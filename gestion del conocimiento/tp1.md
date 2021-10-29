@@ -24,25 +24,50 @@ El proyecto extrae conocimiento de 111 diferentes ediciones lingüísticas de Wi
 
 TODO: falta
 
-## Ejercicio 3: Realizar consultas Sparql en dbpedia
+## Ejercicio 2: Realizar consultas Sparql en dbpedia
 Para cada caso reporte la consulta sparql correspondiente y el resultado de la misma. En las consultas, de preferencia al uso de clases y propiedades en la ontología de dbpedia (dbo) 
 1. Obtener a los escritores que hayan nacido en una ciudad de Argentina. 
 2. Obtener a los escritores que hayan nacido en una ciudad de Uruguay.
 3. Utilizando el keyword filter (vea sección 6.3.2.6 del libro), obtener a los escritores que hayan nacido en una ciudad de Argentina o de Uruguay 
 4. Utilizando el keyword union (vea sección 6.3.2.6 del libro), obtener a los escritores que hayan nacido en una ciudad de Argentina o de Uruguay
 
-## Ejercicio 4: Llegó Wikidata
+## Ejercicio 3: Llegó Wikidata
 Acceda al sitio oficial del proyecto Wikidata: https://www.wikidata.org y leyendo la documentación responda las siguientes preguntas.
 1. _¿Qué es wikidata?_
 
 Wikidata es una base de conocimiento colaborativa, libre y abierta que almacena información estructurada. Su principal ventaja es que ofrece datos enlazados, descritos mediante RDF, lo cual permite relacionarlos con otros conjuntos de datos de otros repositorios digitales.
 Wikidata puede ser leída y editada tanto por seres humanos como por máquinas, integrando fuentes de datos publicadas con licencias compatibles con Creative Commons de dominio público (CC-0). Por tanto, todo el contenido puede ser reutilizado por cualquier persona u empresa que así lo desee.
 
-2. ¿De donde sale la información disponible en Wikidata?
-3. ¿Que partes de los artículos de Wikipedia se transforman en tripletas?
-4. ¿Dado el articulo en Wikipedia de "National University of La Plata", como infiero la URL del recurso correspondiente en Wikidata? 
-5. ¿Que diferencias y similitudes encuentra con DBpedia?
+2. _¿De donde sale la información disponible en Wikidata?_
 
-## Ejercicio 5: Consultas en Wikidata
+Los datos se obtienen de las siguientes fuentes:
+- Wikipedia – Encyclopedia  
+- Wiktionary – Dictionary and thesaurus    
+- Wikibooks – Textbooks, manuals, and cookbooks   
+- Wikinews – News   
+- Wikiquote – Collection of quotations    
+- Wikisource – Library    
+- Wikiversity – Learning resources    
+- Wikivoyage – Travel guides    
+- Wikispecies – Directory of species   
+- Wikimedia Commons – Media repository    
+- Incubator – New language versions   
+- Meta-Wiki – Wikimedia project coordination   
+- MediaWiki – Software documentation   
+
+3. _¿Que partes de los artículos de Wikipedia se transforman en tripletas?_
+4. _¿Dado el articulo en Wikipedia de "National University of La Plata", como infiero la URL del recurso correspondiente en Wikidata?_
+
+Cuando entramos a la url del recurso (https://es.wikipedia.org/wiki/Universidad_Nacional_de_La_Plata), en la seccion inferior podemos encontrar una seccion "Control de Autoridades" donde se encuentra el link a Wikidata (https://www.wikidata.org/wiki/Q784171).
+
+5. _¿Que diferencias y similitudes encuentra con DBpedia?_
+
+Estas son algunas de las principales diferencias para destacar:
+- **Dirección del flujo de información**: DBpedia extrae información de Wikipedia, Wikidata la proporciona a Wikipedia.
+- **Estructura**: DBpedia hace lo mejor para aplicar estructura a la información textual de Wikipedia, mientras que la información de Wikidata está estructurada de forma nativa para comenzar.
+- **Madurez**: DBpedia es más antigua, Wikidata recién está comenzando
+- **Notabilidad**: DBpedia hereda el sentido de "notoriedad" blanco, occidental y masculino de Wikipedia, mientras que Wikidata no tiene reglas de notoriedad (todavía, y las Wikipedias pueden optar por no incluir información de Wikidata que no crean que califique como "notable")
+
+## Ejercicio 4: Consultas en Wikidata
 1. Adapte las queries que construyo en los puntos c y d del ejercicio anterior en el endpoint de Wikidata. (https://query.wikidata.org). ¿Obtuvo resultados diferentes? Si la respuesta es si, ¿a que se deben?
 2. Realice una mapa en la que sea posible visualizar los autódromos que se encuentran en una ciudad que esté a mas de 600 metros sobre el nivel del mar.
