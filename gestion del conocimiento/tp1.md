@@ -28,15 +28,78 @@ TODO: falta
 Para cada caso reporte la consulta sparql correspondiente y el resultado de la misma. En las consultas, de preferencia al uso de clases y propiedades en la ontología de dbpedia (dbo) 
 1. _Obtener a los escritores que hayan nacido en una ciudad de Argentina._
 
+```sparql
+SELECT ?item
+WHERE 
+{
+    ?item rdf:type dbo:Person.
+    ?item rdf:type dbo:Writer.
+    ?item dbo:birthPlace ?lugar.
+    ?lugar rdf:type dbo:City.
+    ?lugar dbo:country dbr:Argentina.
+}
+```
 
 2. _Obtener a los escritores que hayan nacido en una ciudad de Uruguay._
 
+```sparql
+SELECT ?item
+WHERE 
+{
+    ?item rdf:type dbo:Person.
+    ?item rdf:type dbo:Writer.
+    ?item dbo:birthPlace ?lugar.
+    ?lugar rdf:type dbo:City.
+    ?lugar dbo:country dbr:Uruguay.
+}
+```
 
 3. _Utilizando el keyword filter (vea sección 6.3.2.6 del libro), obtener a los escritores que hayan nacido en una ciudad de Argentina o de Uruguay_
 
+```sparql
+SELECT ?item
+WHERE 
+{
+    ?item rdf:type dbo:Person.
+    ?item rdf:type dbo:Writer.
+    ?item dbo:birthPlace ?lugar.
+    ?lugar rdf:type dbo:City.
+    ?lugar dbo:country ?pais.
+    FILTER(?pais = dbr:Argentina || ?pais = dbr:Uruguay)
+}
+```
 
 4. _Utilizando el keyword union (vea sección 6.3.2.6 del libro), obtener a los escritores que hayan nacido en una ciudad de Argentina o de Uruguay_
 
+```sparql
+SELECT *
+WHERE 
+{
+    {
+        SELECT ?item
+        WHERE 
+        {
+            ?item rdf:type dbo:Person.
+            ?item rdf:type dbo:Writer.
+            ?item dbo:birthPlace ?lugar.
+            ?lugar rdf:type dbo:City.
+            ?lugar dbo:country dbr:Argentina.
+        }
+    }
+    UNION
+    {
+        SELECT ?item
+        WHERE 
+        {
+            ?item rdf:type dbo:Person.
+            ?item rdf:type dbo:Writer.
+            ?item dbo:birthPlace ?lugar2.
+            ?lugar2 rdf:type dbo:City.
+            ?lugar2 dbo:country dbr:Uruguay.
+        }
+    }
+}
+```
 
 
 ## Ejercicio 3: Llegó Wikidata
@@ -83,7 +146,7 @@ Estas son algunas de las principales diferencias para destacar:
 
 ```sparql
 # escritores que hayan nacido en una ciudad de Argentina o de Uruguay usando filter
-SELECT ?item ?itemLabel ?lugar ?lugarLabel ?pais ?paisLabel
+SELECT ?item ?itemLabel
 WHERE
 {
   ?item wdt:P31 wd:Q5. # instanceof human
@@ -102,7 +165,7 @@ SELECT *
 WHERE
 {
   {
-    SELECT ?item ?itemLabel ?lugar ?lugarLabel
+    SELECT ?item ?itemLabel
     WHERE
     {
       ?item wdt:P31 wd:Q5. # instanceof human
@@ -115,7 +178,7 @@ WHERE
   }
   UNION
   {
-    SELECT ?item ?itemLabel ?lugar ?lugarLabel
+    SELECT ?item ?itemLabel
     WHERE
     {
       ?item wdt:P31 wd:Q5. # instanceof human
