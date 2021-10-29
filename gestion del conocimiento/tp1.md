@@ -60,6 +60,8 @@ Los datos se obtienen de las siguientes fuentes:
 
 Cuando entramos a la url del recurso (https://es.wikipedia.org/wiki/Universidad_Nacional_de_La_Plata), en la seccion inferior podemos encontrar una seccion "Control de Autoridades" donde se encuentra el link a Wikidata (https://www.wikidata.org/wiki/Q784171).
 
+![seccion-control-autoridades](ubicacion_url_wikidata.png) 
+
 5. _¿Que diferencias y similitudes encuentra con DBpedia?_
 
 Estas son algunas de las principales diferencias para destacar:
