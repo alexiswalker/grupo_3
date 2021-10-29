@@ -1,0 +1,48 @@
+# TP Sparql
+
+## Objetivo pedagógico
+Utilizar Sparql para realizar consultas variadas en DBpedia.
+
+## Requerimientos
+Para este trabajo se requiere:
+- Conexión a Internet para poder acceder al endpoint de DBpedia.
+
+Como referencia para este trabajo, utilice el capítulo 6 (en particular de la sección 6.3 en adelante) del libro "Developers guide to the semantic web"
+
+## Ejercicio 1: ¿Qué es dbpedia?
+El siguiente articulo ofrece un panorama general de los aspectos más importantes de dbpedia http://svn.aksw.org/papers/2013/SWJ_DBpedia/public.pdf
+Lea el artículo y responda:
+1. _¿Qué es dbpedia?_
+
+El proyecto de la comunidad DBpedia extrae conocimiento estructurado y multilingüe de Wikipedia y lo hace libremente disponible en la Web utilizando tecnologías de Web Semántica y Datos Vinculados. Este proyecto es realizado por la Universidad de Leipzig, Universidad Libre de Berlín y la compañía OpenLink Software.
+
+2. _¿De donde sale la información disponible en dbpedia?_
+
+El proyecto extrae conocimiento de 111 diferentes ediciones lingüísticas de Wikipedia. La base de conocimientos más grande de DBpedia que se extrae de la edición en inglés de Wikipedia consta de más de 400 millones de hechos que describen 3,7 millones de cosas. Las bases de conocimiento de DBpedia que se extraen del otro 110 ediciones de Wikipedia juntas constan de 1,46 mil millones de hechos y describen 10 millones de cosas adicionales. 
+
+3. _¿Que partes de los artículos de Wikipedia se transforman en tripletas? ¿Qué prefijo utiliza DBpedia para sus propiedes y cuales para los recursos?_
+
+TODO: falta
+
+## Ejercicio 3: Realizar consultas Sparql en dbpedia
+Para cada caso reporte la consulta sparql correspondiente y el resultado de la misma. En las consultas, de preferencia al uso de clases y propiedades en la ontología de dbpedia (dbo) 
+1. Obtener a los escritores que hayan nacido en una ciudad de Argentina. 
+2. Obtener a los escritores que hayan nacido en una ciudad de Uruguay.
+3. Utilizando el keyword filter (vea sección 6.3.2.6 del libro), obtener a los escritores que hayan nacido en una ciudad de Argentina o de Uruguay 
+4. Utilizando el keyword union (vea sección 6.3.2.6 del libro), obtener a los escritores que hayan nacido en una ciudad de Argentina o de Uruguay
+
+## Ejercicio 4: Llegó Wikidata
+Acceda al sitio oficial del proyecto Wikidata: https://www.wikidata.org y leyendo la documentación responda las siguientes preguntas.
+1. _¿Qué es wikidata?_
+
+Wikidata es una base de conocimiento colaborativa, libre y abierta que almacena información estructurada. Su principal ventaja es que ofrece datos enlazados, descritos mediante RDF, lo cual permite relacionarlos con otros conjuntos de datos de otros repositorios digitales.
+Wikidata puede ser leída y editada tanto por seres humanos como por máquinas, integrando fuentes de datos publicadas con licencias compatibles con Creative Commons de dominio público (CC-0). Por tanto, todo el contenido puede ser reutilizado por cualquier persona u empresa que así lo desee.
+
+2. ¿De donde sale la información disponible en Wikidata?
+3. ¿Que partes de los artículos de Wikipedia se transforman en tripletas?
+4. ¿Dado el articulo en Wikipedia de "National University of La Plata", como infiero la URL del recurso correspondiente en Wikidata? 
+5. ¿Que diferencias y similitudes encuentra con DBpedia?
+
+## Ejercicio 5: Consultas en Wikidata
+1. Adapte las queries que construyo en los puntos c y d del ejercicio anterior en el endpoint de Wikidata. (https://query.wikidata.org). ¿Obtuvo resultados diferentes? Si la respuesta es si, ¿a que se deben?
+2. Realice una mapa en la que sea posible visualizar los autódromos que se encuentran en una ciudad que esté a mas de 600 metros sobre el nivel del mar.
