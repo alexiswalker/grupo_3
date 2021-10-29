@@ -26,10 +26,85 @@ TODO: falta
 
 ## Ejercicio 2: Realizar consultas Sparql en dbpedia
 Para cada caso reporte la consulta sparql correspondiente y el resultado de la misma. En las consultas, de preferencia al uso de clases y propiedades en la ontología de dbpedia (dbo) 
-1. Obtener a los escritores que hayan nacido en una ciudad de Argentina. 
-2. Obtener a los escritores que hayan nacido en una ciudad de Uruguay.
-3. Utilizando el keyword filter (vea sección 6.3.2.6 del libro), obtener a los escritores que hayan nacido en una ciudad de Argentina o de Uruguay 
-4. Utilizando el keyword union (vea sección 6.3.2.6 del libro), obtener a los escritores que hayan nacido en una ciudad de Argentina o de Uruguay
+1. _Obtener a los escritores que hayan nacido en una ciudad de Argentina._
+
+```sparql
+SELECT ?item ?itemLabel ?lugar ?lugarLabel
+WHERE
+{
+  ?item wdt:P31 wd:Q5. # instanceof human
+  ?item wdt:P106 wd:Q36180. # occupation writer
+  ?item wdt:P19 ?lugar. # placeOfBirth 
+  ?lugar wdt:P31 wd:Q515. # instanceof city
+  ?lugar wdt:P17 wd:Q414. # country argentina
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
+} limit 10
+```
+
+2. _Obtener a los escritores que hayan nacido en una ciudad de Uruguay._
+
+```sparql
+SELECT ?item ?itemLabel ?lugar ?lugarLabel
+WHERE
+{
+  ?item wdt:P31 wd:Q5. # instanceof human
+  ?item wdt:P106 wd:Q36180. # occupation writer
+  ?item wdt:P19 ?lugar. # placeOfBirth 
+  ?lugar wdt:P31 wd:Q515. # instanceof city
+  ?lugar wdt:P17 wd:Q77. # country uruguay
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
+} limit 10
+```
+
+3. _Utilizando el keyword filter (vea sección 6.3.2.6 del libro), obtener a los escritores que hayan nacido en una ciudad de Argentina o de Uruguay_
+
+```sparql
+SELECT ?item ?itemLabel ?lugar ?lugarLabel ?pais ?paisLabel
+WHERE
+{
+  ?item wdt:P31 wd:Q5. # instanceof human
+  ?item wdt:P106 wd:Q36180. # occupation writer
+  ?item wdt:P19 ?lugar. # placeOfBirth 
+  ?lugar wdt:P31 wd:Q515. # instanceof city
+  ?lugar wdt:P17 ?pais. # country
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
+  FILTER(?pais = wd:Q414 || ?pais = wd:Q77) # argentina || uruguay
+} limit 10
+```
+
+4. _Utilizando el keyword union (vea sección 6.3.2.6 del libro), obtener a los escritores que hayan nacido en una ciudad de Argentina o de Uruguay_
+
+```sparql
+SELECT * 
+WHERE
+{
+  {
+    SELECT ?item ?itemLabel ?lugar ?lugarLabel
+    WHERE
+    {
+      ?item wdt:P31 wd:Q5. # instanceof human
+      ?item wdt:P106 wd:Q36180. # occupation writer
+      ?item wdt:P19 ?lugar. # placeOfBirth 
+      ?lugar wdt:P31 wd:Q515. # instanceof city
+      ?lugar wdt:P17 wd:Q414. # country argentina
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
+    } limit 10
+  }
+  UNION
+  {
+    SELECT ?item ?itemLabel ?lugar ?lugarLabel
+    WHERE
+    {
+      ?item wdt:P31 wd:Q5. # instanceof human
+      ?item wdt:P106 wd:Q36180. # occupation writer
+      ?item wdt:P19 ?lugar. # placeOfBirth 
+      ?lugar wdt:P31 wd:Q515. # instanceof city
+      ?lugar wdt:P17 wd:Q77. # country uruguay
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
+    } limit 10
+  }
+}
+```
 
 ## Ejercicio 3: Llegó Wikidata
 Acceda al sitio oficial del proyecto Wikidata: https://www.wikidata.org y leyendo la documentación responda las siguientes preguntas.
