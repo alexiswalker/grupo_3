@@ -566,7 +566,7 @@ Esto puede deberse no solo a que poseen estructuras de grafos distintas, sino qu
 2. _Realice una mapa en la que sea posible visualizar los autódromos que se encuentran en una ciudad que esté a mas de 600 metros sobre el nivel del mar._
 
 ```sparql
-SELECT ?item ?itemLabel ?date ?image
+SELECT ?item ?itemLabel ?date 
 WHERE 
 {
   ?item wdt:P31 wd:Q2338524. # instanceof motorsportRacingTrack
@@ -576,18 +576,17 @@ WHERE
   OPTIONAL
   {
     ?lugar wdt:P571 ?date. # inception
-    ?item wdt:P18 ?image. # image
   }
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
   FILTER(?elevacion >= 600)
 }
 ```
 
-| item                                     | itemLabel                    | date                 | image                                                                                                                                              |
-| ---------------------------------------- | ---------------------------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| http://www.wikidata.org/entity/Q12156002 | Autódromo Las Vizcachas      | 1898-01-01T00:00:00Z | http://commons.wikimedia.org/wiki/Special:FilePath/Aut%C3%B3dromo%20Las%20Vizcachas%204.JPG                                                        |
-| http://www.wikidata.org/entity/Q173099   | Autódromo Hermanos Rodríguez | 1521-08-23T00:00:00Z | http://commons.wikimedia.org/wiki/Special:FilePath/Aut%C3%B3dromo%20Hermanos%20Rodr%C3%ADguez%2C%20June%204%2C%202018%20SkySat%20%28cropped%29.jpg |
-| http://www.wikidata.org/entity/Q867557   | Circuito de Albacete         |                      |                                                                                                                                                    |
-| http://www.wikidata.org/entity/Q4827227  | Autódromo Jorge Ángel Pena   |                      |                                                                                                                                                    |
+| item                                     | itemLabel                    | date                 |
+| ---------------------------------------- | ---------------------------- | -------------------- |
+| http://www.wikidata.org/entity/Q867557   | Circuito de Albacete         |                      |
+| http://www.wikidata.org/entity/Q173099   | Autódromo Hermanos Rodríguez | 1521-08-23T00:00:00Z |
+| http://www.wikidata.org/entity/Q4827227  | Autódromo Jorge Ángel Pena   |                      |
+| http://www.wikidata.org/entity/Q12156002 | Autódromo Las Vizcachas      | 1898-01-01T00:00:00Z |
 
 Solo las dos primeras se mostraran en el timeline ya que son las unicas con fechas de inauguracion.
