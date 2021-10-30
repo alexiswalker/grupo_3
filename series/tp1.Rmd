@@ -60,9 +60,12 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ```{r message=FALSE}
-paquetes <- c("readr", "tidyverse", "gridExtra", "kableExtra", "tseries", "xts",
-              "forecast", "ggfortify", "lessR", "fable", "tsibble", 
-              "tibbletime", "showtext")
+paquetes <- c("readr", "tidyverse", "showtext", "forecast", "gridExtra", 
+              "tseries", "tsibble")
+
+#, "gridExtra", "kableExtra", "tseries", "xts",
+#              , "ggfortify", "lessR", "fable", "tsibble", 
+#              "tibbletime"
 
 instalados <- paquetes %in% rownames(installed.packages())
 
@@ -201,17 +204,17 @@ ggplot(dif_indice_salarios, aes(x = fecha, y = indice_salarios)) +
 ```
 
 ```{r}
-adf<-adf.test(dif_ts_indice_salarios)
-adf$p.value < 5/100
-
-adf<-adf.test(dif_ts_indice_precios_consumidor)
-adf$p.value < 5/100
-
-kpss<-kpss.test(dif_ts_indice_salarios)
-kpss$p.value < 5/100
-
-kpss<-kpss.test(dif_ts_indice_precios_consumidor)
-kpss$p.value < 5/100
+# adf<-adf.test(dif_ts_indice_salarios)
+# adf$p.value < 5/100
+# 
+# adf<-adf.test(dif_ts_indice_precios_consumidor)
+# adf$p.value < 5/100
+# 
+# kpss<-kpss.test(dif_ts_indice_salarios)
+# kpss$p.value < 5/100
+# 
+# kpss<-kpss.test(dif_ts_indice_precios_consumidor)
+# kpss$p.value < 5/100
 
 
 
@@ -314,7 +317,7 @@ summary(modelo)
 
 residuos <- resid(modelo)
 
-Histogram(residuos,density = T)
+#Histogram(residuos,density = T)
 
 ```
 
@@ -336,7 +339,7 @@ summary(modelo)
 ```{r}
 residuos <- resid(modelo)
 
-Histogram(residuos,density = T)
+#Histogram(residuos,density = T)
 
 
 ```
@@ -353,10 +356,10 @@ test_data <- dif_ts_indice_precios_consumidor %>%
 ```
 
 ```{r}
-forecast_data <- train_data %>% 
-  model(arima = ARIMA(value), arima210 = ARIMA(value ~ pdq(3,2,0))) %>%
-  forecast(h = 7) %>%
-  rename(model = .model, mean = .mean)
+# forecast_data <- train_data %>% 
+#   model(arima = ARIMA(value), arima210 = ARIMA(value ~ pdq(3,2,0))) %>%
+#   forecast(h = 7) %>%
+#   rename(model = .model, mean = .mean)
 ```
 
 
@@ -364,7 +367,7 @@ forecast_data <- train_data %>%
 ggplot() +
   geom_line(data = train_data, aes(x = index, y = value), color = "blue") +
   geom_line(data = test_data, aes(x = index, y = value), color = "red3") +
-  geom_line(data = forecast_data, aes(x = index, y = mean, color = model)) +
+  #geom_line(data = forecast_data, aes(x = index, y = mean, color = model)) +
   labs(x = "Tiempo") +
   ggtitle("Forecast")
 ```
