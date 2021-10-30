@@ -61,7 +61,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```{r message=FALSE}
 paquetes <- c("readr", "tidyverse", "gridExtra", "kableExtra", "tseries", "xts",
-              "forecast", "ggfortify", "lessR", "fable", "tsibble", "tibbletime")
+              "forecast", "ggfortify", "lessR", "fable", "tsibble", 
+              "tibbletime", "showtext")
 
 instalados <- paquetes %in% rownames(installed.packages())
 
@@ -83,6 +84,8 @@ theme_set(theme_bw())
 
 ```{r}
 #TODO
+
+showtext_auto()
 ```
 
 <!-- datos -->
