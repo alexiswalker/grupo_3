@@ -11,6 +11,7 @@ Como referencia para este trabajo, utilice el capítulo 6 (en particular de la s
 
 ## Ejercicio 1: ¿Qué es dbpedia?
 El siguiente articulo ofrece un panorama general de los aspectos más importantes de dbpedia http://svn.aksw.org/papers/2013/SWJ_DBpedia/public.pdf
+
 Lea el artículo y responda:
 1. _¿Qué es dbpedia?_
 
@@ -22,7 +23,13 @@ El proyecto extrae conocimiento de 111 diferentes ediciones lingüísticas de Wi
 
 3. _¿Que partes de los artículos de Wikipedia se transforman en tripletas? ¿Qué prefijo utiliza DBpedia para sus propiedes y cuales para los recursos?_
 
-TODO: falta
+Las partes de los articulos que se transforman en tripletas son los "infoboxes". La idea de estos infoboxes es que sean usados para mostrar los hechos mas importantes de un articulo en un formato de clave/valor. Existen distintas plantillas por los cuales son generados, por lo que esto simplifica la extraccion de la informacion.
+
+TODO: esto que viene a continuacion difiere con el paper. el paper dice que los resources estan en dbr, pero la pagina ya no lo muestra.
+
+DBpedia posee su ontologia en el prefijo `dbo`. Tambien posee los prefijos `dbp` y `dbd` para properties y datatypes respectivamente.
+Para los recursos, los prefijos inician con `dbpedia-` y continua con el idioma, por ejemplo `dbpedia-es`.
+Mas info [aqui](https://dbpedia.org/sparql/?help=nsdecl).
 
 ## Ejercicio 2: Realizar consultas Sparql en dbpedia
 Para cada caso reporte la consulta sparql correspondiente y el resultado de la misma. En las consultas, de preferencia al uso de clases y propiedades en la ontología de dbpedia (dbo) 
@@ -496,6 +503,11 @@ Los datos se obtienen de las siguientes fuentes:
 - MediaWiki – Software documentation   
 
 3. _¿Que partes de los artículos de Wikipedia se transforman en tripletas?_
+
+TODO: no estoy seguro del todo 
+
+Cualquier informacion del articulo puede ser convertido en tripletas. De hecho, como se menciona en [la pagina de wikimedia](https://meta.wikimedia.org/wiki/Wikidata/Notes/DBpedia_and_Wikidata), mientras que dbpedia extrae la informacion "semi estructurada" de los infoboxes y los expone en tripletas, wikidata permite generar los infoboxes con sus tripletas. Es por esto que la generacion de las mismas es "semi manual" mientras que la de dbpedia es mas "automatica".
+
 4. _¿Dado el articulo en Wikipedia de "National University of La Plata", como infiero la URL del recurso correspondiente en Wikidata?_
 
 Cuando entramos a la url del recurso (https://es.wikipedia.org/wiki/Universidad_Nacional_de_La_Plata), en la seccion inferior podemos encontrar una seccion "Control de Autoridades" donde se encuentra el link a Wikidata (https://www.wikidata.org/wiki/Q784171).
@@ -504,11 +516,14 @@ Cuando entramos a la url del recurso (https://es.wikipedia.org/wiki/Universidad_
 
 5. _¿Que diferencias y similitudes encuentra con DBpedia?_
 
-Estas son algunas de las principales diferencias para destacar:
+Ambas presentan la informacion de wikipedia de una forma estructurada, basada en grafos.
+
+Las principales diferencias para destacar:
 - **Dirección del flujo de información**: DBpedia extrae información de Wikipedia, Wikidata la proporciona a Wikipedia.
 - **Estructura**: DBpedia hace lo mejor para aplicar estructura a la información textual de Wikipedia, mientras que la información de Wikidata está estructurada de forma nativa para comenzar.
 - **Madurez**: DBpedia es más antigua, Wikidata recién está comenzando
-- **Notabilidad**: DBpedia hereda el sentido de "notoriedad" blanco, occidental y masculino de Wikipedia, mientras que Wikidata no tiene reglas de notoriedad (todavía, y las Wikipedias pueden optar por no incluir información de Wikidata que no crean que califique como "notable")
+- **Notabilidad**: DBpedia hereda el sentido de "notoriedad" blanco, occidental y masculino de Wikipedia, mientras que Wikidata no tiene reglas de notoriedad (todavía, y las Wikipedias pueden optar por no incluir información de Wikidata que no crean que califique como "notable") TODO: WTF?
+- **Automatizacion**: DBpedia posee un proceso de extraccion de informacion automatizado ya que utiliza la informacion de los infoboxes, mientras que Wikidata es semi-automatica/depediente de la comunidad que la mantiene.
 
 ## Ejercicio 4: Consultas en Wikidata
 1. _Adapte las queries que construyo en los puntos c y d del ejercicio anterior en el endpoint de Wikidata. (https://query.wikidata.org). ¿Obtuvo resultados diferentes? Si la respuesta es si, ¿a que se deben?_
@@ -590,3 +605,5 @@ WHERE
 | http://www.wikidata.org/entity/Q12156002 | Autódromo Las Vizcachas      | 1898-01-01T00:00:00Z |
 
 Solo las dos primeras se mostraran en el timeline ya que son las unicas con fechas de inauguracion.
+
+![histropedia](histropedia.PNG)
