@@ -74,9 +74,6 @@ if (any(instalados == FALSE)) {
 }
 
 invisible(lapply(paquetes, library, character.only = TRUE))
-
-
-source("Funciones.R")
 ```
 
 ```{r}
@@ -88,6 +85,37 @@ theme_set(theme_bw())
 ```{r}
 #TODO
 showtext_auto()
+
+incorrelation <- function(ts, type = c("Ljung-Box","Box-Pierce"), fitdf = 0){
+  p_ljung_box = NULL
+  s_ljung_box = NULL
+  for(i in 0:(length(ts)/4)){
+    p_ljung_box[i] = Box.test(ts, lag = i, type = type, fitdf = fitdf)$p.value
+    s_ljung_box[i] = Box.test(ts, lag = i, type = type, fitdf = fitdf)$statistic
+  }
+  table = data.frame(j = 1:(length(ts)/4),
+                     P_Value = p_ljung_box,
+                     Statistic = s_ljung_box)
+  return(table)
+}
+
+aic_matrix <- function(ts, p.order = 1, q.order = 1){
+  
+  require(forecast)
+  
+  aic_matrix = matrix(data = NA, nrow = p.order, ncol = q.order)
+  for(i in 0:p.order){
+    for(j in 0:q.order){
+      aic = arima(ts,order = c(i,0,j))$aic
+      aic_matrix[i,j] = aic
+    }
+  }
+  rownames(aic_matrix) = c(1:p.order)
+  colnames(aic_matrix) = c(1:q.order)
+  
+  return(aic_matrix)
+}
+
 ```
 
 <!-- datos -->
@@ -141,6 +169,8 @@ ggplot(raw_data, aes(x = fecha)) +
 
 \lipsum[2]
 
+\newpage
+
 ## Diferenciación 
 
 ```{r}
@@ -162,7 +192,7 @@ número de diferenciaciones estacionales: `r indice_precios_consumidor_nsdiffs`
 
 Después de diferenciar gráfico x
 
-```{r fig.cap="Índice de precio al consumidor y su tendencia", fig.height=4, fig.width=10}
+```{r fig.cap="Índice de precio al consumidor y su tendencia", fig.height=3, fig.width=10}
 dif_ts_indice_precios_consumidor <- ts_indice_precios_consumidor %>%
   diff(1) %>%
   diff(1)
@@ -187,7 +217,7 @@ número de diferenciaciones regulares: `r indice_salarios_ndiffs`
 
 número de diferenciaciones estacionales: `r indice_salarios_nsdiffs`
 
-```{r fig.cap="Índice de Salarios y su tendencia", fig.height=4, fig.width=10}
+```{r fig.cap="Índice de Salarios y su tendencia", fig.height=3, fig.width=10}
 dif_ts_indice_salarios <- ts_indice_salarios %>% diff(1)
 
 dif_indice_salarios <- data.frame(
@@ -201,6 +231,8 @@ ggplot(dif_indice_salarios, aes(x = fecha, y = indice_salarios)) +
   labs(x = "Tiempo") +
   ggtitle("Índice de Salarios")
 ```
+
+\newpage
 
 ## Funciones de autocorrelación y autocorrelación parcial
 
@@ -240,13 +272,13 @@ par(old_par_setting)
 
 
 ```{r}
-Box.test(dif_ts_indice_precios_consumidor, lag = 1, type = "Box-Pierce")
-Box.test(dif_ts_indice_precios_consumidor, lag = 1, type = "Ljung-Box")
-#white noise
-
-Box.test(dif_ts_indice_salarios, lag = 1, type = "Box-Pierce")
-Box.test(dif_ts_indice_salarios, lag = 1, type = "Ljung-Box")
-# no white noise
+# Box.test(dif_ts_indice_precios_consumidor, lag = 1, type = "Box-Pierce")
+# Box.test(dif_ts_indice_precios_consumidor, lag = 1, type = "Ljung-Box")
+# #white noise
+# 
+# Box.test(dif_ts_indice_salarios, lag = 1, type = "Box-Pierce")
+# Box.test(dif_ts_indice_salarios, lag = 1, type = "Ljung-Box")
+# # no white noise
 #
 # 
 # Incorrelation(dif_ts_indice_precios_consumidor,"Box-Pierce")
@@ -258,15 +290,15 @@ Box.test(dif_ts_indice_salarios, lag = 1, type = "Ljung-Box")
 ```
 
 
-
 ## Modelos
 
 ### Estimación
 
 ```{r}
-modelo <- arma(ts_indice_precios_consumidor, order = c(1, 0), include.intercept = T)
+aic_matrix(dif_ts_indice_precios_consumidor, 5, 5)
 
-
+modelo <- arima(dif_ts_indice_precios_consumidor,order = c(1,0,1))
+modelo <- arima(dif_ts_indice_precios_consumidor,order = c(6,1,0))
 
 coef(modelo)
 
@@ -274,6 +306,15 @@ summary(modelo)
 
 ```
 
+```{r}
+aic_matrix(dif_ts_indice_salarios, 3, 3)
+
+modelo <- arima(dif_ts_indice_salarios, order = c(1,0,2))
+
+coef(modelo)
+
+summary(modelo)
+```
 
 ### Análisis de los Residuos
 
