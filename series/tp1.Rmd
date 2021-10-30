@@ -187,8 +187,6 @@ número de diferenciaciones regulares: `r indice_salarios_ndiffs`
 
 número de diferenciaciones estacionales: `r indice_salarios_nsdiffs`
 
-
-
 ```{r fig.cap="Índice de Salarios y su tendencia", fig.height=4, fig.width=10}
 dif_ts_indice_salarios <- ts_indice_salarios %>% diff(1)
 
@@ -204,80 +202,41 @@ ggplot(dif_indice_salarios, aes(x = fecha, y = indice_salarios)) +
   ggtitle("Índice de Salarios")
 ```
 
-```{r}
-# adf<-adf.test(dif_ts_indice_salarios)
-# adf$p.value < 5/100
-# 
-# adf<-adf.test(dif_ts_indice_precios_consumidor)
-# adf$p.value < 5/100
-# 
-# kpss<-kpss.test(dif_ts_indice_salarios)
-# kpss$p.value < 5/100
-# 
-# kpss<-kpss.test(dif_ts_indice_precios_consumidor)
-# kpss$p.value < 5/100
-
-
-
-```
-
-
-## Decomposición
-
-### Índice de precios al consumidor
-
-```{r fig.cap="Funciones", fig.height=5, fig.width=10, warning=FALSE}
-decompose_plot <- dif_ts_indice_precios_consumidor %>%
-  decompose(type = "additive") %>%
-  autoplot(ts.colour = "steelblue")
-decompose_plot + xlab("Tiempo") + ggtitle("Descoposición aditiva")
-```
-
-\lipsum[2]
-
-### Índice de Salarios
-
-```{r fig.cap="Funciones", fig.height=5, fig.width=10, warning=FALSE}
-decompose_plot <- dif_ts_indice_salarios %>%
-  decompose(type = "additive") %>%
-  autoplot(ts.colour = "steelblue")
-decompose_plot + xlab("Tiempo") + ggtitle("Descoposición aditiva")
-```
-
-\lipsum[2]
-
 ## Funciones de autocorrelación y autocorrelación parcial
 
 ### Índice de precios al consumidor
 
 ```{r fig.cap="Índice de precios al consumidor", fig.height=5, fig.width=10}
-acf_plot <- ggAcf(dif_ts_indice_precios_consumidor) +
-  ggtitle("Función de autocorrelación") +
-  ylab(label = "Autocorrelación")
+old_par_setting <- par(no.readonly = TRUE)
 
-pacf_plot <- ggAcf(dif_ts_indice_precios_consumidor, type = "partial") +
-  ggtitle("Función de autocorrelación parcial") +
-  ylab(label = "Autocorrelación parcial")
+par(mfrow=c(2,2))
 
-grid.arrange(acf_plot, pacf_plot, nrow = 2)
+data <- as.vector(dif_ts_indice_precios_consumidor)
+
+acf(data, type = "correlation", main = "Función de Autocorrelación")
+acf(data, type = "partial", main = "Función de Autocorrelación Parcial")
+acf(data, type = "covariance", main = "Función de Autocovarianza")
+plot(dif_ts_indice_precios_consumidor, main = "Serie", xlab="Tiempo", ylab = "")
+
+par(old_par_setting)
 ```
 
 ### Índice de Salarios
 
+```{r fig.cap="Índice de Salarios", fig.height=5, fig.width=10}
+old_par_setting <- par(no.readonly = TRUE)
 
+par(mfrow=c(2,2))
 
-```{r fig.cap="Índice de salarios", fig.height=5, fig.width=10}
-acf_plot <- ggAcf(dif_ts_indice_salarios) +
-  ggtitle("Función de autocorrelación") +
-  ylab(label = "Autocorrelación")
+data <- as.vector(dif_ts_indice_salarios)
 
-pacf_plot <- ggAcf(dif_ts_indice_salarios, type = "partial") +
-  ggtitle("Función de autocorrelación parcial") +
-  ylab(label = "Autocorrelación parcial")
+acf(data, type = "correlation", main = "Función de Autocorrelación")
+acf(data, type = "partial", main = "Función de Autocorrelación Parcial")
+acf(data, type = "covariance", main = "Función de Autocovarianza")
+plot(dif_ts_indice_salarios, main = "Serie", xlab="Tiempo", ylab = "")
 
-grid.arrange(acf_plot, pacf_plot, nrow = 2)
+par(old_par_setting)
 ```
-
 
 
 ```{r}
@@ -394,7 +353,27 @@ ggplot() +
 \newpage
 
 # Apéndices
-\lipsum[1]
+
+## Decomposición
+
+### Índice de precios al consumidor
+
+```{r fig.cap="Funciones", fig.height=5, fig.width=10, warning=FALSE}
+decompose_plot <- dif_ts_indice_precios_consumidor %>%
+  decompose(type = "additive") %>%
+  autoplot(ts.colour = "steelblue")
+decompose_plot + xlab("Tiempo") + ggtitle("Descoposición aditiva")
+```
+
+### Índice de Salarios
+
+```{r fig.cap="Funciones", fig.height=5, fig.width=10, warning=FALSE}
+decompose_plot <- dif_ts_indice_salarios %>%
+  decompose(type = "additive") %>%
+  autoplot(ts.colour = "steelblue")
+decompose_plot + xlab("Tiempo") + ggtitle("Descoposición aditiva")
+```
+
 
 
 
