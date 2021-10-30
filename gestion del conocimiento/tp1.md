@@ -26,10 +26,450 @@ TODO: falta
 
 ## Ejercicio 2: Realizar consultas Sparql en dbpedia
 Para cada caso reporte la consulta sparql correspondiente y el resultado de la misma. En las consultas, de preferencia al uso de clases y propiedades en la ontología de dbpedia (dbo) 
-1. Obtener a los escritores que hayan nacido en una ciudad de Argentina. 
-2. Obtener a los escritores que hayan nacido en una ciudad de Uruguay.
-3. Utilizando el keyword filter (vea sección 6.3.2.6 del libro), obtener a los escritores que hayan nacido en una ciudad de Argentina o de Uruguay 
-4. Utilizando el keyword union (vea sección 6.3.2.6 del libro), obtener a los escritores que hayan nacido en una ciudad de Argentina o de Uruguay
+1. _Obtener a los escritores que hayan nacido en una ciudad de Argentina._
+
+```sparql
+SELECT ?item
+WHERE 
+{
+    ?item rdf:type dbo:Person.
+    ?item rdf:type dbo:Writer.
+    ?item dbo:birthPlace ?lugar.
+    ?lugar rdf:type dbo:City.
+    ?lugar dbo:country dbr:Argentina.
+}
+```
+
+| item.type | item.value                                                    |
+| --------- | ------------------------------------------------------------- |
+| uri       | http://dbpedia.org/resource/Héctor_Tizón                      |
+| uri       | http://dbpedia.org/resource/Herman_Aguinis                    |
+| uri       | http://dbpedia.org/resource/Gabriela_Cabezón_Cámara           |
+| uri       | http://dbpedia.org/resource/Edgar_Brau                        |
+| uri       | http://dbpedia.org/resource/Ángel_Cappelletti                 |
+| uri       | http://dbpedia.org/resource/Alberto_Laiseca                   |
+| uri       | http://dbpedia.org/resource/Ricardo_Ernesto_Montes_i_Bradley  |
+| uri       | http://dbpedia.org/resource/Eduardo_Sguiglia                  |
+| uri       | http://dbpedia.org/resource/Mirta_Rosenberg                   |
+| uri       | http://dbpedia.org/resource/Enrique_Pavón_Pereyra             |
+| uri       | http://dbpedia.org/resource/John_Farrell_(Australian_poet)    |
+| uri       | http://dbpedia.org/resource/Jorge_Romero_Brest                |
+| uri       | http://dbpedia.org/resource/Enrique_Larreta                   |
+| uri       | http://dbpedia.org/resource/Elizabeth_Azcona_Cranwell         |
+| uri       | http://dbpedia.org/resource/Esther_Vilar                      |
+| uri       | http://dbpedia.org/resource/Marta_Lynch                       |
+| uri       | http://dbpedia.org/resource/Marta_Mirazón_Lahr                |
+| uri       | http://dbpedia.org/resource/Julio_Barragán                    |
+| uri       | http://dbpedia.org/resource/Xavier_Waterkeyn                  |
+| uri       | http://dbpedia.org/resource/Roberto_Arlt                      |
+| uri       | http://dbpedia.org/resource/Jorge_Luis_Borges                 |
+| uri       | http://dbpedia.org/resource/Sylvia_Molloy_(writer)            |
+| uri       | http://dbpedia.org/resource/Lynette_Roberts                   |
+| uri       | http://dbpedia.org/resource/Alejandro_Rozitchner              |
+| uri       | http://dbpedia.org/resource/María_Esther_Vázquez              |
+| uri       | http://dbpedia.org/resource/Mercedes_Ron                      |
+| uri       | http://dbpedia.org/resource/Rafael_Squirru                    |
+| uri       | http://dbpedia.org/resource/Martín_Caparrós                   |
+| uri       | http://dbpedia.org/resource/Silvina_Bullrich                  |
+| uri       | http://dbpedia.org/resource/Hugo_Mujica                       |
+| uri       | http://dbpedia.org/resource/Bertha_Moss                       |
+| uri       | http://dbpedia.org/resource/Ezechiel_Saad                     |
+| uri       | http://dbpedia.org/resource/Pacho_O'Donnell                   |
+| uri       | http://dbpedia.org/resource/Samanta_Schweblin                 |
+| uri       | http://dbpedia.org/resource/Azucena_Galettini                 |
+| uri       | http://dbpedia.org/resource/Adriana_Puiggrós                  |
+| uri       | http://dbpedia.org/resource/Alan_Pauls                        |
+| uri       | http://dbpedia.org/resource/Alejandro_Agostinelli             |
+| uri       | http://dbpedia.org/resource/Aníbal_Cristobo                   |
+| uri       | http://dbpedia.org/resource/Ariana_Harwicz                    |
+| uri       | http://dbpedia.org/resource/Esteban_Echeverría                |
+| uri       | http://dbpedia.org/resource/Federico_Andahazi                 |
+| uri       | http://dbpedia.org/resource/Flavia_Company                    |
+| uri       | http://dbpedia.org/resource/Oliver_Fiechter                   |
+| uri       | http://dbpedia.org/resource/Carlos_Gorostiza                  |
+| uri       | http://dbpedia.org/resource/Oliverio_Girondo                  |
+| uri       | http://dbpedia.org/resource/Ángel_Faretta                     |
+| uri       | http://dbpedia.org/resource/Guido_Mina_di_Sospiro             |
+| uri       | http://dbpedia.org/resource/Adolfo_Bioy_Casares               |
+| uri       | http://dbpedia.org/resource/Alberto_Manguel                   |
+| uri       | http://dbpedia.org/resource/Ana_María_Shua                    |
+| uri       | http://dbpedia.org/resource/Marta_Traba                       |
+| uri       | http://dbpedia.org/resource/Marcelo_Birmajer                  |
+| uri       | http://dbpedia.org/resource/Vicente_Fidel_López               |
+| uri       | http://dbpedia.org/resource/Marcela_Iacub                     |
+| uri       | http://dbpedia.org/resource/Conrado_Nalé_Roxlo                |
+| uri       | http://dbpedia.org/resource/Humberto_Costantini               |
+| uri       | http://dbpedia.org/resource/Gonzalo_Garcés                    |
+| uri       | http://dbpedia.org/resource/Luis_Barragán_(painter)           |
+| uri       | http://dbpedia.org/resource/Luisa_Peluffo                     |
+| uri       | http://dbpedia.org/resource/Inés_Fernández_Moreno             |
+| uri       | http://dbpedia.org/resource/J._Rodolfo_Wilcock                |
+| uri       | http://dbpedia.org/resource/José_María_Rosa                   |
+| uri       | http://dbpedia.org/resource/Carlos_Bernardo_González_Pecotche |
+| uri       | http://dbpedia.org/resource/Carlos_Lousto                     |
+| uri       | http://dbpedia.org/resource/Carlos_Petroni                    |
+| uri       | http://dbpedia.org/resource/José_María_Ramos_Mejía            |
+| uri       | http://dbpedia.org/resource/José_Rivera_Indarte               |
+| uri       | http://dbpedia.org/resource/Enrique_Anderson_Imbert           |
+| uri       | http://dbpedia.org/resource/Perla_Suez                        |
+| uri       | http://dbpedia.org/resource/Alicia_Ghiragossian               |
+| uri       | http://dbpedia.org/resource/Marcos_Aguinis                    |
+| uri       | http://dbpedia.org/resource/Felipe_Pigna                      |
+| uri       | http://dbpedia.org/resource/Lohana_Berkins                    |
+| uri       | http://dbpedia.org/resource/Homero_Manzi                      |
+| uri       | http://dbpedia.org/resource/Mario_Markic                      |
+| uri       | http://dbpedia.org/resource/Ricardo_Romero_(writer)           |
+| uri       | http://dbpedia.org/resource/César_Aira                        |
+| uri       | http://dbpedia.org/resource/María_Elena_Walsh                 |
+| uri       | http://dbpedia.org/resource/Raúl_Scalabrini_Ortiz             |
+| uri       | http://dbpedia.org/resource/Emma_de_Cartosio                  |
+| uri       | http://dbpedia.org/resource/Martina_Iñíguez                   |
+
+2. _Obtener a los escritores que hayan nacido en una ciudad de Uruguay._
+
+```sparql
+SELECT ?item
+WHERE 
+{
+    ?item rdf:type dbo:Person.
+    ?item rdf:type dbo:Writer.
+    ?item dbo:birthPlace ?lugar.
+    ?lugar rdf:type dbo:City.
+    ?lugar dbo:country dbr:Uruguay.
+}
+```
+
+| item.type | item.value                                          |
+| --------- | --------------------------------------------------- |
+| uri       | http://dbpedia.org/resource/Claudia_Amengual        |
+| uri       | http://dbpedia.org/resource/Delmira_Agustini        |
+| uri       | http://dbpedia.org/resource/José_Enrique_Rodó       |
+| uri       | http://dbpedia.org/resource/Juan_Carlos_Onetti      |
+| uri       | http://dbpedia.org/resource/Julio_Herrera_y_Reissig |
+| uri       | http://dbpedia.org/resource/Jorge_Ruffinelli        |
+| uri       | http://dbpedia.org/resource/Marcos_Sastre           |
+| uri       | http://dbpedia.org/resource/Manuel_Pérez_y_Curis    |
+| uri       | http://dbpedia.org/resource/Esther_de_Cáceres       |
+| uri       | http://dbpedia.org/resource/Mario_Benedetti         |
+| uri       | http://dbpedia.org/resource/Gabriel_Pombo           |
+| uri       | http://dbpedia.org/resource/Jules_Supervielle       |
+| uri       | http://dbpedia.org/resource/Daniel_Chavarría        |
+| uri       | http://dbpedia.org/resource/Daniel_Mella            |
+| uri       | http://dbpedia.org/resource/Ida_Vitale              |
+| uri       | http://dbpedia.org/resource/Jorge_Majfud            |
+| uri       | http://dbpedia.org/resource/Adela_Castell           |
+| uri       | http://dbpedia.org/resource/Jorge_Medina_Vidal      |
+| uri       | http://dbpedia.org/resource/Hugo_Burel              |
+| uri       | http://dbpedia.org/resource/Alberto_Methol_Ferré    |
+| uri       | http://dbpedia.org/resource/Eduardo_Acevedo_Díaz    |
+| uri       | http://dbpedia.org/resource/Eduardo_Galeano         |
+| uri       | http://dbpedia.org/resource/Laura_Canoura           |
+| uri       | http://dbpedia.org/resource/Comte_de_Lautréamont    |
+| uri       | http://dbpedia.org/resource/Eduardo_Cuitiño         |
+| uri       | http://dbpedia.org/resource/Natalia_Mardero         |
+| uri       | http://dbpedia.org/resource/Circe_Maia              |
+| uri       | http://dbpedia.org/resource/Gloria_Escomel          |
+| uri       | http://dbpedia.org/resource/Juan_Carlos_Mondragón   |
+| uri       | http://dbpedia.org/resource/Jules_Laforgue          |
+| uri       | http://dbpedia.org/resource/Carlos_Rehermann        |
+| uri       | http://dbpedia.org/resource/Carlos_Vaz_Ferreira     |
+| uri       | http://dbpedia.org/resource/Carmen_Novoa            |
+| uri       | http://dbpedia.org/resource/Carmen_Posadas          |
+| uri       | http://dbpedia.org/resource/Matilde_Bianchi         |
+| uri       | http://dbpedia.org/resource/Hipólito_da_Costa       |
+| uri       | http://dbpedia.org/resource/Luisa_Luisi             |
+
+3. _Utilizando el keyword filter (vea sección 6.3.2.6 del libro), obtener a los escritores que hayan nacido en una ciudad de Argentina o de Uruguay_
+
+```sparql
+SELECT ?item
+WHERE 
+{
+    ?item rdf:type dbo:Person.
+    ?item rdf:type dbo:Writer.
+    ?item dbo:birthPlace ?lugar.
+    ?lugar rdf:type dbo:City.
+    ?lugar dbo:country ?pais.
+    FILTER(?pais = dbr:Argentina || ?pais = dbr:Uruguay)
+}
+```
+
+| item.type | item.value                                                    |
+| --------- | ------------------------------------------------------------- |
+| uri       | http://dbpedia.org/resource/Héctor_Tizón                      |
+| uri       | http://dbpedia.org/resource/Herman_Aguinis                    |
+| uri       | http://dbpedia.org/resource/Gabriela_Cabezón_Cámara           |
+| uri       | http://dbpedia.org/resource/Edgar_Brau                        |
+| uri       | http://dbpedia.org/resource/Ángel_Cappelletti                 |
+| uri       | http://dbpedia.org/resource/Alberto_Laiseca                   |
+| uri       | http://dbpedia.org/resource/Ricardo_Ernesto_Montes_i_Bradley  |
+| uri       | http://dbpedia.org/resource/Eduardo_Sguiglia                  |
+| uri       | http://dbpedia.org/resource/Mirta_Rosenberg                   |
+| uri       | http://dbpedia.org/resource/Daniel_Chavarría                  |
+| uri       | http://dbpedia.org/resource/Enrique_Pavón_Pereyra             |
+| uri       | http://dbpedia.org/resource/Mario_Benedetti                   |
+| uri       | http://dbpedia.org/resource/John_Farrell_(Australian_poet)    |
+| uri       | http://dbpedia.org/resource/Jorge_Romero_Brest                |
+| uri       | http://dbpedia.org/resource/Enrique_Larreta                   |
+| uri       | http://dbpedia.org/resource/Elizabeth_Azcona_Cranwell         |
+| uri       | http://dbpedia.org/resource/Esther_Vilar                      |
+| uri       | http://dbpedia.org/resource/Marta_Lynch                       |
+| uri       | http://dbpedia.org/resource/Marta_Mirazón_Lahr                |
+| uri       | http://dbpedia.org/resource/Julio_Barragán                    |
+| uri       | http://dbpedia.org/resource/Xavier_Waterkeyn                  |
+| uri       | http://dbpedia.org/resource/Roberto_Arlt                      |
+| uri       | http://dbpedia.org/resource/Jorge_Luis_Borges                 |
+| uri       | http://dbpedia.org/resource/Sylvia_Molloy_(writer)            |
+| uri       | http://dbpedia.org/resource/Lynette_Roberts                   |
+| uri       | http://dbpedia.org/resource/Alejandro_Rozitchner              |
+| uri       | http://dbpedia.org/resource/María_Esther_Vázquez              |
+| uri       | http://dbpedia.org/resource/Mercedes_Ron                      |
+| uri       | http://dbpedia.org/resource/Rafael_Squirru                    |
+| uri       | http://dbpedia.org/resource/Martín_Caparrós                   |
+| uri       | http://dbpedia.org/resource/Silvina_Bullrich                  |
+| uri       | http://dbpedia.org/resource/Hugo_Mujica                       |
+| uri       | http://dbpedia.org/resource/Bertha_Moss                       |
+| uri       | http://dbpedia.org/resource/Ezechiel_Saad                     |
+| uri       | http://dbpedia.org/resource/Pacho_O'Donnell                   |
+| uri       | http://dbpedia.org/resource/Samanta_Schweblin                 |
+| uri       | http://dbpedia.org/resource/Azucena_Galettini                 |
+| uri       | http://dbpedia.org/resource/Adriana_Puiggrós                  |
+| uri       | http://dbpedia.org/resource/Alan_Pauls                        |
+| uri       | http://dbpedia.org/resource/Alejandro_Agostinelli             |
+| uri       | http://dbpedia.org/resource/Aníbal_Cristobo                   |
+| uri       | http://dbpedia.org/resource/Ariana_Harwicz                    |
+| uri       | http://dbpedia.org/resource/Esteban_Echeverría                |
+| uri       | http://dbpedia.org/resource/Federico_Andahazi                 |
+| uri       | http://dbpedia.org/resource/Flavia_Company                    |
+| uri       | http://dbpedia.org/resource/Oliver_Fiechter                   |
+| uri       | http://dbpedia.org/resource/Carlos_Gorostiza                  |
+| uri       | http://dbpedia.org/resource/Oliverio_Girondo                  |
+| uri       | http://dbpedia.org/resource/Ángel_Faretta                     |
+| uri       | http://dbpedia.org/resource/Guido_Mina_di_Sospiro             |
+| uri       | http://dbpedia.org/resource/Adolfo_Bioy_Casares               |
+| uri       | http://dbpedia.org/resource/Alberto_Manguel                   |
+| uri       | http://dbpedia.org/resource/Ana_María_Shua                    |
+| uri       | http://dbpedia.org/resource/Marta_Traba                       |
+| uri       | http://dbpedia.org/resource/Marcelo_Birmajer                  |
+| uri       | http://dbpedia.org/resource/Vicente_Fidel_López               |
+| uri       | http://dbpedia.org/resource/Marcela_Iacub                     |
+| uri       | http://dbpedia.org/resource/Conrado_Nalé_Roxlo                |
+| uri       | http://dbpedia.org/resource/Humberto_Costantini               |
+| uri       | http://dbpedia.org/resource/Gonzalo_Garcés                    |
+| uri       | http://dbpedia.org/resource/Luis_Barragán_(painter)           |
+| uri       | http://dbpedia.org/resource/Luisa_Peluffo                     |
+| uri       | http://dbpedia.org/resource/Inés_Fernández_Moreno             |
+| uri       | http://dbpedia.org/resource/J._Rodolfo_Wilcock                |
+| uri       | http://dbpedia.org/resource/José_María_Rosa                   |
+| uri       | http://dbpedia.org/resource/Carlos_Bernardo_González_Pecotche |
+| uri       | http://dbpedia.org/resource/Carlos_Lousto                     |
+| uri       | http://dbpedia.org/resource/Carlos_Petroni                    |
+| uri       | http://dbpedia.org/resource/José_María_Ramos_Mejía            |
+| uri       | http://dbpedia.org/resource/Jorge_Majfud                      |
+| uri       | http://dbpedia.org/resource/José_Rivera_Indarte               |
+| uri       | http://dbpedia.org/resource/Enrique_Anderson_Imbert           |
+| uri       | http://dbpedia.org/resource/Perla_Suez                        |
+| uri       | http://dbpedia.org/resource/Alicia_Ghiragossian               |
+| uri       | http://dbpedia.org/resource/Marcos_Aguinis                    |
+| uri       | http://dbpedia.org/resource/Felipe_Pigna                      |
+| uri       | http://dbpedia.org/resource/Lohana_Berkins                    |
+| uri       | http://dbpedia.org/resource/Homero_Manzi                      |
+| uri       | http://dbpedia.org/resource/Claudia_Amengual                  |
+| uri       | http://dbpedia.org/resource/Delmira_Agustini                  |
+| uri       | http://dbpedia.org/resource/José_Enrique_Rodó                 |
+| uri       | http://dbpedia.org/resource/Juan_Carlos_Onetti                |
+| uri       | http://dbpedia.org/resource/Julio_Herrera_y_Reissig           |
+| uri       | http://dbpedia.org/resource/Jorge_Ruffinelli                  |
+| uri       | http://dbpedia.org/resource/Marcos_Sastre                     |
+| uri       | http://dbpedia.org/resource/Manuel_Pérez_y_Curis              |
+| uri       | http://dbpedia.org/resource/Esther_de_Cáceres                 |
+| uri       | http://dbpedia.org/resource/Gabriel_Pombo                     |
+| uri       | http://dbpedia.org/resource/Jules_Supervielle                 |
+| uri       | http://dbpedia.org/resource/Daniel_Mella                      |
+| uri       | http://dbpedia.org/resource/Ida_Vitale                        |
+| uri       | http://dbpedia.org/resource/Jorge_Medina_Vidal                |
+| uri       | http://dbpedia.org/resource/Hugo_Burel                        |
+| uri       | http://dbpedia.org/resource/Alberto_Methol_Ferré              |
+| uri       | http://dbpedia.org/resource/Eduardo_Acevedo_Díaz              |
+| uri       | http://dbpedia.org/resource/Eduardo_Galeano                   |
+| uri       | http://dbpedia.org/resource/Laura_Canoura                     |
+| uri       | http://dbpedia.org/resource/Comte_de_Lautréamont              |
+| uri       | http://dbpedia.org/resource/Eduardo_Cuitiño                   |
+| uri       | http://dbpedia.org/resource/Natalia_Mardero                   |
+| uri       | http://dbpedia.org/resource/Circe_Maia                        |
+| uri       | http://dbpedia.org/resource/Gloria_Escomel                    |
+| uri       | http://dbpedia.org/resource/Juan_Carlos_Mondragón             |
+| uri       | http://dbpedia.org/resource/Jules_Laforgue                    |
+| uri       | http://dbpedia.org/resource/Carlos_Rehermann                  |
+| uri       | http://dbpedia.org/resource/Carlos_Vaz_Ferreira               |
+| uri       | http://dbpedia.org/resource/Carmen_Novoa                      |
+| uri       | http://dbpedia.org/resource/Carmen_Posadas                    |
+| uri       | http://dbpedia.org/resource/Matilde_Bianchi                   |
+| uri       | http://dbpedia.org/resource/Mario_Markic                      |
+| uri       | http://dbpedia.org/resource/Ricardo_Romero_(writer)           |
+| uri       | http://dbpedia.org/resource/Adela_Castell                     |
+| uri       | http://dbpedia.org/resource/Luisa_Luisi                       |
+| uri       | http://dbpedia.org/resource/César_Aira                        |
+| uri       | http://dbpedia.org/resource/María_Elena_Walsh                 |
+| uri       | http://dbpedia.org/resource/Raúl_Scalabrini_Ortiz             |
+| uri       | http://dbpedia.org/resource/Emma_de_Cartosio                  |
+| uri       | http://dbpedia.org/resource/Martina_Iñíguez                   |
+| uri       | http://dbpedia.org/resource/Hipólito_da_Costa                 |
+
+4. _Utilizando el keyword union (vea sección 6.3.2.6 del libro), obtener a los escritores que hayan nacido en una ciudad de Argentina o de Uruguay_
+
+```sparql
+SELECT *
+WHERE 
+{
+    {
+        SELECT ?item
+        WHERE 
+        {
+            ?item rdf:type dbo:Person.
+            ?item rdf:type dbo:Writer.
+            ?item dbo:birthPlace ?lugar.
+            ?lugar rdf:type dbo:City.
+            ?lugar dbo:country dbr:Argentina.
+        }
+    }
+    UNION
+    {
+        SELECT ?item
+        WHERE 
+        {
+            ?item rdf:type dbo:Person.
+            ?item rdf:type dbo:Writer.
+            ?item dbo:birthPlace ?lugar2.
+            ?lugar2 rdf:type dbo:City.
+            ?lugar2 dbo:country dbr:Uruguay.
+        }
+    }
+}
+```
+
+| item.type | item.value                                                    |
+| --------- | ------------------------------------------------------------- |
+| uri       | http://dbpedia.org/resource/Héctor_Tizón                      |
+| uri       | http://dbpedia.org/resource/Herman_Aguinis                    |
+| uri       | http://dbpedia.org/resource/Gabriela_Cabezón_Cámara           |
+| uri       | http://dbpedia.org/resource/Edgar_Brau                        |
+| uri       | http://dbpedia.org/resource/Ángel_Cappelletti                 |
+| uri       | http://dbpedia.org/resource/Alberto_Laiseca                   |
+| uri       | http://dbpedia.org/resource/Ricardo_Ernesto_Montes_i_Bradley  |
+| uri       | http://dbpedia.org/resource/Eduardo_Sguiglia                  |
+| uri       | http://dbpedia.org/resource/Mirta_Rosenberg                   |
+| uri       | http://dbpedia.org/resource/Enrique_Pavón_Pereyra             |
+| uri       | http://dbpedia.org/resource/John_Farrell_(Australian_poet)    |
+| uri       | http://dbpedia.org/resource/Jorge_Romero_Brest                |
+| uri       | http://dbpedia.org/resource/Enrique_Larreta                   |
+| uri       | http://dbpedia.org/resource/Elizabeth_Azcona_Cranwell         |
+| uri       | http://dbpedia.org/resource/Esther_Vilar                      |
+| uri       | http://dbpedia.org/resource/Marta_Lynch                       |
+| uri       | http://dbpedia.org/resource/Marta_Mirazón_Lahr                |
+| uri       | http://dbpedia.org/resource/Julio_Barragán                    |
+| uri       | http://dbpedia.org/resource/Xavier_Waterkeyn                  |
+| uri       | http://dbpedia.org/resource/Roberto_Arlt                      |
+| uri       | http://dbpedia.org/resource/Jorge_Luis_Borges                 |
+| uri       | http://dbpedia.org/resource/Sylvia_Molloy_(writer)            |
+| uri       | http://dbpedia.org/resource/Lynette_Roberts                   |
+| uri       | http://dbpedia.org/resource/Alejandro_Rozitchner              |
+| uri       | http://dbpedia.org/resource/María_Esther_Vázquez              |
+| uri       | http://dbpedia.org/resource/Mercedes_Ron                      |
+| uri       | http://dbpedia.org/resource/Rafael_Squirru                    |
+| uri       | http://dbpedia.org/resource/Martín_Caparrós                   |
+| uri       | http://dbpedia.org/resource/Silvina_Bullrich                  |
+| uri       | http://dbpedia.org/resource/Hugo_Mujica                       |
+| uri       | http://dbpedia.org/resource/Bertha_Moss                       |
+| uri       | http://dbpedia.org/resource/Ezechiel_Saad                     |
+| uri       | http://dbpedia.org/resource/Pacho_O'Donnell                   |
+| uri       | http://dbpedia.org/resource/Samanta_Schweblin                 |
+| uri       | http://dbpedia.org/resource/Azucena_Galettini                 |
+| uri       | http://dbpedia.org/resource/Adriana_Puiggrós                  |
+| uri       | http://dbpedia.org/resource/Alan_Pauls                        |
+| uri       | http://dbpedia.org/resource/Alejandro_Agostinelli             |
+| uri       | http://dbpedia.org/resource/Aníbal_Cristobo                   |
+| uri       | http://dbpedia.org/resource/Ariana_Harwicz                    |
+| uri       | http://dbpedia.org/resource/Esteban_Echeverría                |
+| uri       | http://dbpedia.org/resource/Federico_Andahazi                 |
+| uri       | http://dbpedia.org/resource/Flavia_Company                    |
+| uri       | http://dbpedia.org/resource/Oliver_Fiechter                   |
+| uri       | http://dbpedia.org/resource/Carlos_Gorostiza                  |
+| uri       | http://dbpedia.org/resource/Oliverio_Girondo                  |
+| uri       | http://dbpedia.org/resource/Ángel_Faretta                     |
+| uri       | http://dbpedia.org/resource/Guido_Mina_di_Sospiro             |
+| uri       | http://dbpedia.org/resource/Adolfo_Bioy_Casares               |
+| uri       | http://dbpedia.org/resource/Alberto_Manguel                   |
+| uri       | http://dbpedia.org/resource/Ana_María_Shua                    |
+| uri       | http://dbpedia.org/resource/Marta_Traba                       |
+| uri       | http://dbpedia.org/resource/Marcelo_Birmajer                  |
+| uri       | http://dbpedia.org/resource/Vicente_Fidel_López               |
+| uri       | http://dbpedia.org/resource/Marcela_Iacub                     |
+| uri       | http://dbpedia.org/resource/Conrado_Nalé_Roxlo                |
+| uri       | http://dbpedia.org/resource/Humberto_Costantini               |
+| uri       | http://dbpedia.org/resource/Gonzalo_Garcés                    |
+| uri       | http://dbpedia.org/resource/Luis_Barragán_(painter)           |
+| uri       | http://dbpedia.org/resource/Luisa_Peluffo                     |
+| uri       | http://dbpedia.org/resource/Inés_Fernández_Moreno             |
+| uri       | http://dbpedia.org/resource/J._Rodolfo_Wilcock                |
+| uri       | http://dbpedia.org/resource/José_María_Rosa                   |
+| uri       | http://dbpedia.org/resource/Carlos_Bernardo_González_Pecotche |
+| uri       | http://dbpedia.org/resource/Carlos_Lousto                     |
+| uri       | http://dbpedia.org/resource/Carlos_Petroni                    |
+| uri       | http://dbpedia.org/resource/José_María_Ramos_Mejía            |
+| uri       | http://dbpedia.org/resource/José_Rivera_Indarte               |
+| uri       | http://dbpedia.org/resource/Enrique_Anderson_Imbert           |
+| uri       | http://dbpedia.org/resource/Perla_Suez                        |
+| uri       | http://dbpedia.org/resource/Alicia_Ghiragossian               |
+| uri       | http://dbpedia.org/resource/Marcos_Aguinis                    |
+| uri       | http://dbpedia.org/resource/Felipe_Pigna                      |
+| uri       | http://dbpedia.org/resource/Lohana_Berkins                    |
+| uri       | http://dbpedia.org/resource/Homero_Manzi                      |
+| uri       | http://dbpedia.org/resource/Mario_Markic                      |
+| uri       | http://dbpedia.org/resource/Ricardo_Romero_(writer)           |
+| uri       | http://dbpedia.org/resource/César_Aira                        |
+| uri       | http://dbpedia.org/resource/María_Elena_Walsh                 |
+| uri       | http://dbpedia.org/resource/Raúl_Scalabrini_Ortiz             |
+| uri       | http://dbpedia.org/resource/Emma_de_Cartosio                  |
+| uri       | http://dbpedia.org/resource/Martina_Iñíguez                   |
+| uri       | http://dbpedia.org/resource/Claudia_Amengual                  |
+| uri       | http://dbpedia.org/resource/Delmira_Agustini                  |
+| uri       | http://dbpedia.org/resource/José_Enrique_Rodó                 |
+| uri       | http://dbpedia.org/resource/Juan_Carlos_Onetti                |
+| uri       | http://dbpedia.org/resource/Julio_Herrera_y_Reissig           |
+| uri       | http://dbpedia.org/resource/Jorge_Ruffinelli                  |
+| uri       | http://dbpedia.org/resource/Marcos_Sastre                     |
+| uri       | http://dbpedia.org/resource/Manuel_Pérez_y_Curis              |
+| uri       | http://dbpedia.org/resource/Esther_de_Cáceres                 |
+| uri       | http://dbpedia.org/resource/Mario_Benedetti                   |
+| uri       | http://dbpedia.org/resource/Gabriel_Pombo                     |
+| uri       | http://dbpedia.org/resource/Jules_Supervielle                 |
+| uri       | http://dbpedia.org/resource/Daniel_Chavarría                  |
+| uri       | http://dbpedia.org/resource/Daniel_Mella                      |
+| uri       | http://dbpedia.org/resource/Ida_Vitale                        |
+| uri       | http://dbpedia.org/resource/Jorge_Majfud                      |
+| uri       | http://dbpedia.org/resource/Adela_Castell                     |
+| uri       | http://dbpedia.org/resource/Jorge_Medina_Vidal                |
+| uri       | http://dbpedia.org/resource/Hugo_Burel                        |
+| uri       | http://dbpedia.org/resource/Alberto_Methol_Ferré              |
+| uri       | http://dbpedia.org/resource/Eduardo_Acevedo_Díaz              |
+| uri       | http://dbpedia.org/resource/Eduardo_Galeano                   |
+| uri       | http://dbpedia.org/resource/Laura_Canoura                     |
+| uri       | http://dbpedia.org/resource/Comte_de_Lautréamont              |
+| uri       | http://dbpedia.org/resource/Eduardo_Cuitiño                   |
+| uri       | http://dbpedia.org/resource/Natalia_Mardero                   |
+| uri       | http://dbpedia.org/resource/Circe_Maia                        |
+| uri       | http://dbpedia.org/resource/Gloria_Escomel                    |
+| uri       | http://dbpedia.org/resource/Juan_Carlos_Mondragón             |
+| uri       | http://dbpedia.org/resource/Jules_Laforgue                    |
+| uri       | http://dbpedia.org/resource/Carlos_Rehermann                  |
+| uri       | http://dbpedia.org/resource/Carlos_Vaz_Ferreira               |
+| uri       | http://dbpedia.org/resource/Carmen_Novoa                      |
+| uri       | http://dbpedia.org/resource/Carmen_Posadas                    |
+| uri       | http://dbpedia.org/resource/Matilde_Bianchi                   |
+| uri       | http://dbpedia.org/resource/Hipólito_da_Costa                 |
+| uri       | http://dbpedia.org/resource/Luisa_Luisi                       |
+
 
 ## Ejercicio 3: Llegó Wikidata
 Acceda al sitio oficial del proyecto Wikidata: https://www.wikidata.org y leyendo la documentación responda las siguientes preguntas.
@@ -60,6 +500,8 @@ Los datos se obtienen de las siguientes fuentes:
 
 Cuando entramos a la url del recurso (https://es.wikipedia.org/wiki/Universidad_Nacional_de_La_Plata), en la seccion inferior podemos encontrar una seccion "Control de Autoridades" donde se encuentra el link a Wikidata (https://www.wikidata.org/wiki/Q784171).
 
+![seccion-control-autoridades](ubicacion_url_wikidata.png) 
+
 5. _¿Que diferencias y similitudes encuentra con DBpedia?_
 
 Estas son algunas de las principales diferencias para destacar:
@@ -69,5 +511,82 @@ Estas son algunas de las principales diferencias para destacar:
 - **Notabilidad**: DBpedia hereda el sentido de "notoriedad" blanco, occidental y masculino de Wikipedia, mientras que Wikidata no tiene reglas de notoriedad (todavía, y las Wikipedias pueden optar por no incluir información de Wikidata que no crean que califique como "notable")
 
 ## Ejercicio 4: Consultas en Wikidata
-1. Adapte las queries que construyo en los puntos c y d del ejercicio anterior en el endpoint de Wikidata. (https://query.wikidata.org). ¿Obtuvo resultados diferentes? Si la respuesta es si, ¿a que se deben?
-2. Realice una mapa en la que sea posible visualizar los autódromos que se encuentran en una ciudad que esté a mas de 600 metros sobre el nivel del mar.
+1. _Adapte las queries que construyo en los puntos c y d del ejercicio anterior en el endpoint de Wikidata. (https://query.wikidata.org). ¿Obtuvo resultados diferentes? Si la respuesta es si, ¿a que se deben?_
+
+```sparql
+# escritores que hayan nacido en una ciudad de Argentina o de Uruguay usando filter
+SELECT ?item ?itemLabel
+WHERE
+{
+  ?item wdt:P31 wd:Q5. # instanceof human
+  ?item wdt:P106 wd:Q36180. # occupation writer
+  ?item wdt:P19 ?lugar. # placeOfBirth 
+  ?lugar wdt:P31 wd:Q515. # instanceof city
+  ?lugar wdt:P17 ?pais. # country
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
+  FILTER(?pais = wd:Q414 || ?pais = wd:Q77) # argentina || uruguay
+}
+```
+
+```sparql
+# escritores que hayan nacido en una ciudad de Argentina o de Uruguay usando union
+SELECT * 
+WHERE
+{
+  {
+    SELECT ?item ?itemLabel
+    WHERE
+    {
+      ?item wdt:P31 wd:Q5. # instanceof human
+      ?item wdt:P106 wd:Q36180. # occupation writer
+      ?item wdt:P19 ?lugar. # placeOfBirth 
+      ?lugar wdt:P31 wd:Q515. # instanceof city
+      ?lugar wdt:P17 wd:Q414. # country argentina
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
+    }
+  }
+  UNION
+  {
+    SELECT ?item ?itemLabel
+    WHERE
+    {
+      ?item wdt:P31 wd:Q5. # instanceof human
+      ?item wdt:P106 wd:Q36180. # occupation writer
+      ?item wdt:P19 ?lugar. # placeOfBirth 
+      ?lugar wdt:P31 wd:Q515. # instanceof city
+      ?lugar wdt:P17 wd:Q77. # country uruguay
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
+    }
+  }
+}
+```
+A comparacion de las queries realizadas en dbpedia, estas devuelven un total de `1796` registros.
+Esto puede deberse no solo a que poseen estructuras de grafos distintas, sino que tambien wikidata posee la mayor parte de la wikipedia mientras que dbpedia no.
+
+2. _Realice una mapa en la que sea posible visualizar los autódromos que se encuentran en una ciudad que esté a mas de 600 metros sobre el nivel del mar._
+
+```sparql
+SELECT ?item ?itemLabel ?date 
+WHERE 
+{
+  ?item wdt:P31 wd:Q2338524. # instanceof motorsportRacingTrack
+  ?item wdt:P131 ?lugar. # located
+  ?lugar wdt:P31 wd:Q515. # instanceof city
+  ?lugar wdt:P2044 ?elevacion. # elevationAboveSeaLevel
+  OPTIONAL
+  {
+    ?lugar wdt:P571 ?date. # inception
+  }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
+  FILTER(?elevacion >= 600)
+}
+```
+
+| item                                     | itemLabel                    | date                 |
+| ---------------------------------------- | ---------------------------- | -------------------- |
+| http://www.wikidata.org/entity/Q867557   | Circuito de Albacete         |                      |
+| http://www.wikidata.org/entity/Q173099   | Autódromo Hermanos Rodríguez | 1521-08-23T00:00:00Z |
+| http://www.wikidata.org/entity/Q4827227  | Autódromo Jorge Ángel Pena   |                      |
+| http://www.wikidata.org/entity/Q12156002 | Autódromo Las Vizcachas      | 1898-01-01T00:00:00Z |
+
+Solo las dos primeras se mostraran en el timeline ya que son las unicas con fechas de inauguracion.
