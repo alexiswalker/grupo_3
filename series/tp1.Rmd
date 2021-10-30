@@ -60,11 +60,11 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ```{r message=FALSE}
-paquetes <- c("readr", "tidyverse", "showtext", "forecast", "gridExtra", 
+paquetes <- c("readr", "tidyverse", "showtext", "forecast", "gridExtra",
               "tseries", "tsibble")
 
 #, "gridExtra", "kableExtra", "tseries", "xts",
-#              , "ggfortify", "lessR", "fable", "tsibble", 
+#              , "ggfortify", "lessR", "fable", "tsibble",
 #              "tibbletime"
 
 instalados <- paquetes %in% rownames(installed.packages())
@@ -76,7 +76,7 @@ if (any(instalados == FALSE)) {
 invisible(lapply(paquetes, library, character.only = TRUE))
 
 
-source("Funciones.R") 
+source("Funciones.R")
 ```
 
 ```{r}
@@ -87,7 +87,6 @@ theme_set(theme_bw())
 
 ```{r}
 #TODO
-
 showtext_auto()
 ```
 
@@ -100,17 +99,17 @@ raw_data <- read_csv(
 ```
 
 ```{r}
-indice_precios_consumidor <- raw_data %>% 
+indice_precios_consumidor <- raw_data %>%
   select(fecha, indice_precios_consumidor_acumulada)
 
 indice_salarios <- raw_data %>%
   select(fecha, indice_salarios_acumulada)
 
 ts_indice_precios_consumidor <- indice_precios_consumidor$indice_precios_consumidor_acumulada %>%
-  ts(frequency = 12, start = c(2017,01))
+  ts(frequency = 12, start = c(2017, 01))
 
 ts_indice_salarios <- indice_salarios$indice_salarios_acumulada %>%
-  ts(frequency = 12, start = c(2017,01))
+  ts(frequency = 12, start = c(2017, 01))
 ```
 
 # Introducción
@@ -146,10 +145,10 @@ ggplot(raw_data, aes(x = fecha)) +
 
 ```{r}
 indice_precios_consumidor_ndiffs <- ndiffs(ts_indice_precios_consumidor)
-indice_salarios_ndiffs <-ndiffs(ts_indice_salarios)
+indice_salarios_ndiffs <- ndiffs(ts_indice_salarios)
 
 indice_precios_consumidor_nsdiffs <- nsdiffs(ts_indice_precios_consumidor)
-indice_salarios_nsdiffs <-nsdiffs(ts_indice_salarios)
+indice_salarios_nsdiffs <- nsdiffs(ts_indice_salarios)
 ```
 hay que eliminar la tendencia y la estacionalidad de la serie para que pueda ser estacionaria.
 
@@ -164,7 +163,9 @@ número de diferenciaciones estacionales: `r indice_precios_consumidor_nsdiffs`
 Después de diferenciar gráfico x
 
 ```{r fig.cap="Índice de precio al consumidor y su tendencia", fig.height=4, fig.width=10}
-dif_ts_indice_precios_consumidor <- ts_indice_precios_consumidor %>% diff(1) %>% diff(1)
+dif_ts_indice_precios_consumidor <- ts_indice_precios_consumidor %>%
+  diff(1) %>%
+  diff(1)
 
 dif_indice_precios_consumidor <- data.frame(
   indice_precios_consumidor = as.vector(dif_ts_indice_precios_consumidor),
@@ -189,7 +190,7 @@ número de diferenciaciones estacionales: `r indice_salarios_nsdiffs`
 
 
 ```{r fig.cap="Índice de Salarios y su tendencia", fig.height=4, fig.width=10}
-dif_ts_indice_salarios = ts_indice_salarios %>% diff(1)
+dif_ts_indice_salarios <- ts_indice_salarios %>% diff(1)
 
 dif_indice_salarios <- data.frame(
   indice_salarios = as.vector(dif_ts_indice_salarios),
@@ -226,7 +227,9 @@ ggplot(dif_indice_salarios, aes(x = fecha, y = indice_salarios)) +
 ### Índice de precios al consumidor
 
 ```{r fig.cap="Funciones", fig.height=5, fig.width=10, warning=FALSE}
-decompose_plot <- dif_ts_indice_precios_consumidor %>% decompose(type = 'additive') %>% autoplot(ts.colour = 'steelblue')
+decompose_plot <- dif_ts_indice_precios_consumidor %>%
+  decompose(type = "additive") %>%
+  autoplot(ts.colour = "steelblue")
 decompose_plot + xlab("Tiempo") + ggtitle("Descoposición aditiva")
 ```
 
@@ -235,7 +238,9 @@ decompose_plot + xlab("Tiempo") + ggtitle("Descoposición aditiva")
 ### Índice de Salarios
 
 ```{r fig.cap="Funciones", fig.height=5, fig.width=10, warning=FALSE}
-decompose_plot <- dif_ts_indice_salarios %>% decompose(type = 'additive') %>% autoplot(ts.colour = 'steelblue')
+decompose_plot <- dif_ts_indice_salarios %>%
+  decompose(type = "additive") %>%
+  autoplot(ts.colour = "steelblue")
 decompose_plot + xlab("Tiempo") + ggtitle("Descoposición aditiva")
 ```
 
@@ -277,11 +282,11 @@ grid.arrange(acf_plot, pacf_plot, nrow = 2)
 
 ```{r}
 Box.test(dif_ts_indice_precios_consumidor, lag = 1, type = "Box-Pierce")
-Box.test(dif_ts_indice_precios_consumidor, lag = 1,type = "Ljung-Box")
+Box.test(dif_ts_indice_precios_consumidor, lag = 1, type = "Ljung-Box")
 #white noise
 
 Box.test(dif_ts_indice_salarios, lag = 1, type = "Box-Pierce")
-Box.test(dif_ts_indice_salarios, lag = 1,type = "Ljung-Box")
+Box.test(dif_ts_indice_salarios, lag = 1, type = "Ljung-Box")
 # no white noise
 #
 # 
@@ -326,7 +331,7 @@ residuos <- resid(modelo)
 ### Estimación
 
 ```{r}
-modelo <- arma(ts_indice_salarios , order = c(1, 5), include.intercept = T)
+modelo <- arma(ts_indice_salarios, order = c(1, 5), include.intercept = T)
 
 coef(modelo)
 
@@ -347,16 +352,16 @@ residuos <- resid(modelo)
 
 ```{r}
 train_data <- dif_ts_indice_precios_consumidor %>%
-  as_tsibble() %>% 
-  filter_index(~ '2020-12')
+  as_tsibble() %>%
+  filter_index(~ "2020-12")
 
 test_data <- dif_ts_indice_precios_consumidor %>%
-  as_tsibble() %>% 
-  filter_index('2021-01' ~ '2021-07')
+  as_tsibble() %>%
+  filter_index("2021-01" ~ "2021-07")
 ```
 
 ```{r}
-# forecast_data <- train_data %>% 
+# forecast_data <- train_data %>%
 #   model(arima = ARIMA(value), arima210 = ARIMA(value ~ pdq(3,2,0))) %>%
 #   forecast(h = 7) %>%
 #   rename(model = .model, mean = .mean)
