@@ -581,29 +581,26 @@ Esto puede deberse no solo a que poseen estructuras de grafos distintas, sino qu
 2. _Realice una mapa en la que sea posible visualizar los autódromos que se encuentran en una ciudad que esté a mas de 600 metros sobre el nivel del mar._
 
 ```sparql
-SELECT ?item ?itemLabel ?date 
+SELECT ?item ?itemLabel ?geo
 WHERE 
 {
   ?item wdt:P31 wd:Q2338524. # instanceof motorsportRacingTrack
   ?item wdt:P131 ?lugar. # located
+  ?item wdt:P625 ?geo. # coordinateLocation
   ?lugar wdt:P31 wd:Q515. # instanceof city
   ?lugar wdt:P2044 ?elevacion. # elevationAboveSeaLevel
-  OPTIONAL
-  {
-    ?lugar wdt:P571 ?date. # inception
-  }
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
   FILTER(?elevacion >= 600)
 }
 ```
 
-| item                                     | itemLabel                    | date                 |
-| ---------------------------------------- | ---------------------------- | -------------------- |
-| http://www.wikidata.org/entity/Q867557   | Circuito de Albacete         |                      |
-| http://www.wikidata.org/entity/Q173099   | Autódromo Hermanos Rodríguez | 1521-08-23T00:00:00Z |
-| http://www.wikidata.org/entity/Q4827227  | Autódromo Jorge Ángel Pena   |                      |
-| http://www.wikidata.org/entity/Q12156002 | Autódromo Las Vizcachas      | 1898-01-01T00:00:00Z |
+| item                                     | itemLabel                    | geo                               |
+| ---------------------------------------- | ---------------------------- | --------------------------------- |
+| http://www.wikidata.org/entity/Q867557   | Circuito de Albacete         | Point(-1.79416667 39.00638889)    |
+| http://www.wikidata.org/entity/Q4827227  | Autódromo Jorge Ángel Pena   | Point(-68.49741667 -33.05983333)  |
+| http://www.wikidata.org/entity/Q12156002 | Autódromo Las Vizcachas      | Point(-70.52263333 -33.60229167)  |
+| http://www.wikidata.org/entity/Q173099   | Autódromo Hermanos Rodríguez | Point(-99.088747222 19.404197222) |
 
-Solo las dos primeras se mostraran en el timeline ya que son las unicas con fechas de inauguracion.
+Y en el mapa:
 
-![histropedia](histropedia.PNG)
+![mapa](mapa.png)
