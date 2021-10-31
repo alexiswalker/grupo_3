@@ -52,6 +52,7 @@ output:
 \newpage
 
 \thispagestyle{empty}
+\setcounter{tocdepth}{4}
 \tableofcontents
 \newpage
 
@@ -99,22 +100,20 @@ incorrelation <- function(ts, type = c("Ljung-Box","Box-Pierce"), fitdf = 0){
   return(table)
 }
 
-aic_matrix <- function(ts, p.order = 1, q.order = 1){
-  
+aic_grid_search <- function(ts, p = 1, q = 1){
   require(forecast)
-  
-  aic_matrix = matrix(data = NA, nrow = p.order, ncol = q.order)
-  for(i in 0:p.order){
-    for(j in 0:q.order){
-      aic = arima(ts,order = c(i,0,j))$aic
-      aic_matrix[i,j] = aic
-    }
-  }
-  rownames(aic_matrix) = c(1:p.order)
-  colnames(aic_matrix) = c(1:q.order)
-  
-  return(aic_matrix)
+  expand.grid(0:p, 0:q) %>% 
+    rename(p = Var1, q = Var2) %>%
+    mutate(aic = map2_dbl(p, q, function(p, q){AIC(arima(ts, order = c(p,0,q)))}))
 }
+
+bic_grid_search <- function(ts, p = 1, q = 1){
+  require(forecast)
+  expand.grid(0:p, 0:q) %>% 
+    rename(p = Var1, q = Var2) %>%
+    mutate(bic = map2_dbl(p, q, function(p, q){BIC(arima(ts, order = c(p,0,q)))}))
+}
+
 
 ```
 
@@ -134,10 +133,10 @@ indice_salarios <- raw_data %>%
   select(fecha, indice_salarios_acumulada)
 
 ts_indice_precios_consumidor <- indice_precios_consumidor$indice_precios_consumidor_acumulada %>%
-  ts(frequency = 12, start = c(2017, 01))
+  ts(frequency = 12, start = c(2016, 12))
 
 ts_indice_salarios <- indice_salarios$indice_salarios_acumulada %>%
-  ts(frequency = 12, start = c(2017, 01))
+  ts(frequency = 12, start = c(2016, 12))
 ```
 
 # Introducción
@@ -292,87 +291,116 @@ par(old_par_setting)
 
 ## Modelos
 
-### Estimación
+### Índice de precios al consumidor
 
-```{r}
-aic_matrix(dif_ts_indice_precios_consumidor, 5, 5)
+#### Estimación
 
-modelo <- arima(dif_ts_indice_precios_consumidor,order = c(1,0,1))
-modelo <- arima(dif_ts_indice_precios_consumidor,order = c(6,1,0))
+```{r warning=FALSE, fig.cap="Criterios de Información", fig.height=5, fig.width=10}
 
-coef(modelo)
+aic_data <- aic_grid_search(dif_ts_indice_precios_consumidor, 5, 5)
 
-summary(modelo)
+aic_plot <- ggplot(aic_data, aes(p, q)) + # x and y axes => Var1 and Var2
+  geom_tile(aes(fill = aic)) + # background colours are mapped according to the value column
+  geom_text(aes(fill = aic, label = round(aic, 2))) +
+  ggtitle("AIC")
+
+bic_data <- bic_grid_search(dif_ts_indice_precios_consumidor, 5, 5)
+
+bic_plot <- ggplot(bic_data, aes(p, q)) + # x and y axes => Var1 and Var2
+  geom_tile(aes(fill = bic)) + # background colours are mapped according to the value column
+  geom_text(aes(fill = bic, label = round(bic, 2)))  +
+  ggtitle("BIC")
+
+grid.arrange(aic_plot, bic_plot, ncol=2)
 
 ```
 
 ```{r}
-aic_matrix(dif_ts_indice_salarios, 3, 3)
+train_data <- window(dif_ts_indice_precios_consumidor, end= c(2020, 12))
 
-modelo <- arima(dif_ts_indice_salarios, order = c(1,0,2))
-
-coef(modelo)
-
-summary(modelo)
+test_data <- window(dif_ts_indice_precios_consumidor, start= c(2021, 01))
 ```
+#### Métrica de performance
 
-### Análisis de los Residuos
+#### Comparación
+
+
+#### Análisis de Diagnóstico
 
 ```{r}
-
-residuos <- resid(modelo)
-
+#residuos <- resid(modelo)
 #Histogram(residuos,density = T)
-
 ```
 
-
-
-### Estimación
+#### Pronóstico
 
 ```{r}
-modelo <- arma(ts_indice_salarios, order = c(1, 5), include.intercept = T)
-
-coef(modelo)
-
-summary(modelo)
-
-```
+modelo <- arima(train_data, order = c(1,0,1))
 
 
-### Análisis de los Residuos
-```{r}
-residuos <- resid(modelo)
-
-#Histogram(residuos,density = T)
-
-
-```
-
-
-```{r}
-train_data <- dif_ts_indice_precios_consumidor %>%
-  as_tsibble() %>%
-  filter_index(~ "2020-12")
-
-test_data <- dif_ts_indice_precios_consumidor %>%
-  as_tsibble() %>%
-  filter_index("2021-01" ~ "2021-07")
-```
-
-```{r}
-# forecast_data <- train_data %>%
-#   model(arima = ARIMA(value), arima210 = ARIMA(value ~ pdq(3,2,0))) %>%
-#   forecast(h = 7) %>%
-#   rename(model = .model, mean = .mean)
-```
-
-
-```{r fig.cap="Forecast", fig.height=4, fig.width=10}
+colors <- c("train" = "blue", "test" = "red", "forecast" = "orange")
 ggplot() +
-  geom_line(data = train_data, aes(x = index, y = value), color = "blue") +
-  geom_line(data = test_data, aes(x = index, y = value), color = "red3") +
-  #geom_line(data = forecast_data, aes(x = index, y = mean, color = model)) +
+  geom_line(data = as_tsibble(train_data), aes(x = index, y = value, color = "train")) +
+  geom_line(data = as_tsibble(test_data), aes(x = index, y = value, color = "test")) +
+  geom_line(data = as_tsibble(forecast(modelo, h = 7)$mean), aes(x = index, y = value, color = "forecast")) +
+  scale_color_manual(name = "", values = colors) +
+  labs(x = "Tiempo") +
+  ggtitle("Forecast")
+
+```
+
+### Índice de precios al consumidor
+
+#### Estimación
+
+```{r warning=FALSE, fig.cap="Criterios de Información", fig.height=5, fig.width=10}
+
+aic_data <- aic_grid_search(dif_ts_indice_salarios, 3, 3)
+
+aic_plot <- ggplot(aic_data, aes(p, q)) + # x and y axes => Var1 and Var2
+  geom_tile(aes(fill = aic)) + # background colours are mapped according to the value column
+  geom_text(aes(fill = aic, label = round(aic, 2))) +
+  ggtitle("AIC")
+
+bic_data <- bic_grid_search(dif_ts_indice_salarios, 3, 3)
+
+bic_plot <- ggplot(bic_data, aes(p, q)) + # x and y axes => Var1 and Var2
+  geom_tile(aes(fill = bic)) + # background colours are mapped according to the value column
+  geom_text(aes(fill = bic, label = round(bic, 2)))  +
+  ggtitle("BIC")
+
+grid.arrange(aic_plot, bic_plot, ncol=2)
+```
+```{r}
+train_data <- window(dif_ts_indice_salarios, end= c(2020, 12))
+
+test_data <- window(dif_ts_indice_salarios, start= c(2021, 01))
+```
+
+#### Métrica de performance
+
+#### Comparación
+
+
+#### Análisis de Diagnóstico
+
+```{r}
+residuos <- resid(modelo)
+#Histogram(residuos,density = T)
+```
+
+#### Pronóstico
+
+
+```{r}
+modelo <- auto.arima(train_data)
+
+colors <- c("train" = "blue", "test" = "red", "forecast" = "orange")
+ggplot() +
+  geom_line(data = as_tsibble(train_data), aes(x = index, y = value, color = "train")) +
+  geom_line(data = as_tsibble(test_data), aes(x = index, y = value, color = "test")) +
+  geom_line(data = as_tsibble(forecast(modelo, h = 7)$mean), aes(x = index, y = value, color = "forecast")) +
+  scale_color_manual(name = "", values = colors) +
   labs(x = "Tiempo") +
   ggtitle("Forecast")
 ```
