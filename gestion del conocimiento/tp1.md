@@ -26,7 +26,7 @@ El proyecto extrae conocimiento de 111 diferentes ediciones lingüísticas de Wi
 
 Las partes de los articulos que se transforman en tripletas son los "infoboxes". La idea de estos infoboxes es que sean usados para mostrar los hechos mas importantes de un articulo en un formato de clave/valor. Existen distintas plantillas por los cuales son generados, por lo que esto simplifica la extraccion de la informacion.
 
-TODO: esto que viene a continuacion difiere con el paper. el paper dice que los resources estan en dbr, pero la pagina ya no lo muestra.
+> TODO: esto que viene a continuacion difiere con el paper. el paper dice que los resources estan en dbr, pero la pagina ya no lo muestra.
 
 DBpedia posee su ontologia en el prefijo `dbo`. Tambien posee los prefijos `dbp` y `dbd` para properties y datatypes respectivamente.
 Para los recursos, los prefijos inician con `dbpedia-` y continua con el idioma, por ejemplo `dbpedia-es`.
