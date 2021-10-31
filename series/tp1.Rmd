@@ -322,8 +322,23 @@ test_data <- window(dif_ts_indice_precios_consumidor, start= c(2021, 01))
 ```
 #### Métrica de performance
 
+```{r}
+model_aic_bic <- arima(train_data, order = c(1,0,1))
+
+my_forecast <- forecast(model_aic_bic, h = length(test_data))
+
+accuracy_aic_bic <- accuracy(test_data, my_forecast$mean)  
+```
+
 #### Comparación
 
+```{r}
+auto_model <- auto.arima(train_data)
+
+my_forecast <- forecast(auto_model, h = length(test_data))
+
+acurracy_auto <- accuracy(test_data, my_forecast$mean)  
+```
 
 #### Análisis de Diagnóstico
 
@@ -335,21 +350,20 @@ test_data <- window(dif_ts_indice_precios_consumidor, start= c(2021, 01))
 #### Pronóstico
 
 ```{r}
-modelo <- arima(train_data, order = c(1,0,1))
 
-
-colors <- c("train" = "blue", "test" = "red", "forecast" = "orange")
+colors <- c("train" = "blue", "test" = "red", "forecast" = "orange", "auto" = "gray")
 ggplot() +
   geom_line(data = as_tsibble(train_data), aes(x = index, y = value, color = "train")) +
   geom_line(data = as_tsibble(test_data), aes(x = index, y = value, color = "test")) +
-  geom_line(data = as_tsibble(forecast(modelo, h = 7)$mean), aes(x = index, y = value, color = "forecast")) +
+  geom_line(data = as_tsibble(forecast(model_aic_bic, h = 7)$mean), aes(x = index, y = value, color = "forecast")) +
+  geom_line(data = as_tsibble(forecast(auto_model, h = 7)$mean), aes(x = index, y = value, color = "auto")) +
   scale_color_manual(name = "", values = colors) +
   labs(x = "Tiempo") +
   ggtitle("Forecast")
 
 ```
 
-### Índice de precios al consumidor
+### Índice de Salarios
 
 #### Estimación
 
@@ -379,8 +393,29 @@ test_data <- window(dif_ts_indice_salarios, start= c(2021, 01))
 
 #### Métrica de performance
 
+```{r}
+model_aic <- arima(train_data, order = c(1,0,2))
+
+my_forecast <- forecast(model_aic, h = length(test_data))
+
+accuracy_aic <- accuracy(test_data, my_forecast$mean)  
+
+model_bic <- arima(train_data, order = c(1,0,0))
+
+my_forecast <- forecast(model_bic, h = length(test_data))
+
+accuracy_bic <- accuracy(test_data, my_forecast$mean)  
+```
+
 #### Comparación
 
+```{r}
+auto_model <- auto.arima(train_data)
+
+my_forecast <- forecast(auto_model, h = length(test_data))
+
+accuracy_auto <- accuracy(test_data, my_forecast$mean)  
+```
 
 #### Análisis de Diagnóstico
 
@@ -395,11 +430,13 @@ residuos <- resid(modelo)
 ```{r}
 modelo <- auto.arima(train_data)
 
-colors <- c("train" = "blue", "test" = "red", "forecast" = "orange")
+colors <- c("train" = "blue", "test" = "red", "aic" = "orange", "bic" = "gray", "auto" = "black")
 ggplot() +
   geom_line(data = as_tsibble(train_data), aes(x = index, y = value, color = "train")) +
   geom_line(data = as_tsibble(test_data), aes(x = index, y = value, color = "test")) +
-  geom_line(data = as_tsibble(forecast(modelo, h = 7)$mean), aes(x = index, y = value, color = "forecast")) +
+  geom_line(data = as_tsibble(forecast(model_aic, h = 7)$mean), aes(x = index, y = value, color = "aic")) +
+  geom_line(data = as_tsibble(forecast(model_bic, h = 7)$mean), aes(x = index, y = value, color = "bic")) +
+  geom_line(data = as_tsibble(forecast(auto_model, h = 7)$mean), aes(x = index, y = value, color = "auto")) +
   scale_color_manual(name = "", values = colors) +
   labs(x = "Tiempo") +
   ggtitle("Forecast")
