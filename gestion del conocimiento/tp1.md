@@ -601,6 +601,6 @@ WHERE
 | http://www.wikidata.org/entity/Q12156002 | Autódromo Las Vizcachas      | Point(-70.52263333 -33.60229167)  |
 | http://www.wikidata.org/entity/Q173099   | Autódromo Hermanos Rodríguez | Point(-99.088747222 19.404197222) |
 
-Y en el mapa:
+Y en el mapa (agregando: #defaultView:Map en la primera línea de la consulta):
 
 ![mapa](mapa.png)
