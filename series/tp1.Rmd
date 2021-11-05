@@ -337,7 +337,7 @@ metrics_aic_bic <- accuracy_aic_bic %>%
 
 metrics_aic_bic %>%
   kable(booktabs = T, caption = "Métricas", digits = 3) %>%
-  kable_styling(latex_options = c("striped"))
+  kable_styling(latex_options = c("striped", "hold_position"))
 ```
 
 
@@ -358,7 +358,7 @@ metrics_auto <- acurracy_auto %>%
 
 rbind(metrics_aic_bic, metrics_auto) %>%
   kable(booktabs = T, caption = "Métricas", digits = 3) %>%
-  kable_styling(latex_options = c("striped"))
+  kable_styling(latex_options = c("striped", "hold_position"))
 ```
 
 
@@ -438,7 +438,7 @@ metrics_aic <- accuracy_aic %>%
 
 metrics_aic %>%
   kable(booktabs = T, caption = "Mejor modelos según AIC", digits = 3) %>%
-  kable_styling(latex_options = c("striped"))
+  kable_styling(latex_options = c("striped", "hold_position"))
 ```
 
 ```{r}
@@ -448,7 +448,7 @@ metrics_bic <- accuracy_bic %>%
 
 metrics_bic %>%
   kable(booktabs = T, caption = "Mejor modelos según BIC", digits = 3) %>%
-  kable_styling(latex_options = c("striped"))
+  kable_styling(latex_options = c("striped", "hold_position"))
 ```
 
 #### Comparación
@@ -468,7 +468,7 @@ metrics_auto <- acurracy_auto %>%
 
 rbind(metrics_aic, metrics_bic, metrics_auto) %>%
   kable(booktabs = T, caption = "Métricas", digits = 3) %>%
-  kable_styling(latex_options = c("striped"))
+  kable_styling(latex_options = c("striped", "hold_position"))
 ```
 
 #### Análisis de Diagnóstico
