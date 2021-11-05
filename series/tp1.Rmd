@@ -62,7 +62,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```{r message=FALSE}
 paquetes <- c("readr", "tidyverse", "showtext", "forecast", "gridExtra",
-              "tseries", "tsibble")
+              "tseries", "tsibble", "kableExtra")
 
 #, "gridExtra", "kableExtra", "tseries", "xts",
 #              , "ggfortify", "lessR", "fable", "tsibble",
@@ -113,8 +113,6 @@ bic_grid_search <- function(ts, p = 1, q = 1){
     rename(p = Var1, q = Var2) %>%
     mutate(bic = map2_dbl(p, q, function(p, q){BIC(arima(ts, order = c(p,0,q)))}))
 }
-
-
 ```
 
 <!-- datos -->
@@ -329,8 +327,19 @@ model_aic_bic <- arima(train_data, order = c(1,0,1))
 
 my_forecast <- forecast(model_aic_bic, h = length(test_data))
 
-accuracy_aic_bic <- accuracy(test_data, my_forecast$mean)  
+accuracy_aic_bic <- accuracy(test_data, my_forecast$mean)
 ```
+
+```{r}
+metrics_aic_bic <- accuracy_aic_bic %>%
+  as_tibble() %>%
+  add_column(Modelo = "arima(order = c(1, 0, 1))", .before = "ME")
+
+metrics_aic_bic %>%
+  kable(booktabs = T, caption = "Métricas", digits = 3) %>%
+  kable_styling(latex_options = c("striped"))
+```
+
 
 #### Comparación
 
@@ -339,8 +348,19 @@ auto_model <- auto.arima(train_data)
 
 my_forecast <- forecast(auto_model, h = length(test_data))
 
-acurracy_auto <- accuracy(test_data, my_forecast$mean)  
+acurracy_auto <- accuracy(test_data, my_forecast$mean)
 ```
+
+```{r}
+metrics_auto <- acurracy_auto %>%
+  as_tibble() %>%
+  add_column(Modelo = "ARIMA(1,0,1)", .before = "ME")
+
+rbind(metrics_aic_bic, metrics_auto) %>%
+  kable(booktabs = T, caption = "Métricas", digits = 3) %>%
+  kable_styling(latex_options = c("striped"))
+```
+
 
 #### Análisis de Diagnóstico
 
@@ -402,13 +422,33 @@ model_aic <- arima(train_data, order = c(1,0,2))
 
 my_forecast <- forecast(model_aic, h = length(test_data))
 
-accuracy_aic <- accuracy(test_data, my_forecast$mean)  
+accuracy_aic <- accuracy(test_data, my_forecast$mean)
 
 model_bic <- arima(train_data, order = c(1,0,0))
 
 my_forecast <- forecast(model_bic, h = length(test_data))
 
 accuracy_bic <- accuracy(test_data, my_forecast$mean)  
+```
+
+```{r}
+metrics_aic <- accuracy_aic %>%
+  as_tibble() %>%
+  add_column(Modelo = "arima(order = c(1, 0, 2))", .before = "ME")
+
+metrics_aic %>%
+  kable(booktabs = T, caption = "Mejor modelos según AIC", digits = 3) %>%
+  kable_styling(latex_options = c("striped"))
+```
+
+```{r}
+metrics_bic <- accuracy_bic %>%
+  as_tibble() %>%
+  add_column(Modelo = "arima(order = c(1, 0, 0))", .before = "ME")
+
+metrics_bic %>%
+  kable(booktabs = T, caption = "Mejor modelos según BIC", digits = 3) %>%
+  kable_styling(latex_options = c("striped"))
 ```
 
 #### Comparación
@@ -419,6 +459,16 @@ auto_model <- auto.arima(train_data)
 my_forecast <- forecast(auto_model, h = length(test_data))
 
 accuracy_auto <- accuracy(test_data, my_forecast$mean)  
+```
+
+```{r}
+metrics_auto <- acurracy_auto %>%
+  as_tibble() %>%
+  add_column(Modelo = "ARIMA(1,0,0)(1,0,0)[12]", .before = "ME")
+
+rbind(metrics_aic, metrics_bic, metrics_auto) %>%
+  kable(booktabs = T, caption = "Métricas", digits = 3) %>%
+  kable_styling(latex_options = c("striped"))
 ```
 
 #### Análisis de Diagnóstico
