@@ -406,11 +406,15 @@ Ambos análisis conducen al mismo resultado.
 
 #### Análisis de Diagnóstico
 
-```{r fig.cap="Residuos", fig.height=5, fig.width=10, warning=FALSE}
-ggtsdisplay(residuals(model_aic_bic_ipc), lag.max = 45, main = 'Residuos', plot.type = "histogram")
+Visualmente no se evidencia tendencia, por lo que se asumir que la media y varianza son constantes. El histograma (Fig. 10) muestra con comportamiento normal con media cero; lo que se corrobora a partir del test de Shapiro-Wilk con un p-value `r shapiro.test(residuals(auto_model_ipc))[["p.value"]]`. El gráfico de autocorrelación se asemeja al del ruido blanco: p-value `r Box.test(residuals(auto_model_ipc), lag = 1, type = "Ljung-Box", fitdf = 0)$p.value` del test Ljung-Box con lag igual a 1.
+
+```{r fig.cap="Residuos", fig.height=5, fig.width=10, warning=FALSE, fig.pos="H"}
+ggtsdisplay(residuals(auto_model_ipc), lag.max = 24, main = 'Residuos', plot.type = "histogram")
 ```
 
 #### Pronóstico
+
+Se comparan los modelos analizados en una prueba de pronóstico.
 
 ```{r fig.cap="Pronóstico", fig.height=4, fig.width=10}
 
