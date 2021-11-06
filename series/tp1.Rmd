@@ -87,6 +87,16 @@ theme_set(theme_bw())
 #TODO
 showtext_auto()
 
+plot_acf_pacf <- function(time_serie){
+  p_acf <- ggAcf(time_serie, type = "correlation") +
+    ggtitle("Autocorrelación") + labs(y = "Autocorrelación")
+  
+  p_pacf <- ggAcf(time_serie, type = "partial") +
+    ggtitle("Autocorrelación Parcial") + labs(y = "Autocorrelación Parcial" )
+  
+  grid.arrange(p_acf, p_pacf, ncol=2)
+}
+
 incorrelation <- function(ts, type = c("Ljung-Box","Box-Pierce"), fitdf = 0){
   p_ljung_box = NULL
   s_ljung_box = NULL
@@ -94,9 +104,9 @@ incorrelation <- function(ts, type = c("Ljung-Box","Box-Pierce"), fitdf = 0){
     p_ljung_box[i] = Box.test(ts, lag = i, type = type, fitdf = fitdf)$p.value
     s_ljung_box[i] = Box.test(ts, lag = i, type = type, fitdf = fitdf)$statistic
   }
-  table = data.frame(j = 1:(length(ts)/4),
-                     P_Value = p_ljung_box,
-                     Statistic = s_ljung_box)
+  table = data.frame(lag = 1:(length(ts)/4),
+                     pvalue = p_ljung_box,
+                     estadístico = s_ljung_box)
   return(table)
 }
 
@@ -104,14 +114,14 @@ aic_grid_search <- function(ts, p = 1, q = 1){
   require(forecast)
   expand.grid(0:p, 0:q) %>% 
     rename(p = Var1, q = Var2) %>%
-    mutate(aic = map2_dbl(p, q, function(p, q){AIC(arima(ts, order = c(p,0,q)))}))
+    mutate(aic = map2_dbl(p, q, function(p, q){AIC(arima(ts, order = c(p,0,q), include.mean = F))}))
 }
 
 bic_grid_search <- function(ts, p = 1, q = 1){
   require(forecast)
   expand.grid(0:p, 0:q) %>% 
     rename(p = Var1, q = Var2) %>%
-    mutate(bic = map2_dbl(p, q, function(p, q){BIC(arima(ts, order = c(p,0,q)))}))
+    mutate(bic = map2_dbl(p, q, function(p, q){BIC(arima(ts, order = c(p,0,q), include.mean = F))}))
 }
 ```
 
@@ -139,17 +149,9 @@ ts_indice_salarios <- indice_salarios$indice_salarios_acumulada %>%
 
 # Introducción
 
-perdida de poder adquisitivo de los salarios frente a la inflación - ampliar
+Perdida de poder adquisitivo de los salarios frente a la inflación - ampliar
 
-\lipsum[1]
-
-\newpage
-
-# Marco Teórico (acá deberán escribir los modelos)
-
-\lipsum[1]
-
-```{r fig.cap="Inflación versus Salarios", fig.height=4, fig.width=10}
+```{r fig.cap="Inflación versus Salarios", fig.height=4, fig.width=10, fig.pos="H"}
 ggplot(raw_data, aes(x = fecha)) +
   geom_line(aes(y = indice_precios_consumidor_acumulada), color = "red3") +
   geom_line(aes(y = indice_salarios_acumulada), color = "steelblue") +
@@ -164,32 +166,38 @@ ggplot(raw_data, aes(x = fecha)) +
   ggtitle("Inflación versus Salarios")
 ```
 
-\lipsum[2]
-
 \newpage
 
-## Diferenciación 
+# Marco Teórico
+
+Ambas series temporales exhiben una marcada tendencia creciente que hace suponer una media también creciente en el tiempo, por lo que es probable que el proceso estocástico que la ha generado no sea estacionario en media.
+
+## Estacionariedad
+
+A fin de mejorar la normalidad de los datos se analiza la tendencia y estacionalidad. La diferenciación es el instrumento que permite eliminar estos componentes para conseguir estacionariedad.
+
+### Índice de precios al consumidor
+
+Se puede observar en la gráfica de autocorrelación (Fig. 2) como la serie no es estacionaria ya que el valor de la función no decae de manera exponencial (se comportar como si se tratase de un camino aleatorio). También se aprecia que no parece existir un componente estacional.
+
+```{r fig.cap="Índice de precios al consumidor", fig.height=3, fig.width=9, fig.pos="H"}
+plot_acf_pacf(ts_indice_precios_consumidor)
+```
 
 ```{r}
 indice_precios_consumidor_ndiffs <- ndiffs(ts_indice_precios_consumidor)
-indice_salarios_ndiffs <- ndiffs(ts_indice_salarios)
-
 indice_precios_consumidor_nsdiffs <- nsdiffs(ts_indice_precios_consumidor)
-indice_salarios_nsdiffs <- nsdiffs(ts_indice_salarios)
 ```
-hay que eliminar la tendencia y la estacionalidad de la serie para que pueda ser estacionaria.
 
-Al diferenciar la serie se consigue que ésta sea estacionaria, 
+Se estima el número de diferenciaciones regulares y estacionales que deberían llevarse a cabo para que la serie sea estacionaria.
 
-### Índice IPC
+- Número de diferenciaciones regulares: `r indice_precios_consumidor_ndiffs`
+- Número de diferenciaciones estacionales: `r indice_precios_consumidor_nsdiffs`
 
-número de diferenciaciones regulares: `r indice_precios_consumidor_ndiffs`
+Y se procese a su ejecución conforme el resultado sugerido.
 
-número de diferenciaciones estacionales: `r indice_precios_consumidor_nsdiffs`
 
-Después de diferenciar gráfico x
-
-```{r fig.cap="Índice de precio al consumidor y su tendencia", fig.height=3, fig.width=10}
+```{r fig.cap="Índice de precio al consumidor y su tendencia", fig.height=3, fig.width=9, fig.pos="H"}
 dif_ts_indice_precios_consumidor <- ts_indice_precios_consumidor %>%
   diff(1) %>%
   diff(1)
@@ -200,21 +208,61 @@ dif_indice_precios_consumidor <- data.frame(
 
 ggplot(dif_indice_precios_consumidor, aes(x = fecha, y = indice_precios_consumidor)) +
   geom_line(color = "steelblue") +
-  stat_smooth(method = "lm", col = "red3", formula = y ~ x + 0, size = 0.4, se = FALSE) +
+  stat_smooth(method = "lm", col = "red3", formula = y ~ x, size = 0.4, se = FALSE) +
   scale_y_continuous(name = "Índice de precio al consumidor") +
   labs(x = "Tiempo") +
   ggtitle("Índice de precio al consumidor")
 ```    
 
+Luego de presentar el resultado (Fig. 3) junto a un modelo lineal simple, se entiende que se ha conseguido estacionariedad en la media.
 
+```{r fig.cap="Índice de precios al consumidor", fig.height=3, fig.width=9, fig.pos="H"}
+plot_acf_pacf(dif_ts_indice_precios_consumidor)
+```
+
+Se repite el análisis de autocorrelaciones (Fig. 4), ahora el resultado tiene el comportamiento de un camino aleatorio diferenciado.
+
+Se formalizan las conclusiones realizando las prueblas Ljung-Box y, su versión simplificada, Box-Pierce.
+
+```{r warning=FALSE}
+i_box_pierce_indice_precios_consumidor <- incorrelation(dif_ts_indice_precios_consumidor,"Box-Pierce")
+i_ljung_box_indice_precios_consumidor <- incorrelation(dif_ts_indice_precios_consumidor, "Ljung-Box")
+
+test_data_indice_precios_consumidor <- merge(i_box_pierce_indice_precios_consumidor, i_ljung_box_indice_precios_consumidor, by="lag", suffixes = c("",""))
+
+test_data_indice_precios_consumidor %>%
+    kable(booktabs = T, caption = "Pruebas de autocorrelación", digits = 3) %>%
+    column_spec(2, color =  ifelse(test_data_indice_precios_consumidor[2] > 0.05, "blue", "black")) %>% 
+    column_spec(4, color =  ifelse(test_data_indice_precios_consumidor[4] > 0.05, "blue", "black")) %>% 
+    add_header_above(c(" " = 1, "Box-Pierce" = 2, "Ljung-Box" = 2)) %>%
+    kable_styling(latex_options = c("striped", "hold_position"), full_width = F, font_size = 7)
+```
+
+P-values significativos (Tabla 1) por lo que no se rechaza la hipótesis nula; las autocorrelaciones son igual a cero: se distribuyen de forma independiente. <esta bien?? :(>
 
 ### Índice de Salarios
 
-número de diferenciaciones regulares: `r indice_salarios_ndiffs`
+Se puede observar en la gráfica de autocorrelación (Fig. 5) que la serie de Índices de Salarios tiene el mismo comportamiento que la anterior.
 
-número de diferenciaciones estacionales: `r indice_salarios_nsdiffs`
+```{r fig.cap="Índice de Salarios", fig.height=3, fig.width=9, fig.pos="H"}
+plot_acf_pacf(ts_indice_salarios)
+```
 
-```{r fig.cap="Índice de Salarios y su tendencia", fig.height=3, fig.width=10}
+
+```{r}
+indice_salarios_ndiffs <- ndiffs(ts_indice_salarios)
+indice_salarios_nsdiffs <- nsdiffs(ts_indice_salarios)
+```
+
+
+Se estima el número de diferenciaciones regulares y estacionales que deberían llevarse a cabo para que la serie sea estacionaria.
+
+- Número de diferenciaciones regulares: `r indice_salarios_ndiffs`
+- Número de diferenciaciones estacionales: `r indice_salarios_nsdiffs`
+
+Y se procese a su ejecución conforme el resultado sugerido.
+
+```{r fig.cap="Índice de Salarios y su tendencia", fig.height=3, fig.width=9, fig.pos="H"}
 dif_ts_indice_salarios <- ts_indice_salarios %>% diff(1)
 
 dif_indice_salarios <- data.frame(
@@ -223,69 +271,55 @@ dif_indice_salarios <- data.frame(
 
 ggplot(dif_indice_salarios, aes(x = fecha, y = indice_salarios)) +
   geom_line(color = "steelblue") +
-  stat_smooth(method = "lm", col = "red3", formula = y ~ x + 0, size = 0.4, se = FALSE) +
+  stat_smooth(method = "lm", col = "red3", formula = y ~ x, size = 0.4, se = FALSE) +
   scale_y_continuous(name = "Índice de Salarios") +
   labs(x = "Tiempo") +
   ggtitle("Índice de Salarios")
 ```
 
+A pesar de la sugerencia del número de diferenciaciones, no parece eliminarse la tendencia (Fig. 6). Por lo que se repite el procedimiento una vez más.
+
+```{r fig.cap="Índice de Salarios y su tendencia", fig.height=3, fig.width=9, fig.pos="H"}
+dif_ts_indice_salarios <- ts_indice_salarios %>% diff(1) %>% diff(1)
+
+dif_indice_salarios <- data.frame(
+  indice_salarios = as.vector(dif_ts_indice_salarios),
+  fecha = indice_salarios$fecha[c(-1, -2)])
+
+ggplot(dif_indice_salarios, aes(x = fecha, y = indice_salarios)) +
+  geom_line(color = "steelblue") +
+  stat_smooth(method = "lm", col = "red3", formula = y ~ x, size = 0.4, se = FALSE) +
+  scale_y_continuous(name = "Índice de Salarios") +
+  labs(x = "Tiempo") +
+  ggtitle("Índice de Salarios")
+```
+
+El resultado (Fig. 7) junto a un modelo lineal simple, muestra la estacionariedad en la media.
+
+```{r fig.cap="Índice de precios al consumidor", fig.height=3, fig.width=9, fig.pos="H"}
+plot_acf_pacf(dif_ts_indice_salarios)
+```
+
+Se repite el análisis de autocorrelaciones (Fig. 8), ahora el resultado tiene el comportamiento de un camino aleatorio diferenciado.
+
+```{r warning=FALSE}
+i_box_pierce_indice_salario <- incorrelation(dif_ts_indice_salarios,"Box-Pierce")
+i_ljung_box_indice_salario <- incorrelation(dif_ts_indice_salarios, "Ljung-Box")
+
+test_data_indice_salario <- merge(i_box_pierce_indice_salario, i_ljung_box_indice_salario, by="lag", suffixes = c("",""))
+
+test_data_indice_salario %>%
+    kable(booktabs = T, caption = "Pruebas de autocorrelación", digits = 3) %>%
+    column_spec(2, color =  ifelse(test_data_indice_salario[2] > 0.05, "blue", "black")) %>% 
+    column_spec(4, color =  ifelse(test_data_indice_salario[4] > 0.05, "blue", "black")) %>% 
+    add_header_above(c(" " = 1, "Box-Pierce" = 2, "Ljung-Box" = 2)) %>%
+    kable_styling(latex_options = c("striped", "hold_position"), full_width = F, font_size = 7)
+```
+
+
+<que conclusión sacar?>
+
 \newpage
-
-## Funciones de autocorrelación y autocorrelación parcial
-
-### Índice de precios al consumidor
-
-```{r fig.cap="Índice de precios al consumidor", fig.height=5, fig.width=10}
-old_par_setting <- par(no.readonly = TRUE)
-
-par(mfrow=c(2,2))
-
-data <- as.vector(dif_ts_indice_precios_consumidor)
-
-acf(data, type = "correlation", main = "Función de Autocorrelación")
-acf(data, type = "partial", main = "Función de Autocorrelación Parcial")
-acf(data, type = "covariance", main = "Función de Autocovarianza")
-plot(dif_ts_indice_precios_consumidor, main = "Serie", xlab="Tiempo", ylab = "")
-
-par(old_par_setting)
-```
-
-### Índice de Salarios
-
-```{r fig.cap="Índice de Salarios", fig.height=5, fig.width=10}
-old_par_setting <- par(no.readonly = TRUE)
-
-par(mfrow=c(2,2))
-
-data <- as.vector(dif_ts_indice_salarios)
-
-acf(data, type = "correlation", main = "Función de Autocorrelación")
-acf(data, type = "partial", main = "Función de Autocorrelación Parcial")
-acf(data, type = "covariance", main = "Función de Autocovarianza")
-plot(dif_ts_indice_salarios, main = "Serie", xlab="Tiempo", ylab = "")
-
-par(old_par_setting)
-```
-
-
-```{r}
-# Box.test(dif_ts_indice_precios_consumidor, lag = 1, type = "Box-Pierce")
-# Box.test(dif_ts_indice_precios_consumidor, lag = 1, type = "Ljung-Box")
-# #white noise
-# 
-# Box.test(dif_ts_indice_salarios, lag = 1, type = "Box-Pierce")
-# Box.test(dif_ts_indice_salarios, lag = 1, type = "Ljung-Box")
-# # no white noise
-#
-# 
-# Incorrelation(dif_ts_indice_precios_consumidor,"Box-Pierce")
-# Incorrelation(dif_ts_indice_precios_consumidor,"Ljung-Box")
-# 
-# Incorrelation(dif_ts_indice_salarios,"Ljung-Box")
-# Incorrelation(dif_ts_indice_salarios,"Box-Pierce")
-
-```
-
 
 ## Modelos
 
@@ -293,19 +327,21 @@ par(old_par_setting)
 
 #### Estimación
 
-```{r warning=FALSE, fig.cap="Criterios de Información", fig.height=4, fig.width=10}
+Se calculan, para la serie temporal, distintos órdenes de parámetros del modelo ARMA y se comparan AIC y BIC como criterios de información.
 
-aic_data <- aic_grid_search(dif_ts_indice_precios_consumidor, 5, 5)
+```{r warning=FALSE, fig.cap="Criterios de Información", fig.height=4, fig.width=10, fig.pos="H"}
 
-aic_plot <- ggplot(aic_data, aes(p, q)) +
+aic_data_indice_precios_consumidor <- aic_grid_search(dif_ts_indice_precios_consumidor, 3, 7)
+
+aic_plot <- ggplot(aic_data_indice_precios_consumidor, aes(p, q)) +
   geom_tile(aes(fill = aic)) +
   scale_fill_gradient(low = "white", high = "steelblue") +
   geom_text(aes(fill = aic, label = round(aic, 2))) +
   ggtitle("AIC")
 
-bic_data <- bic_grid_search(dif_ts_indice_precios_consumidor, 5, 5)
+bic_data_indice_precios_consumidor <- bic_grid_search(dif_ts_indice_precios_consumidor, 3, 7)
 
-bic_plot <- ggplot(bic_data, aes(p, q)) +
+bic_plot <- ggplot(bic_data_indice_precios_consumidor, aes(p, q)) +
   geom_tile(aes(fill = bic)) + 
   scale_fill_gradient(low = "white", high = "steelblue") +
   geom_text(aes(fill = bic, label = round(bic, 2)))  +
@@ -315,58 +351,63 @@ grid.arrange(aic_plot, bic_plot, ncol=2)
 
 ```
 
-```{r}
-train_data <- window(dif_ts_indice_precios_consumidor, end= c(2020, 12))
+En ambos casos, el modelo sugerido es ARMA(1, 1).
 
-test_data <- window(dif_ts_indice_precios_consumidor, start= c(2021, 01))
+```{r}
+train_data_ipc <- window(dif_ts_indice_precios_consumidor, end= c(2020, 12))
+
+test_data_ipc <- window(dif_ts_indice_precios_consumidor, start= c(2021, 01))
 ```
+
 #### Métrica de performance
 
+Se resumen las métricas del modelo propuesto.
+
 ```{r}
-model_aic_bic <- arima(train_data, order = c(1,0,1))
+model_aic_bic_ipc <- arima(train_data_ipc, order = c(1,0,1), include.mean = F)
 
-my_forecast <- forecast(model_aic_bic, h = length(test_data))
+my_forecast_ipc <- forecast(model_aic_bic_ipc, h = length(test_data_ipc))
 
-accuracy_aic_bic <- accuracy(test_data, my_forecast$mean)
+accuracy_aic_bic_ipc <- accuracy(test_data_ipc, my_forecast_ipc$mean)
 ```
 
 ```{r}
-metrics_aic_bic <- accuracy_aic_bic %>%
+metrics_aic_bic_ipc<- accuracy_aic_bic_ipc %>%
   as_tibble() %>%
   add_column(Modelo = "arima(order = c(1, 0, 1))", .before = "ME")
 
-metrics_aic_bic %>%
+metrics_aic_bic_ipc %>%
   kable(booktabs = T, caption = "Métricas", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"))
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
 
 #### Comparación
 
+Existen herramientas para determinar automáticamente un modelo que mejor ajuste. Se aprovecha esta posibilidad y se compara con el modelo antes elegido.
+
 ```{r}
-auto_model <- auto.arima(train_data)
-
-my_forecast <- forecast(auto_model, h = length(test_data))
-
-acurracy_auto <- accuracy(test_data, my_forecast$mean)
+auto_model_ipc <- auto.arima(train_data_ipc)
+my_forecast_auto_ipc <- forecast(auto_model_ipc, h = length(test_data_ipc))
+acurracy_auto_ipc <- accuracy(test_data_ipc, my_forecast_auto_ipc$mean)
 ```
 
 ```{r}
-metrics_auto <- acurracy_auto %>%
+metrics_auto_ipc <- acurracy_auto_ipc %>%
   as_tibble() %>%
-  add_column(Modelo = "ARIMA(1,0,1)", .before = "ME")
+  add_column(Modelo = "auto: ARIMA(1,0,1)", .before = "ME")
 
-rbind(metrics_aic_bic, metrics_auto) %>%
+rbind(metrics_aic_bic_ipc, metrics_auto_ipc) %>%
   kable(booktabs = T, caption = "Métricas", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"))
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
+Ambos análisis conducen al mismo resultado.
 
 #### Análisis de Diagnóstico
 
 ```{r fig.cap="Residuos", fig.height=5, fig.width=10, warning=FALSE}
-residuals <- resid(model_aic_bic)
-checkresiduals(residuals)
+ggtsdisplay(residuals(model_aic_bic_ipc), lag.max = 45, main = 'Residuos', plot.type = "histogram")
 ```
 
 #### Pronóstico
@@ -375,10 +416,10 @@ checkresiduals(residuals)
 
 colors <- c("train" = "blue", "test" = "red", "forecast" = "orange", "auto" = "gray")
 ggplot() +
-  geom_line(data = as_tsibble(train_data), aes(x = index, y = value, color = "train")) +
-  geom_line(data = as_tsibble(test_data), aes(x = index, y = value, color = "test")) +
-  geom_line(data = as_tsibble(forecast(model_aic_bic, h = 7)$mean), aes(x = index, y = value, color = "forecast")) +
-  geom_line(data = as_tsibble(forecast(auto_model, h = 7)$mean), aes(x = index, y = value, color = "auto")) +
+  geom_line(data = as_tsibble(train_data_ipc), aes(x = index, y = value, color = "train")) +
+  geom_line(data = as_tsibble(test_data_ipc), aes(x = index, y = value, color = "test")) +
+  geom_line(data = as_tsibble(forecast(model_aic_bic_ipc, h = 7)$mean), aes(x = index, y = value, color = "forecast")) +
+  geom_line(data = as_tsibble(forecast(auto_model_ipc, h = 7)$mean), aes(x = index, y = value, color = "auto")) +
   scale_color_manual(name = "", values = colors) +
   labs(x = "Tiempo") +
   ggtitle("Pronóstico")
@@ -389,64 +430,60 @@ ggplot() +
 
 #### Estimación
 
-```{r warning=FALSE, fig.cap="Criterios de Información", fig.height=4, fig.width=10}
+```{r warning=FALSE, fig.cap="Criterios de Información", fig.height=4, fig.width=10, fig.pos="H"}
 
-aic_data <- aic_grid_search(dif_ts_indice_salarios, 3, 3)
+aic_data_is <- aic_grid_search(dif_ts_indice_salarios, 3, 7)
 
-aic_plot <- ggplot(aic_data, aes(p, q)) +
+aic_plot_is <- ggplot(aic_data_is, aes(p, q)) +
   geom_tile(aes(fill = aic)) +
   scale_fill_gradient(low = "white", high = "steelblue") +
   geom_text(aes(fill = aic, label = round(aic, 2))) +
   ggtitle("AIC")
 
-bic_data <- bic_grid_search(dif_ts_indice_salarios, 3, 3)
+bic_data_is <- bic_grid_search(dif_ts_indice_salarios, 3, 7)
 
-bic_plot <- ggplot(bic_data, aes(p, q)) + 
+bic_plot_is <- ggplot(bic_data_is, aes(p, q)) + 
   geom_tile(aes(fill = bic)) +
   scale_fill_gradient(low = "white", high = "steelblue") +
   geom_text(aes(fill = bic, label = round(bic, 2)))  +
   ggtitle("BIC")
 
-grid.arrange(aic_plot, bic_plot, ncol=2)
+grid.arrange(aic_plot_is, bic_plot_is, ncol=2)
 ```
 ```{r}
-train_data <- window(dif_ts_indice_salarios, end= c(2020, 12))
+train_data_is <- window(dif_ts_indice_salarios, end= c(2020, 12))
 
-test_data <- window(dif_ts_indice_salarios, start= c(2021, 01))
+test_data_is <- window(dif_ts_indice_salarios, start= c(2021, 01))
 ```
 
 #### Métrica de performance
 
 ```{r}
-model_aic <- arima(train_data, order = c(1,0,2))
+model_aic_is <- arima(train_data_is, order = c(1,0,3), include.mean = F)
+my_forecast_aic_is <- forecast(model_aic_is, h = length(test_data_is))
+accuracy_aic_is <- accuracy(test_data_is, my_forecast_aic_is$mean)
 
-my_forecast <- forecast(model_aic, h = length(test_data))
-
-accuracy_aic <- accuracy(test_data, my_forecast$mean)
-
-model_bic <- arima(train_data, order = c(1,0,0))
-
-my_forecast <- forecast(model_bic, h = length(test_data))
-
-accuracy_bic <- accuracy(test_data, my_forecast$mean)  
+model_bic_is <- arima(train_data_is, order = c(1,0,1), include.mean = F)
+my_forecast_bic_is <- forecast(model_bic_is, h = length(test_data_is))
+accuracy_bic_is <- accuracy(test_data_is, my_forecast_bic_is$mean)  
 ```
 
 ```{r}
-metrics_aic <- accuracy_aic %>%
+metrics_aic_is <- accuracy_aic_is %>%
   as_tibble() %>%
-  add_column(Modelo = "arima(order = c(1, 0, 2))", .before = "ME")
+  add_column(Modelo = "arima(order = c(1, 0, 3))", .before = "ME")
 
-metrics_aic %>%
+metrics_aic_is %>%
   kable(booktabs = T, caption = "Mejor modelos según AIC", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
 
 ```{r}
-metrics_bic <- accuracy_bic %>%
+metrics_bic_is <- accuracy_bic_is %>%
   as_tibble() %>%
-  add_column(Modelo = "arima(order = c(1, 0, 0))", .before = "ME")
+  add_column(Modelo = "arima(order = c(1, 0, 1))", .before = "ME")
 
-metrics_bic %>%
+metrics_bic_is %>%
   kable(booktabs = T, caption = "Mejor modelos según BIC", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
@@ -454,19 +491,19 @@ metrics_bic %>%
 #### Comparación
 
 ```{r}
-auto_model <- auto.arima(train_data)
+auto_model_is <- auto.arima(train_data_is)
 
-my_forecast <- forecast(auto_model, h = length(test_data))
+my_forecast_auto_is <- forecast(auto_model_is, h = length(test_data_is))
 
-accuracy_auto <- accuracy(test_data, my_forecast$mean)  
+accuracy_auto_is <- accuracy(test_data_is, my_forecast_auto_is$mean)  
 ```
 
 ```{r}
-metrics_auto <- acurracy_auto %>%
+metrics_auto_is <- accuracy_auto_is %>%
   as_tibble() %>%
-  add_column(Modelo = "ARIMA(1,0,0)(1,0,0)[12]", .before = "ME")
+  add_column(Modelo = "auto: ARIMA(1,0,0)(1,0,0)[12]", .before = "ME")
 
-rbind(metrics_aic, metrics_bic, metrics_auto) %>%
+rbind(metrics_aic_is, metrics_bic_is, metrics_auto_is) %>%
   kable(booktabs = T, caption = "Métricas", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
@@ -474,30 +511,26 @@ rbind(metrics_aic, metrics_bic, metrics_auto) %>%
 #### Análisis de Diagnóstico
 
 ```{r fig.cap="Residuos", fig.height=5, fig.width=10, warning=FALSE}
-residuals <- resid(auto_model)
-checkresiduals(residuals)
+residuals_is <- resid(auto_model_is)
+checkresiduals(residuals_is)
 ```
 
 #### Pronóstico
 
 
 ```{r fig.cap="Pronóstico", fig.height=4, fig.width=10}
-modelo <- auto.arima(train_data)
 
 colors <- c("train" = "blue", "test" = "red", "aic" = "orange", "bic" = "gray", "auto" = "black")
 ggplot() +
-  geom_line(data = as_tsibble(train_data), aes(x = index, y = value, color = "train")) +
-  geom_line(data = as_tsibble(test_data), aes(x = index, y = value, color = "test")) +
-  geom_line(data = as_tsibble(forecast(model_aic, h = 7)$mean), aes(x = index, y = value, color = "aic")) +
-  geom_line(data = as_tsibble(forecast(model_bic, h = 7)$mean), aes(x = index, y = value, color = "bic")) +
-  geom_line(data = as_tsibble(forecast(auto_model, h = 7)$mean), aes(x = index, y = value, color = "auto")) +
+  geom_line(data = as_tsibble(train_data_is), aes(x = index, y = value, color = "train")) +
+  geom_line(data = as_tsibble(test_data_is), aes(x = index, y = value, color = "test")) +
+  geom_line(data = as_tsibble(forecast(model_aic_is, h = 7)$mean), aes(x = index, y = value, color = "aic")) +
+  geom_line(data = as_tsibble(forecast(model_bic_is, h = 7)$mean), aes(x = index, y = value, color = "bic")) +
+  geom_line(data = as_tsibble(forecast(auto_model_is, h = 7)$mean), aes(x = index, y = value, color = "auto")) +
   scale_color_manual(name = "", values = colors) +
   labs(x = "Tiempo") +
   ggtitle("Pronóstico")
 ```
-
-
-
 \newpage
 
 # Análisis de Resultados
