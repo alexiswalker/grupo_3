@@ -434,6 +434,8 @@ ggplot() +
 
 #### Estimación
 
+Se calculan, para la serie temporal, distintos órdenes de parámetros del modelo ARMA y se comparan AIC y BIC como criterios de información.
+
 ```{r warning=FALSE, fig.cap="Criterios de Información", fig.height=4, fig.width=10, fig.pos="H"}
 
 aic_data_is <- aic_grid_search(dif_ts_indice_salarios, 3, 7)
@@ -454,6 +456,12 @@ bic_plot_is <- ggplot(bic_data_is, aes(p, q)) +
 
 grid.arrange(aic_plot_is, bic_plot_is, ncol=2)
 ```
+
+En este caso:
+
+- AIC sugiere un p igual 1 y un q = 3.
+- BIC sugiere un p igual a q igual a 1.
+
 ```{r}
 train_data_is <- window(dif_ts_indice_salarios, end= c(2020, 12))
 
@@ -461,6 +469,8 @@ test_data_is <- window(dif_ts_indice_salarios, start= c(2021, 01))
 ```
 
 #### Métrica de performance
+
+Se resumen las métricas para ambos modelos.
 
 ```{r}
 model_aic_is <- arima(train_data_is, order = c(1,0,3), include.mean = F)
@@ -494,25 +504,29 @@ metrics_bic_is %>%
 
 #### Comparación
 
+Nuevamente se aprovecha la posibilidad de determinar automaticamente un buen modelo y se suma el resultado a lo ya planteado.
+
 ```{r}
 auto_model_is <- auto.arima(train_data_is)
-
 my_forecast_auto_is <- forecast(auto_model_is, h = length(test_data_is))
-
 accuracy_auto_is <- accuracy(test_data_is, my_forecast_auto_is$mean)  
 ```
 
 ```{r}
 metrics_auto_is <- accuracy_auto_is %>%
   as_tibble() %>%
-  add_column(Modelo = "auto: ARIMA(1,0,0)(1,0,0)[12]", .before = "ME")
+  add_column(Modelo = "auto: ARIMA(0,0,0)(1,0,0)[12]", .before = "ME")
 
 rbind(metrics_aic_is, metrics_bic_is, metrics_auto_is) %>%
   kable(booktabs = T, caption = "Métricas", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
 
+El mejor es ?? 
+
 #### Análisis de Diagnóstico
+
+Visualmente no se evidencia tendencia, por lo que se asumir que la media y varianza son constantes. El histograma (Fig. 10) muestra con comportamiento normal con media cero; lo que se corrobora a partir del test de Shapiro-Wilk con un p-value `r shapiro.test(residuals(auto_model_is))[["p.value"]]`. El gráfico de autocorrelación se asemeja al del ruido blanco: p-value `r Box.test(residuals(auto_model_is), lag = 1, type = "Ljung-Box", fitdf = 0)$p.value` del test Ljung-Box con lag igual a 1.
 
 ```{r fig.cap="Residuos", fig.height=5, fig.width=10, warning=FALSE}
 residuals_is <- resid(auto_model_is)
@@ -521,6 +535,7 @@ checkresiduals(residuals_is)
 
 #### Pronóstico
 
+Se comparan los modelos analizados en una prueba de pronóstico.
 
 ```{r fig.cap="Pronóstico", fig.height=4, fig.width=10}
 
@@ -545,7 +560,7 @@ ggplot() +
 \lipsum[1]
 \newpage
 
-# Referencias bibliográficas 3
+# Referencias bibliográficas
 \lipsum[1]
 \newpage
 
@@ -555,7 +570,7 @@ ggplot() +
 
 ### Índice de precios al consumidor
 
-```{r fig.cap="Funciones", fig.height=5, fig.width=10, warning=FALSE}
+```{r fig.cap="Funciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
 decompose_plot <- dif_ts_indice_precios_consumidor %>%
   decompose(type = "additive") %>%
   autoplot(ts.colour = "steelblue")
@@ -564,15 +579,9 @@ decompose_plot + xlab("Tiempo") + ggtitle("Descoposición aditiva")
 
 ### Índice de Salarios
 
-```{r fig.cap="Funciones", fig.height=5, fig.width=10, warning=FALSE}
+```{r fig.cap="Funciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
 decompose_plot <- dif_ts_indice_salarios %>%
   decompose(type = "additive") %>%
   autoplot(ts.colour = "steelblue")
 decompose_plot + xlab("Tiempo") + ggtitle("Descoposición aditiva")
 ```
-
-
-
-
-
-
