@@ -176,6 +176,7 @@ ggplot(raw_data, aes(x = fecha)) +
   labs(x = "Tiempo") +
   ggtitle("Inflación versus Salarios")
 ```
+
 Predecir el comportamiento de estos índices puede ser de utilizas para estimar el impacto de un nuevo rumbo en la gestión.
 
 \newpage
@@ -329,11 +330,13 @@ test_data_indice_salario %>%
 ```
 
 
-<que conclusión sacar?>
+(Tabla 2)<que conclusión sacar?>
 
 \newpage
 
 ## Modelos
+
+Una vez transformada la información para satisfacer los supuestos de los modelos a utilizar, se estiman los parámetros que mejoran su comportamiento.
 
 ### Índice de precios al consumidor
 
@@ -363,7 +366,7 @@ grid.arrange(aic_plot, bic_plot, ncol=2)
 
 ```
 
-En ambos casos, el modelo sugerido es ARMA(1, 1).
+En ambos casos, el modelo sugerido es ARMA(1, 1) (Fig. 9).
 
 ```{r}
 train_data_ipc <- window(dif_ts_indice_precios_consumidor, end= c(2020, 12))
@@ -373,7 +376,7 @@ test_data_ipc <- window(dif_ts_indice_precios_consumidor, start= c(2021, 01))
 
 #### Métrica de performance
 
-Se resumen las métricas del modelo propuesto.
+Se resumen las métricas del modelo propuesto (Tabla 3).
 
 ```{r}
 model_aic_bic_ipc <- arima(train_data_ipc, order = c(1,0,1), include.mean = F)
@@ -414,7 +417,7 @@ rbind(metrics_aic_bic_ipc, metrics_auto_ipc) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-Ambos análisis conducen al mismo resultado.
+Ambos análisis conducen al mismo resultado (Tabla 4).
 
 #### Análisis de Diagnóstico
 
@@ -426,7 +429,7 @@ ggtsdisplay(residuals(auto_model_ipc), lag.max = 24, main = 'Residuos', plot.typ
 
 #### Pronóstico
 
-Se comparan los modelos analizados en una prueba de pronóstico.
+Se comparan los modelos analizados en una prueba de pronóstico (Fig. 11).
 
 ```{r fig.cap="Pronóstico", fig.height=2.3, fig.width=10}
 
@@ -448,7 +451,7 @@ ggplot() +
 
 #### Estimación
 
-Se calculan, para la serie temporal, distintos órdenes de parámetros del modelo ARMA y se comparan AIC y BIC como criterios de información.
+Se calculan, para la serie temporal, distintos órdenes de parámetros del modelo ARMA y se comparan AIC y BIC como criterios de información (Fig. 12).
 
 ```{r warning=FALSE, fig.cap="Criterios de Información", fig.height=3.5, fig.width=10, fig.pos="H"}
 
@@ -484,7 +487,7 @@ test_data_is <- window(dif_ts_indice_salarios, start= c(2021, 01))
 
 #### Métrica de performance
 
-Se resumen las métricas para ambos modelos.
+Se resumen las métricas para ambos modelos (Tabla 5 y 6).
 
 ```{r}
 model_aic_is <- arima(train_data_is, order = c(1,0,3), include.mean = F)
@@ -518,7 +521,7 @@ metrics_bic_is %>%
 
 #### Comparación
 
-Nuevamente se aprovecha la posibilidad de determinar automaticamente un buen modelo y se suma el resultado a lo ya planteado.
+Nuevamente se aprovecha la posibilidad de determinar automaticamente un buen modelo y se suma el resultado a lo ya planteado (Tabla 7).
 
 ```{r}
 auto_model_is <- auto.arima(train_data_is)
@@ -540,7 +543,7 @@ El mejor es ??
 
 #### Análisis de Diagnóstico
 
-Visualmente no se evidencia tendencia, por lo que se asumir que la media y varianza son constantes. El histograma (Fig. 10) muestra con comportamiento normal con media cero; lo que se corrobora a partir del test de Shapiro-Wilk con un p-value `r shapiro.test(residuals(auto_model_is))[["p.value"]]`. El gráfico de autocorrelación se asemeja al del ruido blanco: p-value `r Box.test(residuals(auto_model_is), lag = 1, type = "Ljung-Box", fitdf = 0)$p.value` del test Ljung-Box con lag igual a 1.
+Visualmente no se evidencia tendencia, por lo que se asumir que la media y varianza son constantes. El histograma (Fig. 13) muestra con comportamiento normal con media cero; lo que se corrobora a partir del test de Shapiro-Wilk con un p-value `r shapiro.test(residuals(auto_model_is))[["p.value"]]`. El gráfico de autocorrelación se asemeja al del ruido blanco: p-value `r Box.test(residuals(auto_model_is), lag = 1, type = "Ljung-Box", fitdf = 0)$p.value` del test Ljung-Box con lag igual a 1.
 
 ```{r fig.cap="Residuos", fig.height=3.5, fig.width=10, warning=FALSE}
 residuals_is <- resid(auto_model_is)
@@ -549,7 +552,7 @@ checkresiduals(residuals_is)
 
 #### Pronóstico
 
-Se comparan los modelos analizados en una prueba de pronóstico.
+Se comparan los modelos analizados en una prueba de pronóstico (Fig. 11).
 
 ```{r fig.cap="Pronóstico", fig.height=2.3, fig.width=10}
 
@@ -564,6 +567,7 @@ ggplot() +
   labs(x = "Tiempo") +
   ggtitle("Pronóstico")
 ```
+
 \newpage
 
 # Análisis de Resultados
