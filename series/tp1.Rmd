@@ -56,6 +56,9 @@ output:
 \tableofcontents
 \newpage
 
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.5em}
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
@@ -149,7 +152,15 @@ ts_indice_salarios <- indice_salarios$indice_salarios_acumulada %>%
 
 # Introducción
 
-Perdida de poder adquisitivo de los salarios frente a la inflación - ampliar
+La inflación puede ser un fenómeno producido por múltiples causas. Uno de los supuestos que pudiese darle origen es el resultado de la distorsión del mercado debido al aumentos salarial. La percepción individual sugiere que los motivos, en la coyuntura actual, son otros: especulación, emisión, devaluación, exportaciones, monopolios formadores de precios.
+
+Analizar como evolucionan conjuramente en el tiempo el **Índice de precios al consumidor** y el **Índice de salarios** puede brindar soporte a la sospecha planteada. Además esta comparativa muestra cómo se comporta el poder adquisitivo de un empleado. Es posible determinar si se recompone conforme aumentan los precios, acompaña o se abre una brecha que da cuenta de su disminución. 
+
+La información fue extraída de la página oficial del Instituto Nacional de Estadística y Censos - INDEC Argentina:
+
+- [Índice de precios al consumidor](https://www.indec.gob.ar/ftp/cuadros/economia/sh_ipc_10_21.xls)
+- [Índice de salarios](https://www.indec.gob.ar/ftp/cuadros/sociedad/variaciones_salarios_09_21.xls)
+
 
 ```{r fig.cap="Inflación versus Salarios", fig.height=4, fig.width=10, fig.pos="H"}
 ggplot(raw_data, aes(x = fecha)) +
@@ -165,6 +176,7 @@ ggplot(raw_data, aes(x = fecha)) +
   labs(x = "Tiempo") +
   ggtitle("Inflación versus Salarios")
 ```
+Predecir el comportamiento de estos índices puede ser de utilizas para estimar el impacto de un nuevo rumbo en la gestión.
 
 \newpage
 
@@ -180,7 +192,7 @@ A fin de mejorar la normalidad de los datos se analiza la tendencia y estacional
 
 Se puede observar en la gráfica de autocorrelación (Fig. 2) como la serie no es estacionaria ya que el valor de la función no decae de manera exponencial (se comportar como si se tratase de un camino aleatorio). También se aprecia que no parece existir un componente estacional.
 
-```{r fig.cap="Índice de precios al consumidor", fig.height=3, fig.width=9, fig.pos="H"}
+```{r fig.cap="Índice de precios al consumidor", fig.height=2.3, fig.width=10, fig.pos="H"}
 plot_acf_pacf(ts_indice_precios_consumidor)
 ```
 
@@ -197,7 +209,7 @@ Se estima el número de diferenciaciones regulares y estacionales que deberían 
 Y se procese a su ejecución conforme el resultado sugerido.
 
 
-```{r fig.cap="Índice de precio al consumidor y su tendencia", fig.height=3, fig.width=9, fig.pos="H"}
+```{r fig.cap="Índice de precio al consumidor y su tendencia", fig.height=2.3, fig.width=10, fig.pos="H"}
 dif_ts_indice_precios_consumidor <- ts_indice_precios_consumidor %>%
   diff(1) %>%
   diff(1)
@@ -216,7 +228,7 @@ ggplot(dif_indice_precios_consumidor, aes(x = fecha, y = indice_precios_consumid
 
 Luego de presentar el resultado (Fig. 3) junto a un modelo lineal simple, se entiende que se ha conseguido estacionariedad en la media.
 
-```{r fig.cap="Índice de precios al consumidor", fig.height=3, fig.width=9, fig.pos="H"}
+```{r fig.cap="Índice de precios al consumidor", fig.height=2.3, fig.width=10, fig.pos="H"}
 plot_acf_pacf(dif_ts_indice_precios_consumidor)
 ```
 
@@ -244,7 +256,7 @@ P-values significativos (Tabla 1) por lo que no se rechaza la hipótesis nula; l
 
 Se puede observar en la gráfica de autocorrelación (Fig. 5) que la serie de Índices de Salarios tiene el mismo comportamiento que la anterior.
 
-```{r fig.cap="Índice de Salarios", fig.height=3, fig.width=9, fig.pos="H"}
+```{r fig.cap="Índice de Salarios", fig.height=2.3, fig.width=10, fig.pos="H"}
 plot_acf_pacf(ts_indice_salarios)
 ```
 
@@ -262,7 +274,7 @@ Se estima el número de diferenciaciones regulares y estacionales que deberían 
 
 Y se procese a su ejecución conforme el resultado sugerido.
 
-```{r fig.cap="Índice de Salarios y su tendencia", fig.height=3, fig.width=9, fig.pos="H"}
+```{r fig.cap="Índice de Salarios y su tendencia", fig.height=2.3, fig.width=10, fig.pos="H"}
 dif_ts_indice_salarios <- ts_indice_salarios %>% diff(1)
 
 dif_indice_salarios <- data.frame(
@@ -279,7 +291,7 @@ ggplot(dif_indice_salarios, aes(x = fecha, y = indice_salarios)) +
 
 A pesar de la sugerencia del número de diferenciaciones, no parece eliminarse la tendencia (Fig. 6). Por lo que se repite el procedimiento una vez más.
 
-```{r fig.cap="Índice de Salarios y su tendencia", fig.height=3, fig.width=9, fig.pos="H"}
+```{r fig.cap="Índice de Salarios y su tendencia", fig.height=2.3, fig.width=10, fig.pos="H"}
 dif_ts_indice_salarios <- ts_indice_salarios %>% diff(1) %>% diff(1)
 
 dif_indice_salarios <- data.frame(
@@ -296,7 +308,7 @@ ggplot(dif_indice_salarios, aes(x = fecha, y = indice_salarios)) +
 
 El resultado (Fig. 7) junto a un modelo lineal simple, muestra la estacionariedad en la media.
 
-```{r fig.cap="Índice de precios al consumidor", fig.height=3, fig.width=9, fig.pos="H"}
+```{r fig.cap="Índice de precios al consumidor", fig.height=2.3, fig.width=10, fig.pos="H"}
 plot_acf_pacf(dif_ts_indice_salarios)
 ```
 
@@ -329,7 +341,7 @@ test_data_indice_salario %>%
 
 Se calculan, para la serie temporal, distintos órdenes de parámetros del modelo ARMA y se comparan AIC y BIC como criterios de información.
 
-```{r warning=FALSE, fig.cap="Criterios de Información", fig.height=4, fig.width=10, fig.pos="H"}
+```{r warning=FALSE, fig.cap="Criterios de Información", fig.height=3.5, fig.width=8, fig.pos="H"}
 
 aic_data_indice_precios_consumidor <- aic_grid_search(dif_ts_indice_precios_consumidor, 3, 7)
 
@@ -408,7 +420,7 @@ Ambos análisis conducen al mismo resultado.
 
 Visualmente no se evidencia tendencia, por lo que se asumir que la media y varianza son constantes. El histograma (Fig. 10) muestra con comportamiento normal con media cero; lo que se corrobora a partir del test de Shapiro-Wilk con un p-value `r shapiro.test(residuals(auto_model_ipc))[["p.value"]]`. El gráfico de autocorrelación se asemeja al del ruido blanco: p-value `r Box.test(residuals(auto_model_ipc), lag = 1, type = "Ljung-Box", fitdf = 0)$p.value` del test Ljung-Box con lag igual a 1.
 
-```{r fig.cap="Residuos", fig.height=5, fig.width=10, warning=FALSE, fig.pos="H"}
+```{r fig.cap="Residuos", fig.height=3.5, fig.width=10, warning=FALSE, fig.pos="H"}
 ggtsdisplay(residuals(auto_model_ipc), lag.max = 24, main = 'Residuos', plot.type = "histogram")
 ```
 
@@ -416,7 +428,7 @@ ggtsdisplay(residuals(auto_model_ipc), lag.max = 24, main = 'Residuos', plot.typ
 
 Se comparan los modelos analizados en una prueba de pronóstico.
 
-```{r fig.cap="Pronóstico", fig.height=4, fig.width=10}
+```{r fig.cap="Pronóstico", fig.height=2.3, fig.width=10}
 
 colors <- c("train" = "blue", "test" = "red", "forecast" = "orange", "auto" = "gray")
 ggplot() +
@@ -430,13 +442,15 @@ ggplot() +
 
 ```
 
+\newpage
+
 ### Índice de Salarios
 
 #### Estimación
 
 Se calculan, para la serie temporal, distintos órdenes de parámetros del modelo ARMA y se comparan AIC y BIC como criterios de información.
 
-```{r warning=FALSE, fig.cap="Criterios de Información", fig.height=4, fig.width=10, fig.pos="H"}
+```{r warning=FALSE, fig.cap="Criterios de Información", fig.height=3.5, fig.width=10, fig.pos="H"}
 
 aic_data_is <- aic_grid_search(dif_ts_indice_salarios, 3, 7)
 
@@ -528,7 +542,7 @@ El mejor es ??
 
 Visualmente no se evidencia tendencia, por lo que se asumir que la media y varianza son constantes. El histograma (Fig. 10) muestra con comportamiento normal con media cero; lo que se corrobora a partir del test de Shapiro-Wilk con un p-value `r shapiro.test(residuals(auto_model_is))[["p.value"]]`. El gráfico de autocorrelación se asemeja al del ruido blanco: p-value `r Box.test(residuals(auto_model_is), lag = 1, type = "Ljung-Box", fitdf = 0)$p.value` del test Ljung-Box con lag igual a 1.
 
-```{r fig.cap="Residuos", fig.height=5, fig.width=10, warning=FALSE}
+```{r fig.cap="Residuos", fig.height=3.5, fig.width=10, warning=FALSE}
 residuals_is <- resid(auto_model_is)
 checkresiduals(residuals_is)
 ```
@@ -537,7 +551,7 @@ checkresiduals(residuals_is)
 
 Se comparan los modelos analizados en una prueba de pronóstico.
 
-```{r fig.cap="Pronóstico", fig.height=4, fig.width=10}
+```{r fig.cap="Pronóstico", fig.height=2.3, fig.width=10}
 
 colors <- c("train" = "blue", "test" = "red", "aic" = "orange", "bic" = "gray", "auto" = "black")
 ggplot() +
