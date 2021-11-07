@@ -161,6 +161,7 @@ La información fue extraída de la página oficial del Instituto Nacional de Es
 - [Índice de precios al consumidor](https://www.indec.gob.ar/ftp/cuadros/economia/sh_ipc_10_21.xls)
 - [Índice de salarios](https://www.indec.gob.ar/ftp/cuadros/sociedad/variaciones_salarios_09_21.xls)
 
+Y se considera la variación mensual acumulada estableciendo a Diciembre 2016 como el 100%.
 
 ```{r fig.cap="Inflación versus Salarios", fig.height=4, fig.width=10, fig.pos="H"}
 ggplot(raw_data, aes(x = fecha)) +
@@ -251,7 +252,7 @@ test_data_indice_precios_consumidor %>%
     kable_styling(latex_options = c("striped", "hold_position"), full_width = F, font_size = 7)
 ```
 
-P-values significativos (Tabla 1) por lo que no se rechaza la hipótesis nula; las autocorrelaciones son igual a cero: se distribuyen de forma independiente. <esta bien?? :(>
+P-values significativos (Tabla 1) por lo que no se ...
 
 ### Índice de Salarios
 
@@ -369,9 +370,9 @@ grid.arrange(aic_plot, bic_plot, ncol=2)
 En ambos casos, el modelo sugerido es ARMA(1, 1) (Fig. 9).
 
 ```{r}
-train_data_ipc <- window(dif_ts_indice_precios_consumidor, end= c(2020, 12))
+train_data_ipc <- window(dif_ts_indice_precios_consumidor, end= c(2021, 4))
 
-test_data_ipc <- window(dif_ts_indice_precios_consumidor, start= c(2021, 01))
+test_data_ipc <- window(dif_ts_indice_precios_consumidor, start= c(2021, 05))
 ```
 
 #### Métrica de performance
@@ -437,8 +438,8 @@ colors <- c("train" = "blue", "test" = "red", "forecast" = "orange", "auto" = "g
 ggplot() +
   geom_line(data = as_tsibble(train_data_ipc), aes(x = index, y = value, color = "train")) +
   geom_line(data = as_tsibble(test_data_ipc), aes(x = index, y = value, color = "test")) +
-  geom_line(data = as_tsibble(forecast(model_aic_bic_ipc, h = 7)$mean), aes(x = index, y = value, color = "forecast")) +
-  geom_line(data = as_tsibble(forecast(auto_model_ipc, h = 7)$mean), aes(x = index, y = value, color = "auto")) +
+  geom_line(data = as_tsibble(forecast(model_aic_bic_ipc, h = 3)$mean), aes(x = index, y = value, color = "forecast")) +
+  geom_line(data = as_tsibble(forecast(auto_model_ipc, h = 3)$mean), aes(x = index, y = value, color = "auto")) +
   scale_color_manual(name = "", values = colors) +
   labs(x = "Tiempo") +
   ggtitle("Pronóstico")
@@ -480,9 +481,9 @@ En este caso:
 - BIC sugiere un p igual a q igual a 1.
 
 ```{r}
-train_data_is <- window(dif_ts_indice_salarios, end= c(2020, 12))
+train_data_is <- window(dif_ts_indice_salarios, end= c(2021, 04))
 
-test_data_is <- window(dif_ts_indice_salarios, start= c(2021, 01))
+test_data_is <- window(dif_ts_indice_salarios, start= c(2021, 05))
 ```
 
 #### Métrica de performance
@@ -560,9 +561,9 @@ colors <- c("train" = "blue", "test" = "red", "aic" = "orange", "bic" = "gray", 
 ggplot() +
   geom_line(data = as_tsibble(train_data_is), aes(x = index, y = value, color = "train")) +
   geom_line(data = as_tsibble(test_data_is), aes(x = index, y = value, color = "test")) +
-  geom_line(data = as_tsibble(forecast(model_aic_is, h = 7)$mean), aes(x = index, y = value, color = "aic")) +
-  geom_line(data = as_tsibble(forecast(model_bic_is, h = 7)$mean), aes(x = index, y = value, color = "bic")) +
-  geom_line(data = as_tsibble(forecast(auto_model_is, h = 7)$mean), aes(x = index, y = value, color = "auto")) +
+  geom_line(data = as_tsibble(forecast(model_aic_is, h = 3)$mean), aes(x = index, y = value, color = "aic")) +
+  geom_line(data = as_tsibble(forecast(model_bic_is, h = 3)$mean), aes(x = index, y = value, color = "bic")) +
+  geom_line(data = as_tsibble(forecast(auto_model_is, h = 3)$mean), aes(x = index, y = value, color = "auto")) +
   scale_color_manual(name = "", values = colors) +
   labs(x = "Tiempo") +
   ggtitle("Pronóstico")
