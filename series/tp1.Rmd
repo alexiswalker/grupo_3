@@ -60,16 +60,10 @@ output:
 \setlength{\parskip}{0.5em}
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-```
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
 
-```{r message=FALSE}
 paquetes <- c("readr", "tidyverse", "showtext", "forecast", "gridExtra",
               "tseries", "tsibble", "kableExtra")
-
-#, "gridExtra", "kableExtra", "tseries", "xts",
-#              , "ggfortify", "lessR", "fable", "tsibble",
-#              "tibbletime"
 
 instalados <- paquetes %in% rownames(installed.packages())
 
@@ -78,26 +72,36 @@ if (any(instalados == FALSE)) {
 }
 
 invisible(lapply(paquetes, library, character.only = TRUE))
-```
 
-```{r}
 theme_set(theme_bw())
 ```
-
-<!-- utilizades -->
 
 ```{r}
 #TODO
 showtext_auto()
 
-plot_acf_pacf <- function(time_serie){
-  p_acf <- ggAcf(time_serie, type = "correlation") +
-    ggtitle("Autocorrelación") + labs(y = "Autocorrelación")
+plot_series <- function(ts, title, ylabel = "", subtitle = NA) {
+  p_series <- autoplot(ts) +
+    geom_line(color = "steelblue") +
+    stat_smooth(method = "lm", col = "red3", formula = y ~ x, size = 0.4, se = FALSE) +
+    scale_y_continuous(name = ylabel) +
+    labs(x = "Tiempo")
   
-  p_pacf <- ggAcf(time_serie, type = "partial") +
-    ggtitle("Autocorrelación Parcial") + labs(y = "Autocorrelación Parcial" )
+  if (is.na(subtitle)) {
+    p_series <- p_series + ggtitle(title)
+  } else {
+    p_series <- p_series + ggtitle(title, subtitle = subtitle)
+  }
   
-  grid.arrange(p_acf, p_pacf, ncol=2)
+  p_acf <- ggAcf(ts, type = "correlation") +
+    ggtitle("Autocorrelación") + 
+    labs(y = "")
+  
+  p_pacf <- ggAcf(ts, type = "partial") +
+    ggtitle("Autocorrelación Parcial") + 
+    labs(y = "" )
+  
+  grid.arrange(p_series, arrangeGrob(p_acf, p_pacf, ncol=2))
 }
 
 incorrelation <- function(ts, type = c("Ljung-Box","Box-Pierce"), fitdf = 0){
@@ -113,18 +117,32 @@ incorrelation <- function(ts, type = c("Ljung-Box","Box-Pierce"), fitdf = 0){
   return(table)
 }
 
+test_incorrelation <- function(ts, title = "Pruebas de Incorrelacion") {
+  i_box_pierce <- incorrelation(ts, "Box-Pierce")
+  i_ljung_box <- incorrelation(ts, "Ljung-Box")
+  
+  test_incorrelation_data <- merge(i_box_pierce, i_ljung_box, by="lag", suffixes = c("",""))
+  
+  test_incorrelation_data %>%
+      kable(booktabs = T, caption = title, digits = 3) %>%
+      column_spec(2, color = ifelse(test_incorrelation_data[2] > 0.05, "blue", "black")) %>% 
+      column_spec(4, color = ifelse(test_incorrelation_data[4] > 0.05, "blue", "black")) %>% 
+      add_header_above(c(" " = 1, "Box-Pierce" = 2, "Ljung-Box" = 2)) %>%
+      kable_styling(latex_options = c("striped", "hold_position"), full_width = F, font_size = 7)
+}
+
 aic_grid_search <- function(ts, p = 1, q = 1){
   require(forecast)
   expand.grid(0:p, 0:q) %>% 
     rename(p = Var1, q = Var2) %>%
-    mutate(aic = map2_dbl(p, q, function(p, q){AIC(arima(ts, order = c(p,0,q), include.mean = F))}))
+    mutate(aic = map2_dbl(p, q, function(p, q){AIC(arima(ts, order = c(p,0,q), include.mean = F, method="ML"))}))
 }
 
 bic_grid_search <- function(ts, p = 1, q = 1){
   require(forecast)
   expand.grid(0:p, 0:q) %>% 
     rename(p = Var1, q = Var2) %>%
-    mutate(bic = map2_dbl(p, q, function(p, q){BIC(arima(ts, order = c(p,0,q), include.mean = F))}))
+    mutate(bic = map2_dbl(p, q, function(p, q){BIC(arima(ts, order = c(p,0,q), include.mean = F, method="ML"))}))
 }
 ```
 
@@ -152,9 +170,9 @@ ts_indice_salarios <- indice_salarios$indice_salarios_acumulada %>%
 
 # Introducción
 
-La inflación puede ser un fenómeno producido por múltiples causas. Uno de los supuestos que pudiese darle origen es el resultado de la distorsión del mercado debido al aumentos salarial. La percepción individual sugiere que los motivos, en la coyuntura actual, son otros: especulación, emisión, devaluación, exportaciones, monopolios formadores de precios.
+La inflación puede ser un fenómeno producido por múltiples causas. Uno de los supuestos que puede darle origen es el resultado de la distorsión del mercado debido a aumentos salariales. La percepción individual sugiere que los motivos, en la coyuntura actual, son otros: especulación, emisión, devaluación, exportaciones, monopolios formadores de precios, etc.
 
-Analizar como evolucionan conjuramente en el tiempo el **Índice de precios al consumidor** y el **Índice de salarios** puede brindar soporte a la sospecha planteada. Además esta comparativa muestra cómo se comporta el poder adquisitivo de un empleado. Es posible determinar si se recompone conforme aumentan los precios, acompaña o se abre una brecha que da cuenta de su disminución. 
+Analizar como evolucionan conjuntamente en el tiempo el **Índice de precios al consumidor** y el **Índice de salarios** puede brindar soporte a la sospecha planteada. Además, esta comparativa muestra cómo se comporta el poder adquisitivo de un empleado. Es posible determinar si se recompone conforme aumentan los precios, acompaña o se abre una brecha que da cuenta de su disminución. 
 
 La información fue extraída de la página oficial del Instituto Nacional de Estadística y Censos - INDEC Argentina:
 
@@ -178,24 +196,26 @@ ggplot(raw_data, aes(x = fecha)) +
   ggtitle("Inflación versus Salarios")
 ```
 
-Predecir el comportamiento de estos índices puede ser de utilizas para estimar el impacto de un nuevo rumbo en la gestión.
+Predecir el comportamiento de estos índices puede ser de utilidad para estimar el impacto de un nuevo rumbo en la gestión.
 
 \newpage
 
 # Marco Teórico
 
-Ambas series temporales exhiben una marcada tendencia creciente que hace suponer una media también creciente en el tiempo, por lo que es probable que el proceso estocástico que la ha generado no sea estacionario en media.
+Ambas series temporales exhiben una marcada tendencia creciente que hace suponer una media también creciente en el tiempo, por lo que es probable que el proceso estocástico que la ha generado no sea estacionario en primer orden.
 
 ## Estacionariedad
 
 A fin de mejorar la normalidad de los datos se analiza la tendencia y estacionalidad. La diferenciación es el instrumento que permite eliminar estos componentes para conseguir estacionariedad.
 
+TODO: ver de agregar una referencia a URIEL o PENA.
+
 ### Índice de precios al consumidor
 
-Se puede observar en la gráfica de autocorrelación (Fig. 2) como la serie no es estacionaria ya que el valor de la función no decae de manera exponencial (se comportar como si se tratase de un camino aleatorio). También se aprecia que no parece existir un componente estacional.
+Se puede observar en la gráfica de autocorrelación (Fig. 2) como la serie no es estacionaria ya que el valor de la función no decae de manera exponencial. También se aprecia que no parece existir un componente estacional.
 
-```{r fig.cap="Índice de precios al consumidor", fig.height=2.3, fig.width=10, fig.pos="H"}
-plot_acf_pacf(ts_indice_precios_consumidor)
+```{r fig.cap="Índice de precios al consumidor", fig.height=5, fig.width=10, fig.pos="H"}
+plot_series(ts_indice_precios_consumidor, title = "Índice de precios al consumidor")
 ```
 
 ```{r}
@@ -208,58 +228,53 @@ Se estima el número de diferenciaciones regulares y estacionales que deberían 
 - Número de diferenciaciones regulares: `r indice_precios_consumidor_ndiffs`
 - Número de diferenciaciones estacionales: `r indice_precios_consumidor_nsdiffs`
 
-Y se procese a su ejecución conforme el resultado sugerido.
+Y se procede a su ejecución conforme el resultado sugerido.
 
-
-```{r fig.cap="Índice de precio al consumidor y su tendencia", fig.height=2.3, fig.width=10, fig.pos="H"}
+```{r fig.cap="Índice de precio al consumidor y su tendencia", fig.height=5, fig.width=10, fig.pos="H"}
 dif_ts_indice_precios_consumidor <- ts_indice_precios_consumidor %>%
-  diff(1) %>%
+  diff(1) %>% 
   diff(1)
 
-dif_indice_precios_consumidor <- data.frame(
-  indice_precios_consumidor = as.vector(dif_ts_indice_precios_consumidor),
-  fecha = indice_precios_consumidor$fecha[c(-1, -2)])
-
-ggplot(dif_indice_precios_consumidor, aes(x = fecha, y = indice_precios_consumidor)) +
-  geom_line(color = "steelblue") +
-  stat_smooth(method = "lm", col = "red3", formula = y ~ x, size = 0.4, se = FALSE) +
-  scale_y_continuous(name = "Índice de precio al consumidor") +
-  labs(x = "Tiempo") +
-  ggtitle("Índice de precio al consumidor")
+plot_series(dif_ts_indice_precios_consumidor, 
+            title = "Índice de precios al consumidor", 
+            subtitle = "Diferenciado dos veces")
 ```    
 
 Luego de presentar el resultado (Fig. 3) junto a un modelo lineal simple, se entiende que se ha conseguido estacionariedad en la media.
 
-```{r fig.cap="Índice de precios al consumidor", fig.height=2.3, fig.width=10, fig.pos="H"}
-plot_acf_pacf(dif_ts_indice_precios_consumidor)
+Se repite el análisis de autocorrelaciones (Fig. 3), ahora el resultado tiene el comportamiento de un camino aleatorio diferenciado. El lag numero 6 en la funcion de autocorrelacion es significativo, por lo que puede indicar que existe algun componente estacional.
+
+Se formalizan las conclusiones realizando los tests de Box-Pierce y Ljung-Box.
+
+```{r}
+test_incorrelation(dif_ts_indice_precios_consumidor)
 ```
 
-Se repite el análisis de autocorrelaciones (Fig. 4), ahora el resultado tiene el comportamiento de un camino aleatorio diferenciado.
+El test de Box-Pierce utiliza a $\sigma^2(\hat{\rho_j}(Y))\cong1/n$ como estimador de la varianza, lo que produce un sesgo al no rechazo de la hipotesis nula que los $\rho_1(Y)=\rho_2(Y)=...=\rho_j(Y)=0$. TODO: agregar referencia URIEL.
 
-Se formalizan las conclusiones realizando las prueblas Ljung-Box y, su versión simplificada, Box-Pierce.
 
-```{r warning=FALSE}
-i_box_pierce_indice_precios_consumidor <- incorrelation(dif_ts_indice_precios_consumidor,"Box-Pierce")
-i_ljung_box_indice_precios_consumidor <- incorrelation(dif_ts_indice_precios_consumidor, "Ljung-Box")
+TODO: esto lo dejamos? deberiamos preguntar en el foro:
+A partir del lag numero 6, los p-values del test de Ljung-Box son significativos. Se procede a diferenciar la serie una vez mas con lag=6.
 
-test_data_indice_precios_consumidor <- merge(i_box_pierce_indice_precios_consumidor, i_ljung_box_indice_precios_consumidor, by="lag", suffixes = c("",""))
+```{r fig.cap="Índice de precio al consumidor y su tendencia diferenciados con lag=6", fig.height=5, fig.width=10, fig.pos="H"}
+dif_6_ts_indice_precios_consumidor <- dif_ts_indice_precios_consumidor %>%
+  diff(6)
 
-test_data_indice_precios_consumidor %>%
-    kable(booktabs = T, caption = "Pruebas de autocorrelación", digits = 3) %>%
-    column_spec(2, color =  ifelse(test_data_indice_precios_consumidor[2] > 0.05, "blue", "black")) %>% 
-    column_spec(4, color =  ifelse(test_data_indice_precios_consumidor[4] > 0.05, "blue", "black")) %>% 
-    add_header_above(c(" " = 1, "Box-Pierce" = 2, "Ljung-Box" = 2)) %>%
-    kable_styling(latex_options = c("striped", "hold_position"), full_width = F, font_size = 7)
+plot_series(dif_6_ts_indice_precios_consumidor, 
+            title = "Índice de precios al consumidor diferenciado 2 veces", 
+            subtitle = "Diferenciado dos veces")
 ```
 
-P-values significativos (Tabla 1) por lo que no se ...
+```{r}
+test_incorrelation(dif_6_ts_indice_precios_consumidor)
+```
 
 ### Índice de Salarios
 
 Se puede observar en la gráfica de autocorrelación (Fig. 5) que la serie de Índices de Salarios tiene el mismo comportamiento que la anterior.
 
-```{r fig.cap="Índice de Salarios", fig.height=2.3, fig.width=10, fig.pos="H"}
-plot_acf_pacf(ts_indice_salarios)
+```{r fig.cap="Índice de Salarios", fig.height=5, fig.width=10, fig.pos="H"}
+plot_series(ts_indice_salarios, title = "Índice de Salarios")
 ```
 
 
@@ -268,7 +283,6 @@ indice_salarios_ndiffs <- ndiffs(ts_indice_salarios)
 indice_salarios_nsdiffs <- nsdiffs(ts_indice_salarios)
 ```
 
-
 Se estima el número de diferenciaciones regulares y estacionales que deberían llevarse a cabo para que la serie sea estacionaria.
 
 - Número de diferenciaciones regulares: `r indice_salarios_ndiffs`
@@ -276,62 +290,33 @@ Se estima el número de diferenciaciones regulares y estacionales que deberían 
 
 Y se procese a su ejecución conforme el resultado sugerido.
 
-```{r fig.cap="Índice de Salarios y su tendencia", fig.height=2.3, fig.width=10, fig.pos="H"}
+```{r fig.cap="Índice de Salarios y su tendencia", fig.height=5, fig.width=10, fig.pos="H"}
 dif_ts_indice_salarios <- ts_indice_salarios %>% diff(1)
 
-dif_indice_salarios <- data.frame(
-  indice_salarios = as.vector(dif_ts_indice_salarios),
-  fecha = indice_salarios$fecha[c(-1)])
-
-ggplot(dif_indice_salarios, aes(x = fecha, y = indice_salarios)) +
-  geom_line(color = "steelblue") +
-  stat_smooth(method = "lm", col = "red3", formula = y ~ x, size = 0.4, se = FALSE) +
-  scale_y_continuous(name = "Índice de Salarios") +
-  labs(x = "Tiempo") +
-  ggtitle("Índice de Salarios")
+plot_series(dif_ts_indice_salarios, 
+            title = "Índice de Salarios",
+            subtitle = "Diferenciado")
 ```
 
 A pesar de la sugerencia del número de diferenciaciones, no parece eliminarse la tendencia (Fig. 6). Por lo que se repite el procedimiento una vez más.
 
-```{r fig.cap="Índice de Salarios y su tendencia", fig.height=2.3, fig.width=10, fig.pos="H"}
+```{r fig.cap="Índice de Salarios y su tendencia", fig.height=5, fig.width=10, fig.pos="H"}
 dif_ts_indice_salarios <- ts_indice_salarios %>% diff(1) %>% diff(1)
 
-dif_indice_salarios <- data.frame(
-  indice_salarios = as.vector(dif_ts_indice_salarios),
-  fecha = indice_salarios$fecha[c(-1, -2)])
-
-ggplot(dif_indice_salarios, aes(x = fecha, y = indice_salarios)) +
-  geom_line(color = "steelblue") +
-  stat_smooth(method = "lm", col = "red3", formula = y ~ x, size = 0.4, se = FALSE) +
-  scale_y_continuous(name = "Índice de Salarios") +
-  labs(x = "Tiempo") +
-  ggtitle("Índice de Salarios")
+plot_series(dif_ts_indice_salarios, 
+            title = "Índice de Salarios",
+            subtitle = "Diferenciado dos veces")
 ```
 
 El resultado (Fig. 7) junto a un modelo lineal simple, muestra la estacionariedad en la media.
 
-```{r fig.cap="Índice de precios al consumidor", fig.height=2.3, fig.width=10, fig.pos="H"}
-plot_acf_pacf(dif_ts_indice_salarios)
-```
-
 Se repite el análisis de autocorrelaciones (Fig. 8), ahora el resultado tiene el comportamiento de un camino aleatorio diferenciado.
 
 ```{r warning=FALSE}
-i_box_pierce_indice_salario <- incorrelation(dif_ts_indice_salarios,"Box-Pierce")
-i_ljung_box_indice_salario <- incorrelation(dif_ts_indice_salarios, "Ljung-Box")
-
-test_data_indice_salario <- merge(i_box_pierce_indice_salario, i_ljung_box_indice_salario, by="lag", suffixes = c("",""))
-
-test_data_indice_salario %>%
-    kable(booktabs = T, caption = "Pruebas de autocorrelación", digits = 3) %>%
-    column_spec(2, color =  ifelse(test_data_indice_salario[2] > 0.05, "blue", "black")) %>% 
-    column_spec(4, color =  ifelse(test_data_indice_salario[4] > 0.05, "blue", "black")) %>% 
-    add_header_above(c(" " = 1, "Box-Pierce" = 2, "Ljung-Box" = 2)) %>%
-    kable_styling(latex_options = c("striped", "hold_position"), full_width = F, font_size = 7)
+test_incorrelation(dif_ts_indice_salarios)
 ```
 
-
-(Tabla 2)<que conclusión sacar?>
+(Tabla 2) TODO: <que conclusión sacar?>
 
 \newpage
 
@@ -346,7 +331,6 @@ Una vez transformada la información para satisfacer los supuestos de los modelo
 Se calculan, para la serie temporal, distintos órdenes de parámetros del modelo ARMA y se comparan AIC y BIC como criterios de información.
 
 ```{r warning=FALSE, fig.cap="Criterios de Información", fig.height=3.5, fig.width=8, fig.pos="H"}
-
 aic_data_indice_precios_consumidor <- aic_grid_search(dif_ts_indice_precios_consumidor, 3, 7)
 
 aic_plot <- ggplot(aic_data_indice_precios_consumidor, aes(p, q)) +
@@ -364,7 +348,6 @@ bic_plot <- ggplot(bic_data_indice_precios_consumidor, aes(p, q)) +
   ggtitle("BIC")
 
 grid.arrange(aic_plot, bic_plot, ncol=2)
-
 ```
 
 En ambos casos, el modelo sugerido es ARMA(1, 1) (Fig. 9).
