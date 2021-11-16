@@ -175,6 +175,9 @@ ggplot(raw_data, aes(x = fecha)) +
 
 Predecir el comportamiento de estos índices puede ser de utilidad para estimar el impacto de un nuevo rumbo en la gestión.
 
+TODO: agregar que queremos predecir hasta enero 2022.
+TODO: ver si se pueden agregar referencias al indec, o bibliografia.
+
 \newpage
 
 # Marco Teórico
@@ -263,13 +266,7 @@ train_data_ipc <- window(dif_ts_indice_precios_consumidor, end = c(2021, 4))
 test_data_ipc <- window(dif_ts_indice_precios_consumidor, start = c(2021, 5))
 ```
 
-
-```{r}
-model_aic_bic_ipc <- arima(train_data_ipc, 
-                           order = c(1,0,1), 
-                           include.mean = F)
-summary(model_aic_bic_ipc)
-```
+TODO: mover a apendices y hacer referencia
 
 ```{r}
 model_ma_ipc <- arima(train_data_ipc, 
@@ -339,13 +336,15 @@ La normalidad de los errores se corrobora a partir del test de Shapiro-Wilk con 
 
 Se comparan los modelos analizados en una prueba de pronóstico (Fig. 11).
 
-```{r fig.cap="Predicciones", fig.height=3.5, fig.width=10, warning=FALSE, fig.pos="H"}
+```{r fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
 model_arima_ma_ipc <- arima(window(ts_indice_precios_consumidor, end = c(2021, 4)), 
                             order = c(0, 2, 6), 
                             fixed = c(0, 0, 0, 0, 0, NA), 
                             include.mean = F)
 
-autoplot(forecast(model_arima_ma_ipc, h = 9), ylab = 'Porcentaje Acumulado')
+autoplot(forecast(model_arima_ma_ipc, h = 9), 
+         ylab = 'Porcentaje Acumulado',
+         main = 'Indice de Precios al Consumidor')
 ```
 
 
@@ -355,38 +354,20 @@ autoplot(forecast(model_arima_ma_ipc, h = 9), ylab = 'Porcentaje Acumulado')
 
 #### Estimación
 
-Se calculan, para la serie temporal, distintos órdenes de parámetros del modelo ARMA y se comparan AIC y BIC como criterios de información (Fig. 12).
-
-```{r warning=FALSE, fig.cap="Criterios de Información", fig.height=3.5, fig.width=10, fig.pos="H"}
-
-aic_data_is <- aic_grid_search(dif_ts_indice_salarios, 3, 7)
-
-aic_plot_is <- ggplot(aic_data_is, aes(p, q)) +
-  geom_tile(aes(fill = aic)) +
-  scale_fill_gradient(low = "white", high = "steelblue") +
-  geom_text(aes(fill = aic, label = round(aic, 2))) +
-  ggtitle("AIC")
-
-bic_data_is <- bic_grid_search(dif_ts_indice_salarios, 3, 7)
-
-bic_plot_is <- ggplot(bic_data_is, aes(p, q)) + 
-  geom_tile(aes(fill = bic)) +
-  scale_fill_gradient(low = "white", high = "steelblue") +
-  geom_text(aes(fill = bic, label = round(bic, 2)))  +
-  ggtitle("BIC")
-
-grid.arrange(aic_plot_is, bic_plot_is, ncol=2)
-```
-
-En este caso:
-
-- AIC sugiere un p igual 1 y un q = 3.
-- BIC sugiere un p igual a q igual a 1.
 
 ```{r}
-train_data_is <- window(dif_ts_indice_salarios, end= c(2021, 04))
+train_data_is <- window(dif_ts_indice_salarios, end = c(2021, 04))
+test_data_is <- window(dif_ts_indice_salarios, start = c(2021, 05))
+```
 
-test_data_is <- window(dif_ts_indice_salarios, start= c(2021, 05))
+```{r}
+model_arma_is <- arima(train_data_is, order = c(1,0,1))
+summary(model_arma_is)
+```
+
+```{r}
+model_auto_is <- auto.arima(train_data_is)
+summary(model_auto_is)
 ```
 
 #### Métrica de performance
@@ -394,82 +375,60 @@ test_data_is <- window(dif_ts_indice_salarios, start= c(2021, 05))
 Se resumen las métricas para ambos modelos (Tabla 5 y 6).
 
 ```{r}
-model_aic_is <- arima(train_data_is, order = c(2,0,6), include.mean = F)
-my_forecast_aic_is <- forecast(model_aic_is, h = length(test_data_is))
-accuracy_aic_is <- accuracy(test_data_is, my_forecast_aic_is$mean)
+forecast_model_arma_is <- forecast(model_arma_is, h = length(test_data_is))
+accuracy_model_arma_is <- accuracy(test_data_is, forecast_model_arma_is$mean)
 
-model_bic_is <- arima(train_data_is, order = c(1,0,1), include.mean = F)
-my_forecast_bic_is <- forecast(model_bic_is, h = length(test_data_is))
-accuracy_bic_is <- accuracy(test_data_is, my_forecast_bic_is$mean)  
-```
+forecast_model_auto_is <- forecast(model_auto_is, h = length(test_data_is))
+accuracy_model_auto_is <- accuracy(test_data_is, forecast_model_auto_is$mean)
 
-```{r}
-metrics_aic_is <- accuracy_aic_is %>%
+metrics_model_arma_is <- accuracy_model_arma_is %>%
   as_tibble() %>%
-  add_column(Modelo = "arima(order = c(1, 0, 3))", .before = "ME")
-
-metrics_aic_is %>%
-  kable(booktabs = T, caption = "Mejor modelos según AIC", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"))
-```
-
-```{r}
-metrics_bic_is <- accuracy_bic_is %>%
+  add_column(Modelo = "ACF/PACF: ARMA(1,1)", 
+             AIC = AIC(model_arma_is),
+             BIC = BIC(model_arma_is), .before = "ME")
+metrics_model_auto_is <- accuracy_model_auto_is %>%
   as_tibble() %>%
-  add_column(Modelo = "arima(order = c(1, 0, 1))", .before = "ME")
+  add_column(Modelo = "auto.arima: SARIMA(1,0,0)(1,0,0)[12]", 
+             AIC = AIC(model_auto_is),
+             BIC = BIC(model_auto_is), .before = "ME")
 
-metrics_bic_is %>%
-  kable(booktabs = T, caption = "Mejor modelos según BIC", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"))
+rbind(metrics_model_arma_is, metrics_model_auto_is) %>%
+  select(Modelo, AIC, BIC, ME, RMSE) %>% 
+  kable(booktabs = T, caption = "Métricas de performance", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-#### Comparación
-
-Nuevamente se aprovecha la posibilidad de determinar automaticamente un buen modelo y se suma el resultado a lo ya planteado (Tabla 7).
-
-```{r}
-auto_model_is <- auto.arima(train_data_is)
-my_forecast_auto_is <- forecast(auto_model_is, h = length(test_data_is))
-accuracy_auto_is <- accuracy(test_data_is, my_forecast_auto_is$mean)  
-```
-
-```{r}
-metrics_auto_is <- accuracy_auto_is %>%
-  as_tibble() %>%
-  add_column(Modelo = "auto: ARIMA(0,0,0)(1,0,0)[12]", .before = "ME")
-
-rbind(metrics_aic_is, metrics_bic_is, metrics_auto_is) %>%
-  kable(booktabs = T, caption = "Métricas", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"))
-```
-
-El mejor es ?? 
+TODO: elegimos autoarima
 
 #### Análisis de Diagnóstico
 
-Visualmente no se evidencia tendencia, por lo que se asumir que la media y varianza son constantes. El histograma (Fig. 13) muestra con comportamiento normal con media cero; lo que se corrobora a partir del test de Shapiro-Wilk con un p-value `r shapiro.test(residuals(auto_model_is))[["p.value"]]`. El gráfico de autocorrelación se asemeja al del ruido blanco: p-value `r Box.test(residuals(auto_model_is), lag = 1, type = "Ljung-Box", fitdf = 0)$p.value` del test Ljung-Box con lag igual a 1.
-
-```{r fig.cap="Residuos", fig.height=3.5, fig.width=10, warning=FALSE}
-residuals_is <- resid(auto_model_is)
-checkresiduals(residuals_is)
+```{r fig.cap="Residuos", fig.height=3.5, fig.width=10, warning=FALSE, fig.pos="H"}
+ggtsdisplay(residuals(model_auto_is), 
+            lag.max = 24, 
+            main = 'Residuos SARIMA(1,0,0)(1,0,0)[12]', 
+            plot.type = "histogram")
 ```
+
+Los residuos del modelo elegido no estan autocorrelacionados y se distribuyen aproximadamente normal.
+Se confirman dichos hipotesis con los siguientes tests.
+
+```{r}
+test_incorrelation(residuals(model_auto_is))
+```
+
+Los tests coinciden que no existe correlacion en los residuos del modelo.
+
+La normalidad de los errores se corrobora a partir del test de Shapiro-Wilk con un p-value `r shapiro.test(residuals(model_auto_is))[["p.value"]]`.
 
 #### Pronóstico
 
 Se comparan los modelos analizados en una prueba de pronóstico (Fig. 11).
 
-```{r fig.cap="Pronóstico", fig.height=2.3, fig.width=10}
-
-colors <- c("train" = "blue", "test" = "red", "aic" = "orange", "bic" = "gray", "auto" = "black")
-ggplot() +
-  geom_line(data = as_tsibble(train_data_is), aes(x = index, y = value, color = "train")) +
-  geom_line(data = as_tsibble(test_data_is), aes(x = index, y = value, color = "test")) +
-  geom_line(data = as_tsibble(forecast(model_aic_is, h = 3)$mean), aes(x = index, y = value, color = "aic")) +
-  geom_line(data = as_tsibble(forecast(model_bic_is, h = 3)$mean), aes(x = index, y = value, color = "bic")) +
-  geom_line(data = as_tsibble(forecast(auto_model_is, h = 3)$mean), aes(x = index, y = value, color = "auto")) +
-  scale_color_manual(name = "", values = colors) +
-  labs(x = "Tiempo") +
-  ggtitle("Pronóstico")
+```{r fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
+model_arima_auto_is <- auto.arima(window(ts_indice_salarios, end = c(2021, 4)))
+autoplot(forecast(model_arima_auto_is, h = 9), 
+         ylab = 'Porcentaje Acumulado',
+         main = 'Indice de Salarios')
 ```
 
 \newpage
