@@ -63,7 +63,7 @@ output:
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
 
 paquetes <- c("readr", "tidyverse", "showtext", "forecast", "gridExtra",
-              "tseries", "tsibble", "kableExtra")
+              "tseries", "tsibble", "kableExtra", "urca")
 
 instalados <- paquetes %in% rownames(installed.packages())
 
@@ -168,6 +168,11 @@ ts_indice_salarios <- indice_salarios$indice_salarios_acumulada %>%
   ts(frequency = 12, start = c(2016, 12))
 ```
 
+```{r}
+auto.arima(ts_indice_precios_consumidor)
+```
+
+
 # Introducción
 
 La inflación puede ser un fenómeno producido por múltiples causas. Uno de los supuestos que puede darle origen es el resultado de la distorsión del mercado debido a aumentos salariales. La percepción individual sugiere que los motivos, en la coyuntura actual, son otros: especulación, emisión, devaluación, exportaciones, monopolios formadores de precios, etc.
@@ -221,6 +226,11 @@ plot_series(ts_indice_precios_consumidor, title = "Índice de precios al consumi
 ```{r}
 indice_precios_consumidor_ndiffs <- ndiffs(ts_indice_precios_consumidor)
 indice_precios_consumidor_nsdiffs <- nsdiffs(ts_indice_precios_consumidor)
+
+ndiffs(ts_indice_precios_consumidor, max.d = 4, test="kpss", type="trend")
+
+summary(ur.df(ts_indice_precios_consumidor, type = "none", lags = 6, selectlags = "AIC"))
+
 ```
 
 Se estima el número de diferenciaciones regulares y estacionales que deberían llevarse a cabo para que la serie sea estacionaria.
@@ -253,8 +263,16 @@ test_incorrelation(dif_ts_indice_precios_consumidor)
 El test de Box-Pierce utiliza a $\sigma^2(\hat{\rho_j}(Y))\cong1/n$ como estimador de la varianza, lo que produce un sesgo al no rechazo de la hipotesis nula que los $\rho_1(Y)=\rho_2(Y)=...=\rho_j(Y)=0$. TODO: agregar referencia URIEL.
 
 
-TODO: esto lo dejamos? deberiamos preguntar en el foro:
+TODO: esto lo dejamos? deberíamos preguntar en el foro:
 A partir del lag numero 6, los p-values del test de Ljung-Box son significativos. Se procede a diferenciar la serie una vez mas con lag=6.
+
+```{r}
+dif_ts_indice_precios_consumidor
+
+adf.test(dif_ts_indice_precios_consumidor)
+kpss.test(ts_indice_precios_consumidor, null = "Trend")
+```
+
 
 ```{r fig.cap="Índice de precio al consumidor y su tendencia diferenciados con lag=6", fig.height=5, fig.width=10, fig.pos="H"}
 dif_6_ts_indice_precios_consumidor <- dif_ts_indice_precios_consumidor %>%
@@ -331,7 +349,7 @@ Una vez transformada la información para satisfacer los supuestos de los modelo
 Se calculan, para la serie temporal, distintos órdenes de parámetros del modelo ARMA y se comparan AIC y BIC como criterios de información.
 
 ```{r warning=FALSE, fig.cap="Criterios de Información", fig.height=3.5, fig.width=8, fig.pos="H"}
-aic_data_indice_precios_consumidor <- aic_grid_search(dif_ts_indice_precios_consumidor, 3, 7)
+aic_data_indice_precios_consumidor <- aic_grid_search(dif_ts_indice_precios_consumidor, 4, 4)
 
 aic_plot <- ggplot(aic_data_indice_precios_consumidor, aes(p, q)) +
   geom_tile(aes(fill = aic)) +
@@ -339,7 +357,7 @@ aic_plot <- ggplot(aic_data_indice_precios_consumidor, aes(p, q)) +
   geom_text(aes(fill = aic, label = round(aic, 2))) +
   ggtitle("AIC")
 
-bic_data_indice_precios_consumidor <- bic_grid_search(dif_ts_indice_precios_consumidor, 3, 7)
+bic_data_indice_precios_consumidor <- bic_grid_search(dif_ts_indice_precios_consumidor, 4, 4)
 
 bic_plot <- ggplot(bic_data_indice_precios_consumidor, aes(p, q)) +
   geom_tile(aes(fill = bic)) + 
@@ -364,13 +382,9 @@ Se resumen las métricas del modelo propuesto (Tabla 3).
 
 ```{r}
 model_aic_bic_ipc <- arima(train_data_ipc, order = c(1,0,1), include.mean = F)
-
 my_forecast_ipc <- forecast(model_aic_bic_ipc, h = length(test_data_ipc))
-
 accuracy_aic_bic_ipc <- accuracy(test_data_ipc, my_forecast_ipc$mean)
-```
 
-```{r}
 metrics_aic_bic_ipc<- accuracy_aic_bic_ipc %>%
   as_tibble() %>%
   add_column(Modelo = "arima(order = c(1, 0, 1))", .before = "ME")
@@ -380,23 +394,43 @@ metrics_aic_bic_ipc %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
+```{r}
+model_6_1 <- arima(train_data_ipc, order = c(6,0,1), include.mean = F, fixed=c(0,0,0,0,0,NA,NA), transform.pars = FALSE, method="ML")
+my_forecast_6_1 <- forecast(model_6_1, h = length(test_data_ipc))
+accuracy_6_1 <- accuracy(test_data_ipc, my_forecast_6_1$mean)
+
+metrics_6_1 <- accuracy_6_1 %>%
+  as_tibble() %>%
+  add_column(Modelo = "seis", .before = "ME")
+
+metrics_6_1 %>%
+  kable(booktabs = T, caption = "Métricas", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+
+AIC(model_6_1)
+```
+
 
 #### Comparación
 
 Existen herramientas para determinar automáticamente un modelo que mejor ajuste. Se aprovecha esta posibilidad y se compara con el modelo antes elegido.
 
 ```{r}
-auto_model_ipc <- auto.arima(train_data_ipc)
+auto_model_ipc <- auto.arima(train_data_ipc, seasonal = T)
 my_forecast_auto_ipc <- forecast(auto_model_ipc, h = length(test_data_ipc))
 acurracy_auto_ipc <- accuracy(test_data_ipc, my_forecast_auto_ipc$mean)
-```
 
-```{r}
 metrics_auto_ipc <- acurracy_auto_ipc %>%
   as_tibble() %>%
   add_column(Modelo = "auto: ARIMA(1,0,1)", .before = "ME")
+```
 
-rbind(metrics_aic_bic_ipc, metrics_auto_ipc) %>%
+
+
+```{r}
+
+
+rbind(metrics_aic_bic_ipc, metrics_auto_ipc, metrics_6_1) %>%
   kable(booktabs = T, caption = "Métricas", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
@@ -408,7 +442,7 @@ Ambos análisis conducen al mismo resultado (Tabla 4).
 Visualmente no se evidencia tendencia, por lo que se asumir que la media y varianza son constantes. El histograma (Fig. 10) muestra con comportamiento normal con media cero; lo que se corrobora a partir del test de Shapiro-Wilk con un p-value `r shapiro.test(residuals(auto_model_ipc))[["p.value"]]`. El gráfico de autocorrelación se asemeja al del ruido blanco: p-value `r Box.test(residuals(auto_model_ipc), lag = 1, type = "Ljung-Box", fitdf = 0)$p.value` del test Ljung-Box con lag igual a 1.
 
 ```{r fig.cap="Residuos", fig.height=3.5, fig.width=10, warning=FALSE, fig.pos="H"}
-ggtsdisplay(residuals(auto_model_ipc), lag.max = 24, main = 'Residuos', plot.type = "histogram")
+ggtsdisplay(residuals(model_6_1), lag.max = 24, main = 'Residuos', plot.type = "histogram")
 ```
 
 #### Pronóstico
@@ -417,12 +451,14 @@ Se comparan los modelos analizados en una prueba de pronóstico (Fig. 11).
 
 ```{r fig.cap="Pronóstico", fig.height=2.3, fig.width=10}
 
-colors <- c("train" = "blue", "test" = "red", "forecast" = "orange", "auto" = "gray")
+colors <- c("train" = "blue", "test" = "red", "forecast" = "orange", "auto" = "gray", "seis" = "black")
 ggplot() +
   geom_line(data = as_tsibble(train_data_ipc), aes(x = index, y = value, color = "train")) +
   geom_line(data = as_tsibble(test_data_ipc), aes(x = index, y = value, color = "test")) +
   geom_line(data = as_tsibble(forecast(model_aic_bic_ipc, h = 3)$mean), aes(x = index, y = value, color = "forecast")) +
   geom_line(data = as_tsibble(forecast(auto_model_ipc, h = 3)$mean), aes(x = index, y = value, color = "auto")) +
+  geom_line(data = as_tsibble(my_forecast_6_1$mean), aes(x = index, y = value, color = "seis")) +
+  
   scale_color_manual(name = "", values = colors) +
   labs(x = "Tiempo") +
   ggtitle("Pronóstico")
@@ -474,7 +510,7 @@ test_data_is <- window(dif_ts_indice_salarios, start= c(2021, 05))
 Se resumen las métricas para ambos modelos (Tabla 5 y 6).
 
 ```{r}
-model_aic_is <- arima(train_data_is, order = c(1,0,3), include.mean = F)
+model_aic_is <- arima(train_data_is, order = c(2,0,6), include.mean = F)
 my_forecast_aic_is <- forecast(model_aic_is, h = length(test_data_is))
 accuracy_aic_is <- accuracy(test_data_is, my_forecast_aic_is$mean)
 
