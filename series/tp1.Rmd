@@ -77,9 +77,6 @@ theme_set(theme_bw())
 ```
 
 ```{r}
-#TODO
-showtext_auto()
-
 incorrelation <- function(ts, type = c("Ljung-Box","Box-Pierce"), fitdf = 0){
   p_ljung_box = NULL
   s_ljung_box = NULL
@@ -147,6 +144,8 @@ ts_indice_salarios <- indice_salarios$indice_salarios_acumulada %>%
 
 # Introducción
 
+Las series de tiempo son el resultado de observar valores de una variable aleatoria a lo largo del tiempo en intervalos iguales o desiguales. En el analisis de las series temporales se utilizan metodos que permiten interpretarlas y extraer informacion sobre las relaciones entre los datos de la serie u otras series.
+
 La inflación puede ser un fenómeno producido por múltiples causas. Uno de los supuestos que puede darle origen es el resultado de la distorsión del mercado debido a aumentos salariales. La percepción individual sugiere que los motivos, en la coyuntura actual, son otros: especulación, emisión, devaluación, exportaciones, monopolios formadores de precios, etc.
 
 Analizar como evolucionan conjuntamente en el tiempo el **Índice de precios al consumidor** y el **Índice de salarios** puede brindar soporte a la sospecha planteada. Además, esta comparativa muestra cómo se comporta el poder adquisitivo de un empleado. Es posible determinar si se recompone conforme aumentan los precios, acompaña o se abre una brecha que da cuenta de su disminución. 
@@ -182,15 +181,15 @@ TODO: ver si se pueden agregar referencias al indec, o bibliografia.
 
 # Marco Teórico
 
-Ambas series temporales exhiben una marcada tendencia creciente que hace suponer una media también creciente en el tiempo, por lo que es probable que el proceso estocástico que la ha generado no sea estacionario en primer orden.
 
-## Estacionariedad
 
-A fin de mejorar la normalidad de los datos se analiza la tendencia y estacionalidad. La diferenciación es el instrumento que permite eliminar estos componentes para conseguir estacionariedad.
+\newpage
 
-TODO: ver de agregar una referencia a URIEL o PENA.
+Una vez transformada la información para satisfacer los supuestos de los modelos a utilizar, se estiman los parámetros que mejoran su comportamiento.
 
-### Índice de precios al consumidor
+## Índice de precios al consumidor
+
+### Diferenciacion
 
 Se puede observar en la gráfica de autocorrelación (Fig. 2) como la serie no es estacionaria ya que el valor de la función no decae de manera exponencial. También se aprecia que no parece existir un componente estacional.
 
@@ -221,42 +220,7 @@ Luego de presentar el resultado (Fig. 3) junto a un modelo lineal simple, se ent
 
 El lag numero 6 en la funcion de autocorrelacion es significativo, por lo que se puede proponer un MA(6) para modelarlo. TODO: agregar alguna referencia donde diga que en ACF modele el parametro del MA
 
-### Índice de Salarios
-
-Se puede observar en la gráfica de autocorrelación (Fig. 5) que la serie de Índices de Salarios tiene el mismo comportamiento que la anterior.
-
-```{r fig.cap="Índice de Salarios", fig.height=5, fig.width=10, fig.pos="H"}
-ggtsdisplay(ts_indice_salarios, main = "Índice de Salarios")
-```
-
-
-```{r}
-indice_salarios_ndiffs <- ndiffs(ts_indice_salarios)
-```
-
-Se estima el número de diferenciaciones regulares y estacionales que deberían llevarse a cabo para que la serie sea estacionaria.
-
-- Número de diferenciaciones regulares: `r indice_salarios_ndiffs`
-
-Y se procese a su ejecución conforme el resultado sugerido.
-
-```{r fig.cap="Índice de Salarios y su tendencia", fig.height=5, fig.width=10, fig.pos="H"}
-dif_ts_indice_salarios <- ts_indice_salarios %>% diff(1)
-
-ggtsdisplay(dif_ts_indice_salarios, 
-            main = "Índice de Salarios: Diferenciado")
-```
-En ambos ACF y PACF los lags 1 son significativos, por lo que se podria modelar con un ARMA(1,1). TODO: referencia
-
-\newpage
-
-## Modelos
-
-Una vez transformada la información para satisfacer los supuestos de los modelos a utilizar, se estiman los parámetros que mejoran su comportamiento.
-
-### Índice de precios al consumidor
-
-#### Estimación
+### Estimación
 
 Se calculan para la serie temporal, distintos órdenes de parámetros del modelo ARMA y se comparan AIC y BIC como criterios de información.
 TODO: decir que separamos en train / test hasta abril
@@ -281,7 +245,7 @@ model_auto_ipc <- auto.arima(train_data_ipc)
 summary(model_auto_ipc)
 ```
 
-#### Métricas de performance
+### Métricas de performance
 
 Se resumen las métricas de los modelos propuestos (Tabla 3).
 
@@ -311,7 +275,7 @@ rbind(metrics_model_ma_ipc, metrics_model_auto_ipc) %>%
 
 Por Parsimonia, se selecciona el modelo ARMA(0,6) ya que sus $\theta_i=0$ cuando $i=1,2,3,4,5$, y $\phi_6=0.3102$.
 
-#### Análisis de Diagnóstico
+### Análisis de Diagnóstico
 
 ```{r fig.cap="Residuos", fig.height=3.5, fig.width=10, warning=FALSE, fig.pos="H"}
 ggtsdisplay(residuals(model_ma_ipc), 
@@ -332,7 +296,7 @@ Aun asi, ambos tests coinciden que no existe correlacion en los residuos del mod
 
 La normalidad de los errores se corrobora a partir del test de Shapiro-Wilk con un p-value `r shapiro.test(residuals(model_ma_ipc))[["p.value"]]`. TODO: explicar shapiro
 
-#### Pronóstico
+### Pronóstico
 
 Se comparan los modelos analizados en una prueba de pronóstico (Fig. 11).
 
@@ -350,9 +314,36 @@ autoplot(forecast(model_arima_ma_ipc, h = 9),
 
 \newpage
 
-### Índice de Salarios
+## Índice de Salarios
 
-#### Estimación
+### Diferenciacion
+
+Se puede observar en la gráfica de autocorrelación (Fig. 5) que la serie de Índices de Salarios tiene el mismo comportamiento que la anterior.
+
+```{r fig.cap="Índice de Salarios", fig.height=5, fig.width=10, fig.pos="H"}
+ggtsdisplay(ts_indice_salarios, main = "Índice de Salarios")
+```
+
+
+```{r}
+indice_salarios_ndiffs <- ndiffs(ts_indice_salarios)
+```
+
+Se estima el número de diferenciaciones regulares y estacionales que deberían llevarse a cabo para que la serie sea estacionaria.
+
+- Número de diferenciaciones regulares: `r indice_salarios_ndiffs`
+
+Y se procese a su ejecución conforme el resultado sugerido.
+
+```{r fig.cap="Índice de Salarios y su tendencia", fig.height=5, fig.width=10, fig.pos="H"}
+dif_ts_indice_salarios <- ts_indice_salarios %>% diff(1)
+
+ggtsdisplay(dif_ts_indice_salarios, 
+            main = "Índice de Salarios: Diferenciado")
+```
+En ambos ACF y PACF los lags 1 son significativos, por lo que se podria modelar con un ARMA(1,1). TODO: referencia
+
+### Estimación
 
 
 ```{r}
@@ -370,7 +361,7 @@ model_auto_is <- auto.arima(train_data_is)
 summary(model_auto_is)
 ```
 
-#### Métrica de performance
+### Métricas de performance
 
 Se resumen las métricas para ambos modelos (Tabla 5 y 6).
 
@@ -400,7 +391,7 @@ rbind(metrics_model_arma_is, metrics_model_auto_is) %>%
 
 TODO: elegimos autoarima
 
-#### Análisis de Diagnóstico
+### Análisis de Diagnóstico
 
 ```{r fig.cap="Residuos", fig.height=3.5, fig.width=10, warning=FALSE, fig.pos="H"}
 ggtsdisplay(residuals(model_auto_is), 
@@ -420,7 +411,7 @@ Los tests coinciden que no existe correlacion en los residuos del modelo.
 
 La normalidad de los errores se corrobora a partir del test de Shapiro-Wilk con un p-value `r shapiro.test(residuals(model_auto_is))[["p.value"]]`.
 
-#### Pronóstico
+### Pronóstico
 
 Se comparan los modelos analizados en una prueba de pronóstico (Fig. 11).
 
