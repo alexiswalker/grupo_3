@@ -181,7 +181,32 @@ TODO: ver si se pueden agregar referencias al indec, o bibliografia.
 
 # Marco Teórico
 
+Un proceso autorregresivo de orden $p$, $AR(p)$, es definido de la siguiente manera:
 
+$$
+Y_t = \phi_1Y_{t-1} + \phi_2Y_{t-2} + ... + \phi_pY_{t-p} + \varepsilon_t
+$$
+
+La idea central es que el valor actual de la serie depende de los $p$ terminos previos de la misma. Es decir, que la serie se explica a si misma.
+
+Por otro lado, un proceso de medias moviles de orden $q$, $MA(q)$, se define de la siguiente manera:
+
+$$
+Y_t = \varepsilon_t - \theta_1\varepsilon_{t-1} - \theta_2\varepsilon_{t-2} - ... - \theta_q\varepsilon_{t-q}
+$$
+
+De forma que el valor de la serie actual puede ser expresado como un promedio ponderado de los errores pasados de la misma.
+
+Combinando los modelos autorregresivos y los modelos de medias moviles se obtienen los modelos $ARMA(p, q)$. El resultado entonces es:
+
+$$
+Y_t = \phi_1Y_{t-1} + \phi_2Y_{t-2} + ... + \phi_pY_{t-p} + \varepsilon_t - \theta_1\varepsilon_{t-1} - \theta_2\varepsilon_{t-2} - ... - \theta_q\varepsilon_{t-q}
+$$
+
+Los modelos autorregresivos y de medias moviles son validos para series de tiempo que son _estacionarias_. Se define que una serie es estacionaria de orden 2 cuando sus segundos momentos son constantes a lo largo del tiempo. Es decir, cuando su media y varianza se mantienen constantes.
+Por lo contrario, una serie es _no estacionaria_ cuando la tendencia y/o la variabilidad cambian a lo largo del tiempo.
+
+El presente trabajo practico tiene como objetivo el analisis y prediccion las series descriptas anteriormente mediante modelos ARMA.
 
 \newpage
 
@@ -275,7 +300,7 @@ rbind(metrics_model_ma_ipc, metrics_model_auto_ipc) %>%
 
 Por Parsimonia, se selecciona el modelo ARMA(0,6) ya que sus $\theta_i=0$ cuando $i=1,2,3,4,5$, y $\phi_6=0.3102$.
 
-### Análisis de Diagnóstico
+### Análisis de diagnóstico
 
 ```{r fig.cap="Residuos", fig.height=3.5, fig.width=10, warning=FALSE, fig.pos="H"}
 ggtsdisplay(residuals(model_ma_ipc), 
@@ -391,7 +416,7 @@ rbind(metrics_model_arma_is, metrics_model_auto_is) %>%
 
 TODO: elegimos autoarima
 
-### Análisis de Diagnóstico
+### Análisis de diagnóstico
 
 ```{r fig.cap="Residuos", fig.height=3.5, fig.width=10, warning=FALSE, fig.pos="H"}
 ggtsdisplay(residuals(model_auto_is), 
