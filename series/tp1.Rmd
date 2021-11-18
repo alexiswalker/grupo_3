@@ -43,12 +43,25 @@ header-includes:
 output: 
   bookdown::pdf_document2: default
 ---
+
 \thispagestyle{empty}
 \newpage
 
 \thispagestyle{empty}
+
 \abstract
-\lipsum[1]
+
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0em}
+
+\noindent El presente trabajo tiene por objetivo estudiar la relación entre dos variables económicas fundamentales, el IPC (Indice de precios al Consumidor) y el índice de Salarios
+
+Ambos indicadores son considerados fundamentales para el desarrollo de un país ya que conllevan en la relación entre ambos. Por un lado como evoluciona en nivel de vida de la población, si es que los salarios se incrementan en mayor proporción que los bienes y servicios, con la consiguiente mejora en el bienestar además del incremento de la producción de bienes y servicios que ocasiona la mayor demanda, o, como se demostrará en el desarrollo del presente, los indicadores de incremento de bienes y servicios crecen a mayor ritmo que los salarios, disminuyendo el bienestar de la masa asalariada.
+
+Como resultado de este proceso inflacionario y de baja demanda interna hay que mencionar que esto perjudica a los sectores productores de bienes y servicios internos.
+
+Las causas que originan el fenómeno de inflación  no serán tratadas por lo complejo y extenso que es el tema.
+
 \newpage
 
 \setlength{\parindent}{0em}
@@ -57,7 +70,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
 
-paquetes <- c("readr", "tidyverse", "showtext", "forecast", "gridExtra",
+paquetes <- c("readr", "tidyverse", "forecast", "gridExtra",
               "tseries", "tsibble", "kableExtra", "urca")
 
 instalados <- paquetes %in% rownames(installed.packages())
@@ -139,18 +152,17 @@ ts_indice_salarios <- indice_salarios$indice_salarios_acumulada %>%
 
 # Introducción
 
-Las series de tiempo son el resultado de observar valores de una variable aleatoria a lo largo del tiempo en intervalos iguales o desiguales. En el analisis de las series temporales se utilizan metodos que permiten interpretarlas y extraer informacion sobre las relaciones entre los datos de la serie u otras series.
+Las series de tiempo son el resultado de observar valores de una variable aleatoria a lo largo del tiempo en intervalos iguales o desiguales. En el análisis de las series temporales se utilizan métodos que permiten interpretarlas y extraer información sobre las relaciones entre los datos de la serie u otras series. 
 
-La inflación puede ser un fenómeno producido por múltiples causas. Uno de los supuestos que puede darle origen es el resultado de la distorsión del mercado debido a aumentos salariales. La percepción individual sugiere que los motivos, en la coyuntura actual, son otros: especulación, emisión, devaluación, exportaciones, monopolios formadores de precios, etc.
+“La inflación es el crecimiento generalizado y continuo de los precios de los bienes y los servicios” ^[Francisco Mochon y Victor Beker. 1997. Economía, Principios y Aplicaciones. Segunda Edición. McGraw Hill pag 496.], y el índice de precios al consumidor (IPC) representa el costo de la canasta de bienes y servicios consumidos por la economía local.
 
-Analizar como evolucionan conjuntamente en el tiempo el **Índice de precios al consumidor** y el **Índice de salarios** puede brindar soporte a la sospecha planteada. Además, esta comparativa muestra cómo se comporta el poder adquisitivo de un empleado. Es posible determinar si se recompone conforme aumentan los precios, acompaña o se abre una brecha que da cuenta de su disminución. 
+El  fenómeno  de la inflación se produce por múltiples causas. Las teorías tradicionales se pueden resumir en: inflación de demanda, que se produce cuando los gastos superan la capacidad de producción de la economía, por causas monetarias, cuando se incrementa la emisión monetaria, la inflación de costos, cuando los precios suben por grupos económicos de presión y la inflación estructural, que es la que se origina debido a los problemas estructurales de las economías en vías de desarrollo.
 
-La información fue extraída de la página oficial del Instituto Nacional de Estadística y Censos - INDEC Argentina:
+La percepción individual sugiere que los motivos, en la coyuntura actual, son variados: especulación, emisión desmedida, presión por devaluación, bajas exportaciones, monopolios formadores de precios, elevado gasto público, mercado laboral altamente regulado, etc.
 
-- [Índice de precios al consumidor](https://www.indec.gob.ar/ftp/cuadros/economia/sh_ipc_10_21.xls)
-- [Índice de salarios](https://www.indec.gob.ar/ftp/cuadros/sociedad/variaciones_salarios_09_21.xls)
+Analizar como evolucionan conjuntamente en el tiempo el Índice de precios al consumidor y el Índice de salarios puede ayudar a clarificar los problemas y soluciones posibles.
 
-Y se considera la variación mensual acumulada estableciendo a Diciembre 2016 como el 100%.
+Además, esta comparativa muestra cómo se comporta el poder adquisitivo de un empleado. Es posible determinar si se recompone conforme aumentan los precios, acompaña o se abre una brecha que da cuenta de su disminución.
 
 ```{r ipc-vs-is, fig.cap="Inflación versus Salarios", fig.height=4, fig.width=10, fig.pos="H"}
 ggplot(raw_data, aes(x = fecha)) +
@@ -167,10 +179,12 @@ ggplot(raw_data, aes(x = fecha)) +
   ggtitle("Inflación versus Salarios")
 ```
 
-Predecir el comportamiento de estos índices puede ser de utilidad para estimar el impacto de un nuevo rumbo en la gestión.
+La información fue extraída de la página oficial del Instituto Nacional de Estadística y Censos - INDEC Argentina:
 
-TODO: agregar que queremos predecir hasta enero 2022.
-TODO: ver si se pueden agregar referencias al indec, o bibliografia.
+- Índice de precios al consumidor
+- Índice de salarios
+
+Y se considera la variación mensual acumulada estableciendo a Diciembre 2016 como el 100%.
 
 \newpage
 
@@ -455,15 +469,31 @@ autoplot(forecast(model_arima_auto_is, h = 9),
 \newpage
 
 # Análisis de Resultados
-\lipsum[1]
-\newpage
+
+Se observa de los análisis realizados que el pronóstico de incremento de IPC es superior al pronóstico de incremento de masa salarial en una ventana de tiempo de considerable amplitud.
+
+No se avisoran condiciones de política económica interna que alteren las tendencias observadas ni se espera cambios en el contexto internacional que ayuden a mejorar este desequilibrio.
 
 # Conclusiones
-\lipsum[1]
+
+Queda en evidencia que la tendencia de estas variables son altamente negativas para la economía local.
+
+De no realizarse cambios en el rumbo económico que impliquen mejoras en: el aspecto financiero (bajar el ritmo de emisión monetaria), incrementar las exportaciones para solventar la balanza de pagos y tipo de cambio, fomentar la producción nacional, para utilizar al máximo la capacidad instalada y poder disminuir las importaciones y luego con el crecimiento disminuir los impuestos para ser más competitivos, no se lograran mejorar los indicadores y el salario real seguirá decreciendo.
+
 \newpage
 
 # Referencias bibliográficas
-\lipsum[1]
+
+F. Mochon, V. Beker (1997). Economía, Principio y Aplicaciones, Segunda Edición, McGraw Hill
+
+R. Dornbusch, Stanley Fischer, (1995)  Macroeconomía, Sexta Edición, McGraw Hill
+
+Instituto Nacional de Estadística y Censos - I.N.D.E.C, Correo electrónico: ces@indec.gob.ar Sitio web: www.indec.gob.ar
+
+Uriel Jiménez, Ezequiel. (1985). Análisis de series temporales. Editorial Paraninfo S.A. Madrid-España.
+
+Peña Sanchez de Rivera, Daniel. (2010). Análisis de series temporales. Alianza Editorial S.A. Madrid-España.
+
 \newpage
 
 # Apéndices
