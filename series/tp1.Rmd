@@ -154,7 +154,7 @@ ts_indice_salarios <- indice_salarios$indice_salarios_acumulada %>%
 
 Las series de tiempo son el resultado de observar valores de una variable aleatoria a lo largo del tiempo en intervalos iguales o desiguales. En el análisis de las series temporales se utilizan métodos que permiten interpretarlas y extraer información sobre las relaciones entre los datos de la serie u otras series. 
 
-Segun @mochon, “La inflación es el crecimiento generalizado y continuo de los precios de los bienes y los servicios” (p. 496), y el índice de precios al consumidor (IPC) representa el costo de la canasta de bienes y servicios consumidos por la economía local.
+Según @mochon, _“La inflación es el crecimiento generalizado y continuo de los precios de los bienes y los servicios”_ (p. 496), y el índice de precios al consumidor (IPC) representa el costo de la canasta de bienes y servicios consumidos por la economía local.
 
 El  fenómeno  de la inflación se produce por múltiples causas. Las teorías tradicionales se pueden resumir en: inflación de demanda, que se produce cuando los gastos superan la capacidad de producción de la economía, por causas monetarias, cuando se incrementa la emisión monetaria, la inflación de costos, cuando los precios suben por grupos económicos de presión y la inflación estructural, que es la que se origina debido a los problemas estructurales de las economías en vías de desarrollo.
 
@@ -196,9 +196,9 @@ Un proceso autorregresivo de orden $p$, $AR(p)$, es definido de la siguiente man
   Y_t = \phi_1Y_{t-1} + \phi_2Y_{t-2} + ... + \phi_pY_{t-p} + \varepsilon_t
 \end{equation}
 
-La idea central es que el valor actual de la serie depende de los $p$ terminos previos de la misma. Es decir, que la serie se explica a si misma.
+La idea central es que el valor actual de la serie depende de los $p$ términos previos de la misma. Es decir, que la serie se explica a si misma.
 
-Por otro lado, un proceso de medias moviles de orden $q$, $MA(q)$, se define de la siguiente manera:
+Por otro lado, un proceso de medias móviles de orden $q$, $MA(q)$, se define de la siguiente manera:
 
 \begin{equation}
   Y_t = \varepsilon_t - \theta_1\varepsilon_{t-1} - \theta_2\varepsilon_{t-2} - ... - \theta_q\varepsilon_{t-q}
@@ -206,34 +206,34 @@ Por otro lado, un proceso de medias moviles de orden $q$, $MA(q)$, se define de 
 
 De forma que el valor de la serie actual puede ser expresado como un promedio ponderado de los errores pasados de la misma.
 
-Combinando los modelos autorregresivos y los modelos de medias moviles se obtienen los modelos $ARMA(p, q)$. El resultado entonces es:
+Combinando los modelos autorregresivos y los modelos de medias móviles se obtienen los modelos $ARMA(p, q)$. El resultado entonces es:
 
 \begin{equation}
   Y_t = \phi_1Y_{t-1} + \phi_2Y_{t-2} + ... + \phi_pY_{t-p} + \varepsilon_t - \theta_1\varepsilon_{t-1} - \theta_2\varepsilon_{t-2} - ... - \theta_q\varepsilon_{t-q}
 \end{equation}
 
-Los modelos autorregresivos y de medias moviles son validos para series de tiempo que son _estacionarias_. Se define que una serie es estacionaria de orden 2 cuando sus segundos momentos son constantes a lo largo del tiempo. Es decir, cuando su media y varianza se mantienen constantes.
+Los modelos autorregresivos y de medias móviles son validos para series de tiempo que son _estacionarias_. Se define que una serie es estacionaria de orden 2 cuando sus segundos momentos son constantes a lo largo del tiempo. Es decir, cuando su media y varianza se mantienen constantes.
 Por lo contrario, una serie es _no estacionaria_ cuando la tendencia y/o la variabilidad cambian a lo largo del tiempo.
 
-El presente trabajo practico tiene como objetivo el analisis y prediccion las series descriptas anteriormente mediante modelos ARMA.
+El presente trabajo practico tiene como objetivo el análisis y predicción las series descriptas anteriormente mediante modelos ARMA.
 
 ## Índice de precios al consumidor
 
 ### Estacionaridad
 
-En la Figura \@ref(fig:ipc), se observa que la serie de IPC es _no estacionaria_ ya que su media varia a lo largo del tiempo y su funcion de autocorrelacion decrece en forma lineal lentamente. En el siguiente TP, se llevara a cabo un test para confirmar esta conjetura.
+En la Figura \@ref(fig:ipc), se observa que la serie de IPC es _no estacionaria_ ya que su media varia a lo largo del tiempo y su función de autocorrelación decrece en forma lineal lentamente. En el siguiente TP, se llevara a cabo un test para confirmar esta conjetura.
 
 ```{r ipc, fig.cap="Índice de precios al consumidor", fig.height=5, fig.width=10, fig.pos="H"}
 ggtsdisplay(ts_indice_precios_consumidor, main = 'Índice de precios al consumidor')
 ```
 
-Como se puede asumir que la tendencia de una serie en el instante $t$ es muy proxima a la del instante $t-1$, se puede formular una nueva serie de la manera $Y_t = y_t - y_{t-1}$. Este proceso se define como _diferenciacion_ y permite transformar una serie no estacionaria a estacionaria. 
+Como se puede asumir que la tendencia de una serie en el instante $t$ es muy próxima a la del instante $t-1$, se puede formular una nueva serie de la manera $Y_t = y_t - y_{t-1}$. Este proceso se define como _diferenciación_ y permite transformar una serie no estacionaria a estacionaria. 
 
 ```{r}
 indice_precios_consumidor_ndiffs <- ndiffs(ts_indice_precios_consumidor)
 ```
 
-Mediante la funcion `ndiffs` de R, se estima que el numero de diferenciaciones necesarias para convertir a la serie IPC en estacionaria (`r indice_precios_consumidor_ndiffs` veces).
+Mediante la función `ndiffs` de R, se estima que el numero de diferenciaciones necesarias para convertir a la serie IPC en estacionaria (`r indice_precios_consumidor_ndiffs` veces).
 
 La Figura \@ref(fig:ipc-diferenciado) muestra el indice de precios al consumidor diferenciado.
 
@@ -246,19 +246,19 @@ ggtsdisplay(dif_ts_indice_precios_consumidor,
             main = "Índice de precios al consumidor: Diferenciado dos veces")
 ```    
 
-La funcion de autocorrelacion (ACF) presenta un lag significativo en 6, por lo que el proceso puede ser modelado con un $MA(6)$. Como ninguno de los lags de la funcion de autocorrelacion parcial (PACF) resultan ser significativos, el proceso no puede ser expresado en un $AR(q)$. #TODO: Referencia?
+La función de autocorrelación (ACF) presenta un lag significativo en 6, por lo que el proceso puede ser modelado con un $MA(6)$. Como ninguno de los lags de la función de autocorrelación parcial (PACF) resultan ser significativos, el proceso no puede ser expresado en un $AR(q)$. #TODO: Referencia?
 
 ### Modelado
 
-Se procede a modelar la serie separando en train y test. El primero contara los datos desde el inicio hasta abril del 2021. Los datos de testing seran desde mayo del 2021 hasta julio de ese mismo anio.
-Se generan dos modelos y se comparan para elegir el mejor segun criterios de informacion.
+Se procede a modelar la serie separando en train y test. El primero contara los datos desde el inicio hasta abril del 2021. Los datos de testing serán desde mayo del 2021 hasta julio de ese mismo año.
+Se generan dos modelos y se comparan para elegir el mejor según criterios de información.
 
 ```{r}
 train_data_ipc <- window(dif_ts_indice_precios_consumidor, end = c(2021, 4))
 test_data_ipc <- window(dif_ts_indice_precios_consumidor, start = c(2021, 5))
 ```
 
-Como primer modelo, se propone el $MA(6)$ descripto anteriormente con su $\theta_6$ distinto de cero y los demas $\phi_i=0$, con $i=1,2,3,4,5$ (ver detalle del modelo en [Apendice](#ap-ipc-modelo-ma)). El segundo modelo propuesto es un $MA(2)$ obtenido con la funcion `auto.arima` del paquete `forecast` en R (ver detalle del modelo en [Apendice](#ap-ipc-modelo-auto-arima)). 
+Como primer modelo, se propone el $MA(6)$ descripto anteriormente con su $\theta_6$ distinto de cero y los demás $\phi_i=0$, con $i=1,2,3,4,5$ (ver detalle del modelo en [Apendice](#ap-ipc-modelo-ma)). El segundo modelo propuesto es un $MA(2)$ obtenido con la función `auto.arima` del paquete `forecast` en R (ver detalle del modelo en [Apendice](#ap-ipc-modelo-auto-arima)). 
 
 ```{r}
 model_ma_ipc <- arima(train_data_ipc, 
@@ -271,7 +271,7 @@ model_auto_ipc <- auto.arima(train_data_ipc)
 
 ### Métricas de performance
 
-Las metricas de los modelos propuestos se detallan a continuacion.
+Las métricas de los modelos propuestos se detallan a continuación.
 
 ```{r modelos-ipc}
 forecast_model_ma_ipc <- forecast(model_ma_ipc, h = length(test_data_ipc))
@@ -297,11 +297,11 @@ rbind(metrics_model_ma_ipc, metrics_model_auto_ipc) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-El modelo $MA(6)$ es elegido por sobre al $MA(2)$ ya que si bien ambos "empatan" en cuanto a los criterios AIC y BIC, el primero es mas parsimonioso por tener un solo parametro $\theta_6$.
+El modelo $MA(6)$ es elegido por sobre al $MA(2)$ ya que si bien ambos "empatan" en cuanto a los criterios AIC y BIC, el primero es mas parsimonioso por tener un solo parámetro $\theta_6$.
 
 ### Análisis de diagnóstico
 
-Se detalla el analisis de los residuos del modelo elegido en la Figura \@ref(fig:residuos-modelo-ipc).
+Se detalla el análisis de los residuos del modelo elegido en la Figura \@ref(fig:residuos-modelo-ipc).
 
 ```{r residuos-modelo-ipc, fig.cap="Residuos modelo MA(6) para IPC", fig.height=3.5, fig.width=10, warning=FALSE, fig.pos="H"}
 residuos_ma <- residuals(model_ma_ipc)
@@ -312,20 +312,20 @@ ggtsdisplay(residuos_ma,
             plot.type = "histogram")
 ```
 
-El modelo presenta un buen ajuste debido a que sus residuos son "white noise", es decir, no estan autocorrelados y $\varepsilon\sim~N(0,1)$. 
+El modelo presenta un buen ajuste debido a que sus residuos son "white noise", es decir, no están autocorrelados y $\varepsilon\sim~N(0,1)$. 
 
 ```{r lb-residuos-modelo-ipc}
 test_incorrelation(residuals(model_ma_ipc), title = "Pruebas de incorrelacion de los residuos del modelo MA(6) de IPC")
 ```
 
-La Tabla \@ref(tab:lb-residuos-modelo-ipc) muestra los valores de los test de Box-Pierce y Ljung-Box para los residuos. Los mismos plantean la siguiente hipotesis:
+La Tabla \@ref(tab:lb-residuos-modelo-ipc) muestra los valores de los test de Box-Pierce y Ljung-Box para los residuos. Los mismos plantean la siguiente hipótesis:
 \begin{align}
   & H_0)\rho_1(Y)=\rho_2(Y)=...=\rho_j(Y)=0, (j=1,2,...) \notag \\
   & H_1)\exists\rho_j(Y)/\rho_j(Y)\neq0 (\#eq:box-pierce)
 \end{align}
-El test de Box-Pierce utiliza a $\sigma^2(\hat{\rho_j}(Y))\cong1/n$ como estimador de la varianza, lo que produce un sesgo al no rechazo de la hipotesis nula que los $\rho_1(Y)=\rho_2(Y)=...=\rho_j(Y)=0$. #TODO: agregar referencia?. El test de Ljung-Box utiliza otra estimacion de la varianza para corregir el sesgo.
+El test de Box-Pierce utiliza a $\sigma^2(\hat{\rho_j}(Y))\cong1/n$ como estimador de la varianza, lo que produce un sesgo al no rechazo de la hipótesis nula que los $\rho_1(Y)=\rho_2(Y)=...=\rho_j(Y)=0$. #TODO: agregar referencia?. El test de Ljung-Box utiliza otra estimación de la varianza para corregir el sesgo.
 
-Ambos tests poseen valores no significativos para todos los lags, por lo que no se rechaza la hipotesis nula de coeficientes de autocorrelacion iguales a cero.
+Ambos tests poseen valores no significativos para todos los lags, por lo que no se rechaza la hipótesis nula de coeficientes de autocorrelación iguales a cero.
 
 ```{r}
 shapiro_residuos_ma_ipc <- shapiro.test(residuals(model_ma_ipc))[["p.value"]]
@@ -336,7 +336,7 @@ Para la validar la normalidad de los residuos, se utiliza el test de Shapiro-Wil
   H_0)X\sim N(\mu, \sigma^2) \notag \\
   H_1)X\nsim N(\mu, \sigma^2) (\#eq:shapiro-wilk)
 \end{align}
-El p-value del test es de `r shapiro_residuos_ma_ipc`, mayor a $\alpha=0.05$, por lo que no se puede rechazar la hipotesis de normalidad.
+El p-value del test es de `r shapiro_residuos_ma_ipc`, mayor a $\alpha=0.05$, por lo que no se puede rechazar la hipótesis de normalidad.
 
 Se concluye que el modelo presenta un buen ajuste a los datos.
 
@@ -385,7 +385,7 @@ dif_ts_indice_salarios <- ts_indice_salarios %>% diff(1)
 ggtsdisplay(dif_ts_indice_salarios, 
             main = "Índice de Salarios: Diferenciado")
 ```
-En ambos ACF y PACF los lags 1 son significativos, por lo que se podria modelar con un ARMA(1,1). TODO: referencia
+En ambos ACF y PACF los lags 1 son significativos, por lo que se podría modelar con un ARMA(1,1). TODO: referencia
 
 ### Modelado
 
@@ -444,14 +444,14 @@ ggtsdisplay(residuals(model_auto_is),
             plot.type = "histogram")
 ```
 
-Los residuos del modelo elegido no estan autocorrelacionados y se distribuyen aproximadamente normal.
-Se confirman dichos hipotesis con los siguientes tests.
+Los residuos del modelo elegido no están autocorrelacionados y se distribuyen aproximadamente normal.
+Se confirman dichos hipótesis con los siguientes tests.
 
 ```{r}
 test_incorrelation(residuals(model_auto_is))
 ```
 
-Los tests coinciden que no existe correlacion en los residuos del modelo.
+Los tests coinciden que no existe correlación en los residuos del modelo.
 
 La normalidad de los errores se corrobora a partir del test de Shapiro-Wilk con un p-value `r shapiro.test(residuals(model_auto_is))[["p.value"]]`.
 
