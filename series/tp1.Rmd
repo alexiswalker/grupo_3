@@ -56,13 +56,17 @@ output:
 \setlength{\parskip}{0.5em}
 \setlength{\parindent}{0em}
 
-\noindent El presente trabajo tiene por objetivo estudiar la relación entre dos variables económicas fundamentales, el IPC (Indice de precios al Consumidor) y el índice de Salarios
+\noindent El presente trabajo tiene por objetivo estudiar la relación entre dos variables económicas fundamentales, el IPC (Indice de precios al Consumidor) y el índice de Salarios.
 
-Ambos indicadores son considerados fundamentales para el desarrollo de un país ya que conllevan en la relación entre ambos. Por un lado como evoluciona en nivel de vida de la población, si es que los salarios se incrementan en mayor proporción que los bienes y servicios, con la consiguiente mejora en el bienestar además del incremento de la producción de bienes y servicios que ocasiona la mayor demanda, o, como se demostrará en el desarrollo del presente, los indicadores de incremento de bienes y servicios crecen a mayor ritmo que los salarios, disminuyendo el bienestar de la masa asalariada.
+Ambos indicadores son considerados fundamentales para el desarrollo de un país ya que conllevan, en la relación entre ambos, dos efectos antagónicos según se comporten. 
 
-Como resultado de este proceso inflacionario y de baja demanda interna hay que mencionar que esto perjudica a los sectores productores de bienes y servicios internos.
+Por un lado, cómo evoluciona en nivel de vida de la población. Si los salarios se incrementan en mayor proporción que los bienes y servicios, consiguientemente se mejora el bienestar además del incremento de la producción ocasionando mayor demanda.
 
-Las causas que originan el fenómeno de inflación  no serán tratadas por lo complejo y extenso que es el tema.
+Por otro, como se demostrará en el desarrollo del presente, Si los indicadores de incremento de bienes y servicios crecen a mayor ritmo que los salarios, disminuye el bienestar de la masa asalariada.
+
+Como resultado de este proceso inflacionario y de baja demanda interna hay que mencionar que esto perjudica a los sectores productivos internos.
+
+Las causas que originan el fenómeno de inflaciónno serán tratadas por lo complejo y extenso que es el tema.
 
 \newpage
 
@@ -328,7 +332,7 @@ Se concluye entonces que el modelo planteado presenta un buen ajuste a los datos
 
 ### Pronóstico
 
-Se comparan los modelos analizados en una prueba de pronóstico (Figura \@ref(fig:ipc-pronostico)).
+Se realiza una prueba de pronóstico (Figura \@ref(fig:ipc-pronostico)).
 
 ```{r ipc-pronostico, fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
 model_arima_ma_ipc <- arima(window(ts_indice_precios_consumidor, end = c(2021, 4)), 
@@ -340,7 +344,6 @@ autoplot(forecast(model_arima_ma_ipc, h = 9),
          ylab = 'Porcentaje Acumulado',
          main = 'Indice de Precios al Consumidor')
 ```
-
 
 \newpage
 
@@ -451,9 +454,9 @@ Se concluye que el modelo presenta un buen ajuste a los datos.
 
 ### Pronóstico
 
-Se comparan los modelos analizados en una prueba de pronóstico (Fig. 11).
+Se realiza una prueba de pronóstico (Figura \@ref(fig:is-pronostico)).
 
-```{r fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
+```{r is-pronostico, fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
 model_arima_auto_is <- auto.arima(window(ts_indice_salarios, end = c(2021, 4)))
 autoplot(forecast(model_arima_auto_is, h = 9), 
          ylab = 'Porcentaje Acumulado',
@@ -479,8 +482,6 @@ De no realizarse cambios en el rumbo económico que impliquen mejoras en: el asp
 # Referencias bibliográficas
 
 <div id="refs"></div>
-
-
 
 \newpage
 
