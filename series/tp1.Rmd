@@ -184,7 +184,7 @@ La información fue extraída de la página oficial del Instituto Nacional de Es
 - Índice de precios al consumidor
 - Índice de salarios
 
-Y se considera la variación mensual acumulada estableciendo a Diciembre 2016 como el 100%.
+Se considera la variación mensual acumulada estableciendo a Diciembre 2016 como el 100% y se pretende predecir los cambios de las series para Enero 2022.
 
 \newpage
 
