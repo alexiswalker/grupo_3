@@ -250,7 +250,7 @@ La función de autocorrelación (ACF) presenta un lag significativo en 6, por lo
 
 ### Modelado
 
-Se procede a modelar la serie separando en train y test. El primero contara los datos desde el inicio hasta abril del 2021. Los datos de testing serán desde mayo del 2021 hasta julio de ese mismo año.
+Se procede a modelar la serie separando en train y test. El primero contará los datos desde el inicio hasta abril del 2021. Los datos de testing serán desde mayo del 2021 hasta julio de ese mismo año.
 Se generan dos modelos y se comparan para elegir el mejor según criterios de información.
 
 ```{r}
@@ -271,7 +271,7 @@ model_auto_ipc <- auto.arima(train_data_ipc)
 
 ### Métricas de performance
 
-Las métricas de los modelos propuestos se detallan a continuación.
+Las métricas de los modelos propuestos se detallan en la Tabla \@ref(tab:modelos-ipc)
 
 ```{r modelos-ipc}
 forecast_model_ma_ipc <- forecast(model_ma_ipc, h = length(test_data_ipc))
@@ -301,8 +301,6 @@ El modelo $MA(6)$ es elegido por sobre al $MA(2)$ ya que si bien ambos "empatan"
 
 ### Análisis de diagnóstico
 
-Se detalla el análisis de los residuos del modelo elegido en la Figura \@ref(fig:residuos-modelo-ipc).
-
 ```{r residuos-modelo-ipc, fig.cap="Residuos modelo MA(6) para IPC", fig.height=3.5, fig.width=10, warning=FALSE, fig.pos="H"}
 residuos_ma <- residuals(model_ma_ipc)
 
@@ -311,6 +309,8 @@ ggtsdisplay(residuos_ma,
             main = "Residuos MA(6)", 
             plot.type = "histogram")
 ```
+
+Se detalla el análisis de los residuos del modelo elegido en la Figura \@ref(fig:residuos-modelo-ipc).
 
 El modelo presenta un buen ajuste debido a que sus residuos son "white noise", es decir, no están autocorrelados y $\varepsilon\sim~N(0,1)$. 
 
@@ -342,9 +342,9 @@ Se concluye que el modelo presenta un buen ajuste a los datos.
 
 ### Pronóstico
 
-Se comparan los modelos analizados en una prueba de pronóstico (Fig. 11).
+Se comparan los modelos analizados en una prueba de pronóstico (Figura \@ref(fig:ipc-pronostico)).
 
-```{r fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
+```{r ipc-pronostico, fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
 model_arima_ma_ipc <- arima(window(ts_indice_precios_consumidor, end = c(2021, 4)), 
                             order = c(0, 2, 6), 
                             fixed = c(0, 0, 0, 0, 0, NA), 
@@ -362,33 +362,40 @@ autoplot(forecast(model_arima_ma_ipc, h = 9),
 
 ### Estacionaridad
 
-Se puede observar en la gráfica de autocorrelación (Fig. 5) que la serie de Índices de Salarios tiene el mismo comportamiento que la anterior.
+En la Figura \@ref(fig:is) se observa que, al igual que la serie de IPC, el Índice de Salarios tampoco es estacionario, su media varia a lo largo del
+tiempo y su función de autocorrelación también decrece lentamente en forma lineal.
 
-```{r fig.cap="Índice de Salarios", fig.height=5, fig.width=10, fig.pos="H"}
+Mediante la función ndiffs de R, se estima que el número de diferenciaciones necesarias para convertir la serie en estacionaria. El resultado obtenido es `r ndiffs(ts_indice_salarios)`.
+
+```{r is, fig.cap="Índice de Salarios", fig.height=5, fig.width=10, fig.pos="H"}
 ggtsdisplay(ts_indice_salarios, main = "Índice de Salarios")
 ```
-
 
 ```{r}
 indice_salarios_ndiffs <- ndiffs(ts_indice_salarios)
 ```
 
-Se estima el número de diferenciaciones regulares y estacionales que deberían llevarse a cabo para que la serie sea estacionaria.
-
-- Número de diferenciaciones regulares: `r indice_salarios_ndiffs`
-
-Y se procese a su ejecución conforme el resultado sugerido.
-
-```{r fig.cap="Índice de Salarios y su tendencia", fig.height=5, fig.width=10, fig.pos="H"}
+```{r is-diferenciado, fig.cap="Índice de Salarios y su tendencia", fig.height=5, fig.width=10, fig.pos="H"}
 dif_ts_indice_salarios <- ts_indice_salarios %>% diff(1)
 
 ggtsdisplay(dif_ts_indice_salarios, 
             main = "Índice de Salarios: Diferenciado")
 ```
-En ambos ACF y PACF los lags 1 son significativos, por lo que se podría modelar con un ARMA(1,1). TODO: referencia
+
+Se procese a su ejecución conforme el resultado sugerido. La Figura \@ref(fig:is-diferenciado) muestra el índice de precios al consumidor diferenciado.
+
+Tanto la función de autocorrelación (ACF) com la de autocorrelación parcial (PACF) presentan un lag significativo en 1, por lo que el proceso puede ser
+modelado con un $ARMA(1,1)$.
 
 ### Modelado
 
+Se procede a modelar los datos separándolos en train y test (de igual manera que la serie anterior): desde el inicio hasta abril del 2021 para entrenamiento y el resto (mayo del 2021 hasta julio del 2021) para pruebas.
+
+Se generan dos modelos y se comparan para elegir el mejor según criterios de información.
+
+El primero, según lo mencionado, es un $ARMA(1,1)$ (ver detalle del modelo en [Apéndice](#ap-is-modelo-arma)).
+
+El segundo es un modelo $AR(1)$  estacionario con un período igual a 12, obtenido con la función auto.arima del paquete forecast en R (ver detalle del modelo en [Apéndice](#ap-is-modelo-auto-arima)).
 
 ```{r}
 train_data_is <- window(dif_ts_indice_salarios, end = c(2021, 04))
@@ -397,19 +404,17 @@ test_data_is <- window(dif_ts_indice_salarios, start = c(2021, 05))
 
 ```{r}
 model_arma_is <- arima(train_data_is, order = c(1,0,1))
-summary(model_arma_is)
 ```
 
 ```{r}
 model_auto_is <- auto.arima(train_data_is)
-summary(model_auto_is)
 ```
 
 ### Métricas de performance
 
-Se resumen las métricas para ambos modelos (Tabla 5 y 6).
+Las métricas de los modelos propuestos se detallan en la Tabla \@ref(tab:modelos-is)
 
-```{r}
+```{r modelos-is}
 forecast_model_arma_is <- forecast(model_arma_is, h = length(test_data_is))
 accuracy_model_arma_is <- accuracy(test_data_is, forecast_model_arma_is$mean)
 
@@ -433,27 +438,30 @@ rbind(metrics_model_arma_is, metrics_model_auto_is) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-TODO: elegimos autoarima
+El modelo que resutltó del proceso iterativo propuesto por la función auto.arima tiene se comporta con índice superiores. Por lo que el modelo $AR(1)$  estacionario con un período igual a 12 es el elegido para realizar el pronósito (en la medida que sus residuos se comportes según supuestos).
 
 ### Análisis de diagnóstico
 
-```{r fig.cap="Residuos", fig.height=3.5, fig.width=10, warning=FALSE, fig.pos="H"}
+```{r residuos-modelo-is, fig.cap="Residuos", fig.height=3.5, fig.width=10, warning=FALSE, fig.pos="H"}
 ggtsdisplay(residuals(model_auto_is), 
             lag.max = 24, 
             main = 'Residuos SARIMA(1,0,0)(1,0,0)[12]', 
             plot.type = "histogram")
 ```
 
-Los residuos del modelo elegido no están autocorrelacionados y se distribuyen aproximadamente normal.
-Se confirman dichos hipótesis con los siguientes tests.
+Se detalla el análisis de los residuos del modelo elegido en la Figura \@ref(fig:residuos-modelo-is).
 
-```{r}
+Presenta un buen ajuste debido a que sus residuos son "white noise", es decir, no están autocorrelados y $\varepsilon\sim~N(0,1)$. 
+
+```{r lb-residuos-modelo-is}
 test_incorrelation(residuals(model_auto_is))
 ```
 
-Los tests coinciden que no existe correlación en los residuos del modelo.
+La Tabla \@ref(tab:lb-residuos-modelo-is) muestra los valores de los test de Box-Pierce y Ljung-Box para los residuos. Ambos tests poseen valores no significativos para todos los lags, por lo que no se rechaza la hipótesis nula de coeficientes de autocorrelación iguales a cero.
 
 La normalidad de los errores se corrobora a partir del test de Shapiro-Wilk con un p-value `r shapiro.test(residuals(model_auto_is))[["p.value"]]`.
+
+Se concluye que el modelo presenta un buen ajuste a los datos.
 
 ### Pronóstico
 
@@ -492,7 +500,7 @@ De no realizarse cambios en el rumbo económico que impliquen mejoras en: el asp
 
 # Apéndices
 
-## Modelo MA(6) para IPC {#ap-ipc-modelo-ma}
+## Modelo $MA(6)$ para IPC {#ap-ipc-modelo-ma}
 
 ```{r}
 summary(model_ma_ipc)
@@ -504,7 +512,17 @@ summary(model_ma_ipc)
 summary(model_auto_ipc)
 ```
 
+## Modelo $ARMA(1,1)$ para Índice de Salarios {#ap-is-modelo-arma}
 
+```{r}
+summary(model_arma_is)
+```
+
+## Modelo auto.arima para Índice de Salarios {#ap-is-modelo-auto-arima}
+
+```{r}
+summary(model_auto_is)
+```
 
 ## Decomposición
 
