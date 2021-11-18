@@ -332,7 +332,7 @@ Se concluye entonces que el modelo planteado presenta un buen ajuste a los datos
 
 ### Pronóstico
 
-Se realiza una prueba de pronóstico (Figura \@ref(fig:ipc-pronostico)).
+Se pronostica 9 periodos para llegar al objetivo de enero 2022 en la fig. \@ref(fig:ipc-pronostico) junto a sus intervalos de confianza.
 
 ```{r ipc-pronostico, fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
 model_arima_ma_ipc <- arima(window(ts_indice_precios_consumidor, end = c(2021, 4)), 
@@ -346,6 +346,8 @@ autoplot(forecast_model_arima_ipc,
          ylab = 'Porcentaje Acumulado',
          main = 'Indice de Precios al Consumidor')
 ```
+
+Los valores exactos junto a su valores de test se encuentran en el [Apéndice](#ap-forecast-ipc).
 
 \newpage
 
@@ -450,9 +452,9 @@ Se concluye que el modelo seleccionado presenta un buen ajuste a los datos.
 
 ### Pronóstico
 
-Se realiza una prueba de pronóstico (Figura \@ref(fig:is-pronostico)).
+Las predicciones del modelo actual se detallan en la fig. \@ref(fig:is-pronostico).
 
-```{r is-pronostico, fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
+```{r is-pronostico, fig.cap="Pronóstico indice de salarios", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
 model_arima_auto_is <- auto.arima(window(ts_indice_salarios, end = c(2021, 4)))
 
 forecast_model_arima_is <- forecast(model_arima_auto_is, h = 9)
@@ -461,6 +463,8 @@ autoplot(forecast_model_arima_is,
          ylab = 'Porcentaje Acumulado',
          main = 'Indice de Salarios')
 ```
+
+Los valores exactos junto a su valores de test se encuentran en el [Apéndice](#ap-forecast-is).
 
 \newpage
 
@@ -507,16 +511,7 @@ De no realizarse cambios en el rumbo económico que impliquen mejoras en: el asp
 summary(model_ma_ipc)
 ```
 
-
-```{r}
-model_arima_auto_is <- auto.arima(window(ts_indice_salarios, end = c(2021, 4)))
-
-forecast_model_auto_ipc$mean
-```
-
-model_ma_ipc
-
-## Modelo auto.arima para IPC {#ap-ipc-modelo-auto-arima}
+## Modelo auto.arima para Índice de Precios al Consumidor {#ap-ipc-modelo-auto-arima}
 
 ```{r}
 summary(model_auto_ipc)
@@ -534,47 +529,36 @@ summary(model_arma_is)
 summary(model_auto_is)
 ```
 
-## Real versus Estimado
+## Valores reales versus pronosticos 
 
-### Índice de precios al consumidor
+### Índice de precios al consumidor {#ap-forecast-ipc}
 
 ```{r}
 bind_cols(
-  window(ts_indice_precios_consumidor, start = c(2021, 5)) %>% as_tsibble()  %>% rename(real = value, mes = index),
-  forecast(model_arima_ma_ipc, h = 3) %>% as_tibble() %>% select('Point Forecast') %>% rename(estimado = 'Point Forecast')
+  window(ts_indice_precios_consumidor, start = c(2021, 5)) %>% 
+    as_tsibble() %>% 
+    rename(real = value, mes = index),
+  forecast(model_arima_ma_ipc, h = 3) %>% 
+    as_tibble() %>% 
+    select('Point Forecast') %>% 
+    rename(estimado = 'Point Forecast')
   ) %>% 
   kable(booktabs = T, caption = "IPC - Real versus Estimado ", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-### Índice de Salarios
+### Índice de Salarios {#ap-forecast-is}
 
 ```{r}
 bind_cols(
-  window(ts_indice_salarios, start = c(2021, 5)) %>% as_tsibble()  %>% rename(real = value, mes = index),
-  forecast(model_arima_auto_is, h = 3) %>% as_tibble() %>% select('Point Forecast') %>% rename(estimado = 'Point Forecast')
+  window(ts_indice_salarios, start = c(2021, 5)) %>% 
+    as_tsibble() %>% 
+    rename(real = value, mes = index),
+  forecast(model_arima_auto_is, h = 3) %>% 
+    as_tibble() %>% 
+    select('Point Forecast') %>% 
+    rename(estimado = 'Point Forecast')
   ) %>% 
   kable(booktabs = T, caption = "Índice de Salarios - Real versus Estimado ", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
-```
-
-
-## Decomposición
-
-### Índice de precios al consumidor
-
-```{r fig.cap="Funciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
-decompose_plot <- dif_ts_indice_precios_consumidor %>%
-  decompose(type = "additive") %>%
-  autoplot(ts.colour = "steelblue")
-decompose_plot + xlab("Tiempo") + ggtitle("Descoposición aditiva")
-```
-
-### Índice de Salarios
-
-```{r fig.cap="Funciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
-decompose_plot <- dif_ts_indice_salarios %>%
-  decompose(type = "additive") %>%
-  autoplot(ts.colour = "steelblue")
-decompose_plot + xlab("Tiempo") + ggtitle("Descoposición aditiva")
 ```
