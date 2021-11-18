@@ -507,7 +507,16 @@ De no realizarse cambios en el rumbo económico que impliquen mejoras en: el asp
 summary(model_ma_ipc)
 ```
 
-## Modelo auto.arima para Índice de Precios al Consumidor {#ap-ipc-modelo-auto-arima}
+
+```{r}
+model_arima_auto_is <- auto.arima(window(ts_indice_salarios, end = c(2021, 4)))
+
+forecast_model_auto_ipc$mean
+```
+
+model_ma_ipc
+
+## Modelo auto.arima para IPC {#ap-ipc-modelo-auto-arima}
 
 ```{r}
 summary(model_auto_ipc)
@@ -523,4 +532,49 @@ summary(model_arma_is)
 
 ```{r}
 summary(model_auto_is)
+```
+
+## Real versus Estimado
+
+### Índice de precios al consumidor
+
+```{r}
+bind_cols(
+  window(ts_indice_precios_consumidor, start = c(2021, 5)) %>% as_tsibble()  %>% rename(real = value, mes = index),
+  forecast(model_arima_ma_ipc, h = 3) %>% as_tibble() %>% select('Point Forecast') %>% rename(estimado = 'Point Forecast')
+  ) %>% 
+  kable(booktabs = T, caption = "IPC - Real versus Estimado ", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+### Índice de Salarios
+
+```{r}
+bind_cols(
+  window(ts_indice_salarios, start = c(2021, 5)) %>% as_tsibble()  %>% rename(real = value, mes = index),
+  forecast(model_arima_auto_is, h = 3) %>% as_tibble() %>% select('Point Forecast') %>% rename(estimado = 'Point Forecast')
+  ) %>% 
+  kable(booktabs = T, caption = "Índice de Salarios - Real versus Estimado ", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+
+## Decomposición
+
+### Índice de precios al consumidor
+
+```{r fig.cap="Funciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
+decompose_plot <- dif_ts_indice_precios_consumidor %>%
+  decompose(type = "additive") %>%
+  autoplot(ts.colour = "steelblue")
+decompose_plot + xlab("Tiempo") + ggtitle("Descoposición aditiva")
+```
+
+### Índice de Salarios
+
+```{r fig.cap="Funciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
+decompose_plot <- dif_ts_indice_salarios %>%
+  decompose(type = "additive") %>%
+  autoplot(ts.colour = "steelblue")
+decompose_plot + xlab("Tiempo") + ggtitle("Descoposición aditiva")
 ```
