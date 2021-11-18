@@ -1,15 +1,17 @@
 ---
 title:  | 
-        Trabajo Práctico N° 1
+  Trabajo Práctico N° 1
 subtitle: |
-          Análisis de Series Temporales
+  Análisis de Series Temporales
       
-          Maestría en Explotación de Datos y Gestión del Conocimiento
+  Maestría en Explotación de Datos y Gestión del Conocimiento
 author: |
-        Layla Scheli, Franco Lianza, Lucio Scalzo, Ignacio Mujica, Alexis Walker
+  Layla Scheli, Franco Lianza, Lucio Scalzo, Ignacio Mujica, Alexis Walker
 date: |
-      `r format(Sys.time(), '%d %B %Y')`
-
+  `r format(Sys.time(), '%d %B %Y')`
+bibliography: bibliografia.bib
+biblio-style: "apa"
+link-citations: true
 
 header-includes:
 - \usepackage{titling}
@@ -127,8 +129,6 @@ bic_grid_search <- function(ts, p = 1, q = 1){
 }
 ```
 
-<!-- datos -->
-
 ```{r}
 raw_data <- read_csv(
   file = "https://docs.google.com/uc?id=16we_OjrEZxBUwaQKOh3QAoW5YwfcEg1E",
@@ -154,7 +154,7 @@ ts_indice_salarios <- indice_salarios$indice_salarios_acumulada %>%
 
 Las series de tiempo son el resultado de observar valores de una variable aleatoria a lo largo del tiempo en intervalos iguales o desiguales. En el análisis de las series temporales se utilizan métodos que permiten interpretarlas y extraer información sobre las relaciones entre los datos de la serie u otras series. 
 
-“La inflación es el crecimiento generalizado y continuo de los precios de los bienes y los servicios” ^[Francisco Mochon y Victor Beker. 1997. Economía, Principios y Aplicaciones. Segunda Edición. McGraw Hill pag 496.], y el índice de precios al consumidor (IPC) representa el costo de la canasta de bienes y servicios consumidos por la economía local.
+Segun @mochon, “La inflación es el crecimiento generalizado y continuo de los precios de los bienes y los servicios” (p. 496), y el índice de precios al consumidor (IPC) representa el costo de la canasta de bienes y servicios consumidos por la economía local.
 
 El  fenómeno  de la inflación se produce por múltiples causas. Las teorías tradicionales se pueden resumir en: inflación de demanda, que se produce cuando los gastos superan la capacidad de producción de la economía, por causas monetarias, cuando se incrementa la emisión monetaria, la inflación de costos, cuando los precios suben por grupos económicos de presión y la inflación estructural, que es la que se origina debido a los problemas estructurales de las economías en vías de desarrollo.
 
@@ -484,15 +484,9 @@ De no realizarse cambios en el rumbo económico que impliquen mejoras en: el asp
 
 # Referencias bibliográficas
 
-F. Mochon, V. Beker (1997). Economía, Principio y Aplicaciones, Segunda Edición, McGraw Hill
+<div id="refs"></div>
 
-R. Dornbusch, Stanley Fischer, (1995)  Macroeconomía, Sexta Edición, McGraw Hill
 
-Instituto Nacional de Estadística y Censos - I.N.D.E.C, Correo electrónico: ces@indec.gob.ar Sitio web: www.indec.gob.ar
-
-Uriel Jiménez, Ezequiel. (1985). Análisis de series temporales. Editorial Paraninfo S.A. Madrid-España.
-
-Peña Sanchez de Rivera, Daniel. (2010). Análisis de series temporales. Alianza Editorial S.A. Madrid-España.
 
 \newpage
 
