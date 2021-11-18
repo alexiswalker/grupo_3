@@ -178,25 +178,25 @@ TODO: ver si se pueden agregar referencias al indec, o bibliografia.
 
 Un proceso autorregresivo de orden $p$, $AR(p)$, es definido de la siguiente manera:
 
-$$
-Y_t = \phi_1Y_{t-1} + \phi_2Y_{t-2} + ... + \phi_pY_{t-p} + \varepsilon_t
-$$
+\begin{equation}
+  Y_t = \phi_1Y_{t-1} + \phi_2Y_{t-2} + ... + \phi_pY_{t-p} + \varepsilon_t
+\end{equation}
 
 La idea central es que el valor actual de la serie depende de los $p$ terminos previos de la misma. Es decir, que la serie se explica a si misma.
 
 Por otro lado, un proceso de medias moviles de orden $q$, $MA(q)$, se define de la siguiente manera:
 
-$$
-Y_t = \varepsilon_t - \theta_1\varepsilon_{t-1} - \theta_2\varepsilon_{t-2} - ... - \theta_q\varepsilon_{t-q}
-$$
+\begin{equation}
+  Y_t = \varepsilon_t - \theta_1\varepsilon_{t-1} - \theta_2\varepsilon_{t-2} - ... - \theta_q\varepsilon_{t-q}
+\end{equation}
 
 De forma que el valor de la serie actual puede ser expresado como un promedio ponderado de los errores pasados de la misma.
 
 Combinando los modelos autorregresivos y los modelos de medias moviles se obtienen los modelos $ARMA(p, q)$. El resultado entonces es:
 
-$$
-Y_t = \phi_1Y_{t-1} + \phi_2Y_{t-2} + ... + \phi_pY_{t-p} + \varepsilon_t - \theta_1\varepsilon_{t-1} - \theta_2\varepsilon_{t-2} - ... - \theta_q\varepsilon_{t-q}
-$$
+\begin{equation}
+  Y_t = \phi_1Y_{t-1} + \phi_2Y_{t-2} + ... + \phi_pY_{t-p} + \varepsilon_t - \theta_1\varepsilon_{t-1} - \theta_2\varepsilon_{t-2} - ... - \theta_q\varepsilon_{t-q}
+\end{equation}
 
 Los modelos autorregresivos y de medias moviles son validos para series de tiempo que son _estacionarias_. Se define que una serie es estacionaria de orden 2 cuando sus segundos momentos son constantes a lo largo del tiempo. Es decir, cuando su media y varianza se mantienen constantes.
 Por lo contrario, una serie es _no estacionaria_ cuando la tendencia y/o la variabilidad cambian a lo largo del tiempo.
