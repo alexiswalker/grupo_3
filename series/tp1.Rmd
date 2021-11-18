@@ -283,28 +283,48 @@ rbind(metrics_model_ma_ipc, metrics_model_auto_ipc) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-Por Parsimonia, se selecciona el modelo ARMA(0,6) ya que sus $\theta_i=0$ cuando $i=1,2,3,4,5$, y $\phi_6=0.3102$.
+El modelo $MA(6)$ es elegido por sobre al $MA(2)$ ya que si bien ambos "empatan" en cuanto a los criterios AIC y BIC, el primero es mas parsimonioso por tener un solo parametro $\theta_6$.
 
 ### Análisis de diagnóstico
 
-```{r fig.cap="Residuos", fig.height=3.5, fig.width=10, warning=FALSE, fig.pos="H"}
-ggtsdisplay(residuals(model_ma_ipc), 
+Se detalla el analisis de los residuos del modelo elegido en la Figura \@ref(fig:residuos-modelo-ipc).
+
+```{r residuos-modelo-ipc, fig.cap="Residuos modelo MA(6) para IPC", fig.height=3.5, fig.width=10, warning=FALSE, fig.pos="H"}
+residuos_ma <- residuals(model_ma_ipc)
+
+ggtsdisplay(residuos_ma, 
             lag.max = 24, 
-            main = 'Residuos ARMA(0,6)', 
+            main = "Residuos MA(6)", 
             plot.type = "histogram")
 ```
 
-Los residuos del modelo elegido no estan autocorrelacionados y se distribuyen aproximadamente normal.
-Se confirman dichos hipotesis con los siguientes tests.
+El modelo presenta un buen ajuste debido a que sus residuos son "white noise", es decir, no estan autocorrelados y $\varepsilon\sim~N(0,1)$. 
 
-```{r}
-test_incorrelation(residuals(model_ma_ipc))
+```{r lb-residuos-modelo-ipc}
+test_incorrelation(residuals(model_ma_ipc), title = "Pruebas de incorrelacion de los residuos del modelo MA(6) de IPC")
 ```
 
-El test de Box-Pierce utiliza a $\sigma^2(\hat{\rho_j}(Y))\cong1/n$ como estimador de la varianza, lo que produce un sesgo al no rechazo de la hipotesis nula que los $\rho_1(Y)=\rho_2(Y)=...=\rho_j(Y)=0$. TODO: agregar referencia URIEL.
-Aun asi, ambos tests coinciden que no existe correlacion en los residuos del modelo.
+La Tabla \@ref(tab:lb-residuos-modelo-ipc) muestra los valores de los test de Box-Pierce y Ljung-Box para los residuos. Los mismos plantean la siguiente hipotesis:
+\begin{align}
+  & H_0)\rho_1(Y)=\rho_2(Y)=...=\rho_j(Y)=0, (j=1,2,...) \notag \\
+  & H_1)\exists\rho_j(Y)/\rho_j(Y)\neq0 (\#eq:box-pierce)
+\end{align}
+El test de Box-Pierce utiliza a $\sigma^2(\hat{\rho_j}(Y))\cong1/n$ como estimador de la varianza, lo que produce un sesgo al no rechazo de la hipotesis nula que los $\rho_1(Y)=\rho_2(Y)=...=\rho_j(Y)=0$. #TODO: agregar referencia?. El test de Ljung-Box utiliza otra estimacion de la varianza para corregir el sesgo.
 
-La normalidad de los errores se corrobora a partir del test de Shapiro-Wilk con un p-value `r shapiro.test(residuals(model_ma_ipc))[["p.value"]]`. TODO: explicar shapiro
+Ambos tests poseen valores no significativos para todos los lags, por lo que no se rechaza la hipotesis nula de coeficientes de autocorrelacion iguales a cero.
+
+```{r}
+shapiro_residuos_ma_ipc <- shapiro.test(residuals(model_ma_ipc))[["p.value"]]
+```
+
+Para la validar la normalidad de los residuos, se utiliza el test de Shapiro-Wilk. El mismo plantea:
+\begin{align}
+  H_0)X\sim N(\mu, \sigma^2) \notag \\
+  H_1)X\nsim N(\mu, \sigma^2) (\#eq:shapiro-wilk)
+\end{align}
+El p-value del test es de `r shapiro_residuos_ma_ipc`, mayor a $\alpha=0.05$, por lo que no se puede rechazar la hipotesis de normalidad.
+
+Se concluye que el modelo presenta un buen ajuste a los datos.
 
 ### Pronóstico
 
