@@ -301,6 +301,8 @@ El modelo $MA(6)$ es elegido por sobre al $MA(2)$ ya que si bien ambos "empatan"
 
 ### Análisis de diagnóstico
 
+Se detalla el análisis de los residuos del modelo elegido en la Figura \@ref(fig:residuos-modelo-ipc).
+
 ```{r residuos-modelo-ipc, fig.cap="Residuos modelo MA(6) para IPC", fig.height=3.5, fig.width=10, warning=FALSE, fig.pos="H"}
 residuos_ma <- residuals(model_ma_ipc)
 
@@ -309,8 +311,6 @@ ggtsdisplay(residuos_ma,
             main = "Residuos MA(6)", 
             plot.type = "histogram")
 ```
-
-Se detalla el análisis de los residuos del modelo elegido en la Figura \@ref(fig:residuos-modelo-ipc).
 
 El modelo presenta un buen ajuste debido a que sus residuos son "white noise", es decir, no están autocorrelados y $\varepsilon\sim~N(0,1)$. 
 
@@ -442,14 +442,14 @@ El modelo que resutltó del proceso iterativo propuesto por la función auto.ari
 
 ### Análisis de diagnóstico
 
+Se detalla el análisis de los residuos del modelo elegido en la Figura \@ref(fig:residuos-modelo-is).
+
 ```{r residuos-modelo-is, fig.cap="Residuos", fig.height=3.5, fig.width=10, warning=FALSE, fig.pos="H"}
 ggtsdisplay(residuals(model_auto_is), 
             lag.max = 24, 
             main = 'Residuos SARIMA(1,0,0)(1,0,0)[12]', 
             plot.type = "histogram")
 ```
-
-Se detalla el análisis de los residuos del modelo elegido en la Figura \@ref(fig:residuos-modelo-is).
 
 Presenta un buen ajuste debido a que sus residuos son "white noise", es decir, no están autocorrelados y $\varepsilon\sim~N(0,1)$. 
 
