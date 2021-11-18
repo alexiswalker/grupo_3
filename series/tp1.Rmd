@@ -41,7 +41,7 @@ header-includes:
   }
 
 output: 
-  pdf_document
+  bookdown::pdf_document2: default
 ---
 \thispagestyle{empty}
 \newpage
@@ -49,11 +49,6 @@ output:
 \thispagestyle{empty}
 \abstract
 \lipsum[1]
-\newpage
-
-\thispagestyle{empty}
-\setcounter{tocdepth}{4}
-\tableofcontents
 \newpage
 
 \setlength{\parindent}{0em}
@@ -157,7 +152,7 @@ La información fue extraída de la página oficial del Instituto Nacional de Es
 
 Y se considera la variación mensual acumulada estableciendo a Diciembre 2016 como el 100%.
 
-```{r fig.cap="Inflación versus Salarios", fig.height=4, fig.width=10, fig.pos="H"}
+```{r ipc-vs-is, fig.cap="Inflación versus Salarios", fig.height=4, fig.width=10, fig.pos="H"}
 ggplot(raw_data, aes(x = fecha)) +
   geom_line(aes(y = indice_precios_consumidor_acumulada), color = "red3") +
   geom_line(aes(y = indice_salarios_acumulada), color = "steelblue") +
@@ -208,31 +203,27 @@ Por lo contrario, una serie es _no estacionaria_ cuando la tendencia y/o la vari
 
 El presente trabajo practico tiene como objetivo el analisis y prediccion las series descriptas anteriormente mediante modelos ARMA.
 
-\newpage
-
-Una vez transformada la información para satisfacer los supuestos de los modelos a utilizar, se estiman los parámetros que mejoran su comportamiento.
-
 ## Índice de precios al consumidor
 
-### Diferenciacion
+### Estacionaridad
 
-Se puede observar en la gráfica de autocorrelación (Fig. 2) como la serie no es estacionaria ya que el valor de la función no decae de manera exponencial. También se aprecia que no parece existir un componente estacional.
+En la Figura \@ref(fig:ipc), se observa que la serie de IPC es _no estacionaria_ ya que su media varia a lo largo del tiempo y su funcion de autocorrelacion decrece en forma lineal lentamente. En el siguiente TP, se llevara a cabo un test para confirmar esta conjetura.
 
-```{r fig.cap="Índice de precios al consumidor", fig.height=5, fig.width=10, fig.pos="H"}
+```{r ipc, fig.cap="Índice de precios al consumidor", fig.height=5, fig.width=10, fig.pos="H"}
 ggtsdisplay(ts_indice_precios_consumidor, main = 'Índice de precios al consumidor')
 ```
+
+Como se puede asumir que la tendencia de una serie en el instante $t$ es muy proxima a la del instante $t-1$, se puede formular una nueva serie de la manera $Y_t = y_t - y_{t-1}$. Este proceso se define como _diferenciacion_ y permite transformar una serie no estacionaria a estacionaria. 
 
 ```{r}
 indice_precios_consumidor_ndiffs <- ndiffs(ts_indice_precios_consumidor)
 ```
 
-Se estima el número de diferenciaciones regulares y estacionales que deberían llevarse a cabo para que la serie sea estacionaria.
+Mediante la funcion `ndiffs` de R, se estima que el numero de diferenciaciones necesarias para convertir a la serie IPC en estacionaria (`r indice_precios_consumidor_ndiffs` veces).
 
-- Número de diferenciaciones regulares: `r indice_precios_consumidor_ndiffs`
+La Figura \@ref(fig:ipc-diferenciado) muestra el indice de precios al consumidor diferenciado.
 
-Y se procede a su ejecución conforme el resultado sugerido.
-
-```{r fig.cap="Índice de precio al consumidor y su tendencia", fig.height=5, fig.width=10, fig.pos="H"}
+```{r ipc-diferenciado, fig.cap="Índice de precio al consumidor y su tendencia", fig.height=5, fig.width=10, fig.pos="H"}
 dif_ts_indice_precios_consumidor <- ts_indice_precios_consumidor %>%
   diff(1) %>% 
   diff(1)
@@ -241,40 +232,34 @@ ggtsdisplay(dif_ts_indice_precios_consumidor,
             main = "Índice de precios al consumidor: Diferenciado dos veces")
 ```    
 
-Luego de presentar el resultado (Fig. 3) junto a un modelo lineal simple, se entiende que se ha conseguido estacionariedad en la media.
+La funcion de autocorrelacion (ACF) presenta un lag significativo en 6, por lo que el proceso puede ser modelado con un $MA(6)$. Como ninguno de los lags de la funcion de autocorrelacion parcial (PACF) resultan ser significativos, el proceso no puede ser expresado en un $AR(q)$. #TODO: Referencia?
 
-El lag numero 6 en la funcion de autocorrelacion es significativo, por lo que se puede proponer un MA(6) para modelarlo. TODO: agregar alguna referencia donde diga que en ACF modele el parametro del MA
+### Modelado
 
-### Estimación
-
-Se calculan para la serie temporal, distintos órdenes de parámetros del modelo ARMA y se comparan AIC y BIC como criterios de información.
-TODO: decir que separamos en train / test hasta abril
+Se procede a modelar la serie separando en train y test. El primero contara los datos desde el inicio hasta abril del 2021. Los datos de testing seran desde mayo del 2021 hasta julio de ese mismo anio.
+Se generan dos modelos y se comparan para elegir el mejor segun criterios de informacion.
 
 ```{r}
 train_data_ipc <- window(dif_ts_indice_precios_consumidor, end = c(2021, 4))
 test_data_ipc <- window(dif_ts_indice_precios_consumidor, start = c(2021, 5))
 ```
 
-TODO: mover a apendices y hacer referencia
+Como primer modelo, se propone el $MA(6)$ descripto anteriormente con su $\theta_6$ distinto de cero y los demas $\phi_i=0$, con $i=1,2,3,4,5$ (ver detalle del modelo en [Apendice](#ap-ipc-modelo-ma)). El segundo modelo propuesto es un $MA(2)$ obtenido con la funcion `auto.arima` del paquete `forecast` en R (ver detalle del modelo en [Apendice](#ap-ipc-modelo-auto-arima)). 
 
 ```{r}
 model_ma_ipc <- arima(train_data_ipc, 
                       order = c(0,0,6), 
                       include.mean = F, 
                       fixed = c(0, 0, 0, 0, 0, NA))
-summary(model_ma_ipc)
+model_auto_ipc <- auto.arima(train_data_ipc)
 ```
 
-```{r}
-model_auto_ipc <- auto.arima(train_data_ipc)
-summary(model_auto_ipc)
-```
 
 ### Métricas de performance
 
-Se resumen las métricas de los modelos propuestos (Tabla 3).
+Las metricas de los modelos propuestos se detallan a continuacion.
 
-```{r}
+```{r modelos-ipc}
 forecast_model_ma_ipc <- forecast(model_ma_ipc, h = length(test_data_ipc))
 accuracy_model_ma_ipc <- accuracy(test_data_ipc, forecast_model_ma_ipc$mean)
 
@@ -283,18 +268,18 @@ accuracy_model_auto_ipc <- accuracy(test_data_ipc, forecast_model_auto_ipc$mean)
 
 metrics_model_ma_ipc <- accuracy_model_ma_ipc %>%
   as_tibble() %>%
-  add_column(Modelo = "ACF/PACF: ARMA(0,6)", 
+  add_column(Modelo = "ACF/PACF: MA(6)", 
              AIC = AIC(model_ma_ipc),
              BIC = BIC(model_ma_ipc), .before = "ME")
 metrics_model_auto_ipc <- accuracy_model_auto_ipc %>%
   as_tibble() %>%
-  add_column(Modelo = "auto.arima: ARMA(0,2)", 
+  add_column(Modelo = "auto.arima: MA(2)", 
              AIC = AIC(model_auto_ipc),
              BIC = BIC(model_auto_ipc), .before = "ME")
 
 rbind(metrics_model_ma_ipc, metrics_model_auto_ipc) %>%
   select(Modelo, AIC, BIC, ME, RMSE) %>% 
-  kable(booktabs = T, caption = "Métricas de performance", digits = 3) %>%
+  kable(booktabs = T, caption = "Métricas de performance de los modelos sobre IPC", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
@@ -341,7 +326,7 @@ autoplot(forecast(model_arima_ma_ipc, h = 9),
 
 ## Índice de Salarios
 
-### Diferenciacion
+### Estacionaridad
 
 Se puede observar en la gráfica de autocorrelación (Fig. 5) que la serie de Índices de Salarios tiene el mismo comportamiento que la anterior.
 
@@ -368,7 +353,7 @@ ggtsdisplay(dif_ts_indice_salarios,
 ```
 En ambos ACF y PACF los lags 1 son significativos, por lo que se podria modelar con un ARMA(1,1). TODO: referencia
 
-### Estimación
+### Modelado
 
 
 ```{r}
@@ -462,6 +447,20 @@ autoplot(forecast(model_arima_auto_is, h = 9),
 \newpage
 
 # Apéndices
+
+## Modelo MA(6) para IPC {#ap-ipc-modelo-ma}
+
+```{r}
+summary(model_ma_ipc)
+```
+
+## Modelo auto.arima para IPC {#ap-ipc-modelo-auto-arima}
+
+```{r}
+summary(model_auto_ipc)
+```
+
+
 
 ## Decomposición
 
