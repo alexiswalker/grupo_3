@@ -113,20 +113,6 @@ test_incorrelation <- function(ts, title = "Pruebas de Incorrelacion") {
       add_header_above(c(" " = 1, "Box-Pierce" = 2, "Ljung-Box" = 2)) %>%
       kable_styling(latex_options = c("striped", "hold_position"), full_width = F, font_size = 7)
 }
-
-aic_grid_search <- function(ts, p = 1, q = 1){
-  require(forecast)
-  expand.grid(0:p, 0:q) %>% 
-    rename(p = Var1, q = Var2) %>%
-    mutate(aic = map2_dbl(p, q, function(p, q){AIC(arima(ts, order = c(p,0,q), include.mean = F, method="ML"))}))
-}
-
-bic_grid_search <- function(ts, p = 1, q = 1){
-  require(forecast)
-  expand.grid(0:p, 0:q) %>% 
-    rename(p = Var1, q = Var2) %>%
-    mutate(bic = map2_dbl(p, q, function(p, q){BIC(arima(ts, order = c(p,0,q), include.mean = F, method="ML"))}))
-}
 ```
 
 ```{r}
@@ -176,7 +162,7 @@ ggplot(raw_data, aes(x = fecha)) +
     axis.title.y.right = element_text(color = "steelblue")
   ) +
   labs(x = "Tiempo") +
-  ggtitle("Inflación versus Salarios")
+  ggtitle("Índice de Precios al Consumidor versus Índice de Salarios acumulados", subtitle = "Con base Diciembre 2016")
 ```
 
 La información fue extraída de la página oficial del Instituto Nacional de Estadística y Censos - INDEC Argentina:
@@ -323,7 +309,7 @@ La Tabla \@ref(tab:lb-residuos-modelo-ipc) muestra los valores de los test de Bo
   & H_0)\rho_1(Y)=\rho_2(Y)=...=\rho_j(Y)=0, (j=1,2,...) \notag \\
   & H_1)\exists\rho_j(Y)/\rho_j(Y)\neq0 (\#eq:box-pierce)
 \end{align}
-El test de Box-Pierce utiliza a $\sigma^2(\hat{\rho_j}(Y))\cong1/n$ como estimador de la varianza, lo que produce un sesgo al no rechazo de la hipótesis nula que los $\rho_1(Y)=\rho_2(Y)=...=\rho_j(Y)=0$. #TODO: agregar referencia?. El test de Ljung-Box utiliza otra estimación de la varianza para corregir el sesgo.
+Como menciona @uriel, el test de Box-Pierce utiliza a $\sigma^2(\hat{\rho_j}(Y))\cong1/n$ como estimador de la varianza, lo que produce un sesgo al no rechazo de la hipótesis nula para muestras pequeñas por lo que el test de Ljung-Box refina el estadístico para reducirlo (pag. 129).
 
 Ambos tests poseen valores no significativos para todos los lags, por lo que no se rechaza la hipótesis nula de coeficientes de autocorrelación iguales a cero.
 
@@ -338,7 +324,7 @@ Para la validar la normalidad de los residuos, se utiliza el test de Shapiro-Wil
 \end{align}
 El p-value del test es de `r shapiro_residuos_ma_ipc`, mayor a $\alpha=0.05$, por lo que no se puede rechazar la hipótesis de normalidad.
 
-Se concluye que el modelo presenta un buen ajuste a los datos.
+Se concluye entonces que el modelo planteado presenta un buen ajuste a los datos.
 
 ### Pronóstico
 
