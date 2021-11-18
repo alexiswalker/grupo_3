@@ -373,18 +373,15 @@ ggtsdisplay(dif_ts_indice_salarios,
 
 Se procese a su ejecución conforme el resultado sugerido. La Figura \@ref(fig:is-diferenciado) muestra el índice de precios al consumidor diferenciado.
 
-Tanto la función de autocorrelación (ACF) com la de autocorrelación parcial (PACF) presentan un lag significativo en 1, por lo que el proceso puede ser
+Tanto la función de autocorrelación (ACF) como la de autocorrelación parcial (PACF) presentan un lag significativo en 1, por lo que el proceso puede ser
 modelado con un $ARMA(1,1)$.
 
 ### Modelado
 
-Se procede a modelar los datos separándolos en train y test (de igual manera que la serie anterior): desde el inicio hasta abril del 2021 para entrenamiento y el resto (mayo del 2021 hasta julio del 2021) para pruebas.
+Se procede a modelar los datos separándolos en train y test (de igual manera que la serie anterior): desde el inicio hasta abril del 2021 para entrenamiento y el resto (mayo del 2021 hasta julio del 2021) para pruebas. Los modelos propuestos para la problemática son:
 
-Se generan dos modelos y se comparan para elegir el mejor según criterios de información.
-
-El primero, según lo mencionado, es un $ARMA(1,1)$ (ver detalle del modelo en [Apéndice](#ap-is-modelo-arma)).
-
-El segundo es un modelo $AR(1)$  estacionario con un período igual a 12, obtenido con la función auto.arima del paquete forecast en R (ver detalle del modelo en [Apéndice](#ap-is-modelo-auto-arima)).
+- Un $ARMA(1,1)$ según lo analizado en la sección anterior (ver detalle del modelo en [Apéndice](#ap-is-modelo-arma)).
+- Un $SARIMA(1,0,0)(1,0,0)[12]$ con un período igual a 12, propuesto con la función `auto.arima` del paquete `forecast` en R (ver detalle del modelo en [Apéndice](#ap-is-modelo-auto-arima)).
 
 ```{r}
 train_data_is <- window(dif_ts_indice_salarios, end = c(2021, 04))
@@ -393,9 +390,6 @@ test_data_is <- window(dif_ts_indice_salarios, start = c(2021, 05))
 
 ```{r}
 model_arma_is <- arima(train_data_is, order = c(1,0,1))
-```
-
-```{r}
 model_auto_is <- auto.arima(train_data_is)
 ```
 
@@ -427,7 +421,7 @@ rbind(metrics_model_arma_is, metrics_model_auto_is) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-El modelo que resutltó del proceso iterativo propuesto por la función auto.arima tiene se comporta con índice superiores. Por lo que el modelo $AR(1)$  estacionario con un período igual a 12 es el elegido para realizar el pronósito (en la medida que sus residuos se comportes según supuestos).
+El modelo que resultó del proceso iterativo propuesto por el auto-ml es superador en los criterios AIC y BIC pero ligeramente peor en las medidas ME y RSME. Se opta por seleccionar el SARIMA debido a sus métricas de informacion. Sin embargo, de ser mas estrictos, se podría desempatar realizando cross-validation en el entrenamiento de los modelos (@rafferty, cap. 11).
 
 ### Análisis de diagnóstico
 
