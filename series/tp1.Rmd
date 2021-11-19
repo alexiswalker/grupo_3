@@ -499,6 +499,8 @@ autoplot(window(ts_indice_precios_consumidor, end = c(2021, 4)),
 
 No se avisoran condiciones de política económica interna que alteren las tendencias observadas ni se espera cambios en el contexto internacional que ayuden a mejorar este desequilibrio.
 
+\newpage
+
 # Conclusiones
 
 Queda en evidencia que la tendencia de estas variables son altamente negativas para la economía local.
