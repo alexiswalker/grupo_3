@@ -332,7 +332,9 @@ Se concluye entonces que el modelo planteado presenta un buen ajuste a los datos
 
 ### Pronóstico
 
-Se pronostica 9 periodos para llegar al objetivo de enero 2022 en la fig. \@ref(fig:ipc-pronostico) junto a sus intervalos de confianza.
+Una vez seleccionado el modelo definitivo que cumple satisfactoriamente los criterios de evaluación, se procede a la etapa de predicción.
+
+Se estiman 9 periodos para llegar al objetivo de enero 2022 en la fig. \@ref(fig:ipc-pronostico) junto a sus intervalos de confianza.
 
 ```{r ipc-pronostico, fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
 model_arima_ma_ipc <- arima(window(ts_indice_precios_consumidor, end = c(2021, 4)), 
@@ -348,6 +350,12 @@ autoplot(forecast_model_arima_ipc,
 ```
 
 Los valores exactos junto a su valores de test se encuentran en el [Apéndice](#ap-forecast-ipc).
+
+La simple predicción de valores, sin especificar su precisión, es inadecuada. Para evaluar futura incertidumbre es importante construir intervalos de confianza. En el contexto de modelos lineales para series de tiempo con distribución normal de los errores, éstos son simétricos alrededor de los puntos estimado. 
+
+Los intervalos de confianza de la predicción se incrementan de manera considerable en estimaciones de mediano y largo plazo. Por ello, las mejores predicciones son para unos pocos períodos en adelante porque, en caso contrario, los errores se acumulan haciendo que el modelo pierda vigencia.
+
+Si bien el cálculo de la varianza del error de predicción depende del modelo utilizado, siempre existe un factor en función que tal alejada en el tiempo está la estimación.
 
 \newpage
 
@@ -452,7 +460,7 @@ Se concluye que el modelo seleccionado presenta un buen ajuste a los datos.
 
 ### Pronóstico
 
-Las predicciones del modelo actual se detallan en la fig. \@ref(fig:is-pronostico).
+Con el modelo elegido, se calculan las predicciones y se detallan en la fig. \@ref(fig:is-pronostico).
 
 ```{r is-pronostico, fig.cap="Pronóstico indice de salarios", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
 model_arima_auto_is <- auto.arima(window(ts_indice_salarios, end = c(2021, 4)))
@@ -465,6 +473,8 @@ autoplot(forecast_model_arima_is,
 ```
 
 Los valores exactos junto a su valores de test se encuentran en el [Apéndice](#ap-forecast-is).
+
+Otra vez, no se intenta ir muy lejos en el tiempo, aunque se aprecian intervalos más estrechos que en el caso anterior.
 
 \newpage
 
