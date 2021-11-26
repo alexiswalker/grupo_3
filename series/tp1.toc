@@ -1,0 +1,25 @@
+\contentsline {section}{\numberline {1}Introducción}{4}{section.1}%
+\contentsline {section}{\numberline {2}Marco Teórico}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Índice de Precios al Consumidor}{5}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Estacionaridad}{5}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Modelado}{6}{subsubsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.3}Métricas de performance}{6}{subsubsection.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.4}Análisis de diagnóstico}{7}{subsubsection.2.1.4}%
+\contentsline {subsubsection}{\numberline {2.1.5}Pronóstico}{8}{subsubsection.2.1.5}%
+\contentsline {subsection}{\numberline {2.2}Índice de Salarios}{9}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Estacionaridad}{9}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Modelado}{9}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3}Métricas de performance}{9}{subsubsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.4}Análisis de diagnóstico}{10}{subsubsection.2.2.4}%
+\contentsline {subsubsection}{\numberline {2.2.5}Pronóstico}{11}{subsubsection.2.2.5}%
+\contentsline {section}{\numberline {3}Análisis de Resultados}{12}{section.3}%
+\contentsline {section}{\numberline {4}Conclusiones}{13}{section.4}%
+\contentsline {section}{\numberline {5}Referencias bibliográficas}{14}{section.5}%
+\contentsline {section}{\numberline {6}Apéndices}{15}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Modelo \(MA(6)\) para Índice de Precios al Consumidor}{15}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Modelo auto.arima para Índice de Precios al Consumidor}{15}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Modelo \(ARMA(1,1)\) para Índice de Salarios}{15}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Modelo auto.arima para Índice de Salarios}{15}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Valores reales versus pronosticos}{16}{subsection.6.5}%
+\contentsline {subsubsection}{\numberline {6.5.1}Índice de precios al consumidor}{16}{subsubsection.6.5.1}%
+\contentsline {subsubsection}{\numberline {6.5.2}Índice de Salarios}{16}{subsubsection.6.5.2}%
