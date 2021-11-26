@@ -1,6 +1,6 @@
 ---
 title:  | 
-  Trabajo Práctico N° 1
+  Trabajo Práctico N° 2
 subtitle: |
   Análisis de Series Temporales
       
@@ -211,7 +211,7 @@ El presente trabajo practico tiene como objetivo el análisis y predicción las 
 
 ### Estacionaridad
 
-En la Figura \@ref(fig:ipc), se observa que la serie de IPC es _no estacionaria_ ya que su media varia a lo largo del tiempo y su función de autocorrelación decrece en forma lineal lentamente. En el siguiente TP, se llevara a cabo un test para confirmar esta conjetura.
+En la Figura \@ref(fig:ipc), se observa que la serie de IPC es _no estacionaria_ ya que su media varia a lo largo del tiempo y su función de autocorrelación decrece en forma lineal lentamente.
 
 ```{r ipc, fig.cap="Índice de precios al consumidor", fig.height=5, fig.width=10, fig.pos="H"}
 ggtsdisplay(ts_indice_precios_consumidor, main = 'Índice de precios al consumidor')
