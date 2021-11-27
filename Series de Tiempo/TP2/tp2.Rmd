@@ -258,6 +258,60 @@ El presente trabajo practico tiene como objetivo el análisis y predicción las 
 
 ### Estacionaridad
 
+**Prueba de Dickey-Fuller aumentada**
+
+```{r}
+adf_test(ts_indice_precios_consumidor) %>% 
+  kable(booktabs = T, caption = "Prueba de Dickey-Fuller aumentada", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+```{r}
+urca_adf (ts_indice_precios_consumidor) %>% 
+  kable(booktabs = T, caption = "Prueba de Dickey-Fuller aumentada (biblioteca urca)", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+
+TODO: formula del modelo
+
+**Prueba de Kwiatkowski–Phillips–Schmidt–Shin (KPSS)**
+
+```{r}
+kpss_test(ts_indice_precios_consumidor) %>% 
+  kable(booktabs = T, caption = "Prueba de Kwiatkowski–Phillips–Schmidt–Shin (KPSS)", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+TODO: formula del modelo
+
+**Prueba de Phillips-Perron**
+
+```{r}
+pp_test(ts_indice_precios_consumidor) %>% 
+  kable(booktabs = T, caption = "Prueba de Phillips-Perron", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+TODO: formula del modelo
+
+**Prueba de Zivot y Andrews**
+
+```{r}
+urca_za(ts_indice_precios_consumidor) %>% 
+  kable(booktabs = T, caption = "Prueba de Zivot y Andrews", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+TODO: formula del modelo
+
+```{r}
+kpss_test(ts_indice_precios_consumidor) %>% 
+  kable(booktabs = T, caption = "Prueba de Dickey-Fuller aumentada", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+TODO: formula del modelo
 
 
 En la Figura \@ref(fig:ipc), se observa que la serie de IPC es _no estacionaria_ ya que su media varia a lo largo del tiempo y su función de autocorrelación decrece en forma lineal lentamente.
@@ -293,6 +347,55 @@ La función de autocorrelación (ACF) presenta un lag significativo en 6, por lo
 ## Índice de Salarios
 
 ### Estacionaridad
+
+
+**Prueba de Dickey-Fuller aumentada**
+
+```{r}
+adf_test(ts_indice_salarios) %>% 
+  kable(booktabs = T, caption = "Prueba de Dickey-Fuller aumentada", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+```{r}
+urca_adf (ts_indice_salarios) %>% 
+  kable(booktabs = T, caption = "Prueba de Dickey-Fuller aumentada (biblioteca urca)", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+
+TODO: formula del modelo
+
+**Prueba de Kwiatkowski–Phillips–Schmidt–Shin (KPSS)**
+
+```{r}
+kpss_test(ts_indice_salarios) %>% 
+  kable(booktabs = T, caption = "Prueba de Kwiatkowski–Phillips–Schmidt–Shin (KPSS)", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+TODO: formula del modelo
+
+**Prueba de Phillips-Perron**
+
+```{r}
+pp_test(ts_indice_salarios) %>% 
+  kable(booktabs = T, caption = "Prueba de Phillips-Perron", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+TODO: formula del modelo
+
+**Prueba de Zivot y Andrews**
+
+```{r}
+urca_za(ts_indice_salarios) %>% 
+  kable(booktabs = T, caption = "Prueba de Zivot y Andrews", digits = 3, format = "latex") %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+TODO: formula del modelo
+
 
 En la Figura \@ref(fig:is) se observa que, al igual que la serie de IPC, el Índice de Salarios tampoco es estacionario, su media varia a lo largo del
 tiempo y su función de autocorrelación también decrece lentamente en forma lineal.
