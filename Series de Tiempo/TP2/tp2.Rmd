@@ -120,6 +120,53 @@ test_incorrelation <- function(ts, title = "Pruebas de Incorrelacion") {
 ```
 
 ```{r}
+
+adf_test <- function(ts){
+  adt <- adf.test(ts)
+  df <-  data.frame(adt$statistic, adt$p.value, adt$parameter)
+  colnames(df) <- c("Estadístico", "P-Value", "Lag")
+  rownames(df) <- NULL
+  
+  return(df)
+}
+
+kpss_test <- function(ts){
+  kppst <- kpss.test(ts)
+  df <-  data.frame(kppst$statistic, kppst$p.value, kppst$parameter)
+  colnames(df) <- c("Estadístico", "P-Value", "Lag")
+  rownames(df) <- NULL
+  
+  return(df)
+}
+
+pp_test <- function(ts){
+  ppt <- pp.test(ts)
+  df <-  data.frame(ppt$statistic, ppt$p.value, ppt$parameter)
+  colnames(df) <- c("Estadístico", "P-Value", "Lag")
+  rownames(df) <- NULL
+  
+  return(df)
+}
+
+urca_adf <- function(ts){
+  ur_df <- ur.df(ts, selectlags = "AIC", type = "trend")
+  df <- cbind(as.data.frame(t(ur_df@teststat)) ,ur_df@cval)
+  colnames(df)[1] <- "Estadístico"
+
+  return(df)
+}
+
+urca_za <- function(ts){
+  ur_za <- ur.za(ts, model = "trend")
+  df <- data.frame(ur_za@teststat, ur_za@cval[2], ur_za@lag)
+  colnames(df) <- c("Estadístico", "P-Value", "Lag")
+
+  return(df)
+}
+```
+
+
+```{r}
 raw_data <- read_csv(
   file = "https://docs.google.com/uc?id=16we_OjrEZxBUwaQKOh3QAoW5YwfcEg1E",
   col_types = cols(fecha = col_date(format = "%d/%m/%Y")))
@@ -210,40 +257,6 @@ El presente trabajo practico tiene como objetivo el análisis y predicción las 
 ## Índice de Precios al Consumidor
 
 ### Estacionaridad
-
-
-```{r}
-
-adf_test <- function(ts){
-  adt <- adf.test(ts)
-  df <-  data.frame(adt$statistic, adt$p.value, adt$parameter)
-  colnames(df) <- c("Estadístico", "P-Value", "Lag")
-  rownames(df) <- NULL
-  
-  return(df)
-}
-
-adf_test(ts_indice_precios_consumidor) 
-
-kpss_test <- function(ts){
-  kppst <- kpss.test(ts)
-  df <-  data.frame(kppst$statistic, kppst$p.value, kppst$parameter)
-  colnames(df) <- c("Estadístico", "P-Value", "Lag")
-  rownames(df) <- NULL
-  return(df)
-}
-
-urca_adf <- function(ts){
-  ur_df <- ur.df(ts, selectlags = "AIC", type = "trend", lags = 1)
-  df <- cbind(as.data.frame(t(ur_df@teststat)) ,ur_df@cval)
-  colnames(df)[1] <- "Estadístico"
-
-  return(df)
-}
-
-urca_adf(ts_indice_precios_consumidor)
-
-```
 
 
 
