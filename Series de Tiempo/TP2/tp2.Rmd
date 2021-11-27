@@ -211,6 +211,15 @@ El presente trabajo practico tiene como objetivo el análisis y predicción las 
 
 ### Estacionaridad
 
+
+```{r}
+adf.test(ts_indice_precios_consumidor)
+kpss.test(ts_indice_precios_consumidor)
+ur.df(ts_indice_precios_consumidor, selectlags = "AIC", type = "trend")
+```
+
+
+
 En la Figura \@ref(fig:ipc), se observa que la serie de IPC es _no estacionaria_ ya que su media varia a lo largo del tiempo y su función de autocorrelación decrece en forma lineal lentamente.
 
 ```{r ipc, fig.cap="Índice de precios al consumidor", fig.height=5, fig.width=10, fig.pos="H"}
