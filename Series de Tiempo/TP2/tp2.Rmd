@@ -213,9 +213,36 @@ El presente trabajo practico tiene como objetivo el análisis y predicción las 
 
 
 ```{r}
-adf.test(ts_indice_precios_consumidor)
-kpss.test(ts_indice_precios_consumidor)
-ur.df(ts_indice_precios_consumidor, selectlags = "AIC", type = "trend")
+
+adf_test <- function(ts){
+  adt <- adf.test(ts)
+  df <-  data.frame(adt$statistic, adt$p.value, adt$parameter)
+  colnames(df) <- c("Estadístico", "P-Value", "Lag")
+  rownames(df) <- NULL
+  
+  return(df)
+}
+
+adf_test(ts_indice_precios_consumidor) 
+
+kpss_test <- function(ts){
+  kppst <- kpss.test(ts)
+  df <-  data.frame(kppst$statistic, kppst$p.value, kppst$parameter)
+  colnames(df) <- c("Estadístico", "P-Value", "Lag")
+  rownames(df) <- NULL
+  return(df)
+}
+
+urca_adf <- function(ts){
+  ur_df <- ur.df(ts, selectlags = "AIC", type = "trend", lags = 1)
+  df <- cbind(as.data.frame(t(ur_df@teststat)) ,ur_df@cval)
+  colnames(df)[1] <- "Estadístico"
+
+  return(df)
+}
+
+urca_adf(ts_indice_precios_consumidor)
+
 ```
 
 
