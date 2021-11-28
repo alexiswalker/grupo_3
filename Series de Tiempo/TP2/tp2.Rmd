@@ -260,6 +260,10 @@ El presente trabajo practico tiene como objetivo el análisis y predicción las 
 
 **Prueba de Dickey-Fuller aumentada**
 
+\begin{equation}
+\nabla Y_{t} =  a_{0} + a_{1} t + (\phi_{1} - 1) Y_{t-1} + \epsilon_{t}
+\end{equation}
+
 ```{r}
 adf_test(ts_indice_precios_consumidor) %>% 
   kable(booktabs = T, caption = "Prueba de Dickey-Fuller aumentada", digits = 3) %>%
