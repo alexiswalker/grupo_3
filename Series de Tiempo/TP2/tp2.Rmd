@@ -62,7 +62,7 @@ Ambos indicadores son considerados fundamentales para el desarrollo de un país 
 
 Por un lado, cómo evoluciona en nivel de vida de la población. Si los salarios se incrementan en mayor proporción que los bienes y servicios, consiguientemente se mejora el bienestar además del incremento de la producción ocasionando mayor demanda.
 
-Por otro, como se demostrará en el desarrollo del presente, Si los indicadores de incremento de bienes y servicios crecen a mayor ritmo que los salarios, disminuye el bienestar de la masa asalariada.
+Por otro, como se demostrará en el desarrollo del presente. Si los indicadores de incremento de bienes y servicios crecen a mayor ritmo que los salarios, disminuye el bienestar de la masa asalariada.
 
 Como resultado de este proceso inflacionario y de baja demanda interna hay que mencionar que esto perjudica a los sectores productivos internos.
 
@@ -120,46 +120,19 @@ test_incorrelation <- function(ts, title = "Pruebas de Incorrelacion") {
 ```
 
 ```{r}
-
-adf_test <- function(ts){
-  adt <- adf.test(ts)
-  df <-  data.frame(adt$statistic, adt$p.value, adt$parameter)
-  colnames(df) <- c("Estadístico", "P-Value", "Lag")
-  rownames(df) <- NULL
-  
-  return(df)
-}
-
 kpss_test <- function(ts){
   kppst <- kpss.test(ts)
-  df <-  data.frame(kppst$statistic, kppst$p.value, kppst$parameter)
+  df <- data.frame(kppst$statistic, kppst$p.value, kppst$parameter)
   colnames(df) <- c("Estadístico", "P-Value", "Lag")
   rownames(df) <- NULL
   
   return(df)
 }
 
-pp_test <- function(ts){
-  ppt <- pp.test(ts)
-  df <-  data.frame(ppt$statistic, ppt$p.value, ppt$parameter)
-  colnames(df) <- c("Estadístico", "P-Value", "Lag")
-  rownames(df) <- NULL
-  
-  return(df)
-}
-
-urca_adf <- function(ts){
+adf_test <- function(ts){
   ur_df <- ur.df(ts, selectlags = "AIC", type = "trend")
-  df <- cbind(as.data.frame(t(ur_df@teststat)) ,ur_df@cval)
+  df <- cbind(as.data.frame(t(ur_df@teststat)), ur_df@cval)
   colnames(df)[1] <- "Estadístico"
-
-  return(df)
-}
-
-urca_za <- function(ts){
-  ur_za <- ur.za(ts, model = "trend")
-  df <- data.frame(ur_za@teststat, ur_za@cval[2], ur_za@lag)
-  colnames(df) <- c("Estadístico", "P-Value", "Lag")
 
   return(df)
 }
@@ -266,7 +239,7 @@ ggtsdisplay(ts_indice_precios_consumidor, main = 'Índice de precios al consumid
 
 Es posible someter la evidencia gráfica a distintas pruebas estadísticas para ratificar o rectificar lo observado.
 
-**Prueba de Dickey-Fuller aumentada**
+#### Test de Dickey-Fuller aumentado sobre la serie original
 
 En la ecuación de Dickey-Fuller aumentada \@ref(eq:df):
 
@@ -277,81 +250,41 @@ En la ecuación de Dickey-Fuller aumentada \@ref(eq:df):
 
 Se pone a prueba el coeficiente que acompaña al rezago del período anterior: $(\phi_{1} - 1)$.
 
-El estadístico de este test:
+El estadístico de este test es:
 
-> $\tau_{e} = \frac{\hat{\phi_{1}} - \phi_{1}}{\sigma(\hat{\phi_{1}})}$
+\begin{equation}
+\tau^{e} = \frac{\hat{\phi_{1}} - \phi_{1}}{\sigma(\hat{\phi_{1}})}
+\end{equation}
 
-Y en esta prueba:
+Se plantea el siguiente test:
 
-> Si $\tau_{\tau } \leq \tau_{e} < 0 \Rightarrow$ No Rechazo $H_{0}$
+> Si $\tau \leq \tau^{e} < 0 \Rightarrow$ No Rechazar $H_{0}$
 
-> Si $\tau_{e} < \tau_{\tau } \Rightarrow$ Rechazo $H_{0}$
+> Si $\tau^{e} < \tau \Rightarrow$ Rechazar $H_{0}$
 
-La hipótesis nula establece que la raíz mayor de un $AR(p+1)$ es igual a uno, por lo que el proceso es no estacionario. La alternativa que es menor que uno, siendo estacionario. (@pena)
+Como se explica en @pena, la hipótesis nula establece que la raíz mayor de un $AR(p+1)$ es igual a uno, por lo que el proceso es no estacionario.
 
-En la Tabla \@ref(tab:tau) se observa $\tau_{e}$ entre el valor crítico y cero, lo que determina que no hay evidencia para rechazar $H_{0}$.
+En la Tabla \@ref(tab:ipc-adf) se observa $\tau^{e}$ entre el valor crítico y cero, lo que determina que no hay evidencia para rechazar $H_{0}$.
 
-```{r}
+```{r ipc-adf}
 adf_test(ts_indice_precios_consumidor) %>% 
-  kable(booktabs = T, caption = "Prueba de Dickey-Fuller aumentada", digits = 3) %>%
+  kable(booktabs = T, caption = "Prueba de ADF para IPC", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
+#### Test de Kwiatkowski–Phillips–Schmidt–Shin (KPSS) sobre la serie original
 
+@kpss define otra prueba en la cual la hipótesis nula determina que una serie temporal observable es estacionaria. Los resultados de la misma se encuentran detallados en la Tabla \@ref(tab:ipc-kpss).
 
-```{r tau}
-urca_adf (ts_indice_precios_consumidor) %>% 
-  kable(booktabs = T, caption = "Prueba de Dickey-Fuller aumentada (biblioteca urca)", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
-```
-
-
-TODO: formula del modelo
-
-**Prueba de Kwiatkowski–Phillips–Schmidt–Shin (KPSS)**
-
-En esta prueba, la hipótesis nula determina que una serie temporal observable es estacionaria.
-
-```{r kpss}
+```{r ipc-kpss}
 kpss_test(ts_indice_precios_consumidor) %>% 
-  kable(booktabs = T, caption = "Prueba de Kwiatkowski–Phillips–Schmidt–Shin (KPSS)", digits = 3) %>%
+  kable(booktabs = T, caption = "Test KPSS para IPC", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-Conforme los resultados presentado en la Tabla \@ref(tab:kpss), se rechaza $H_{0}$.
+Ambos tests concluyen que la serie de IPC es _no estacionaria_.
 
-**Prueba de Phillips-Perron**
-
-Tiene como conjetura que los coeficientes de la ecuación de Dickey-Fuller aumentada \@ref(eq:df) son en forma conjunta igual a cero.
-
-> $H_{0}$: $a_{0} = a_{1} = \phi_{1} - 1 = 0$
-
-> $H_{1}$: no específica
-
-
-```{r}
-pp_test(ts_indice_precios_consumidor) %>% 
-  kable(booktabs = T, caption = "Prueba de Phillips-Perron", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
-```
-
-TODO: interpretar tabla
-
-**Prueba de Zivot y Andrews**
-
-```{r}
-urca_za(ts_indice_precios_consumidor) %>% 
-  kable(booktabs = T, caption = "Prueba de Zivot y Andrews", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
-```
-
-TODO: formula del modelo
-
-
-
-
-TODO: ¿hacemos boxcox para confirmar que la serie varia en media y no varianza? (en este caso boxcox no debería servir para nada)
-
+### Diferenciación
 
 Como se puede asumir que la tendencia de una serie en el instante $t$ es muy próxima a la del instante $t-1$, se puede formular una nueva serie de la manera $Y_t = y_t - y_{t-1}$. Este proceso se define como _diferenciación_ y permite transformar una serie no estacionaria a estacionaria. 
 
@@ -365,14 +298,50 @@ La Figura \@ref(fig:ipc-diferenciado) muestra el indice de precios al consumidor
 
 ```{r ipc-diferenciado, fig.cap="Índice de precio al consumidor y su tendencia", fig.height=5, fig.width=10, fig.pos="H"}
 dif_ts_indice_precios_consumidor <- ts_indice_precios_consumidor %>%
-  diff(1) %>% 
-  diff(1)
+  diff(lag = 1, differences = indice_precios_consumidor_ndiffs)
 
 ggtsdisplay(dif_ts_indice_precios_consumidor, 
             main = "Índice de precios al consumidor: Diferenciado dos veces")
 ```    
 
-La función de autocorrelación (ACF) presenta un lag significativo en 6, por lo que el proceso puede ser modelado con un $MA(6)$. Como ninguno de los lags de la función de autocorrelación parcial (PACF) resultan ser significativos, el proceso no puede ser expresado en un $AR(q)$. #TODO: Referencia?
+#### Test de Dickey-Fuller aumentado sobre la serie diferenciada
+
+Se corrobora que la serie de IPC diferenciada es estacionaria mediante el test Dickey-Fuller aumentado (Tabla \@ref(tab:ipc-dif-adf)). El valor de $\tau^{e}$ se encuentra dentro de la zona de rechazo, por lo que se concluye que se rechaza $H_0$.
+
+```{r ipc-dif-adf}
+adf_test(dif_ts_indice_precios_consumidor) %>% 
+  kable(booktabs = T, caption = "Test de ADF para IPC diferenciada", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+#### Test de Kwiatkowski–Phillips–Schmidt–Shin (KPSS) sobre la serie diferenciada
+
+El test KPSS coincide con ADF. En este caso, el p-value es mayor al grado de significación de 0.05, por lo que no se rechaza la hipótesis nula de estacionariedad.
+
+```{r ipc-dif-kpss}
+kpss_test(dif_ts_indice_precios_consumidor) %>% 
+  kable(booktabs = T, caption = "Test KPSS para IPC diferenciada", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+### Modelado
+
+```{r}
+modelo_sarima_ipc <- arima(ts_indice_precios_consumidor, 
+                           order = c(0, 2, 0), 
+                           seasonal = list(order = c(0, 2, 6), period = 12))
+summary(modelo_sarima_ipc)
+```
+```{r}
+modelo_arima_ipc <- arima(ts_indice_precios_consumidor, 
+                          order = c(0, 2, 6), 
+                          fixed = c(0, 0, 0, 0, 0, NA))
+summary(modelo_arima_ipc)
+```
+```{r}
+
+```
+
 
 
 \newpage
@@ -386,12 +355,6 @@ La función de autocorrelación (ACF) presenta un lag significativo en 6, por lo
 
 ```{r}
 adf_test(ts_indice_salarios) %>% 
-  kable(booktabs = T, caption = "Prueba de Dickey-Fuller aumentada", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
-```
-
-```{r}
-urca_adf (ts_indice_salarios) %>% 
   kable(booktabs = T, caption = "Prueba de Dickey-Fuller aumentada (biblioteca urca)", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
@@ -404,26 +367,6 @@ TODO: formula del modelo
 ```{r}
 kpss_test(ts_indice_salarios) %>% 
   kable(booktabs = T, caption = "Prueba de Kwiatkowski–Phillips–Schmidt–Shin (KPSS)", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
-```
-
-TODO: formula del modelo
-
-**Prueba de Phillips-Perron**
-
-```{r}
-pp_test(ts_indice_salarios) %>% 
-  kable(booktabs = T, caption = "Prueba de Phillips-Perron", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
-```
-
-TODO: formula del modelo
-
-**Prueba de Zivot y Andrews**
-
-```{r}
-urca_za(ts_indice_salarios) %>% 
-  kable(booktabs = T, caption = "Prueba de Zivot y Andrews", digits = 3, format = "latex") %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
