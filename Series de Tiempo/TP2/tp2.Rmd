@@ -326,23 +326,46 @@ kpss_test(dif_ts_indice_precios_consumidor) %>%
 
 ### Modelado
 
-```{r}
-modelo_sarima_ipc <- arima(ts_indice_precios_consumidor, 
-                           order = c(0, 2, 0), 
-                           seasonal = list(order = c(0, 2, 6), period = 12))
-summary(modelo_sarima_ipc)
-```
+En el trabajo practico anterior, se obtuvo un modelo $ARIMA(0,2,6)$ para modelar la serie IPC (ver summary en [Apendice](#ipc-modelo-arima)). En esta ocasión, se propone un modelo $SARIMA(0,2,0)(0,2,6)[12]$ (ver summary en [Apendice](#ipc-modelo-sarima)) debido a la naturaleza de dicha serie.
+
 ```{r}
 modelo_arima_ipc <- arima(ts_indice_precios_consumidor, 
                           order = c(0, 2, 6), 
                           fixed = c(0, 0, 0, 0, 0, NA))
-summary(modelo_arima_ipc)
+modelo_sarima_ipc <- arima(ts_indice_precios_consumidor, 
+                           order = c(0, 2, 0), 
+                           seasonal = list(order = c(0, 2, 6), period = 12))
 ```
+
 ```{r}
+metricas_modelos_ipc <- rbind(c("ARIMA(0,2,6)", 
+                                AIC(modelo_arima_ipc),
+                                BIC(modelo_arima_ipc)),
+                              c("SARIMA(0,2,0)(0,2,6)[12]", 
+                                AIC(modelo_sarima_ipc), 
+                                BIC(modelo_sarima_ipc)))
+colnames(metricas_modelos_ipc) <- c("Modelo", "AIC", "BIC")
 
+metricas_modelos_ipc %>% 
+  as.tibble() %>% 
+  mutate(across(c("AIC", "BIC"), as.double)) %>% 
+  kable(booktabs = T, caption = "Metricas modelos propuestos para IPC", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
+TODO: elegimos el sarima porque es mejor en todo sentido con el bic, pero deberiamos ver que onda los residuos.
 
+
+```{r}
+residuos_sarima_ipc <- residuals(modelo_sarima_ipc)
+
+ggtsdisplay(residuos_sarima_ipc, 
+            lag.max = 24, 
+            main = "Residuos SARIMA(0,2,0)(0,2,6)[12]", 
+            plot.type = "histogram")
+```
+
+TODO: residuos que claramente no pasarian el test de ADF. podemos justificarlo con el covicho?
 
 \newpage
 
@@ -426,4 +449,14 @@ De no realizarse cambios en el rumbo económico que impliquen mejoras en: el asp
 
 # Apéndices
 
-<!-- TODO -->
+## Modelo $ARIMA(0,2,6)$ para Índice de Precios al Consumidor {#ipc-modelo-arima}
+
+```{r}
+summary(modelo_arima_ipc)
+```
+
+## Modelo $SARIMA(0,2,0)(0,2,6)[12]$ para Índice de Precios al Consumidor {#ipc-modelo-sarima}
+
+```{r}
+summary(modelo_sarima_ipc)
+```
