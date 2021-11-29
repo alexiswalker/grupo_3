@@ -310,13 +310,15 @@ TODO: formula del modelo
 
 **Prueba de Kwiatkowski–Phillips–Schmidt–Shin (KPSS)**
 
-```{r}
+En esta prueba, la hipótesis nula determina que una serie temporal observable es estacionaria.
+
+```{r kpss}
 kpss_test(ts_indice_precios_consumidor) %>% 
   kable(booktabs = T, caption = "Prueba de Kwiatkowski–Phillips–Schmidt–Shin (KPSS)", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-TODO: formula del modelo
+Conforme los resultados presentado en la Tabla \@ref(tab:kpss), se rechaza $H_{0}$.
 
 **Prueba de Phillips-Perron**
 
