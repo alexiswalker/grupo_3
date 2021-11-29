@@ -268,10 +268,11 @@ Es posible someter la evidencia gráfica a distintas pruebas estadísticas para 
 
 **Prueba de Dickey-Fuller aumentada**
 
-En la ecuación de Dickey-Fuller aumentada:
+En la ecuación de Dickey-Fuller aumentada \@ref(eq:df):
 
 \begin{equation}
 \nabla Y_{t} =  a_{0} + a_{1} t + (\phi_{1} - 1) Y_{t-1} + \epsilon_{t}
+(\#eq:df)
 \end{equation}
 
 Se pone a prueba el coeficiente que acompaña al rezago del período anterior: $(\phi_{1} - 1)$.
@@ -319,13 +320,20 @@ TODO: formula del modelo
 
 **Prueba de Phillips-Perron**
 
+Tiene como conjetura que los coeficientes de la ecuación de Dickey-Fuller aumentada \@ref(eq:df) son en forma conjunta igual a cero.
+
+> $H_{0}$: $a_{0} = a_{1} = \phi_{1} - 1 = 0$
+
+> $H_{1}$: no específica
+
+
 ```{r}
 pp_test(ts_indice_precios_consumidor) %>% 
   kable(booktabs = T, caption = "Prueba de Phillips-Perron", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-TODO: formula del modelo
+TODO: interpretar tabla
 
 **Prueba de Zivot y Andrews**
 
@@ -337,13 +345,7 @@ urca_za(ts_indice_precios_consumidor) %>%
 
 TODO: formula del modelo
 
-```{r}
-kpss_test(ts_indice_precios_consumidor) %>% 
-  kable(booktabs = T, caption = "Prueba de Dickey-Fuller aumentada", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
-```
 
-TODO: formula del modelo
 
 
 TODO: ¿hacemos boxcox para confirmar que la serie varia en media y no varianza? (en este caso boxcox no debería servir para nada)
