@@ -225,7 +225,14 @@ Combinando los modelos autorregresivos y los modelos de medias móviles se obtie
 Los modelos autorregresivos y de medias móviles son validos para series de tiempo que son _estacionarias_. Se define que una serie es estacionaria de orden 2 cuando sus segundos momentos son constantes a lo largo del tiempo. Es decir, cuando su media y varianza se mantienen constantes.
 Por lo contrario, una serie es _no estacionaria_ cuando la tendencia y/o la variabilidad cambian a lo largo del tiempo.
 
-El presente trabajo práctico tiene como objetivo el análisis y predicción las series descriptas anteriormente mediante modelos ARMA.
+La combinación de los modelos $ARMA(p, d)$ estacionales y no estacionales se expresa como: $ARMA(p, q)(P, Q)s$, donde:
+P es el componente autorregresivo estacional, Q el componente de media móvil estacional y s representa el período estacional.
+
+\begin{equation}
+  \Theta_{P} (B^{s}) \phi_{p}(B)Y_{t} = \Theta_{Q} (B^{s}) \theta_{q}(B)\epsilon_{t}
+\end{equation}
+
+El presente trabajo práctico tiene como objetivo el análisis y predicción las series descriptas anteriormente mediante modelos ARMA estacionales y no estacionales.
 
 ## Índice de Precios al Consumidor
 
@@ -333,9 +340,11 @@ modelo_arima_ipc <- arima(ts_indice_precios_consumidor,
                           order = c(0, 2, 6), 
                           fixed = c(0, 0, 0, 0, 0, NA))
 modelo_sarima_ipc <- arima(ts_indice_precios_consumidor, 
-                           order = c(0, 2, 0), 
+                           order = c(0, 2, 0),
                            seasonal = list(order = c(0, 2, 6), period = 12))
 ```
+
+### Métricas de performance
 
 ```{r}
 metricas_modelos_ipc <- rbind(c("ARIMA(0,2,6)", 
@@ -355,6 +364,7 @@ metricas_modelos_ipc %>%
 
 TODO: elegimos el sarima porque es mejor en todo sentido con el bic, pero deberiamos ver que onda los residuos.
 
+### Análisis de diagnóstico
 
 ```{r}
 residuos_sarima_ipc <- residuals(modelo_sarima_ipc)
