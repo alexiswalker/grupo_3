@@ -136,6 +136,15 @@ adf_test <- function(ts){
 
   return(df)
 }
+
+shapiro_wilk_normality_test <- function(residuos){
+  sw <- shapiro.test(residuos)
+  df <- data.frame(sw$statistic, sw$p.value)
+  colnames(df) <- c("Estadístico", "P-Value")
+  rownames(df) <- NULL
+  
+  return(df)
+}
 ```
 
 
@@ -368,6 +377,17 @@ TODO: elegimos el sarima porque es mejor en todo sentido con el bic, pero deberi
 
 ```{r}
 residuos_sarima_ipc <- residuals(modelo_sarima_ipc)
+```
+
+```{r}
+shapiro_wilk_normality_test(residuos_sarima_ipc) %>% 
+  kable(booktabs = T, caption = "Prueba Shapiro-Wilk de normalidad de los residuos", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+
+
+```{r}
 
 ggtsdisplay(residuos_sarima_ipc, 
             lag.max = 24, 
