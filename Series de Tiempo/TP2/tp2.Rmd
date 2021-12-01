@@ -401,33 +401,37 @@ TODO: residuos que claramente no pasarian el test de ADF. podemos justificarlo c
 
 ## Índice de Salarios
 
+```{r is, fig.cap="Índice de Salarios", fig.height=5, fig.width=10, fig.pos="H"}
+ggtsdisplay(ts_indice_salarios, main = "Índice de Salarios")
+```
+
 ### Estacionaridad
 
+#### Test de Dickey-Fuller aumentado sobre la serie original
 
-**Prueba de Dickey-Fuller aumentada**
+En la Tabla \@ref(tab:is-adf) se observa $\tau^{e}$ entre el valor crítico y cero, lo que determina que no hay evidencia para rechazar $H_{0}$.
 
-```{r}
+```{r is-adf}
 adf_test(ts_indice_salarios) %>% 
-  kable(booktabs = T, caption = "Prueba de Dickey-Fuller aumentada (biblioteca urca)", digits = 3) %>%
+  kable(booktabs = T, caption = "Prueba de ADF para Índice de Salarios", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
+#### Test de Kwiatkowski–Phillips–Schmidt–Shin (KPSS) sobre la serie original
 
-TODO: formula del modelo
+Los resultados de la prueba se encuentran detallados en la Tabla \@ref(tab:is-kpss).
 
-**Prueba de Kwiatkowski–Phillips–Schmidt–Shin (KPSS)**
-
-```{r}
-kpss_test(ts_indice_salarios) %>% 
-  kable(booktabs = T, caption = "Prueba de Kwiatkowski–Phillips–Schmidt–Shin (KPSS)", digits = 3) %>%
+```{r is-kpss}
+kpss_test(ts_indice_precios_consumidor) %>% 
+  kable(booktabs = T, caption = "Test KPSS para Índice de Salarios", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-TODO: formula del modelo
+Ambos tests concluyen que la serie de Índice de Salarios es _no estacionaria_.
 
 
-En la Figura \@ref(fig:is) se observa que, al igual que la serie de IPC, el Índice de Salarios tampoco es estacionario, su media varia a lo largo del
-tiempo y su función de autocorrelación también decrece lentamente en forma lineal.
+
+En la Figura \@ref(fig:is) se observa que, al igual que la serie de IPC, el Índice de Salarios tampoco es estacionario, su media varia a lo largo del tiempo y su función de autocorrelación también decrece lentamente en forma lineal.
 
 Mediante la función ndiffs de R, se estima que el número de diferenciaciones necesarias para convertir la serie en estacionaria. El resultado obtenido es `r ndiffs(ts_indice_salarios)`.
 
