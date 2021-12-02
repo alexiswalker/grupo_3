@@ -422,35 +422,50 @@ adf_test(ts_indice_salarios) %>%
 Los resultados de la prueba se encuentran detallados en la Tabla \@ref(tab:is-kpss).
 
 ```{r is-kpss}
-kpss_test(ts_indice_precios_consumidor) %>% 
+kpss_test(ts_indice_salarios) %>% 
   kable(booktabs = T, caption = "Test KPSS para Índice de Salarios", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
 Ambos tests concluyen que la serie de Índice de Salarios es _no estacionaria_.
 
-
+### Diferenciación
 
 En la Figura \@ref(fig:is) se observa que, al igual que la serie de IPC, el Índice de Salarios tampoco es estacionario, su media varia a lo largo del tiempo y su función de autocorrelación también decrece lentamente en forma lineal.
 
 Mediante la función ndiffs de R, se estima que el número de diferenciaciones necesarias para convertir la serie en estacionaria. El resultado obtenido es `r ndiffs(ts_indice_salarios)`.
-
-```{r is, fig.cap="Índice de Salarios", fig.height=5, fig.width=10, fig.pos="H"}
-ggtsdisplay(ts_indice_salarios, main = "Índice de Salarios")
-```
 
 ```{r}
 indice_salarios_ndiffs <- ndiffs(ts_indice_salarios)
 ```
 
 ```{r is-diferenciado, fig.cap="Índice de Salarios y su tendencia", fig.height=5, fig.width=10, fig.pos="H"}
-dif_ts_indice_salarios <- ts_indice_salarios %>% diff(1)
+dif_ts_indice_salarios <- ts_indice_salarios %>% diff(indice_salarios_ndiffs)
 
 ggtsdisplay(dif_ts_indice_salarios, 
             main = "Índice de Salarios: Diferenciado")
 ```
 
+
+
 Se procese a su ejecución conforme el resultado sugerido. La Figura \@ref(fig:is-diferenciado) muestra el índice de precios al consumidor diferenciado.
+
+
+```{r is-adf-dif}
+adf_test(dif_ts_indice_salarios) %>% 
+  kable(booktabs = T, caption = "Prueba de ADF para Índice de Salarios diferenciado", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+#### Test de Kwiatkowski–Phillips–Schmidt–Shin (KPSS) sobre la serie original
+
+Los resultados de la prueba se encuentran detallados en la Tabla \@ref(tab:is-kpss).
+
+```{r is-kpss-dif}
+kpss_test(dif_ts_indice_salarios) %>% 
+  kable(booktabs = T, caption = "Test KPSS para Índice de Salarios diferenciado", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
 
 Tanto la función de autocorrelación (ACF) como la de autocorrelación parcial (PACF) presentan un lag significativo en 1, por lo que el proceso puede ser
 modelado con un $ARMA(1,1)$.
