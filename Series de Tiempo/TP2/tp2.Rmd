@@ -209,43 +209,20 @@ Se considera la variación mensual acumulada estableciendo a Diciembre 2016 como
 
 # Marco Teórico
 
-Un proceso autorregresivo de orden $p$, $AR(p)$, es definido de la siguiente manera:
-
-\begin{equation}
-  Y_t = \phi_1Y_{t-1} + \phi_2Y_{t-2} + ... + \phi_pY_{t-p} + \varepsilon_t
-\end{equation}
-
-La idea central es que el valor actual de la serie depende de los $p$ términos previos de la misma. Es decir, que la serie se explica a si misma.
-
-Por otro lado, un proceso de medias móviles de orden $q$, $MA(q)$, se define de la siguiente manera:
-
-\begin{equation}
-  Y_t = \varepsilon_t - \theta_1\varepsilon_{t-1} - \theta_2\varepsilon_{t-2} - ... - \theta_q\varepsilon_{t-q}
-\end{equation}
-
-De forma que el valor de la serie actual puede ser expresado como un promedio ponderado de los errores pasados de la misma.
-
-Combinando los modelos autorregresivos y los modelos de medias móviles se obtienen los modelos $ARMA(p, q)$. El resultado entonces es:
-
-\begin{equation}
-  Y_t = \phi_1Y_{t-1} + \phi_2Y_{t-2} + ... + \phi_pY_{t-p} + \varepsilon_t - \theta_1\varepsilon_{t-1} - \theta_2\varepsilon_{t-2} - ... - \theta_q\varepsilon_{t-q}
-\end{equation}
-
 Los modelos autorregresivos y de medias móviles son validos para series de tiempo que son _estacionarias_. Se define que una serie es estacionaria de orden 2 cuando sus segundos momentos son constantes a lo largo del tiempo. Es decir, cuando su media y varianza se mantienen constantes.
 Por lo contrario, una serie es _no estacionaria_ cuando la tendencia y/o la variabilidad cambian a lo largo del tiempo.
 
-La combinación de los modelos $ARMA(p, d)$ estacionales y no estacionales se expresa como: $ARMA(p, q)(P, Q)s$, donde:
-P es el componente autorregresivo estacional, Q el componente de media móvil estacional y s representa el período estacional.
+La combinación de los modelos $ARMA(p, d)$ estacionales y no estacionales se expresa como: $ARMA(p, q)(P, Q)s$, donde $P$ es el componente autorregresivo estacional, $Q$ el componente de media móvil estacional y $s$ representa el período estacional.
 
 \begin{equation}
   \Theta_{P} (B^{s}) \phi_{p}(B)Y_{t} = \Theta_{Q} (B^{s}) \theta_{q}(B)\epsilon_{t}
 \end{equation}
 
-El presente trabajo práctico tiene como objetivo el análisis y predicción las series descriptas anteriormente mediante modelos ARMA estacionales y no estacionales.
+El presente trabajo práctico tiene como objetivo el análisis de la estacionariedad de las series presentadas y su modelado mediante modelos SARIMA.
 
 ## Índice de Precios al Consumidor
 
-### Estacionaridad
+### Analisis de la serie
 
 En la Figura \@ref(fig:ipc), se observa que la serie de IPC es _no estacionaria_ ya que su media varia a lo largo del tiempo y su función de autocorrelación decrece en forma lineal lentamente.
 
@@ -255,7 +232,11 @@ ggtsdisplay(ts_indice_precios_consumidor, main = 'Índice de precios al consumid
 
 Es posible someter la evidencia gráfica a distintas pruebas estadísticas para ratificar o rectificar lo observado.
 
-#### Test de Dickey-Fuller aumentado sobre la serie original
+#### Tests de Estacionariedad
+
+Se procede a analizar la estacionariedad de la serie mediante los tests de Dickey Fuller (ADF) y  Kwiatkowski–Phillips–Schmidt–Shin (KPSS).
+
+**Test ADF**
 
 En la ecuación de Dickey-Fuller aumentada \@ref(eq:df):
 
@@ -272,7 +253,7 @@ El estadístico de este test es:
 \tau^{e} = \frac{\hat{\phi_{1}} - \phi_{1}}{\sigma(\hat{\phi_{1}})}
 \end{equation}
 
-Se plantea el siguiente test:
+Se plantea la regla de decisión:
 
 > Si $\tau \leq \tau^{e} < 0 \Rightarrow$ No Rechazar $H_{0}$
 
@@ -280,7 +261,7 @@ Se plantea el siguiente test:
 
 Como se explica en @pena, la hipótesis nula establece que la raíz mayor de un $AR(p+1)$ es igual a uno, por lo que el proceso es no estacionario.
 
-En la Tabla \@ref(tab:ipc-adf) se observa $\tau^{e}$ entre el valor crítico y cero, lo que determina que no hay evidencia para rechazar $H_{0}$.
+En la Tabla \@ref(tab:ipc-adf) se observa $\tau^{e}$ entre el valor crítico y cero, lo que determina que no hay evidencia para rechazar $H_{0}$ (serie no estacionaria).
 
 ```{r ipc-adf}
 adf_test(ts_indice_precios_consumidor) %>% 
@@ -288,9 +269,9 @@ adf_test(ts_indice_precios_consumidor) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-#### Test de Kwiatkowski–Phillips–Schmidt–Shin (KPSS) sobre la serie original
+**Test KPSS**
 
-@kpss define otra prueba en la cual la hipótesis nula determina que una serie temporal observable es estacionaria. Los resultados de la misma se encuentran detallados en la Tabla \@ref(tab:ipc-kpss).
+@kpss definen otra prueba en la cual la hipótesis nula determina que una serie temporal observable es estacionaria. Los resultados de la misma se encuentran detallados en la Tabla \@ref(tab:ipc-kpss).
 
 ```{r ipc-kpss}
 kpss_test(ts_indice_precios_consumidor) %>% 
@@ -298,7 +279,9 @@ kpss_test(ts_indice_precios_consumidor) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-Ambos tests concluyen que la serie de IPC es _no estacionaria_.
+En este caso el p-value es menor al grado de significación 0.05, por lo que se rechaza $H_0$.
+
+En conclusión, ambos tests concluyen que la serie de IPC es _no estacionaria_.
 
 ### Diferenciación
 
@@ -312,7 +295,7 @@ Mediante la función `ndiffs` de R, se estima que el numero de diferenciaciones 
 
 La Figura \@ref(fig:ipc-diferenciado) muestra el indice de precios al consumidor diferenciado.
 
-```{r ipc-diferenciado, fig.cap="Índice de precio al consumidor y su tendencia", fig.height=5, fig.width=10, fig.pos="H"}
+```{r ipc-diferenciado, fig.cap="Índice de precio al consumidor diferenciado", fig.height=5, fig.width=10, fig.pos="H"}
 dif_ts_indice_precios_consumidor <- ts_indice_precios_consumidor %>%
   diff(lag = 1, differences = indice_precios_consumidor_ndiffs)
 
@@ -320,7 +303,9 @@ ggtsdisplay(dif_ts_indice_precios_consumidor,
             main = "Índice de precios al consumidor: Diferenciado dos veces")
 ```    
 
-#### Test de Dickey-Fuller aumentado sobre la serie diferenciada
+#### Tests de Estacionariedad
+
+**Test ADF**
 
 Se corrobora que la serie de IPC diferenciada es estacionaria mediante el test Dickey-Fuller aumentado (Tabla \@ref(tab:ipc-dif-adf)). El valor de $\tau^{e}$ se encuentra dentro de la zona de rechazo, por lo que se concluye que se rechaza $H_0$.
 
@@ -330,15 +315,17 @@ adf_test(dif_ts_indice_precios_consumidor) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-#### Test de Kwiatkowski–Phillips–Schmidt–Shin (KPSS) sobre la serie diferenciada
+**Test KPSS**
 
-El test KPSS coincide con ADF. En este caso, el p-value es mayor al grado de significación de 0.05, por lo que no se rechaza la hipótesis nula de estacionariedad.
+El test KPSS coincide con ADF. El p-value es mayor al grado de significación de 0.05, por lo que no se rechaza la hipótesis nula de estacionariedad.
 
 ```{r ipc-dif-kpss}
 kpss_test(dif_ts_indice_precios_consumidor) %>% 
   kable(booktabs = T, caption = "Test KPSS para IPC diferenciada", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
+
+Se confirma entonces que la serie diferenciada es _estacionaria_.
 
 ### Modelado
 
@@ -349,8 +336,9 @@ modelo_arima_ipc <- arima(ts_indice_precios_consumidor,
                           order = c(0, 2, 6), 
                           fixed = c(0, 0, 0, 0, 0, NA))
 modelo_sarima_ipc <- arima(ts_indice_precios_consumidor, 
-                           order = c(0, 2, 0),
-                           seasonal = list(order = c(0, 2, 6), period = 12))
+                           order = c(0, 2, 6),
+                           seasonal = list(order = c(0, 2, 6), period = 12),
+                           fixed = c(0, 0, 0, 0, 0, NA, 0, 0, 0, 0, 0, NA))
 ```
 
 ### Métricas de performance
@@ -385,29 +373,31 @@ shapiro_wilk_normality_test(residuos_sarima_ipc) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-
-
 ```{r}
-
 ggtsdisplay(residuos_sarima_ipc, 
             lag.max = 24, 
             main = "Residuos SARIMA(0,2,0)(0,2,6)[12]", 
             plot.type = "histogram")
 ```
 
-TODO: residuos que claramente no pasarian el test de ADF. podemos justificarlo con el covicho?
+TODO: residuos que claramente no pasarian el test de ADF.
 
 \newpage
 
 ## Índice de Salarios
 
+La Figura \@ref(tab:is) muestra la serie de Índice de Salarios.
+
 ```{r is, fig.cap="Índice de Salarios", fig.height=5, fig.width=10, fig.pos="H"}
 ggtsdisplay(ts_indice_salarios, main = "Índice de Salarios")
 ```
+Se procede a analizar la estacionariedad de la misma.
 
-### Estacionaridad
+### Analisis de la serie
 
-#### Test de Dickey-Fuller aumentado sobre la serie original
+#### Tests de Estacionariedad
+
+**Test ADF**
 
 En la Tabla \@ref(tab:is-adf) se observa $\tau^{e}$ entre el valor crítico y cero, lo que determina que no hay evidencia para rechazar $H_{0}$.
 
@@ -417,7 +407,7 @@ adf_test(ts_indice_salarios) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-#### Test de Kwiatkowski–Phillips–Schmidt–Shin (KPSS) sobre la serie original
+**Test KPSS**
 
 Los resultados de la prueba se encuentran detallados en la Tabla \@ref(tab:is-kpss).
 
@@ -431,25 +421,28 @@ Ambos tests concluyen que la serie de Índice de Salarios es _no estacionaria_.
 
 ### Diferenciación
 
-En la Figura \@ref(fig:is) se observa que, al igual que la serie de IPC, el Índice de Salarios tampoco es estacionario, su media varia a lo largo del tiempo y su función de autocorrelación también decrece lentamente en forma lineal.
+En la Figura \@ref(fig:is) se observa que, al igual que la serie de IPC, el Índice de Salarios tampoco es estacionario. Su media varia a lo largo del tiempo y su función de autocorrelación también decrece lentamente en forma lineal.
 
-Mediante la función ndiffs de R, se estima que el número de diferenciaciones necesarias para convertir la serie en estacionaria. El resultado obtenido es `r ndiffs(ts_indice_salarios)`.
+Mediante la función `ndiffs` de R, se estima que el número de diferenciaciones necesarias para convertir la serie en estacionaria. El resultado obtenido es `r ndiffs(ts_indice_salarios)`.
 
 ```{r}
 indice_salarios_ndiffs <- ndiffs(ts_indice_salarios)
+indice_salarios_nsdiffs <- nsdiffs(ts_indice_salarios)
 ```
 
-```{r is-diferenciado, fig.cap="Índice de Salarios y su tendencia", fig.height=5, fig.width=10, fig.pos="H"}
-dif_ts_indice_salarios <- ts_indice_salarios %>% diff(indice_salarios_ndiffs)
+```{r is-diferenciado, fig.cap="Índice de Salarios diferenciado", fig.height=5, fig.width=10, fig.pos="H"}
+dif_ts_indice_salarios <- ts_indice_salarios %>% 
+  diff(1, differences=indice_salarios_ndiffs)
 
 ggtsdisplay(dif_ts_indice_salarios, 
             main = "Índice de Salarios: Diferenciado")
 ```
 
+#### Tests de Estacionariedad
 
+**Test ADF**
 
-Se procese a su ejecución conforme el resultado sugerido. La Figura \@ref(fig:is-diferenciado) muestra el índice de precios al consumidor diferenciado.
-
+Al aplicar el test ADF a la serie diferenciada, el valor de $\tau^{e}$ se encuentra en la zona de rechazo de `H_0`, por lo que se confirma que la serie diferenciada es estacionaria.
 
 ```{r is-adf-dif}
 adf_test(dif_ts_indice_salarios) %>% 
@@ -457,9 +450,9 @@ adf_test(dif_ts_indice_salarios) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-#### Test de Kwiatkowski–Phillips–Schmidt–Shin (KPSS) sobre la serie original
+**Test KPSS**
 
-Los resultados de la prueba se encuentran detallados en la Tabla \@ref(tab:is-kpss).
+El test KPSS sobre la serie diferenciada concuerda con el test ADF, cocluyendo que la serie diferenciada es _estacionaria_.
 
 ```{r is-kpss-dif}
 kpss_test(dif_ts_indice_salarios) %>% 
@@ -467,8 +460,7 @@ kpss_test(dif_ts_indice_salarios) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-Tanto la función de autocorrelación (ACF) como la de autocorrelación parcial (PACF) presentan un lag significativo en 1, por lo que el proceso puede ser
-modelado con un $ARMA(1,1)$.
+
 
 \newpage
 
