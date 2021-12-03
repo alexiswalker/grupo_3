@@ -16,7 +16,6 @@ link-citations: true
 header-includes:
 - \usepackage{titling}
 - \usepackage{floatrow}
-- \usepackage{lipsum}
 
 - \renewcommand{\figurename}{Fig.}
 - \renewcommand{\contentsname}{Índice}
@@ -74,7 +73,7 @@ Las causas que originan el fenómeno de inflación no serán tratadas por lo com
 \setlength{\parskip}{0.5em}
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, fig.pos= "H", out.extra = '')
 
 paquetes <- c("readr", "tidyverse", "forecast", "gridExtra",
               "tseries", "tsibble", "kableExtra", "urca")
@@ -183,7 +182,7 @@ Analizar como evolucionan conjuntamente en el tiempo el Índice de precios al co
 
 Además, esta comparativa muestra cómo se comporta el poder adquisitivo de un empleado. Es posible determinar si se recompone conforme aumentan los precios, acompaña o se abre una brecha que da cuenta de su disminución.
 
-```{r ipc-vs-is, fig.cap="Inflación versus Salarios", fig.height=4, fig.width=10, fig.pos="H"}
+```{r ipc-vs-is, fig.cap="Inflación versus Salarios", fig.height=4, fig.width=10}
 ggplot(raw_data, aes(x = fecha)) +
   geom_line(aes(y = indice_precios_consumidor_acumulada), color = "red3") +
   geom_line(aes(y = indice_salarios_acumulada), color = "steelblue") +
@@ -226,17 +225,17 @@ El presente trabajo práctico tiene como objetivo el análisis de la estacionari
 
 En la Figura \@ref(fig:ipc), se observa que la serie de IPC es _no estacionaria_ ya que su media varia a lo largo del tiempo y su función de autocorrelación decrece en forma lineal lentamente.
 
-```{r ipc, fig.cap="Índice de precios al consumidor", fig.height=5, fig.width=10, fig.pos="H"}
+```{r ipc, fig.cap="Índice de precios al consumidor", fig.height=5, fig.width=10}
 ggtsdisplay(ts_indice_precios_consumidor, main = 'Índice de precios al consumidor')
 ```
 
 Es posible someter la evidencia gráfica a distintas pruebas estadísticas para ratificar o rectificar lo observado.
 
-#### Tests de Estacionariedad
+**Tests de Estacionariedad**
 
 Se procede a analizar la estacionariedad de la serie mediante los tests de Dickey Fuller (ADF) y  Kwiatkowski–Phillips–Schmidt–Shin (KPSS).
 
-**Test ADF**
+**Test de Estacionariedad: ADF**
 
 En la ecuación de Dickey-Fuller aumentada \@ref(eq:df):
 
@@ -269,7 +268,7 @@ adf_test(ts_indice_precios_consumidor) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-**Test KPSS**
+**Test de Estacionariedad: KPSS**
 
 @kpss definen otra prueba en la cual la hipótesis nula determina que una serie temporal observable es estacionaria. Los resultados de la misma se encuentran detallados en la Tabla \@ref(tab:ipc-kpss).
 
@@ -295,7 +294,7 @@ Mediante la función `ndiffs` de R, se estima que el numero de diferenciaciones 
 
 La Figura \@ref(fig:ipc-diferenciado) muestra el indice de precios al consumidor diferenciado.
 
-```{r ipc-diferenciado, fig.cap="Índice de precio al consumidor diferenciado", fig.height=5, fig.width=10, fig.pos="H"}
+```{r ipc-diferenciado, fig.cap="Índice de precio al consumidor diferenciado", fig.height=5, fig.width=10}
 dif_ts_indice_precios_consumidor <- ts_indice_precios_consumidor %>%
   diff(lag = 1, differences = indice_precios_consumidor_ndiffs)
 
@@ -303,9 +302,7 @@ ggtsdisplay(dif_ts_indice_precios_consumidor,
             main = "Índice de precios al consumidor: Diferenciado dos veces")
 ```    
 
-#### Tests de Estacionariedad
-
-**Test ADF**
+**Test de Estacionariedad: ADF**
 
 Se corrobora que la serie de IPC diferenciada es estacionaria mediante el test Dickey-Fuller aumentado (Tabla \@ref(tab:ipc-dif-adf)). El valor de $\tau^{e}$ se encuentra dentro de la zona de rechazo, por lo que se concluye que se rechaza $H_0$.
 
@@ -315,7 +312,7 @@ adf_test(dif_ts_indice_precios_consumidor) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-**Test KPSS**
+**Test de Estacionariedad: KPSS**
 
 El test KPSS coincide con ADF. El p-value es mayor al grado de significación de 0.05, por lo que no se rechaza la hipótesis nula de estacionariedad.
 
@@ -329,7 +326,7 @@ Se confirma entonces que la serie diferenciada es _estacionaria_.
 
 ### Modelado
 
-En el trabajo practico anterior, se obtuvo un modelo $ARIMA(0,2,6)$ para modelar la serie IPC (ver summary en [Apendice](#ipc-modelo-arima)). En esta ocasión, se propone un modelo $SARIMA(0,2,0)(0,2,6)[12]$ (ver summary en [Apendice](#ipc-modelo-sarima)) debido a la naturaleza de dicha serie.
+En el trabajo practico anterior, se obtuvo un modelo $ARIMA(0,2,6)$ para modelar la serie IPC (ver summary en [Apendice](#ipc-modelo-arima)). Si bien la serie no parece presentar algun componente de estacionalidad, se propone un modelo $SARIMA(0,2,0)(0,2,6)[12]$ (ver summary en [Apendice](#ipc-modelo-sarima)) para compararlo con el modelo anterior.
 
 ```{r}
 modelo_arima_ipc <- arima(ts_indice_precios_consumidor, 
@@ -343,7 +340,9 @@ modelo_sarima_ipc <- arima(ts_indice_precios_consumidor,
 
 ### Métricas de performance
 
-```{r}
+Se comparan ambos modelos mediante AIC y BIC en la Tabla \@ref(tab:modelos-ipc).
+
+```{r modelos-ipc}
 metricas_modelos_ipc <- rbind(c("ARIMA(0,2,6)", 
                                 AIC(modelo_arima_ipc),
                                 BIC(modelo_arima_ipc)),
@@ -359,7 +358,7 @@ metricas_modelos_ipc %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-TODO: elegimos el sarima porque es mejor en todo sentido con el bic, pero deberiamos ver que onda los residuos.
+Parece que el modelo $SARIMA(0,2,0)(0,2,6)[12]$ es mejor al $ARIMA(0,2,6)$ propuesto en el trabajo anterior. Es necesario realizar un análisis de los residuos del modelo para verificar que presenta un buen ajuste.
 
 ### Análisis de diagnóstico
 
@@ -367,37 +366,28 @@ TODO: elegimos el sarima porque es mejor en todo sentido con el bic, pero deberi
 residuos_sarima_ipc <- residuals(modelo_sarima_ipc)
 ```
 
-```{r}
-shapiro_wilk_normality_test(residuos_sarima_ipc) %>% 
-  kable(booktabs = T, caption = "Prueba Shapiro-Wilk de normalidad de los residuos", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
-```
+Si bien el modelo SARIMA presenta mejores métricas de información que el modelo baseline del trabajo practico anterior, el modelo no ajusta de manera correcta los datos. Al graficar los residuos en la Figura \@ref(fig:ipc-residuos), se puede observar que los residuos presentan autocorrelacion y no se distribuyen normalmente.
 
-```{r}
+```{r ipc-residuos, fig.cap="Residuos modelo SARIMA", fig.height=5, fig.width=10}
 ggtsdisplay(residuos_sarima_ipc, 
             lag.max = 24, 
             main = "Residuos SARIMA(0,2,0)(0,2,6)[12]", 
             plot.type = "histogram")
 ```
 
-TODO: residuos que claramente no pasarian el test de ADF.
-
 \newpage
 
 ## Índice de Salarios
 
-La Figura \@ref(tab:is) muestra la serie de Índice de Salarios.
+La Figura \@ref(fig:is) muestra la serie de Índice de Salarios.
 
 ```{r is, fig.cap="Índice de Salarios", fig.height=5, fig.width=10, fig.pos="H"}
 ggtsdisplay(ts_indice_salarios, main = "Índice de Salarios")
 ```
-Se procede a analizar la estacionariedad de la misma.
 
 ### Analisis de la serie
 
-#### Tests de Estacionariedad
-
-**Test ADF**
+**Test de Estacionariedad: ADF**
 
 En la Tabla \@ref(tab:is-adf) se observa $\tau^{e}$ entre el valor crítico y cero, lo que determina que no hay evidencia para rechazar $H_{0}$.
 
@@ -407,7 +397,7 @@ adf_test(ts_indice_salarios) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-**Test KPSS**
+**Test de Estacionariedad: KPSS**
 
 Los resultados de la prueba se encuentran detallados en la Tabla \@ref(tab:is-kpss).
 
@@ -438,9 +428,7 @@ ggtsdisplay(dif_ts_indice_salarios,
             main = "Índice de Salarios: Diferenciado")
 ```
 
-#### Tests de Estacionariedad
-
-**Test ADF**
+**Test de Estacionariedad: ADF**
 
 Al aplicar el test ADF a la serie diferenciada, el valor de $\tau^{e}$ se encuentra en la zona de rechazo de `H_0`, por lo que se confirma que la serie diferenciada es estacionaria.
 
@@ -450,7 +438,7 @@ adf_test(dif_ts_indice_salarios) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-**Test KPSS**
+**Test de Estacionariedad: KPSS**
 
 El test KPSS sobre la serie diferenciada concuerda con el test ADF, cocluyendo que la serie diferenciada es _estacionaria_.
 
@@ -460,25 +448,27 @@ kpss_test(dif_ts_indice_salarios) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
+### Modelado
 
+En este trabajo practico no se propone otro modelo ya que en el anterior el seleccionado fue un $SARIMA(1,0,0)(1,0,0)[12]$ cuyo summary se encuenta en el [Apendice](#is-modelo-sarima).
+
+```{r}
+ts_indice_salarios <- window(ts_indice_salarios, end = c(2021, 4))
+
+modelo_sarima_is <- auto.arima(ts_indice_salarios)
+```
 
 \newpage
 
 # Análisis de Resultados
 
-Se observa de los análisis realizados que el pronóstico de incremento de IPC es superior al pronóstico de incremento de masa salarial en una ventana de tiempo de considerable amplitud.
-
-<!-- TODO -->
-
-No se avisoran condiciones de política económica interna que alteren las tendencias observadas ni se espera cambios en el contexto internacional que ayuden a mejorar este desequilibrio.
+TODO:
 
 \newpage
 
 # Conclusiones
 
-Queda en evidencia que la tendencia de estas variables son altamente negativas para la economía local.
-
-De no realizarse cambios en el rumbo económico que impliquen mejoras en: el aspecto financiero (bajar el ritmo de emisión monetaria), incrementar las exportaciones para solventar la balanza de pagos y tipo de cambio, fomentar la producción nacional, para utilizar al máximo la capacidad instalada y poder disminuir las importaciones y luego con el crecimiento disminuir los impuestos para ser más competitivos, no se lograran mejorar los indicadores y el salario real seguirá decreciendo.
+TODO: 
 
 \newpage
 
@@ -500,4 +490,10 @@ summary(modelo_arima_ipc)
 
 ```{r}
 summary(modelo_sarima_ipc)
+```
+
+## Modelo $$SARIMA(1,0,0)(1,0,0)[12]$$ para Índice de Salarios {#is-modelo-sarima}
+
+```{r}
+summary(modelo_sarima_is)
 ```
