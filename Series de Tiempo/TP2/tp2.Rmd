@@ -209,33 +209,16 @@ Se considera la variación mensual acumulada estableciendo a Diciembre 2016 como
 # Marco Teórico
 
 Los modelos autorregresivos y de medias móviles son validos para series de tiempo que son _estacionarias_. Se define que una serie es estacionaria de orden 2 cuando sus segundos momentos son constantes a lo largo del tiempo. Es decir, cuando su media y varianza se mantienen constantes.
+
 Por lo contrario, una serie es _no estacionaria_ cuando la tendencia y/o la variabilidad cambian a lo largo del tiempo.
-
-La combinación de los modelos $ARMA(p, d)$ estacionales y no estacionales se expresa como: $ARMA(p, q)(P, Q)s$, donde $P$ es el componente autorregresivo estacional, $Q$ el componente de media móvil estacional y $s$ representa el período estacional.
-
-\begin{equation}
-  \Theta_{P} (B^{s}) \phi_{p}(B)Y_{t} = \Theta_{Q} (B^{s}) \theta_{q}(B)\epsilon_{t}
-\end{equation}
 
 El presente trabajo práctico tiene como objetivo el análisis de la estacionariedad de las series presentadas y su modelado mediante modelos SARIMA.
 
-## Índice de Precios al Consumidor
+## Tests de estacionariedad
 
-### Analisis de la serie
+La estacionariedad puede ser puesta a prueba mediante diferentes tests. Se detallan los dos a utilizar.
 
-En la Figura \@ref(fig:ipc), se observa que la serie de IPC es _no estacionaria_ ya que su media varia a lo largo del tiempo y su función de autocorrelación decrece en forma lineal lentamente.
-
-```{r ipc, fig.cap="Índice de precios al consumidor", fig.height=5, fig.width=10}
-ggtsdisplay(ts_indice_precios_consumidor, main = 'Índice de precios al consumidor')
-```
-
-Es posible someter la evidencia gráfica a distintas pruebas estadísticas para ratificar o rectificar lo observado.
-
-**Tests de Estacionariedad**
-
-Se procede a analizar la estacionariedad de la serie mediante los tests de Dickey Fuller (ADF) y  Kwiatkowski–Phillips–Schmidt–Shin (KPSS).
-
-**Test de Estacionariedad: ADF**
+### Dickey-Fuller Aumentado
 
 En la ecuación de Dickey-Fuller aumentada \@ref(eq:df):
 
@@ -259,6 +242,52 @@ Se plantea la regla de decisión:
 > Si $\tau^{e} < \tau \Rightarrow$ Rechazar $H_{0}$
 
 Como se explica en @pena, la hipótesis nula establece que la raíz mayor de un $AR(p+1)$ es igual a uno, por lo que el proceso es no estacionario.
+
+### Kwiatkowski-Phillips-Schmidt-Shin
+
+@kpss definen otra prueba para raíces unitarias en la cual la hipótesis nula es contraria al test ADF, es decir, plantea que la serie temporal observable es estacionaria.
+
+## Modelos SARIMA
+
+Los modelos $ARIMA$ no logran captar los efectos estacionales de una serie mientras que los $SARIMA$ captan el comportamiento puramente estacional de una serie.
+
+La combinación de los modelos $ARMA(p, d)$ estacionales y no estacionales se expresa como $ARMA(p, q)(P, Q)s$ donde:
+
+- $P$ es el componente autorregresivo estacional
+- $Q$ el componente de media móvil estacional 
+- $s$ representa el período estacional
+
+Por lo que se llega a la ecuación \@ref(eq:sarma).
+
+\begin{equation}
+  \Theta_{P} (B^{s}) \phi_{p}(B)Y_{t} = \Theta_{Q} (B^{s}) \theta_{q}(B)\epsilon_{t}
+  (\#eq:sarma)
+\end{equation}
+
+Al agregar la parte integrada a la ecuación \@ref(eq:sarma), se llega a la expresión del modelo $SARIMA$.
+
+\begin{equation}
+  \Theta_{P} (B^{s}) \phi_{p}(B)Y_{t} \nabla_{s}^{D} \nabla^{d} = \phi_{0} + \Theta_{Q} (B^{s}) \theta_{q}(B)\epsilon_{t}
+  (\#eq:sarima)
+\end{equation}
+
+\newpage
+
+# Análisis de Resultados
+
+## Índice de Precios al Consumidor
+
+### Analisis de la serie
+
+En la Figura \@ref(fig:ipc), se observa que la serie de IPC es _no estacionaria_ ya que su media varia a lo largo del tiempo y su función de autocorrelación decrece en forma lineal lentamente.
+
+```{r ipc, fig.cap="Índice de precios al consumidor", fig.height=5, fig.width=10}
+ggtsdisplay(ts_indice_precios_consumidor, main = 'Índice de precios al consumidor')
+```
+
+Es posible someter la evidencia gráfica a distintas pruebas estadísticas para ratificar o rectificar lo observado.
+
+**Test de Estacionariedad: ADF**
 
 En la Tabla \@ref(tab:ipc-adf) se observa $\tau^{e}$ entre el valor crítico y cero, lo que determina que no hay evidencia para rechazar $H_{0}$ (serie no estacionaria).
 
@@ -326,7 +355,7 @@ Se confirma entonces que la serie diferenciada es _estacionaria_.
 
 ### Modelado
 
-En el trabajo practico anterior, se obtuvo un modelo $ARIMA(0,2,6)$ para modelar la serie IPC (ver summary en [Apendice](#ipc-modelo-arima)). Si bien la serie no parece presentar algun componente de estacionalidad, se propone un modelo $SARIMA(0,2,0)(0,2,6)[12]$ (ver summary en [Apendice](#ipc-modelo-sarima)) para compararlo con el modelo anterior.
+En el trabajo practico anterior, se obtuvo un modelo $ARIMA(0,2,6)$ para modelar la serie IPC (ver summary en [Apendice](#ipc-modelo-arima)). Si bien la serie no parece presentar algún componente de estacionalidad, se propone un modelo $SARIMA(0,2,0)(0,2,6)[12]$ (ver summary en [Apendice](#ipc-modelo-sarima)) para compararlo con el modelo anterior.
 
 ```{r}
 modelo_arima_ipc <- arima(ts_indice_precios_consumidor, 
@@ -375,7 +404,7 @@ ggtsdisplay(residuos_sarima_ipc,
             plot.type = "histogram")
 ```
 
-\newpage
+
 
 ## Índice de Salarios
 
@@ -458,11 +487,6 @@ ts_indice_salarios <- window(ts_indice_salarios, end = c(2021, 4))
 modelo_sarima_is <- auto.arima(ts_indice_salarios)
 ```
 
-\newpage
-
-# Análisis de Resultados
-
-TODO:
 
 \newpage
 
@@ -492,7 +516,7 @@ summary(modelo_arima_ipc)
 summary(modelo_sarima_ipc)
 ```
 
-## Modelo $$SARIMA(1,0,0)(1,0,0)[12]$$ para Índice de Salarios {#is-modelo-sarima}
+## Modelo $SARIMA(1,0,0)(1,0,0)[12]$ para Índice de Salarios {#is-modelo-sarima}
 
 ```{r}
 summary(modelo_sarima_is)
