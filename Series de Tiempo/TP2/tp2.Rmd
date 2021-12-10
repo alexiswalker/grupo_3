@@ -492,7 +492,9 @@ modelo_sarima_is <- auto.arima(ts_indice_salarios)
 
 # Conclusiones
 
-TODO: 
+El Indice de Precios al Consumidor y el Indice de Salarios no presentan un comportamiento estacional lo que evidencia una falta de políticas a largo plazo en cuanto a materia económica.
+
+De no realizarse cambios en el rumbo económico, no se lograran mejorar los indicadores y el salario real seguirá decreciendo.
 
 \newpage
 
