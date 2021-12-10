@@ -247,6 +247,16 @@ Como se explica en @pena, la hipótesis nula establece que la raíz mayor de un 
 
 @kpss definen otra prueba para raíces unitarias en la cual la hipótesis nula es contraria al test ADF, es decir, plantea que la serie temporal observable es estacionaria.
 
+## Transformaciones para estabilizar la media y la varianza
+
+Según lo expresado en @pena, la identificación de las estructuras no estacionarias consiste en detectar qué transformaciones hay que aplicar para conseguir un proceso con media y varianza constante. 
+
+En particular, consiste en determinar si es necesario: transformar la serie para que tenga varianza constante y/o diferenciarla para darle una media constante.
+
+Por un lado, las transformaciones de potencia de Box-Cox son una forma general que permiten convertir el proceso original en un proceso condicionalmente homocedástico.
+
+Por otro, como se puede asumir que la tendencia de una serie en el instante $t$ es muy próxima a la del instante $t-1$, se puede formular una nueva serie de la manera $Y_t = y_t - y_{t-1}$. Este proceso se define como _diferenciación_ y permite transformar una serie no estacionaria a estacionaria.
+
 ## Modelos SARIMA
 
 Los modelos $ARIMA$ no logran captar los efectos estacionales de una serie mientras que los $SARIMA$ captan el comportamiento puramente estacional de una serie.
@@ -299,7 +309,7 @@ adf_test(ts_indice_precios_consumidor) %>%
 
 **Test de Estacionariedad: KPSS**
 
-@kpss definen otra prueba en la cual la hipótesis nula determina que una serie temporal observable es estacionaria. Los resultados de la misma se encuentran detallados en la Tabla \@ref(tab:ipc-kpss).
+Los resultados de la prueba se encuentran detallados en la Tabla \@ref(tab:ipc-kpss).
 
 ```{r ipc-kpss}
 kpss_test(ts_indice_precios_consumidor) %>% 
@@ -309,11 +319,9 @@ kpss_test(ts_indice_precios_consumidor) %>%
 
 En este caso el p-value es menor al grado de significación 0.05, por lo que se rechaza $H_0$.
 
-En conclusión, ambos tests concluyen que la serie de IPC es _no estacionaria_.
+En conclusión, ambos tests determinan que la serie de IPC es _no estacionaria_.
 
 ### Diferenciación
-
-Como se puede asumir que la tendencia de una serie en el instante $t$ es muy próxima a la del instante $t-1$, se puede formular una nueva serie de la manera $Y_t = y_t - y_{t-1}$. Este proceso se define como _diferenciación_ y permite transformar una serie no estacionaria a estacionaria. 
 
 ```{r}
 indice_precios_consumidor_ndiffs <- ndiffs(ts_indice_precios_consumidor)
