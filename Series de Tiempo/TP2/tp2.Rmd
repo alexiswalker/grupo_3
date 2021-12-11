@@ -363,7 +363,7 @@ Se confirma entonces que la serie diferenciada es _estacionaria_.
 
 ### Modelado
 
-En el trabajo practico anterior, se obtuvo un modelo $ARIMA(0,2,6)$ para modelar la serie IPC (ver summary en [Apendice](#ipc-modelo-arima)). Si bien la serie no parece presentar algún componente de estacionalidad, se propone un modelo $SARIMA(0,2,0)(0,2,6)[12]$ (ver summary en [Apendice](#ipc-modelo-sarima)) para compararlo con el modelo anterior.
+En el trabajo práctico anterior, se obtuvo un modelo $ARIMA(0,2,6)$ para modelar la serie IPC (ver summary en [Apendice](#ipc-modelo-arima)). Si bien la serie no parece presentar algún componente de estacionalidad, se propone un modelo $SARIMA(0,2,0)(0,2,6)[12]$ (ver summary en [Apendice](#ipc-modelo-sarima)) para compararlo con el modelo anterior.
 
 ```{r}
 modelo_arima_ipc <- arima(ts_indice_precios_consumidor, 
@@ -403,7 +403,7 @@ Parece que el modelo $SARIMA(0,2,0)(0,2,6)[12]$ es mejor al $ARIMA(0,2,6)$ propu
 residuos_sarima_ipc <- residuals(modelo_sarima_ipc)
 ```
 
-Si bien el modelo SARIMA presenta mejores métricas de información que el modelo baseline del trabajo practico anterior, el modelo no ajusta de manera correcta los datos. Al graficar los residuos en la Figura \@ref(fig:ipc-residuos), se puede observar que los residuos presentan autocorrelacion y no se distribuyen normalmente.
+Si bien el modelo SARIMA presenta mejores métricas de información que el modelo baseline del trabajo práctico anterior, la nueva propuesta no ajusta de manera correcta los datos. Al graficar los residuos en la Figura \@ref(fig:ipc-residuos), se puede observar que éstos presentan autocorrelación y no se distribuyen normalmente.
 
 ```{r ipc-residuos, fig.cap="Residuos modelo SARIMA", fig.height=5, fig.width=10}
 ggtsdisplay(residuos_sarima_ipc, 
@@ -411,7 +411,6 @@ ggtsdisplay(residuos_sarima_ipc,
             main = "Residuos SARIMA(0,2,0)(0,2,6)[12]", 
             plot.type = "histogram")
 ```
-
 
 
 ## Índice de Salarios
@@ -477,7 +476,7 @@ adf_test(dif_ts_indice_salarios) %>%
 
 **Test de Estacionariedad: KPSS**
 
-El test KPSS sobre la serie diferenciada concuerda con el test ADF, cocluyendo que la serie diferenciada es _estacionaria_.
+El test KPSS sobre la serie diferenciada concuerda con el test ADF, concluyendo que la serie diferenciada es _estacionaria_.
 
 ```{r is-kpss-dif}
 kpss_test(dif_ts_indice_salarios) %>% 
@@ -487,7 +486,7 @@ kpss_test(dif_ts_indice_salarios) %>%
 
 ### Modelado
 
-En este trabajo practico no se propone otro modelo ya que en el anterior el seleccionado fue un $SARIMA(1,0,0)(1,0,0)[12]$ cuyo summary se encuenta en el [Apendice](#is-modelo-sarima).
+En este trabajo practico no se propone otro modelo ya que en el anterior el seleccionado fue un $SARIMA(1,0,0)(1,0,0)[12]$ cuyo summary se encuentra en el [Apendice](#is-modelo-sarima).
 
 ```{r}
 ts_indice_salarios <- window(ts_indice_salarios, end = c(2021, 4))
@@ -500,9 +499,11 @@ modelo_sarima_is <- auto.arima(ts_indice_salarios)
 
 # Conclusiones
 
-El Indice de Precios al Consumidor y el Indice de Salarios no presentan un comportamiento estacional lo que evidencia una falta de políticas a largo plazo en cuanto a materia económica.
+El Índice de Precios al Consumidor no presenta un comportamiento estacional. Esto evidencia una falta de políticas a largo plazo en cuanto a materia económica, constantes y evolutivas año tras año.
 
-De no realizarse cambios en el rumbo económico, no se lograran mejorar los indicadores y el salario real seguirá decreciendo.
+La sugerencia de ajuste del Índice de Salarios por la búsqueda iterativa de la función `auto.arima {forecast}` de R, propone un modelo $AR(1)(1)_{12}$ lo que solo sugiere un intento cíclico de recomponer parcialmente la pérdida frente a la inflación.
+
+De no realizarse cambios en el rumbo económico, no se lograrán mejorar los indicadores y el salario real seguirá decreciendo, aumenta la brecha en el poder adquisitivo de la masa asalariada. 
 
 \newpage
 
