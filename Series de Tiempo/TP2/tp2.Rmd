@@ -501,7 +501,7 @@ modelo_sarima_is <- auto.arima(ts_indice_salarios)
 
 El Índice de Precios al Consumidor no presenta un comportamiento estacional. Esto evidencia una falta de políticas a largo plazo en cuanto a materia económica, constantes y evolutivas año tras año.
 
-La sugerencia de ajuste del Índice de Salarios por la búsqueda iterativa de la función `auto.arima {forecast}` de R, propone un modelo $AR(1)(1)_{12}$ lo que solo sugiere un intento cíclico de recomponer parcialmente la pérdida frente a la inflación.
+La sugerencia de ajuste del Índice de Salarios por la búsqueda iterativa de la función `auto.arima {forecast}` de R, propone un modelo $AR(1)(1)_{12}$ lo que solo evidencia un intento cíclico de recomponer parcialmente la pérdida frente a la inflación.
 
 De no realizarse cambios en el rumbo económico, no se lograrán mejorar los indicadores y el salario real seguirá decreciendo, aumenta la brecha en el poder adquisitivo de la masa asalariada. 
 
