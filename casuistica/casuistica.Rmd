@@ -1,0 +1,60 @@
+---
+title:  | 
+  T.......................1
+subtitle: |
+  Casuistica
+      
+  Maestría en Explotación de Datos y Gestión del Conocimiento
+author: |
+  Franco Lianza, Alexis Walker
+date: |
+  `r format(Sys.time(), '%d %B %Y')`
+
+header-includes:
+- \usepackage{titling}
+- \usepackage{floatrow}
+- \usepackage{lipsum}
+
+- \renewcommand{\figurename}{Fig.}
+- \renewcommand{\contentsname}{Índice}
+- \renewcommand{\tablename}{Tabla}
+
+- \pretitle{
+      \begin{center}
+      \thispagestyle{empty}
+      \includegraphics[width=2in,height=2in]{logo.png}\LARGE\\
+      \vskip 12em
+  }
+- \posttitle{\end{center}}
+
+- \preauthor{
+      \begin{center}
+      \vskip 26em
+  }
+- \postauthor{\end{center}}
+  
+- \predate{\begin{center}}
+- \postdate{
+    \end{center}
+    \vskip 4em
+  }
+
+output: 
+  bookdown::pdf_document2: default
+---
+
+\thispagestyle{empty}
+\newpage
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.5em}
+
+# Introducción
+
+blah blah
+
+\newpage
+
+# Charla 1
+
+# Charla 2
