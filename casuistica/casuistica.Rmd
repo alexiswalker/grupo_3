@@ -57,4 +57,43 @@ blah blah
 
 # Charla 1
 
-# Charla 2
+# DataOps y MLOps: Cómo escalar el delivery de productos de datos sin morir en el intento
+
+Ciclo de vida de todo proyecto de datos
+
+Deuda técnica o metodológica, modelos que no llegan a producción
+
+2008 - concepto de devops (entrega continuo)
+2014 - reconciendo el valor de los datos, éstos como activos: dataops -> el universo no solo es el código sino que se suman los datos.
+2015 - paper de google -> MLops: codigo datos y modelo.
+
+## Racionales
+
+Las soluciones originadas a partir de los datos se tornaron críticas al estar cada vez más enbedidas en los cores. Tambien en parte por la alfabetizacion de las áreas usuarias, implicando mayor y más compleja demanda.
+
+Problemas
+- una solucion implica nuevas necesidades
+- datos no integrados, no disponibles.. enumerar...
+- la naturaleza cambiante del producto de datos, siempre hay algo para mejorar 
+
+Se buscar cambiar la forma de trabajo del ususairo. 
+
+Soluciones
+- heroicas: laburando mucho, pero como el producto no termina nunca, vivimos sobre demandados
+- esperanza: todo funciona bien del vamos, .
+- sobrestimar: se sobre estima el trabajo para tener espacio a modo de cubrirse
+
+Credibilidad en baja:
+- 51
+- 87
+- 80
+
+
+## Conceptos heredados de la industria del software
+
+agile + devops + control estadistico de procesos
+
+## Ejemplo
+desarrollo, gestion y gobierno 
+
+MLflow
