@@ -14,6 +14,8 @@ header-includes:
 - \usepackage{titling}
 - \usepackage{floatrow}
 - \usepackage{lipsum}
+- \usepackage{graphicx}
+- \usepackage{float}
 
 - \renewcommand{\figurename}{Fig.}
 - \renewcommand{\contentsname}{Índice}
@@ -55,8 +57,6 @@ blah blah
 
 \newpage
 
-# Charla 1
-
 # DataOps y MLOps: Cómo escalar el delivery de productos de datos sin morir en el intento
 
 Ciclo de vida de todo proyecto de datos
@@ -97,3 +97,97 @@ agile + devops + control estadistico de procesos
 desarrollo, gestion y gobierno 
 
 MLflow
+
+\newpage
+
+# Que hotel va primero para vos? Un ejemplo del desafio de usar Machine Learning para odernar hoteles en Despegar.com
+
+_Despegar.com_ se encontraba ante la incógnita de si era posible ordenar los hoteles que se mostraban a los usuarios de manera basado en la probabilidad de compra en tiempo real de manera de optimizar la conversión. La idea era generar un sistema que ante una búsqueda del usuario clasifique y ordene los resultados obteniendo algún tipo de score que pueda ser interpretado como probabilidad de compra.
+
+## El problema del Sorting
+
+El sorting es un tipo de problema que consiste en la aplicación de algoritmos de machine learning cuyo objetivo es optimizar la ubicación de los items de los mas relevantes a los menos relevantes. Para esto, existen 3 enfoques distintos: 
+
+- **_Pointwise_**: el modelo se aplica sobre cada ítem de manera individual, es decir se utilizan las características propias del ítem sin mirar a las del resto. El ordenamiento se da por el score individual de cada ítem.
+- **_Pairwise_**: el modelo se aplica sobre cada par de ítem, de forma que se comparan las características de cada uno a fin de obtener el mejor de ambos. El ordenamiento final es relativo a los scores de cada par.
+- **_Listwise_**: el modelo se aplica sobre la lista entera de items y busca optimizar alguna métrica de ordenamiento como Ganancia _Acumulada Descontada Normalizada (NDCG)_ o la _Precisión Media Promedio (MAP)_.
+
+Solo el ordenamiento _pointwise_ provee scores que pueden ser interpretables como probabilidades, por lo que el proyecto utilizo este enfoque por sobre los otros.
+
+Otro de los problemas encontrados durante la investigación sobre el sorting es el _sesgo de la posición_. En los análisis exploratorios realizados se encontró que la probabilidad de saber si un ítem es relevante para un usuario-contexto disminuye con la posición. Este sesgo complica el trabajo de entender cuanto influye las características del hotel y cuanto influye la posición en la que se muestra.
+
+## Diseno
+
+El diseno del producto fue separado en 4 etapas: estimación del sesgo de la posición de los datos actuales, entrenamiento del modelo (feature engineering y modelado), post procesamiento de scores y evaluación offline.
+
+### Estimacion del sesgo
+
+La posición de un ítem influye en la probabilidad de compra, es decir, es mas probable comprar items que aparezcan en los primeros resultados. Este sesgo debe ser medido de alguna forma para poder incorporarlo al modelo. El equipo de _Despegar.com_ utilizaron el _algoritmo Expectation-Maximization_ obteniendo un **ponderador** para utilizar en el modelo. Este ponderador puede ser interpretado como _la probabilidad de que el usuario haya visto el ítem_.
+
+### Entrenamiento del modelo
+
+Los datos que se utilizaron para el armado del dataset consistían en características propias del contexto, del hotel, del contexto y hotel y finalmente, el target binario de si la persona compraba el hotel o no. La figura \@ref(fig:despegar-features) muestra algunos ejemplos utilizados.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{despegar/features.png}
+    \caption{Features utilizados}
+    \label{fig:despegar-features}
+\end{figure}
+
+Algunas de estas features pueden ser obtenidas en tiempo real y otras tuvieron que pre-computarlas y dejarlas en un _feature store_ para que se pudiesen consumir de manera online.
+
+Para el modelado, se utilizo un _XGBoost por cada destino_ por varias razones: por su potencia predictiva y por su portabilidad. El sistema transaccional de Despegar.com se encuentra programado en Scala, por lo que la elección de XGBoost les permitió programarlos en Python y luego ponerlos productivos en Scala.
+
+La evaluación del modelado consitio en dos momentos: offline y online. La evaluación offline fue medida con métricas de clasificación (F-score) y métricas de probabilidad (Negative Log Loss). La online, mediante 3 KPIs definidos por el negocio: _tasa de conversión_, _margen por usuario_ e _ingreso_. A su vez, el modelo fue deployado utilizando un esquema A/B para algunos de los destinos seleccionados.
+
+### Post procesamiento de scores
+
+Luego del entrenamiento, los scores obtenidos fueron post procesados en función del enfoque.
+
+En el _enfoque de clasificación_, se definió un umbral por el cual los hoteles eran clasificados en "relevantes" y "no relevantes". De esta manera se optimizaba de manera eficiente el f-score.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{despegar/enfoque_clasificacion.png}
+    \caption{Enfoque de Clasificacion}
+    \label{fig:despegar-enfoque-clasificacion}
+\end{figure}
+
+En el _enfoque de probabilidades_, se optimiza la métrica negative log loss (NLL) para medir diferencias entre el score ($z$) y el target de compra o no compra ($y$).
+
+\begin{equation}
+  NLL = \sum_{i=-1}^{+N} y_i + \log z_i + (1 - y_i) \log (1 - z_i)
+  (\#eq:despegar-nll)
+\end{equation}
+
+A su vez, se utilizaron _gráficos de calibración_. Estos gráficos permiten observar la relación de los scores medidos y la tasa de conversión. La idea general de esta herramienta es agrupar hoteles de manera similar y graficar las medidas. Resulto de gran importancia durante el desarrollo ya que se puede compartir con otras áreas de Despegar.com ya que son simples de interpretar: siempre y cuando se muestre una tendencia positiva, el modelo funciona correctamente.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{despegar/grafico_calibracion.png}
+    \caption{Grafico de Calibración.}
+    \label{fig:despegar-grafico-calibracion}
+\end{figure}
+
+### Evaluación
+
+El equipo decidió realizar una POC con el enfoque de _clasificación_ obteniendo resultados mixtos en los KPIs. En la siguiente iteración, se cambio al enfoque de _probabilidades_.
+
+El enfoque de _probabilidades_ resultó ser el mejor. La Figura \@ref(fig:despegar-grafico-calibracion-resultados) muestra los gráficos de calibración obtenidos por enfoque.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{despegar/grafico_calibracion_resultados.png}
+    \caption{Graficos de calibración obtenidos por enfoque.}
+    \label{fig:despegar-grafico-calibracion-resultados}
+\end{figure}
+
+En la Figura \@ref(fig:despegar-resultados) se detalla el comportamiento de cada KPI en función de su enfoque.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{despegar/resultados.png}
+    \caption{Resultados obtenidos por enfoque.}
+    \label{fig:despegar-resultados}
+\end{figure}
