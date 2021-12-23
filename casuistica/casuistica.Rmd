@@ -194,4 +194,9 @@ En la Figura \@ref(fig:despegar-resultados) se detalla el comportamiento de cada
 
 ## Conclusiones
 
-TODO: algo
+Es interesante mencionar que la ciencia de datos puede estar en cualquier lado, incluso en ordenamiento de listas. Durante toda la charla, los chicos de Despegar.com mencionaron la importancia de analizar el estado del arte y de hacer pruebas de concepto (POCs) para poder involucrar al negocio lo mas temprano posible.
+
+Otro punto interesante a recalcar es que, si bien la métrica mas lógica a optimizar es el f-score (al tratarse de un problema de clasificación), no siempre es la que optimiza mejor los KPIs. No hay que perder el foco de las métricas de negocio a optimizar. Las métricas "clásicas" deben ser de soporte, pero las métricas de negocio son las que nos tienen que definir los modelos o enfoques a seguir.
+
+
+
