@@ -191,3 +191,7 @@ En la Figura \@ref(fig:despegar-resultados) se detalla el comportamiento de cada
     \caption{Resultados obtenidos por enfoque.}
     \label{fig:despegar-resultados}
 \end{figure}
+
+## Conclusiones
+
+TODO: algo
