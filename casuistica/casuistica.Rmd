@@ -48,46 +48,31 @@ output:
 \thispagestyle{empty}
 \newpage
 
-\setlength{\parindent}{0em}
-\setlength{\parskip}{0.5em}
-
-# Introducción
-
-blah blah
-
-\newpage
-
 # DataOps y MLOps: Cómo escalar el delivery de productos de datos sin morir en el intento
 
-Ciclo de vida de todo proyecto de datos
+Con el ya instituido entendimiento en distintos estratos y roles dentro de las compañías sobre la necesidad de trabajar con dato, y su carácter de activo que conlleva a reconocer el valor estratégico de su explotación; es importante ocuparse del ciclo de vida de los mismos. Este concepto se identifica en la industria como: *DataOps* y *MLOps*.
 
-Deuda técnica o metodológica, modelos que no llegan a producción
+Muchos intentos de incorporar esta capacidad dentro del departamento de IT terminan en proyectos inconclusos debido a la falta de gestión de la deuda técnica y metodológica vinculada al gobierno y ciclo de vida del entregable de un científico de datos.
 
-2008 - concepto de devops (entrega continuo)
-2014 - reconciendo el valor de los datos, éstos como activos: dataops -> el universo no solo es el código sino que se suman los datos.
-2015 - paper de google -> MLops: codigo datos y modelo.
+Se recorre un poco de historia para reconocer el estado del arte actual que permite sortear el inconveniente antes planteado:
+
+2008 - se introduce el concepto de DevOps que pretende agilizar el proceso de desarrollo de software focalizando en la entrega continua (construcción, implementación y mantenimiento).
+
+2014 - se empieza a discutir sobre DataOps, el universo ya no solo se centra en el código sino que se suman los datos.
+
+2015 - Google, en su paper _Hidden Technical Debt in Machine Learning Systems_, visibiliza la carencia metodológica y la deuda técnica que existía en los equipos de ciencias de datos. Lo que introduce la idea de MlOps, donde ahora son tres los conceptos: código, datos y modelos; y su gestión para escalar la entrega de este tipo de productos.
 
 ## Racionales
 
-Las soluciones originadas a partir de los datos se tornaron críticas al estar cada vez más enbedidas en los cores. Tambien en parte por la alfabetizacion de las áreas usuarias, implicando mayor y más compleja demanda.
+Hoy, las soluciones originadas a partir de los datos, se tornaron críticas; esto debido al estar cada vez más embebidas en los sistemas *cores* de una empresa. Por otro lado, la evidencia concreta del valor que son capaces de otorgar, ha significado una importante alfabetización de las áreas usuarias, implicando una mayor y más compleja demanda. Lo que se traduce en la exposición de aquello profesionales encargados de desarrollarlas.
 
-Problemas
-- una solucion implica nuevas necesidades
-- datos no integrados, no disponibles.. enumerar...
-- la naturaleza cambiante del producto de datos, siempre hay algo para mejorar 
+Los problemas comunes que surgen en este contexto suelen ser: el constante flujo de nuevas necesidades producto de los casos de éxito, la baja calidad de los datos y la naturaleza cambiante del producto entregado (siempre existe algo para mejorar).
 
-Se buscar cambiar la forma de trabajo del ususairo. 
+Estos inconvenientes se suelen abordar, erróneamente, sobreexigiendo al equipo de desarrollo (lo que no escala debido al flujo constante de requerimientos), siendo optimistas en el resultado obtenido, o bien, sobrestimando la capacidad necesaria para amortiguar cualquier desfajase de calendario.
 
-Soluciones
-- heroicas: laburando mucho, pero como el producto no termina nunca, vivimos sobre demandados
-- esperanza: todo funciona bien del vamos, .
-- sobrestimar: se sobre estima el trabajo para tener espacio a modo de cubrirse
+Al panorama descrito se suma una baja credibilidad en las chance de éxito que este tipo de proyecto tiene, sustentada por estudios realizados por las principales consultoras globales.
 
-Credibilidad en baja:
-- 51
-- 87
-- 80
-
+La realidad detallada, es el *driver*, la argumentación, que traccionó la necesidad de implementar nuevas herramientas para aumentar y mejorar el procesamiento. 
 
 ## Conceptos heredados de la industria del software
 
