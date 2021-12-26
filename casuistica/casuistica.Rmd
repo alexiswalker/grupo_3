@@ -43,10 +43,14 @@ header-includes:
   }
 
 output: 
-  bookdown::pdf_document2: default
+  bookdown::pdf_document2:
+    toc_depth: 3
 ---
+
 \thispagestyle{empty}
 \newpage
+
+
 
 # DataOps y MLOps: Cómo escalar el delivery de productos de datos sin morir en el intento
 
@@ -58,9 +62,9 @@ Se recorre un poco de historia para reconocer el estado del arte actual que perm
 
 2008 - se introduce el concepto de DevOps que pretende agilizar el proceso de desarrollo de software focalizando en la entrega continua (construcción, implementación y mantenimiento).
 
-2014 - se empieza a discutir sobre DataOps, el universo ya no solo se centra en el código sino que se suman los datos.
+2014 - se empieza a discutir sobre *DataOps*, el universo ya no solo se centra en el código sino que se suman los datos.
 
-2015 - Google, en su paper _Hidden Technical Debt in Machine Learning Systems_, visibiliza la carencia metodológica y la deuda técnica que existía en los equipos de ciencias de datos. Lo que introduce la idea de MLOps, donde ahora son tres los conceptos: código, datos y modelos; y su gestión para escalar la entrega de este tipo de productos.
+2015 - Google, en su paper _Hidden Technical Debt in Machine Learning Systems_, visibiliza la carencia metodológica y la deuda técnica que existía en los equipos de ciencias de datos. Lo que introduce la idea de *MLOps*, donde ahora son tres los conceptos: código, datos y modelos; y su gestión para escalar la entrega de este tipo de productos.
 
 ## Racionales
 
@@ -80,6 +84,8 @@ Para acortar los ciclos de desarrollo manteniendo la calidad, se combina: **Agil
 
 El cambio conceptual planteado y argumentado hasta el momento esta muy bien instanciado en algunas herramientas tecnológicas que permiten materializar las ideas subyacentes.
 
+### DataOps
+
 El concepto cumbre e inicial de esta evolución es el **versionado de código** debido a que el equipo de datos trabajan sobre un código base. E inmediatamente se vincula a éste su **ciclo de vida** (figura \@ref(fig:devops)).
 
 \begin{figure}[H]
@@ -97,13 +103,24 @@ Despliegue continuo: implementación con baja fricción.
 
 Por último, las pruebas no solo verifican la calidad de código, sino también, en este esquema, la de los datos, incorporando entonces el **control estadístico de procesos**.
 
+### MLOps
 
-agile + devops + control estadistico de procesos
+Cuando, al *workflow* de trabajo donde se presentan los conceptos enumerado anteriormente (garantizando la calidad de los datos), se suma la convivencia con los modelos, hablamos de *MLOps*.
+
+Esta evolución responde a una problemática real originada por: la necesidad de monitoreo, etiquetado de los datos, comprensión de los modelos, optimización de inferencia, dispositivos *edge* (por ejemplo: celulares) y la privacidad de datos sensibles.
 
 ## Ejemplo
-desarrollo, gestion y gobierno 
 
-MLflow
+**MLflow** es una tecnología *open source* que convive facilmente con otras y ayuda a resolver las principales etapas enumeradas en el flujo de trabajo (figura \@ref(fig:mlflow)).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{mlops/mlflow.jpg}
+    \caption{mlflow}
+    \label{fig:mlflow}
+\end{figure}
+
+## Conclusiones
 
 \newpage
 
