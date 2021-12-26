@@ -1,9 +1,11 @@
 ---
 title:  | 
-  T.......................1
+  Jornadas de Data Mining y Business Intelligence
+
 subtitle: |
-  Casuistica
-      
+  Casuística de Implementación II
+  \
+  \
   Maestría en Explotación de Datos y Gestión del Conocimiento
 author: |
   Franco Lianza, Alexis Walker
@@ -13,9 +15,7 @@ date: |
 header-includes:
 - \usepackage{titling}
 - \usepackage{floatrow}
-- \usepackage{lipsum}
 - \usepackage{graphicx}
-- \usepackage{float}
 
 - \renewcommand{\figurename}{Fig.}
 - \renewcommand{\contentsname}{Índice}
@@ -23,9 +23,9 @@ header-includes:
 
 - \pretitle{
       \begin{center}
-      \thispagestyle{empty}
       \includegraphics[width=2in,height=2in]{logo.png}\LARGE\\
       \vskip 12em
+      \thispagestyle{empty}
   }
 - \posttitle{\end{center}}
 
@@ -39,18 +39,18 @@ header-includes:
 - \postdate{
     \end{center}
     \vskip 4em
+    \cleardoublepage
   }
 
 output: 
   bookdown::pdf_document2: default
 ---
-
 \thispagestyle{empty}
 \newpage
 
 # DataOps y MLOps: Cómo escalar el delivery de productos de datos sin morir en el intento
 
-Con el ya instituido entendimiento en distintos estratos y roles dentro de las compañías sobre la necesidad de trabajar con dato, y su carácter de activo que conlleva a reconocer el valor estratégico de su explotación; es importante ocuparse del ciclo de vida de los mismos. Este concepto se identifica en la industria como: *DataOps* y *MLOps*.
+Con el ya instituido entendimiento en distintos estratos y roles dentro de las compañías sobre la necesidad de trabajar con datos, y su carácter de activo que conlleva a reconocer el valor estratégico de su explotación; es importante ocuparse del ciclo de vida de los mismos. Este concepto se identifica en la industria como: *DataOps* y *MLOps*.
 
 Muchos intentos de incorporar esta capacidad dentro del departamento de IT terminan en proyectos inconclusos debido a la falta de gestión de la deuda técnica y metodológica vinculada al gobierno y ciclo de vida del entregable de un científico de datos.
 
@@ -60,21 +60,43 @@ Se recorre un poco de historia para reconocer el estado del arte actual que perm
 
 2014 - se empieza a discutir sobre DataOps, el universo ya no solo se centra en el código sino que se suman los datos.
 
-2015 - Google, en su paper _Hidden Technical Debt in Machine Learning Systems_, visibiliza la carencia metodológica y la deuda técnica que existía en los equipos de ciencias de datos. Lo que introduce la idea de MlOps, donde ahora son tres los conceptos: código, datos y modelos; y su gestión para escalar la entrega de este tipo de productos.
+2015 - Google, en su paper _Hidden Technical Debt in Machine Learning Systems_, visibiliza la carencia metodológica y la deuda técnica que existía en los equipos de ciencias de datos. Lo que introduce la idea de MLOps, donde ahora son tres los conceptos: código, datos y modelos; y su gestión para escalar la entrega de este tipo de productos.
 
 ## Racionales
 
-Hoy, las soluciones originadas a partir de los datos, se tornaron críticas; esto debido al estar cada vez más embebidas en los sistemas *cores* de una empresa. Por otro lado, la evidencia concreta del valor que son capaces de otorgar, ha significado una importante alfabetización de las áreas usuarias, implicando una mayor y más compleja demanda. Lo que se traduce en la exposición de aquello profesionales encargados de desarrollarlas.
+Hoy, las soluciones originadas a partir de los datos, se tornaron críticas; esto debido a estar cada vez más embebidas en los sistemas *cores* de una empresa. Por otro lado, la evidencia concreta del valor que son capaces de otorgar, ha significado una importante alfabetización de las áreas usuarias, implicando una mayor y más compleja demanda. Lo que se traduce en la exposición de aquello profesionales encargados de desarrollarlas.
 
-Los problemas comunes que surgen en este contexto suelen ser: el constante flujo de nuevas necesidades producto de los casos de éxito, la baja calidad de los datos y la naturaleza cambiante del producto entregado (siempre existe algo para mejorar).
+Los problemas comunes que surgen en este contexto suelen ser: el constante flujo de nuevas necesidades producto de los casos de éxito, la baja calidad de los datos y la posibilidad de evolucionar del entregable (siempre existe algo para mejorar).
 
 Estos inconvenientes se suelen abordar, erróneamente, sobreexigiendo al equipo de desarrollo (lo que no escala debido al flujo constante de requerimientos), siendo optimistas en el resultado obtenido, o bien, sobrestimando la capacidad necesaria para amortiguar cualquier desfajase de calendario.
 
-Al panorama descrito se suma una baja credibilidad en las chance de éxito que este tipo de proyecto tiene, sustentada por estudios realizados por las principales consultoras globales.
+Al panorama descrito se suma una baja credibilidad en las chances de éxito que este tipo de proyecto tiene, sustentada por estudios realizados por las principales consultoras globales.
 
-La realidad detallada, es el *driver*, la argumentación, que traccionó la necesidad de implementar nuevas herramientas para aumentar y mejorar el procesamiento. 
+La realidad detallada, es el *driver*, la argumentación que tracciona la necesidad de implementar nuevas herramientas para aumentar y mejorar el procesamiento. Concretamente el primer concepto que delimita este camino es *DataOps*, y posteriormente *MLOps*.
+
+Para acortar los ciclos de desarrollo manteniendo la calidad, se combina: **Agile + DevOps + SPC = DataOps**. Donde, el agilismo incorpora al usuario, debido a la naturaleza cambiante del entorno, para poder hacer entregas rápidas que agreguen valor. Dentro de estas pretensiones, la infraestructura es provista como servicio, evitando así, demoras en su configuración. Y, por último, se automatiza el control estadístico de procesos (SPC), es decir, en las distintas etapas de enriquecimiento de los datos se realizan validaciones para garantizar la calidad del resultado final.
 
 ## Conceptos heredados de la industria del software
+
+El cambio conceptual planteado y argumentado hasta el momento esta muy bien instanciado en algunas herramientas tecnológicas que permiten materializar las ideas subyacentes.
+
+El concepto cumbre e inicial de esta evolución es el **versionado de código** debido a que el equipo de datos trabajan sobre un código base. E inmediatamente se vincula a éste su **ciclo de vida** (figura \@ref(fig:devops)).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{mlops/devops.png}
+    \caption{Integración/Entrega/Despliegue Continuo}
+    \label{fig:devops}
+\end{figure}
+
+Integración continua: los desarrollos que pueden hacer distintos miembros el equipo deben ser validados antes de integrarse al código fuente base.
+
+Entrega continua: se agrega valor en cada iteración.
+
+Despliegue continuo: implementación con baja fricción.
+
+Por último, las pruebas no solo verifican la calidad de código, sino también, en este esquema, la de los datos, incorporando entonces el **control estadístico de procesos**.
+
 
 agile + devops + control estadistico de procesos
 
