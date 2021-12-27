@@ -95,7 +95,7 @@ El concepto cumbre e inicial de esta evolución es el **versionado de código** 
     \label{fig:devops}
 \end{figure}
 
-Integración continua: los desarrollos que pueden hacer distintos miembros el equipo deben ser validados antes de integrarse al código fuente base.
+Integración continua: los desarrollos que pueden hacer distintos miembros del equipo deben ser validados antes de integrarse al código fuente base.
 
 Entrega continua: se agrega valor en cada iteración.
 
