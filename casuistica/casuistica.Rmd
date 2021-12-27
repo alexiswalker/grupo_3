@@ -58,21 +58,21 @@ Con el ya instituido entendimiento en distintos estratos y roles dentro de las c
 
 Muchos intentos de incorporar esta capacidad dentro del departamento de IT terminan en proyectos inconclusos debido a la falta de gestión de la deuda técnica y metodológica vinculada al gobierno y ciclo de vida del entregable de un científico de datos.
 
-Se recorre un poco de historia para reconocer el estado del arte actual que permite sortear el inconveniente antes planteado:
+Se recorre un poco de historia para comprender el estado del arte actual que permite sortear el inconveniente antes planteado:
 
-2008 - se introduce el concepto de DevOps que pretende agilizar el proceso de desarrollo de software focalizando en la entrega continua (construcción, implementación y mantenimiento).
+2008 - Se introduce el concepto de DevOps que pretende agilizar el proceso de desarrollo de software focalizando en la entrega continua (construcción, implementación y mantenimiento).
 
-2014 - se empieza a discutir sobre *DataOps*, el universo ya no solo se centra en el código sino que se suman los datos.
+2014 - Se empieza a discutir sobre *DataOps*, el universo ya no solo se centra en el código sino que se suman los datos.
 
-2015 - Google, en su paper _Hidden Technical Debt in Machine Learning Systems_, visibiliza la carencia metodológica y la deuda técnica que existía en los equipos de ciencias de datos. Lo que introduce la idea de *MLOps*, donde ahora son tres los conceptos: código, datos y modelos; y su gestión para escalar la entrega de este tipo de productos.
+2015 - Google, en su paper _Hidden Technical Debt in Machine Learning Systems_, visibiliza la carencia metodológica y la deuda técnica que existía en los equipos de ciencias de datos. Lo que introduce la idea de *MLOps*, donde ahora son tres los elementos: código, datos y modelos; y su gestión para escalar la entrega de este tipo de productos.
 
 ## Racionales
 
-Hoy, las soluciones originadas a partir de los datos, se tornaron críticas; esto debido a estar cada vez más embebidas en los sistemas *cores* de una empresa. Por otro lado, la evidencia concreta del valor que son capaces de otorgar, ha significado una importante alfabetización de las áreas usuarias, implicando una mayor y más compleja demanda. Lo que se traduce en la exposición de aquello profesionales encargados de desarrollarlas.
+Hoy, las soluciones originadas a partir de los datos se tornaron críticas; esto debido a estar cada vez más embebidas en los sistemas *cores* de una empresa. Por otro lado, la evidencia concreta del valor que son capaces de otorgar, ha significado una importante alfabetización de las áreas usuarias, implicando una mayor y más compleja demanda. Esto se traduce en la exposición de aquellos profesionales encargados de desarrollarlas.
 
-Los problemas comunes que surgen en este contexto suelen ser: el constante flujo de nuevas necesidades producto de los casos de éxito, la baja calidad de los datos y la posibilidad de evolucionar del entregable (siempre existe algo para mejorar).
+Los problemas comunes que surgen en este contexto suelen ser: el flujo regular de nuevas necesidades producto de los casos de éxito, la baja calidad de los datos y la constante posibilidad de evolucionar el entregable (siempre existe algo para mejorar).
 
-Estos inconvenientes se suelen abordar, erróneamente, sobreexigiendo al equipo de desarrollo (lo que no escala debido al flujo constante de requerimientos), siendo optimistas en el resultado obtenido, o bien, sobrestimando la capacidad necesaria para amortiguar cualquier desfajase de calendario.
+Estos inconvenientes se suelen abordar, erróneamente, sobreexigiendo al equipo de desarrollo (lo que no escala debido a la aparición continua de requerimientos), siendo optimistas en el resultado obtenido, o bien, sobrestimando la capacidad necesaria para amortiguar cualquier desfajase de calendario.
 
 Al panorama descrito se suma una baja credibilidad en las chances de éxito que este tipo de proyecto tiene, sustentada por estudios realizados por las principales consultoras globales.
 
@@ -101,13 +101,13 @@ Entrega continua: se agrega valor en cada iteración.
 
 Despliegue continuo: implementación con baja fricción.
 
-Por último, las pruebas no solo verifican la calidad de código, sino también, en este esquema, la de los datos, incorporando entonces el **control estadístico de procesos**.
+Por último, las pruebas no solo verifican la calidad del código, sino también, en este esquema, la de los datos, incorporando entonces el **control estadístico de procesos**.
 
 ### MLOps
 
 Cuando, al *workflow* de trabajo donde se presentan los conceptos enumerado anteriormente (garantizando la calidad de los datos), se suma la convivencia con los modelos, hablamos de *MLOps*.
 
-Esta evolución responde a una problemática real originada por: la necesidad de monitoreo, etiquetado de los datos, comprensión de los modelos, optimización de inferencia, dispositivos *edge* (por ejemplo: celulares) y la privacidad de datos sensibles.
+Esta evolución responde a una problemática real originada por: la necesidad de monitoreo, el etiquetado de los datos, la comprensión del resultado (modelos), la optimización de inferencia, los dispositivos *edge* (por ejemplo: celulares) y la privacidad de datos sensibles.
 
 ## Ejemplo
 
@@ -120,17 +120,17 @@ Esta evolución responde a una problemática real originada por: la necesidad de
     \label{fig:mlflow}
 \end{figure}
 
-Concretamente permite administrar el ciclo de vida de *ML*, incluida la experimentación, la reproducibilidad, la implementación y un registro de modelos central.
+Concretamente permite administrar el ciclo de vida de productos de *Machine Learning (ML)*, incluida la experimentación, la reproducibilidad, la implementación y un registro de modelos central.
 
-Es posible el monitoreo de datos (controlando también su dominio), de parámetros, de métricas de resultados y, además, control del entorno donde se entrenó el modelo y la serialización del mismo.
+Es posible el monitoreo de datos (controlando también su dominio), de los valores tomados por los parámetros, de las métricas de resultados y, además, el control del entorno donde se entrenó el modelo y la serialización del mismo.
 
 Con esto bajo gobierno, es sencillo promover un experimento como resultado definitivo en el registro.
 
 ## Conclusiones
 
-Lo expresado no se trata de implementar un software que ayude al equipo de ciencia de datos a desarrollar mejor, no se describe un problema tecnológico. Por el contrario, se propone un cambio en la dinámica de trabajo para allornarlos a la criticidad que ha cobrado hoy en día el producto que construyen. 
+Lo expresado no se trata de implementar un software que ayude al equipo de ciencia de datos a desarrollar mejor, no se describe un problema tecnológico. Por el contrario, se propone un cambio en su dinámica de trabajo para allornarlos a la criticidad que ha cobrado hoy en día el producto que construyen. 
 
-Es por todo esto que el proceso de ejecutar *ML* debe ser tan sencillo como el trabajo de ejecutar sistemas de TI.
+Es por todo esto que el proceso de ejecutar *ML* debe ser tan sencillo como el trabajo de ejecutar sistemas de IT.
 
 \newpage
 
