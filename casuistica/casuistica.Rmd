@@ -120,7 +120,17 @@ Esta evolución responde a una problemática real originada por: la necesidad de
     \label{fig:mlflow}
 \end{figure}
 
+Concretamente permite administrar el ciclo de vida de *ML*, incluida la experimentación, la reproducibilidad, la implementación y un registro de modelos central.
+
+Es posible el monitoreo de datos (controlando también su dominio), de parámetros, de métricas de resultados y, además, control del entorno donde se entrenó el modelo y la serialización del mismo.
+
+Con esto bajo gobierno, es sencillo promover un experimento como resultado definitivo en el registro.
+
 ## Conclusiones
+
+Lo expresado no se trata de implementar un software que ayude al equipo de ciencia de datos a desarrollar mejor, no se describe un problema tecnológico. Por el contrario, se propone un cambio en la dinámica de trabajo para allornarlos a la criticidad que ha cobrado hoy en día el producto que construyen. 
+
+Es por todo esto que el proceso de ejecutar *ML* debe ser tan sencillo como el trabajo de ejecutar sistemas de TI.
 
 \newpage
 
