@@ -128,7 +128,7 @@ Con esto bajo gobierno, es sencillo promover un experimento como resultado defin
 
 ## Conclusiones
 
-Lo expresado no se trata de implementar un software que ayude al equipo de ciencia de datos a desarrollar mejor, no se describe un problema tecnológico. Por el contrario, se propone un cambio en su dinámica de trabajo para allornarlos a la criticidad que ha cobrado hoy en día el producto que construyen. 
+Lo expresado no se trata de implementar un software que ayude al equipo de ciencia de datos a desarrollar mejor, no se describe un problema tecnológico. Por el contrario, se propone un cambio en su dinámica de trabajo para ayornarlos a la criticidad que ha cobrado hoy en día el producto que construyen. 
 
 Es por todo esto que el proceso de ejecutar *ML* debe ser tan sencillo como el trabajo de ejecutar sistemas de IT.
 
@@ -191,7 +191,7 @@ En el _enfoque de clasificación_, se definió un umbral por el cual los hoteles
 En el _enfoque de probabilidades_, se optimiza la métrica negative log loss (NLL) para medir diferencias entre el score ($z$) y el target de compra o no compra ($y$).
 
 \begin{equation}
-  NLL = \sum_{i=-1}^{+N} y_i + \log z_i + (1 - y_i) \log (1 - z_i)
+  NLL = \sum_{i=-1}^{N} y_i + \log z_i + (1 - y_i) \log (1 - z_i)
   (\#eq:despegar-nll)
 \end{equation}
 
