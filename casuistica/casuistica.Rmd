@@ -105,7 +105,7 @@ Por último, las pruebas no solo verifican la calidad del código, sino también
 
 ### MLOps
 
-Cuando, al *workflow* de trabajo donde se presentan los conceptos enumerado anteriormente (garantizando la calidad de los datos), se suma la convivencia con los modelos, hablamos de *MLOps*.
+Cuando se suma la convivencia con los modelos al *workflow* de trabajo donde se presentan los conceptos enumerado anteriormente (garantizando la calidad de los datos), hablamos de *MLOps*.
 
 Esta evolución responde a una problemática real originada por: la necesidad de monitoreo, el etiquetado de los datos, la comprensión del resultado (modelos), la optimización de inferencia, los dispositivos *edge* (por ejemplo: celulares) y la privacidad de datos sensibles.
 
