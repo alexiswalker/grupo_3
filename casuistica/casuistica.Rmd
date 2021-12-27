@@ -136,27 +136,27 @@ Es por todo esto que el proceso de ejecutar *ML* debe ser tan sencillo como el t
 
 # Que hotel va primero para vos? Un ejemplo del desafio de usar Machine Learning para odernar hoteles en Despegar.com
 
-_Despegar.com_ se encontraba ante la incógnita de si era posible ordenar los hoteles que se mostraban a los usuarios de manera basado en la probabilidad de compra en tiempo real de manera de optimizar la conversión. La idea era generar un sistema que ante una búsqueda del usuario clasifique y ordene los resultados obteniendo algún tipo de score que pueda ser interpretado como probabilidad de compra.
+_Despegar.com_ se encontraba ante la incógnita de si era posible ordenar los hoteles que se mostraban a los usuarios basado en la probabilidad de compra en tiempo real de manera de optimizar la conversión. La idea era generar un sistema que ante una búsqueda del usuario clasifique y ordene los resultados obteniendo algún tipo de score que pueda ser interpretado como probabilidad de compra.
 
 ## El problema del Sorting
 
-El sorting es un tipo de problema que consiste en la aplicación de algoritmos de machine learning cuyo objetivo es optimizar la ubicación de los items de los mas relevantes a los menos relevantes. Para esto, existen 3 enfoques distintos: 
+El sorting es un tipo de problema que consiste en la aplicación de algoritmos de *Machine Learning* cuyo objetivo es optimizar la ubicación de los items de los más relevantes a los menos relevantes. Para esto, existen 3 enfoques distintos: 
 
 - **_Pointwise_**: el modelo se aplica sobre cada ítem de manera individual, es decir se utilizan las características propias del ítem sin mirar a las del resto. El ordenamiento se da por el score individual de cada ítem.
 - **_Pairwise_**: el modelo se aplica sobre cada par de ítem, de forma que se comparan las características de cada uno a fin de obtener el mejor de ambos. El ordenamiento final es relativo a los scores de cada par.
 - **_Listwise_**: el modelo se aplica sobre la lista entera de items y busca optimizar alguna métrica de ordenamiento como Ganancia _Acumulada Descontada Normalizada (NDCG)_ o la _Precisión Media Promedio (MAP)_.
 
-Solo el ordenamiento _pointwise_ provee scores que pueden ser interpretables como probabilidades, por lo que el proyecto utilizo este enfoque por sobre los otros.
+Solo el ordenamiento _pointwise_ provee scores que pueden ser interpretables como probabilidades, por lo que el proyecto utilizó este enfoque por sobre los otros.
 
-Otro de los problemas encontrados durante la investigación sobre el sorting es el _sesgo de la posición_. En los análisis exploratorios realizados se encontró que la probabilidad de saber si un ítem es relevante para un usuario-contexto disminuye con la posición. Este sesgo complica el trabajo de entender cuanto influye las características del hotel y cuanto influye la posición en la que se muestra.
+Otro de los problemas encontrados durante la investigación sobre el sorting es el _sesgo de la posición_. En los análisis exploratorios realizados se encontró que la probabilidad de saber si un ítem es relevante para un usuario-contexto disminuye con la posición. Este sesgo complica el trabajo de entender cuánto influye las características del hotel y cuanto influye la posición en la que se muestra.
 
-## Diseno
+## Diseño
 
-El diseno del producto fue separado en 4 etapas: estimación del sesgo de la posición de los datos actuales, entrenamiento del modelo (feature engineering y modelado), post procesamiento de scores y evaluación offline.
+El diseño del producto fue separado en 4 etapas: estimación del sesgo de la posición de los datos actuales, entrenamiento del modelo (feature engineering y modelado), post procesamiento de scores y evaluación offline.
 
 ### Estimacion del sesgo
 
-La posición de un ítem influye en la probabilidad de compra, es decir, es mas probable comprar items que aparezcan en los primeros resultados. Este sesgo debe ser medido de alguna forma para poder incorporarlo al modelo. El equipo de _Despegar.com_ utilizaron el _algoritmo Expectation-Maximization_ obteniendo un **ponderador** para utilizar en el modelo. Este ponderador puede ser interpretado como _la probabilidad de que el usuario haya visto el ítem_.
+La posición de un ítem influye en la probabilidad de compra, es decir, es más probable comprar items que aparezcan en los primeros resultados. Este sesgo debe ser medido de alguna forma para poder incorporarlo al modelo. El equipo de _Despegar.com_ utilizaron el _algoritmo Expectation-Maximization_ obteniendo un **ponderador** para utilizar en el modelo. Este ponderador puede ser interpretado como _la probabilidad de que el usuario haya visto el ítem_.
 
 ### Entrenamiento del modelo
 
@@ -169,17 +169,17 @@ Los datos que se utilizaron para el armado del dataset consistían en caracterí
     \label{fig:despegar-features}
 \end{figure}
 
-Algunas de estas features pueden ser obtenidas en tiempo real y otras tuvieron que pre-computarlas y dejarlas en un _feature store_ para que se pudiesen consumir de manera online.
+Algunas de estas *features* pueden ser obtenidas en tiempo real y otras tuvieron que pre-computarlas y dejarlas en un _feature store_ para que se pudiesen consumir de manera online.
 
 Para el modelado, se utilizo un _XGBoost por cada destino_ por varias razones: por su potencia predictiva y por su portabilidad. El sistema transaccional de Despegar.com se encuentra programado en Scala, por lo que la elección de XGBoost les permitió programarlos en Python y luego ponerlos productivos en Scala.
 
-La evaluación del modelado consitio en dos momentos: offline y online. La evaluación offline fue medida con métricas de clasificación (F-score) y métricas de probabilidad (Negative Log Loss). La online, mediante 3 KPIs definidos por el negocio: _tasa de conversión_, _margen por usuario_ e _ingreso_. A su vez, el modelo fue deployado utilizando un esquema A/B para algunos de los destinos seleccionados.
+La evaluación del modelado consistió en dos momentos: offline y online. La evaluación offline fue medida con métricas de clasificación (F-score) y métricas de probabilidad (Negative Log Loss). La online, mediante 3 KPIs definidos por el negocio: _tasa de conversión_, _margen por usuario_ e _ingreso_. A su vez, el modelo fue deployado utilizando un esquema A/B para algunos de los destinos seleccionados.
 
 ### Post procesamiento de scores
 
 Luego del entrenamiento, los scores obtenidos fueron post procesados en función del enfoque.
 
-En el _enfoque de clasificación_, se definió un umbral por el cual los hoteles eran clasificados en "relevantes" y "no relevantes". De esta manera se optimizaba de manera eficiente el f-score.
+En el _enfoque de clasificación_, se definió un umbral por el cual los hoteles eran clasificados en "relevantes" y "no relevantes". De esta manera se optimizaba de manera eficiente el F-score.
 
 \begin{figure}[H]
     \centering
@@ -195,7 +195,7 @@ En el _enfoque de probabilidades_, se optimiza la métrica negative log loss (NL
   (\#eq:despegar-nll)
 \end{equation}
 
-A su vez, se utilizaron _gráficos de calibración_. Estos gráficos permiten observar la relación de los scores medidos y la tasa de conversión. La idea general de esta herramienta es agrupar hoteles de manera similar y graficar las medidas. Resulto de gran importancia durante el desarrollo ya que se puede compartir con otras áreas de Despegar.com ya que son simples de interpretar: siempre y cuando se muestre una tendencia positiva, el modelo funciona correctamente.
+A su vez, se utilizaron _gráficos de calibración_. Éstos permiten observar la relación de los scores medidos y la tasa de conversión. La idea general de esta herramienta es agrupar hoteles de manera similar y graficar las medidas. Resultó de gran importancia durante el desarrollo ya que se puede compartir con otras áreas de Despegar.com debido a que son simples de interpretar: siempre y cuando se muestre una tendencia positiva, el modelo funciona correctamente.
 
 \begin{figure}[H]
     \centering
@@ -230,7 +230,7 @@ En la Figura \@ref(fig:despegar-resultados) se detalla el comportamiento de cada
 
 Es interesante mencionar que la ciencia de datos puede estar en cualquier lado, incluso en ordenamiento de listas. Durante toda la charla, los chicos de Despegar.com mencionaron la importancia de analizar el estado del arte y de hacer pruebas de concepto (POCs) para poder involucrar al negocio lo mas temprano posible.
 
-Otro punto interesante a recalcar es que, si bien la métrica mas lógica a optimizar es el f-score (al tratarse de un problema de clasificación), no siempre es la que optimiza mejor los KPIs. No hay que perder el foco de las métricas de negocio a optimizar. Las métricas "clásicas" deben ser de soporte, pero las métricas de negocio son las que nos tienen que definir los modelos o enfoques a seguir.
+Otro punto interesante a recalcar es que, si bien la métrica mas lógica a optimizar es el F-score (al tratarse de un problema de clasificación), no siempre es la que optimiza mejor los KPIs. No hay que perder el foco de las métricas de negocio a optimizar. Las métricas "clásicas" deben ser de soporte, pero las métricas de negocio son las que nos tienen que definir los modelos o enfoques a seguir.
 
 
 
