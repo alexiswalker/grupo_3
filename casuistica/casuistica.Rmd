@@ -134,7 +134,7 @@ Es por todo esto que el proceso de ejecutar *ML* debe ser tan sencillo como el t
 
 \newpage
 
-# Que hotel va primero para vos? Un ejemplo del desafio de usar Machine Learning para odernar hoteles en Despegar.com
+# ¿Qué hotel va primero para vos? Un ejemplo del desafio de usar Machine Learning para ordenar hoteles en Despegar.com
 
 _Despegar.com_ se encontraba ante la incógnita de si era posible ordenar los hoteles que se mostraban a los usuarios basado en la probabilidad de compra en tiempo real de manera de optimizar la conversión. La idea era generar un sistema que ante una búsqueda del usuario clasifique y ordene los resultados obteniendo algún tipo de score que pueda ser interpretado como probabilidad de compra.
 
