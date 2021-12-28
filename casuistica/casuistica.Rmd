@@ -60,7 +60,7 @@ Muchos intentos de incorporar esta capacidad dentro del departamento de IT termi
 
 Se recorre un poco de historia para comprender el estado del arte actual que permite sortear el inconveniente antes planteado:
 
-2008 - Se introduce el concepto de DevOps que pretende agilizar el proceso de desarrollo de software focalizando en la entrega continua (construcción, implementación y mantenimiento).
+2008 - Se introduce el concepto de *DevOps* que pretende agilizar el proceso de desarrollo de software focalizando en la entrega continua (construcción, implementación y mantenimiento).
 
 2014 - Se empieza a discutir sobre *DataOps*, el universo ya no solo se centra en el código sino que se suman los datos.
 
