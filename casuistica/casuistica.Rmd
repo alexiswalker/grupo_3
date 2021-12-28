@@ -206,7 +206,7 @@ A su vez, se utilizaron _gráficos de calibración_. Éstos permiten observar la
 
 ### Evaluación
 
-El equipo decidió realizar una POC con el enfoque de _clasificación_ obteniendo resultados mixtos en los KPIs. En la siguiente iteración, se cambio al enfoque de _probabilidades_.
+El equipo decidió realizar una POC con el enfoque de _clasificación_ obteniendo resultados mixtos en los KPIs. En la siguiente iteración, se cambió al enfoque de _probabilidades_.
 
 El enfoque de _probabilidades_ resultó ser el mejor. La Figura \@ref(fig:despegar-grafico-calibracion-resultados) muestra los gráficos de calibración obtenidos por enfoque.
 
