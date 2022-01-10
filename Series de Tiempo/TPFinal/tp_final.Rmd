@@ -72,9 +72,16 @@ Las causas que originan el fenómeno de inflación no serán tratadas por lo com
 \setlength{\parindent}{0em}
 \setlength{\parskip}{0.5em}
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE, fig.pos= "H", out.extra = '')
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	fig.pos = "H",
+	warning = FALSE,
+	out.extra = ""
+)
+```
 
+```{r setup, include=FALSE}
 paquetes <- c("readr", "tidyverse", "forecast", "gridExtra",
               "tseries", "tsibble", "kableExtra", "urca")
 
@@ -153,6 +160,8 @@ raw_data <- read_csv(
   col_types = cols(fecha = col_date(format = "%d/%m/%Y")))
 ```
 
+
+
 ```{r}
 indice_precios_consumidor <- raw_data %>%
   select(fecha, indice_precios_consumidor_acumulada)
@@ -160,10 +169,17 @@ indice_precios_consumidor <- raw_data %>%
 indice_salarios <- raw_data %>%
   select(fecha, indice_salarios_acumulada)
 
+base_monetaria <- raw_data %>%
+  select(fecha, variacion_base_monetaria_acumulada)
+
+
 ts_indice_precios_consumidor <- indice_precios_consumidor$indice_precios_consumidor_acumulada %>%
   ts(frequency = 12, start = c(2016, 12))
 
 ts_indice_salarios <- indice_salarios$indice_salarios_acumulada %>%
+  ts(frequency = 12, start = c(2016, 12))
+
+ts_base_monetaria <- base_monetaria$variacion_base_monetaria_acumulada %>%
   ts(frequency = 12, start = c(2016, 12))
 ```
 
@@ -186,15 +202,9 @@ Además, esta comparativa muestra cómo se comporta el poder adquisitivo de un e
 ggplot(raw_data, aes(x = fecha)) +
   geom_line(aes(y = indice_precios_consumidor_acumulada), color = "red3") +
   geom_line(aes(y = indice_salarios_acumulada), color = "steelblue") +
-  scale_y_continuous(
-    name = "Índice de precio al consumidor",
-    sec.axis = sec_axis(~., name = "Índice de salarios")) +
-  theme(
-    axis.title.y = element_text(color = "red3"),
-    axis.title.y.right = element_text(color = "steelblue")
-  ) +
+  geom_line(aes(y = variacion_base_monetaria_acumulada), color = "lightgreen") +
   labs(x = "Tiempo") +
-  ggtitle("Índice de Precios al Consumidor versus Índice de Salarios acumulados", subtitle = "Con base Diciembre 2016")
+  ggtitle("Índice de Precios al Consumidor, Índice de Salarios acumulados y Base Monetaria", subtitle = "Con base Diciembre 2016")
 ```
 
 La información fue extraída de la página oficial del Instituto Nacional de Estadística y Censos - INDEC Argentina:
