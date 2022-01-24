@@ -83,7 +83,7 @@ knitr::opts_chunk$set(
 
 ```{r setup, include=FALSE}
 paquetes <- c("readr", "tidyverse", "forecast", "gridExtra",
-              "tseries", "tsibble", "kableExtra", "urca")
+              "tseries", "tsibble", "kableExtra", "urca", "vars")
 
 instalados <- paquetes %in% rownames(installed.packages())
 
@@ -164,13 +164,13 @@ raw_data <- read_csv(
 
 ```{r}
 indice_precios_consumidor <- raw_data %>%
-  select(fecha, indice_precios_consumidor_acumulada)
+  dplyr::select(fecha, indice_precios_consumidor_acumulada)
 
 indice_salarios <- raw_data %>%
-  select(fecha, indice_salarios_acumulada)
+  dplyr::select(fecha, indice_salarios_acumulada)
 
 base_monetaria <- raw_data %>%
-  select(fecha, variacion_base_monetaria_acumulada)
+  dplyr::select(fecha, variacion_base_monetaria_acumulada)
 
 
 ts_indice_precios_consumidor <- indice_precios_consumidor$indice_precios_consumidor_acumulada %>%
@@ -503,6 +503,82 @@ ts_indice_salarios <- window(ts_indice_salarios, end = c(2021, 4))
 
 modelo_sarima_is <- auto.arima(ts_indice_salarios)
 ```
+
+## Base Monetaria
+
+### Analisis de la serie
+
+En la Figura \@ref(fig:bm), se observa que la serie de ___ es _no estacionaria_ ya que su media varia a lo largo del tiempo y su función de autocorrelación decrece en forma lineal lentamente.
+
+```{r bm, fig.cap="Índice de precios al consumidor", fig.height=5, fig.width=10}
+ggtsdisplay(ts_base_monetaria, main = 'Base Monetaria')
+```
+
+Es posible someter la evidencia gráfica a distintas pruebas estadísticas para ratificar o rectificar lo observado.
+
+**Test de Estacionariedad: ADF**
+
+En la Tabla \@ref(tab:bm-adf) se observa $\tau^{e}$ entre el valor crítico y cero, lo que determina que no hay evidencia para rechazar $H_{0}$ (serie no estacionaria).
+
+```{r bm-adf}
+adf_test(ts_base_monetaria) %>% 
+  kable(booktabs = T, caption = "Prueba de ADF para Base Monetaria", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+**Test de Estacionariedad: KPSS**
+
+Los resultados de la prueba se encuentran detallados en la Tabla \@ref(tab:bm-kpss).
+
+```{r bm-kpss}
+kpss_test(ts_base_monetaria) %>% 
+  kable(booktabs = T, caption = "Test KPSS para Base Monetaria", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+En este caso el p-value es menor al grado de significación 0.05, por lo que se rechaza $H_0$.
+
+En conclusión, ambos tests determinan que la serie de IPC es _no estacionaria_.
+
+### Diferenciación
+
+```{r}
+base_monetaria_ndiffs <- ndiffs(ts_base_monetaria)
+```
+
+Mediante la función `ndiffs` de R, se estima que el numero de diferenciaciones necesarias para convertir a la serie ___ en estacionaria (`r base_monetaria_ndiffs` veces).
+
+La Figura \@ref(fig:bm-diferenciado) muestra el indice de precios al consumidor diferenciado.
+
+```{r bm-diferenciado, fig.cap="Base Monetaria diferenciada", fig.height=5, fig.width=10}
+dif_ts_base_monetaria <- ts_base_monetaria %>%
+  diff(lag = 1, differences = base_monetaria_ndiffs)
+
+ggtsdisplay(dif_ts_base_monetaria, 
+            main = "Índice de precios al consumidor: Diferenciado dos veces")
+```    
+
+**Test de Estacionariedad: ADF**
+
+Se corrobora que la serie de --- diferenciada es estacionaria mediante el test Dickey-Fuller aumentado (Tabla \@ref(tab:bm-dif-adf)). El valor de $\tau^{e}$ se encuentra dentro de la zona de rechazo, por lo que se concluye que se rechaza $H_0$.
+
+```{r bm-dif-adf}
+adf_test(dif_ts_base_monetaria) %>% 
+  kable(booktabs = T, caption = "Test de ADF para Base Monetaria diferenciada", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+**Test de Estacionariedad: KPSS**
+
+El test KPSS coincide con ADF. El p-value es mayor al grado de significación de 0.05, por lo que no se rechaza la hipótesis nula de estacionariedad.
+
+```{r bm-dif-kpss}
+kpss_test(dif_ts_base_monetaria) %>% 
+  kable(booktabs = T, caption = "Test KPSS para Base Monetaria diferenciada", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+Se confirma entonces que la serie diferenciada es _estacionaria_.
 
 
 \newpage
