@@ -581,6 +581,35 @@ kpss_test(dif_ts_base_monetaria) %>%
 Se confirma entonces que la serie diferenciada es _estacionaria_.
 
 
+# VAR
+
+```{r}
+
+dif_ts_base_monetaria_star <- window(dif_ts_base_monetaria, start = index(dif_ts_indice_precios_consumidor)[1])
+var_data <- cbind(dif_ts_base_monetaria_star, dif_ts_indice_precios_consumidor)
+
+
+information_criteria <- VARselect(var_data, lag.max = 12, type = "const")
+information_criteria$selection
+
+var_model <- VAR(var_data, p = 1, type = "const", season = NULL, exog = NULL)
+summary(var_model)
+
+serial.test(var_model, lags.pt = 12, type = "PT.asymptotic")
+
+causality(var_model, cause = "dif_ts_base_monetaria_star")
+
+causality(var_model, cause = "dif_ts_indice_precios_consumidor")
+
+
+irf(var_model, impulse = "dif_ts_base_monetaria_star", response = "dif_ts_indice_precios_consumidor",  n.ahead = 40, boot = TRUE)
+
+irf(var_model, impulse = "dif_ts_indice_precios_consumidor", response = "dif_ts_base_monetaria_star",  n.ahead = 40, boot = TRUE)
+
+
+```
+
+
 \newpage
 
 # Conclusiones
