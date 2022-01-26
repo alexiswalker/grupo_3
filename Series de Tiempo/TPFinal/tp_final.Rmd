@@ -291,6 +291,27 @@ Al agregar la parte integrada a la ecuación \@ref(eq:sarma), se llega a la expr
   (\#eq:sarima)
 \end{equation}
 
+## Vectores autoregresivos
+
+El modelado ARIMA está limitado por su incapacidad para capturar interrelaciones dinámicas entre variables de interés. La generalización directa del modelo ARMA estacionario a la forma multivariante conduce a un modelo vectorial (@var).
+
+Por variable en el sistema, existe una ecuación, cuyo lado derecho incluye una constante y retrasos de todas las variables presentes. 
+
+Para mantenerlo simple, se presenta un modelo VAR de dos variables con retraso igual a 1 ($p = 1$):
+
+\begin{equation}
+  y_{1, t} = c_{1} + \phi_{11, 1} y_{1, t-1} +  \phi_{12, 1} y_{2, t-1} + \epsilon_{1, t}
+  (\#eq:varyuno)
+\end{equation}
+
+\begin{equation}
+  y_{2, t} = c_{2} + \phi_{21, 1} y_{1, t-1} +  \phi_{22, 1} y_{2, t-1} + \epsilon_{2, t}
+  (\#eq:varydos)
+\end{equation}
+
+Donde $\epsilon_{1, t}$ y $\epsilon_{2, t}$ \~ $N(0,\sigma_{y})$ y no están autocorrelacionados. $y_{1, t}$ y $y_{2, t}$ son estacionarias. El coeficiente $\phi_{ii, p}$ captura la influencia del _lag_ $p$ de la variable $y_{i}$ sobre si misma. Mientras que $\phi_{ij, p}$ determina el peso del _lag_ $p$ de la variable $y_{j}$ sobre $y_{i}$.
+
+
 \newpage
 
 # Análisis de Resultados
