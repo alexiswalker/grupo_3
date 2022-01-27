@@ -267,30 +267,6 @@ Por un lado, las transformaciones de potencia de Box-Cox son una forma general q
 
 Por otro, como se puede asumir que la tendencia de una serie en el instante $t$ es muy próxima a la del instante $t-1$, se puede formular una nueva serie de la manera $Y_t = y_t - y_{t-1}$. Este proceso se define como _diferenciación_ y permite transformar una serie no estacionaria a estacionaria.
 
-## Modelos SARIMA
-
-Los modelos $ARIMA$ no logran captar los efectos estacionales de una serie mientras que los $SARIMA$ captan el comportamiento puramente estacional de una serie.
-
-La combinación de los modelos $ARMA(p, d)$ estacionales y no estacionales se expresa como $ARMA(p, q)(P, Q)s$ donde:
-
-- $P$ es el componente autorregresivo estacional
-- $Q$ el componente de media móvil estacional 
-- $s$ representa el período estacional
-
-Por lo que se llega a la ecuación \@ref(eq:sarma).
-
-\begin{equation}
-  \Theta_{P} (B^{s}) \phi_{p}(B)Y_{t} = \Theta_{Q} (B^{s}) \theta_{q}(B)\epsilon_{t}
-  (\#eq:sarma)
-\end{equation}
-
-Al agregar la parte integrada a la ecuación \@ref(eq:sarma), se llega a la expresión del modelo $SARIMA$.
-
-\begin{equation}
-  \Theta_{P} (B^{s}) \phi_{p}(B)Y_{t} \nabla_{s}^{D} \nabla^{d} = \phi_{0} + \Theta_{Q} (B^{s}) \theta_{q}(B)\epsilon_{t}
-  (\#eq:sarima)
-\end{equation}
-
 ## Vectores autoregresivos
 
 El modelado ARIMA está limitado por su incapacidad para capturar interrelaciones dinámicas entre variables de interés. La generalización directa del modelo ARMA estacionario a la forma multivariante conduce a un modelo vectorial (@var).
@@ -310,7 +286,6 @@ Para mantenerlo simple, se presenta un modelo VAR de dos variables con retraso i
 \end{equation}
 
 Donde $\epsilon_{1, t}$ y $\epsilon_{2, t}$ \~ $N(0,\sigma_{y})$ y no están autocorrelacionados. $y_{1, t}$ y $y_{2, t}$ son estacionarias. El coeficiente $\phi_{ii, p}$ captura la influencia del _lag_ $p$ de la variable $y_{i}$ sobre si misma. Mientras que $\phi_{ij, p}$ determina el peso del _lag_ $p$ de la variable $y_{j}$ sobre $y_{i}$.
-
 
 \newpage
 
@@ -604,17 +579,95 @@ Se confirma entonces que la serie diferenciada es _estacionaria_.
 
 # VAR
 
-```{r}
+blah blah introduccion
 
+```{r}
 dif_ts_base_monetaria_star <- window(dif_ts_base_monetaria, start = index(dif_ts_indice_precios_consumidor)[1])
 var_data <- cbind(dif_ts_base_monetaria_star, dif_ts_indice_precios_consumidor)
+```
 
+Se utilizan distintos criterios de información para decidir el número de retardos a incluir.
 
+```{r var-selection}
 information_criteria <- VARselect(var_data, lag.max = 12, type = "const")
-information_criteria$selection
 
-var_model <- VAR(var_data, p = 1, type = "const", season = NULL, exog = NULL)
-summary(var_model)
+information_criteria$selection  %>% t %>%
+  kable(booktabs = T, caption = "Criterios de selección", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+
+En la tabla \@ref(tab:var-selection), todos sugieren que el uso de p = 1 es apropiado para estimar el modelo.
+
+```{r}
+var_model <- VAR(var_data, p = 1, type = "const", season = NULL, exog = NULL) 
+```
+
+El resumen del modelo se incluye en el [Apendice](#ipc-bm-modelo-var)).
+
+Para evaluar el ajuste del modelo se ejecutan algunas pruebas de diagnostico sobre los residuos del modelo.
+
+```{r portmanteau-test}
+portmanteau_test <- serial.test(var_model, lags.pt = 12, type = "PT.asymptotic")
+
+portmanteau_test_result <- data.frame(portmanteau_test$serial$statistic, portmanteau_test$serial$parameter, portmanteau_test$serial$p.value) 
+colnames(portmanteau_test_result) <- c("Estadístico", "Parámetro", "P Value")
+rownames(portmanteau_test_result) <- NULL
+
+portmanteau_test_result%>%
+  kable(booktabs = T, caption = "Residuos: Correlación", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+
+Con la prueba de Portmanteau se revisa correlación. Un p-value mayor al 5% indica la ausencia de correlación, no se rechaza la hipótesis nula.
+
+Es posible tener evidencia de homocedasticidad utilizando la prueba Multiplicador de Lagrange, para efectos ARCH.
+
+```{r}
+arch_test <- arch.test(var_model, lags.multi = 12, multivariate.only = TRUE)
+
+arch_test <- data.frame(arch_test$arch.mul$statistic, arch_test$arch.mul$parameter, arch_test$arch.mul$p.value) 
+colnames(arch_test) <- c("Estadístico", "Parámetro", "P Value")
+rownames(arch_test) <- NULL
+
+arch_test%>%
+  kable(booktabs = T, caption = "Residuos: Homocedasticidad", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+Un p-value por encima del valor crítico no brinda evidencia suficiente para rechazar la hipótesis nula de homocedasticidad.
+
+Se revisa normalidad ... no pasa los test de normalidad hay dos lecturas outliers.
+
+```{r}
+
+normality.test(var_model)
+
+dif_ts_base_monetaria
+
+resid <- residuals(var_model)
+
+#no da
+shapiro.test(resid[, 1])
+
+#aHORA SI
+shapiro.test(resid[-c(34, 37), 1])
+```
+ 
+
+En este punto es posible probar la causalidad de Granger, donde la hipótesis nula de que no hay causalidad se descarta en ambas direcciones
+
+ 
+
+Generar funciones de respuesta de impulso para describir la respuesta de la producción a un shock de desempleo
+
+```{r}
+
+
+
+
+
 
 serial.test(var_model, lags.pt = 12, type = "PT.asymptotic")
 
@@ -626,6 +679,7 @@ causality(var_model, cause = "dif_ts_indice_precios_consumidor")
 irf(var_model, impulse = "dif_ts_base_monetaria_star", response = "dif_ts_indice_precios_consumidor",  n.ahead = 40, boot = TRUE)
 
 irf(var_model, impulse = "dif_ts_indice_precios_consumidor", response = "dif_ts_base_monetaria_star",  n.ahead = 40, boot = TRUE)
+
 
 
 ```
@@ -651,20 +705,8 @@ De no realizarse cambios en el rumbo económico, no se lograrán mejorar los ind
 
 # Apéndices
 
-## Modelo $ARIMA(0,2,6)$ para Índice de Precios al Consumidor {#ipc-modelo-arima}
+## Modelo $VAR$ con retardo 1 para Índice de Precios al Consumidor y Base Monetaria conjuntamente {#ipc-bm-modelo-var}
 
 ```{r}
-summary(modelo_arima_ipc)
-```
-
-## Modelo $SARIMA(0,2,0)(0,2,6)[12]$ para Índice de Precios al Consumidor {#ipc-modelo-sarima}
-
-```{r}
-summary(modelo_sarima_ipc)
-```
-
-## Modelo $SARIMA(1,0,0)(1,0,0)[12]$ para Índice de Salarios {#is-modelo-sarima}
-
-```{r}
-summary(modelo_sarima_is)
+summary(var_model)
 ```
