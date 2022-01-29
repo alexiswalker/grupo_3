@@ -577,14 +577,18 @@ kpss_test(dif_ts_base_monetaria) %>%
 Se confirma entonces que la serie diferenciada es _estacionaria_.
 
 
-# VAR
+# Vectores Autoregresivos
+
 
 blah blah introduccion
+
 
 ```{r}
 dif_ts_base_monetaria_star <- window(dif_ts_base_monetaria, start = index(dif_ts_indice_precios_consumidor)[1])
 var_data <- cbind(dif_ts_base_monetaria_star, dif_ts_indice_precios_consumidor)
 ```
+
+## Modelado
 
 Se utilizan distintos criterios de información para decidir el número de retardos a incluir.
 
@@ -605,6 +609,8 @@ var_model <- VAR(var_data, p = 1, type = "const", season = NULL, exog = NULL)
 
 El resumen del modelo se incluye en el [Apendice](#ipc-bm-modelo-var)).
 
+## Análisis de diagnóstico
+
 Para evaluar el ajuste del modelo se ejecutan algunas pruebas de diagnostico sobre los residuos del modelo.
 
 ```{r portmanteau-test}
@@ -624,7 +630,7 @@ Con la prueba de Portmanteau se revisa correlación. Un p-value mayor al 5% indi
 
 Es posible tener evidencia de homocedasticidad utilizando la prueba Multiplicador de Lagrange, para efectos ARCH.
 
-```{r}
+```{r arch}
 arch_test <- arch.test(var_model, lags.multi = 12, multivariate.only = TRUE)
 
 arch_test <- data.frame(arch_test$arch.mul$statistic, arch_test$arch.mul$parameter, arch_test$arch.mul$p.value) 
@@ -636,52 +642,54 @@ arch_test%>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-Un p-value por encima del valor crítico no brinda evidencia suficiente para rechazar la hipótesis nula de homocedasticidad.
+En la Tabla \@ref(tab:arch) so observa un p-value por encima del valor crítico lo que no brinda evidencia suficiente para rechazar la hipótesis nula de homocedasticidad.
 
-Se revisa normalidad ... no pasa los test de normalidad hay dos lecturas outliers.
+
+Se utiliza la prueba de Jarque-Bera para comprobar si una muestra de datos tiene la asimetría y la curtosis de una distribución normal.
+
+```{r jb}
+normality_test <- normality.test(var_model)
+
+e <- c(normality_test$jb.mul$JB$statistic, normality_test$jb.mul$Skewness$statistic, normality_test$jb.mul$Kurtosis$statistic)
+p <- c(normality_test$jb.mul$JB$parameter, normality_test$jb.mul$Skewness$parameter, normality_test$jb.mul$Kurtosis$parameter)
+pv <- c(normality_test$jb.mul$JB$p.value, normality_test$jb.mul$Skewness$p.value, normality_test$jb.mul$Kurtosis$p.value)
+
+normality_test <- data.frame(e, p, pv)
+colnames(normality_test) <- c("Estadístico", "Parámetro", "P Value")
+rownames(normality_test) <- c("Jarque-Bera", "Asimetría", "Curtosis")
+
+normality_test%>%
+  kable(booktabs = T, caption = "Residuos: Normalidad", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
 
 ```{r}
-
-normality.test(var_model)
-
-dif_ts_base_monetaria
-
 resid <- residuals(var_model)
-
-#no da
-shapiro.test(resid[, 1])
-
-#aHORA SI
-shapiro.test(resid[-c(34, 37), 1])
+shapiro_test_base_monetaria <- shapiro.test(resid[, 1])
+shapiro_test_base_monetaria_sin_37 <- shapiro.test(resid[-c(37), 1])
+shapiro_test_ipc <- shapiro.test(resid[, 2])
 ```
- 
+
+Los resultados resumidos en la Tabla \@ref(tab:jb) no muestran residuos distribuidos normalmente. Si se analizan los generados por cada ecuación por separado, la prueba de Shapiro-Wilk (p-value igual a `r shapiro_test_base_monetaria$p.value`) para el índice de precios señala normalidad, mientras que para la base monetaria no (p-value igual a `r shapiro_test_ipc$p.value`).
+
+De revisar la Figura \@ref(fig:ipc-vs-is) se observa un valor atípico para el mes de marzo de 2020, eliminando esta lectura se obtiene un p-value igual a `r shapiro_test_base_monetaria_sin_37$p.value` observando normalidad.
+
+## Causalidad e Impulso Respuesta
 
 En este punto es posible probar la causalidad de Granger, donde la hipótesis nula de que no hay causalidad se descarta en ambas direcciones
 
- 
+```{r}
+causality(var_model, cause = "dif_ts_base_monetaria_star")
+causality(var_model, cause = "dif_ts_indice_precios_consumidor")
+```
 
 Generar funciones de respuesta de impulso para describir la respuesta de la producción a un shock de desempleo
 
 ```{r}
+irf_base_monetaria <- irf(var_model, impulse = "dif_ts_base_monetaria_star", response = "dif_ts_indice_precios_consumidor",  n.ahead = 12)
 
-
-
-
-
-
-serial.test(var_model, lags.pt = 12, type = "PT.asymptotic")
-
-causality(var_model, cause = "dif_ts_base_monetaria_star")
-
-causality(var_model, cause = "dif_ts_indice_precios_consumidor")
-
-
-irf(var_model, impulse = "dif_ts_base_monetaria_star", response = "dif_ts_indice_precios_consumidor",  n.ahead = 40, boot = TRUE)
-
-irf(var_model, impulse = "dif_ts_indice_precios_consumidor", response = "dif_ts_base_monetaria_star",  n.ahead = 40, boot = TRUE)
-
-
-
+irf_ipc <- irf(var_model, impulse = "dif_ts_indice_precios_consumidor", response = "dif_ts_base_monetaria_star",  n.ahead = 12)
 ```
 
 
