@@ -687,11 +687,50 @@ causality(var_model, cause = "dif_ts_indice_precios_consumidor")
 Generar funciones de respuesta de impulso para describir la respuesta de la producción a un shock de desempleo
 
 ```{r}
-irf_base_monetaria <- irf(var_model, impulse = "dif_ts_base_monetaria_star", response = "dif_ts_indice_precios_consumidor",  n.ahead = 12)
+irf_base_monetaria <- irf(var_model, 
+                          impulse = "dif_ts_base_monetaria_star", 
+                          response = "dif_ts_indice_precios_consumidor",  
+                          n.ahead = 11)
 
-irf_ipc <- irf(var_model, impulse = "dif_ts_indice_precios_consumidor", response = "dif_ts_base_monetaria_star",  n.ahead = 12)
+irf_base_monetaria_data <- data.frame(irf_base_monetaria$irf$dif_ts_base_monetaria_star[ ,1],
+                                      irf_base_monetaria$Lower$dif_ts_base_monetaria_star[ ,1],
+                                      irf_base_monetaria$Upper$dif_ts_base_monetaria_star[ ,1], 
+                                      0:11)
+colnames(irf_base_monetaria_data) <- c('irf', 'lower', 'upper', 'lags')
+
+irf_ipc <- irf(var_model,
+               impulse = "dif_ts_indice_precios_consumidor",
+               response = "dif_ts_base_monetaria_star",
+               n.ahead = 11)
+
+irf_ipc_data <- data.frame(irf_ipc$irf$dif_ts_indice_precios_consumidor[ ,1],
+                                      irf_ipc$Lower$dif_ts_indice_precios_consumidor[ ,1],
+                                      irf_ipc$Upper$dif_ts_indice_precios_consumidor[ ,1], 
+                                      0:11)
+colnames(irf_ipc_data) <- c('irf', 'lower', 'upper', 'lags')
 ```
 
+```{r irf-base-monetaria, fig.cap="Base Monetaria: Impulso Respuesta", fig.height=4, fig.width=10}
+irf_base_monetaria_data %>%  ggplot(aes(lags, irf)) +
+            geom_line(aes(y = upper), colour = 'lightblue2') +
+            geom_line(aes(y = lower), colour = 'lightblue')+
+            geom_line(aes(y = irf))+
+            geom_ribbon(aes(x=lags, ymax=upper, ymin=lower), fill="lightblue", alpha=.1) +
+            xlab("") + ylab("Base Monetaria") + ggtitle("Base Monetaria: Impulso Respuesta") +
+            theme(axis.text.x=element_blank()) +
+            geom_line(colour = 'black')
+```
+
+```{r irf-ipc, fig.cap="IPC: Impulso Respuesta", fig.height=4, fig.width=10}
+irf_ipc_data %>%  ggplot(aes(lags, irf)) +
+            geom_line(aes(y = upper), colour = 'lightblue2') +
+            geom_line(aes(y = lower), colour = 'lightblue')+
+            geom_line(aes(y = irf))+
+            geom_ribbon(aes(x=lags, ymax=upper, ymin=lower), fill="lightblue", alpha=.1) +
+            xlab("") + ylab("Índice de Precio al Consumidor") + ggtitle("IPC: Impulso Respuesta") +
+            theme(axis.text.x=element_blank()) +
+            geom_line(colour = 'black')
+```
 
 \newpage
 
