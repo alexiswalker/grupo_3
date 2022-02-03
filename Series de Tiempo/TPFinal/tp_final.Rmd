@@ -658,7 +658,7 @@ normality_test <- data.frame(e, p, pv)
 colnames(normality_test) <- c("Estadístico", "Parámetro", "P Value")
 rownames(normality_test) <- c("Jarque-Bera", "Asimetría", "Curtosis")
 
-normality_test%>%
+normality_test %>%
   kable(booktabs = T, caption = "Residuos: Normalidad", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
@@ -680,9 +680,31 @@ De revisar la Figura \@ref(fig:ipc-vs-is) se observa un valor atípico para el m
 En este punto es posible probar la causalidad de Granger, donde la hipótesis nula de que no hay causalidad se descarta en ambas direcciones
 
 ```{r}
-causality(var_model, cause = "dif_ts_base_monetaria_star")
-causality(var_model, cause = "dif_ts_indice_precios_consumidor")
+cause_base_monetaria <- causality(var_model, cause = "dif_ts_base_monetaria_star")
+
+base_monetaria_granger <- data.frame(cause_base_monetaria$Granger$method,
+                                     cause_base_monetaria$Granger$p.value)
+
+colnames(base_monetaria_granger) <- c("Método", "P-Value")
+
+base_monetaria_granger %>%
+  kable(booktabs = T, caption = "Causalidad de Grange: Base Monetaria", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
+
+```{r}
+cause_ipc <- causality(var_model, cause = "dif_ts_indice_precios_consumidor")
+
+ipc_granger <- data.frame(cause_ipc$Granger$method,
+                          cause_ipc$Granger$p.value)
+
+colnames(ipc_granger) <- c("Método", "P-Value")
+
+ipc_granger %>%
+  kable(booktabs = T, caption = "Causalidad de Grange: IPC", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
 
 Generar funciones de respuesta de impulso para describir la respuesta de la producción a un shock de desempleo
 
