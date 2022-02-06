@@ -127,10 +127,10 @@ raw_data <- read_csv(
 
 ```{r}
 indice_precios_consumidor <- raw_data %>%
-  select(fecha, indice_precios_consumidor_acumulada)
+  dplyr::select(fecha, indice_precios_consumidor_acumulada)
 
 indice_salarios <- raw_data %>%
-  select(fecha, indice_salarios_acumulada)
+  dplyr::select(fecha, indice_salarios_acumulada)
 
 ts_indice_precios_consumidor <- indice_precios_consumidor$indice_precios_consumidor_acumulada %>%
   ts(frequency = 12, start = c(2016, 12))
@@ -282,7 +282,7 @@ metrics_model_auto_ipc <- accuracy_model_auto_ipc %>%
              BIC = BIC(model_auto_ipc), .before = "ME")
 
 rbind(metrics_model_ma_ipc, metrics_model_auto_ipc) %>%
-  select(Modelo, AIC, BIC, ME, RMSE) %>% 
+  dplyr::select(Modelo, AIC, BIC, ME, RMSE) %>% 
   kable(booktabs = T, caption = "Métricas de performance de los modelos sobre IPC", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
@@ -428,7 +428,7 @@ metrics_model_auto_is <- accuracy_model_auto_is %>%
              BIC = BIC(model_auto_is), .before = "ME")
 
 rbind(metrics_model_arma_is, metrics_model_auto_is) %>%
-  select(Modelo, AIC, BIC, ME, RMSE) %>% 
+  dplyr::select(Modelo, AIC, BIC, ME, RMSE) %>% 
   kable(booktabs = T, caption = "Métricas de performance", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
@@ -552,7 +552,7 @@ bind_cols(
     rename(real = value, mes = index),
   forecast(model_arima_ma_ipc, h = 3) %>% 
     as_tibble() %>% 
-    select('Point Forecast') %>% 
+    dplyr::select('Point Forecast') %>% 
     rename(estimado = 'Point Forecast')
   ) %>% 
   kable(booktabs = T, caption = "IPC - Real versus Estimado ", digits = 3) %>%
@@ -568,7 +568,7 @@ bind_cols(
     rename(real = value, mes = index),
   forecast(model_arima_auto_is, h = 3) %>% 
     as_tibble() %>% 
-    select('Point Forecast') %>% 
+    dplyr::select('Point Forecast') %>% 
     rename(estimado = 'Point Forecast')
   ) %>% 
   kable(booktabs = T, caption = "Índice de Salarios - Real versus Estimado ", digits = 3) %>%

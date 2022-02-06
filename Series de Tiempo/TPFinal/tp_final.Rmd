@@ -55,6 +55,13 @@ output:
 \setlength{\parskip}{0.5em}
 \setlength{\parindent}{0em}
 
+```{r}
+# borrar
+library(showtext)
+showtext_auto()
+```
+
+
 \noindent El presente trabajo tiene por objetivo estudiar la relación entre dos variables económicas fundamentales, el IPC (Indice de precios al Consumidor) y el índice de Salarios.
 
 Ambos indicadores son considerados fundamentales para el desarrollo de un país ya que conllevan, en la relación entre ambos, dos efectos antagónicos según se comporten. 
@@ -94,35 +101,6 @@ if (any(instalados == FALSE)) {
 invisible(lapply(paquetes, library, character.only = TRUE))
 
 theme_set(theme_bw())
-```
-
-```{r}
-incorrelation <- function(ts, type = c("Ljung-Box","Box-Pierce"), fitdf = 0){
-  p_ljung_box = NULL
-  s_ljung_box = NULL
-  for(i in 0:(length(ts)/4)){
-    p_ljung_box[i] = Box.test(ts, lag = i, type = type, fitdf = fitdf)$p.value
-    s_ljung_box[i] = Box.test(ts, lag = i, type = type, fitdf = fitdf)$statistic
-  }
-  table = data.frame(lag = 1:(length(ts)/4),
-                     pvalue = p_ljung_box,
-                     estadístico = s_ljung_box)
-  return(table)
-}
-
-test_incorrelation <- function(ts, title = "Pruebas de Incorrelacion") {
-  i_box_pierce <- incorrelation(ts, "Box-Pierce")
-  i_ljung_box <- incorrelation(ts, "Ljung-Box")
-  
-  test_incorrelation_data <- merge(i_box_pierce, i_ljung_box, by="lag", suffixes = c("",""))
-  
-  test_incorrelation_data %>%
-      kable(booktabs = T, caption = title, digits = 3) %>%
-      column_spec(2, color = ifelse(test_incorrelation_data[2] > 0.05, "blue", "black")) %>% 
-      column_spec(4, color = ifelse(test_incorrelation_data[4] > 0.05, "blue", "black")) %>% 
-      add_header_above(c(" " = 1, "Box-Pierce" = 2, "Ljung-Box" = 2)) %>%
-      kable_styling(latex_options = c("striped", "hold_position"), full_width = F, font_size = 7)
-}
 ```
 
 ```{r}
@@ -204,7 +182,8 @@ autoplot(ts_ipc, series = 'Índice de Precios al Consumidor') +
   autolayer(ts_bm, series = 'Base Monetaria') +
   ggtitle('Índice de Precios al Consumidor, Índice de Salarios acumulados y Base Monetaria',
           subtitle = 'Con base Diciembre 2016') +
-  ylab('% de cambio acumulado')
+  ylab('% de cambio acumulado') +
+  xlab('Tiempo')
 ```
 
 La información fue extraída de la página oficial del Instituto Nacional de Estadística y Censos - INDEC Argentina:
@@ -414,7 +393,7 @@ Mediante la función `ndiffs` de R, se estima que el número de diferenciaciones
 
 ```{r}
 is_ndiffs <- ndiffs(ts_is)
-is_nsdiffs <- nsdiffs(ts_is)
+#is_nsdiffs <- nsdiffs(ts_is)
 ```
 
 ```{r is-diferenciado, fig.cap="Índice de Salarios diferenciado", fig.height=5, fig.width=10, fig.pos="H"}
@@ -525,7 +504,17 @@ Se confirma entonces que la serie diferenciada es _estacionaria_.
 
 ```{r}
 dif_ts_bm <- window(dif_ts_bm, start = index(dif_ts_ipc)[1])
-var_data <- cbind(dif_ts_bm, dif_ts_ipc)
+
+# train_data_ipc <- window(dif_ts_ipc, end = c(2021, 04))
+# test_data_ipc <- window(dif_ts_ipc, start = c(2021, 05))
+# 
+# train_data_bm <- window(dif_ts_bm, end = c(2021, 04))
+# test_data_bm <- window(dif_ts_bm, start = c(2021, 05))
+# 
+# var_train_data <- cbind(train_data_ipc, train_data_bm)
+# var_test_data <- cbind(test_data_ipc, test_data_bm)
+
+var_data <- cbind(dif_ts_ipc, dif_ts_bm)
 ```
 
 ### Modelado
@@ -709,6 +698,71 @@ irf_ipc_data %>%
   theme(axis.text.x=element_blank()) +
   geom_line(colour = 'black')
 ```
+
+### Pronósticos
+
+```{r}
+reverse_diff <- function(stationary_data, non_stationary_last_value){
+  if(nrow(stationary_data)) {
+    f <- head(stationary_data, 1) + non_stationary_last_value
+    r <- tail(stationary_data, -1)
+    return(rbind(f, reverse_diff(r, f$`Point Forecast`)))
+  }
+}
+```
+
+```{r}
+var_forecast <- forecast(var_model, h = 6)
+```
+
+```{r}
+last_value <- as.double(tail(diff(ts_ipc, lag = 1, differences = 1), 1))
+forecast_ipc <- reverse_diff(as.data.frame(var_forecast$forecast$dif_ts_ipc), last_value)
+last_value <- as.double(tail(ts_ipc, 1))
+forecast_ipc <- reverse_diff(forecast_ipc, last_value)
+
+forecast_bm <- reverse_diff(as.data.frame(var_forecast$forecast$dif_ts_bm), as.double(tail(ts_bm, 1)))
+```
+
+
+```{r}
+var_forecast$forecast$dif_ts_ipc$mean = ts(forecast_ipc$`Point Forecast`, frequency = 12, start = c(2021, 8))
+var_forecast$forecast$dif_ts_ipc$lower[, 1] = ts(forecast_ipc$`Lo 80`, frequency = 12, start = c(2021, 8))
+var_forecast$forecast$dif_ts_ipc$lower[, 2] = ts(forecast_ipc$`Lo 95`, frequency = 12, start = c(2021, 8))
+var_forecast$forecast$dif_ts_ipc$upper[, 1] = ts(forecast_ipc$`Hi 80`, frequency = 12, start = c(2021, 8))
+var_forecast$forecast$dif_ts_ipc$upper[, 2] = ts(forecast_ipc$`Hi 95`, frequency = 12, start = c(2021, 8))
+
+var_forecast$forecast$dif_ts_bm$mean = ts(forecast_bm$`Point Forecast`, frequency = 12, start = c(2021, 8))
+var_forecast$forecast$dif_ts_bm$lower[, 1] = ts(forecast_bm$`Lo 80`, frequency = 12, start = c(2021, 8))
+var_forecast$forecast$dif_ts_bm$lower[, 2] = ts(forecast_bm$`Lo 95`, frequency = 12, start = c(2021, 8))
+var_forecast$forecast$dif_ts_bm$upper[, 1] = ts(forecast_bm$`Hi 80`, frequency = 12, start = c(2021, 8))
+var_forecast$forecast$dif_ts_bm$upper[, 2] = ts(forecast_bm$`Hi 95`, frequency = 12, start = c(2021, 8))
+```
+
+```{r pronostico-general, fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
+autoplot(ts_ipc, 
+         series = "Indice Precios Consumidor") +
+  autolayer(var_forecast$forecast$dif_ts_ipc,
+            series = "Pronostico Indice Precios Consumidor", 
+            alpha = 0.5) +
+    autolayer(ts_bm, 
+            series = "Base Monetaria") +
+  autolayer(var_forecast$forecast$dif_ts_bm, 
+            series = "Pronostico Base Monetaria", 
+            alpha = 0.5) +
+  labs(x = "Tiempo", y = "Porcentaje Acumulado") +
+  ggtitle("Series con sus pronosticos")
+```
+
+
+
+```{r}
+
+reverse_diff(as.data.frame(var_forecast$forecast$dif_ts_bm), as.double(tail(ts_bm, 1)))
+
+```
+
+
 
 \newpage
 
