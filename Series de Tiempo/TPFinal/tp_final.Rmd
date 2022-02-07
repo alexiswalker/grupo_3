@@ -702,42 +702,54 @@ irf_ipc_data %>%
 ### Pronósticos
 
 ```{r}
-reverse_diff <- function(stationary_data, non_stationary_last_value){
-  if(nrow(stationary_data)) {
-    f <- head(stationary_data, 1) + non_stationary_last_value
-    r <- tail(stationary_data, -1)
-    return(rbind(f, reverse_diff(r, f$`Point Forecast`)))
+diff_inv <- function(dif_ts, original_ts, n_diff) {
+
+  ts_dif_inv <-  dif_ts
+  
+  for (i in n_diff:1) {
+    if (i > 1) {
+      ts_dif_i_1 <-  diff(original_ts, lag = 1, differences = (i-1))
+    } else {
+      ts_dif_i_1 <- original_ts
+    }
+    ts_dif_inv <- diffinv(ts_dif_inv, lag = 1, differences = 1) + ts_dif_i_1[1]
   }
+  
+  return(ts_dif_inv)
 }
+
+
+join_ts <- function(before, after){
+  return(ts(c(before,after), start=start(before), frequency=frequency(before)))
+}
+
+
+adjust_forecast <- function(dif_ts, ts, forecast_object, ts_name, ts_ndiffs){
+
+  forecast_start = start(forecast_object$forecast[[ts_name]]$mean)
+  
+  forecast_object$forecast[[ts_name]]$mean = window(diff_inv(join_ts(dif_ts, forecast_object$forecast[[ts_name]]$mean), ts, ts_ndiffs), start = forecast_start)
+  forecast_object$forecast[[ts_name]]$lower[, 1] = window(diff_inv(join_ts(dif_ts, forecast_object$forecast[[ts_name]]$lower[, 1]), ts, ts_ndiffs), start = forecast_start)
+  forecast_object$forecast[[ts_name]]$lower[, 2] = window(diff_inv(join_ts(dif_ts, forecast_object$forecast[[ts_name]]$lower[, 2]), ts, ts_ndiffs), start = forecast_start)
+  forecast_object$forecast[[ts_name]]$upper[, 1] = window(diff_inv(join_ts(dif_ts, forecast_object$forecast[[ts_name]]$upper[, 1]), ts, ts_ndiffs), start = forecast_start)
+  forecast_object$forecast[[ts_name]]$upper[, 2] = window(diff_inv(join_ts(dif_ts, forecast_object$forecast[[ts_name]]$upper[, 2]), ts, ts_ndiffs), start = forecast_start)  
+  
+  return(forecast_object)
+}
+
 ```
 
 ```{r}
 var_forecast <- forecast(var_model, h = 6)
-```
 
-```{r}
-last_value <- as.double(tail(diff(ts_ipc, lag = 1, differences = 1), 1))
-forecast_ipc <- reverse_diff(as.data.frame(var_forecast$forecast$dif_ts_ipc), last_value)
-last_value <- as.double(tail(ts_ipc, 1))
-forecast_ipc <- reverse_diff(forecast_ipc, last_value)
+o_dif_ts_bm <- diff(ts_bm, lag = 1, differences = bm_ndiffs) #a la que veníamos usando le sacamos un dato para que quede del mismo tamaño que la otra
 
-forecast_bm <- reverse_diff(as.data.frame(var_forecast$forecast$dif_ts_bm), as.double(tail(ts_bm, 1)))
+var_forecast <- adjust_forecast(dif_ts_ipc, ts_ipc, var_forecast, "dif_ts_ipc", ipc_ndiffs)
+var_forecast <- adjust_forecast(o_dif_ts_bm, ts_bm, var_forecast, "dif_ts_bm", bm_ndiffs)
 ```
 
 
-```{r}
-var_forecast$forecast$dif_ts_ipc$mean = ts(forecast_ipc$`Point Forecast`, frequency = 12, start = c(2021, 8))
-var_forecast$forecast$dif_ts_ipc$lower[, 1] = ts(forecast_ipc$`Lo 80`, frequency = 12, start = c(2021, 8))
-var_forecast$forecast$dif_ts_ipc$lower[, 2] = ts(forecast_ipc$`Lo 95`, frequency = 12, start = c(2021, 8))
-var_forecast$forecast$dif_ts_ipc$upper[, 1] = ts(forecast_ipc$`Hi 80`, frequency = 12, start = c(2021, 8))
-var_forecast$forecast$dif_ts_ipc$upper[, 2] = ts(forecast_ipc$`Hi 95`, frequency = 12, start = c(2021, 8))
 
-var_forecast$forecast$dif_ts_bm$mean = ts(forecast_bm$`Point Forecast`, frequency = 12, start = c(2021, 8))
-var_forecast$forecast$dif_ts_bm$lower[, 1] = ts(forecast_bm$`Lo 80`, frequency = 12, start = c(2021, 8))
-var_forecast$forecast$dif_ts_bm$lower[, 2] = ts(forecast_bm$`Lo 95`, frequency = 12, start = c(2021, 8))
-var_forecast$forecast$dif_ts_bm$upper[, 1] = ts(forecast_bm$`Hi 80`, frequency = 12, start = c(2021, 8))
-var_forecast$forecast$dif_ts_bm$upper[, 2] = ts(forecast_bm$`Hi 95`, frequency = 12, start = c(2021, 8))
-```
 
 ```{r pronostico-general, fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
 autoplot(ts_ipc, 
@@ -754,12 +766,16 @@ autoplot(ts_ipc,
   ggtitle("Series con sus pronosticos")
 ```
 
-
-
 ```{r}
+t <- diff(ts_ipc, lag = 1)
+m <- arima(window(t), order = c(1,0,1))
+f <- forecast::forecast(m, h = 6)
+f
 
-reverse_diff(as.data.frame(var_forecast$forecast$dif_ts_bm), as.double(tail(ts_bm, 1)))
-
+t <- ts_ipc
+m <- arima(window(t), order = c(1,1,1))
+f <- forecast(m, h = 6)
+f
 ```
 
 
