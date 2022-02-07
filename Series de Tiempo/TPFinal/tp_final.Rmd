@@ -90,7 +90,7 @@ knitr::opts_chunk$set(
 
 ```{r setup, include=FALSE}
 paquetes <- c("readr", "tidyverse", "forecast", "gridExtra",
-              "tseries", "tsibble", "kableExtra", "vars")
+              "tseries", "tsibble", "kableExtra", "vars", "prophet")
 
 instalados <- paquetes %in% rownames(installed.packages())
 
@@ -749,8 +749,6 @@ var_forecast <- adjust_forecast(o_dif_ts_bm, ts_bm, var_forecast, "dif_ts_bm", b
 ```
 
 
-
-
 ```{r pronostico-general, fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
 autoplot(ts_ipc, 
          series = "Indice Precios Consumidor") +
@@ -776,6 +774,14 @@ t <- ts_ipc
 m <- arima(window(t), order = c(1,1,1))
 f <- forecast(m, h = 6)
 f
+```
+
+```{r}
+nn_model <- ipc %>% rename(ds = fecha, y = indice_precios_consumidor_acumulada) %>% prophet
+future <- make_future_dataframe(nn_model, periods = 6, include_history = F, freq = "month")
+forecast <- predict(nn_model, future)
+plot(nn_model, forecast)
+
 ```
 
 
