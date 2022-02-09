@@ -288,7 +288,7 @@ You want to choose a model that minimizes the FPE, which represents a balance be
 
 ## Analisis de la series {#analisis}
 
-### Índice de Precios al Consumidor (IPC)
+### Índice de Precios al Consumidor
 
 En la Figura \@ref(fig:ipc), se observa que la serie IPC es _no estacionaria_ ya que su media varía a lo largo del tiempo y su función de autocorrelación decrece lentamente en forma lineal.
 
@@ -1001,7 +1001,7 @@ irf_is_data %>%
 ```
 Gráficamente (Figura \@ref(fig:irf-is-bm)), los _shocks_ en el Índice de Salarios tienen un impacto a mediado plazo en la Base Monetaria, sus efectos perduran aproximadamente 10 meses después de su ocurrencia.
 
-## Pronósticos
+### Pronósticos
 
 ```{r}
 diff_inv <- function(dif_ts, original_ts, n_diff) {
@@ -1070,40 +1070,129 @@ adjust_forecast <- function(dif_ts, ts, forecast_object, ts_name, ts_ndiffs){
 
 ## Prophet
 
+### Índice de Precios al Consumidor
 
 ```{r}
-# t <- diff(ts_ipc, lag = 1)
-# m <- arima(window(t), order = c(1,0,1))
-# f <- forecast::forecast(m, h = 6)
-# f
-# 
-# t <- ts_ipc
-# m <- arima(window(t), order = c(1,1,1))
-# f <- forecast(m, h = 6)
-# f
+ipc_model_data <- rename(ipc, ds = fecha, y = indice_precios_consumidor_acumulada)
+
+ipc_train <- head(ipc_model_data, 53)
+ipc_test <- tail(ipc_model_data, 3)
+```
+
+```{r include=FALSE}
+ipc_prophet_model <- prophet(ipc_train)
 ```
 
 ```{r}
-# nn_model <- ipc %>% rename(ds = fecha, y = indice_precios_consumidor_acumulada) %>% prophet
-# future <- make_future_dataframe(nn_model, periods = 6, include_history = F, freq = "month")
-# forecast <- predict(nn_model, future)
-# plot(nn_model, forecast)
-# 
-# autoplot(nn_model)
+ipc_x_test <- make_future_dataframe(ipc_prophet_model, periods = 3, freq = "month", include_history = FALSE)
+ipc_y_pred <- predict(ipc_prophet_model, ipc_x_test)
+ipc_prophet_accuracy <- accuracy(ipc_test$y, ipc_y_pred$yhat)
+
+ipc_prophet_accuracy %>% 
+  as_tibble() %>% 
+  kable(booktabs = T, caption = "Métricas de performance", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
 ```{r}
-model_bm <- bm %>% 
-  rename(ds = fecha, y = variacion_base_monetaria_acumulada) %>% 
-  prophet 
-
-future <- make_future_dataframe(model_bm, periods = 6, freq = "month")
-forecast_bm <- predict(model_bm, future)
-
-plot(model_bm, forecast_bm) + add_changepoints_to_plot(model_bm)
-
-prophet_plot_components(model_bm, forecast_bm)
+ipc_future <- make_future_dataframe(ipc_prophet_model, periods = 9, freq = "month", include_history = FALSE)
+ipc_prophet_forecast <- predict(ipc_prophet_model, ipc_future)
 ```
+
+```{r}
+plot(ipc_prophet_model, ipc_prophet_forecast) + 
+  ggtitle("Índice de Precios al Consumidor", subtitle = "Con prediccion de 9 meses") +
+  ylab("% cambio acumulado") +
+  xlab("Fecha")
+```
+
+```{r}
+prophet_plot_components(ipc_prophet_model, ipc_prophet_forecast)
+```
+
+### Índice de Salarios
+
+```{r}
+is_model_data <- rename(is, ds = fecha, y = indice_salarios_acumulada)
+
+is_train <- head(is_model_data, 53)
+is_test <- tail(is_model_data, 3)
+```
+
+```{r include=FALSE}
+is_prophet_model <- prophet(is_train)
+```
+
+```{r}
+is_x_test <- make_future_dataframe(is_prophet_model, periods = 3, freq = "month", include_history = FALSE)
+is_y_pred <- predict(is_prophet_model, is_x_test)
+is_prophet_accuracy <- accuracy(is_test$y, is_y_pred$yhat)
+
+is_prophet_accuracy %>% 
+  as_tibble() %>% 
+  kable(booktabs = T, caption = "Métricas de performance", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+```{r}
+is_future <- make_future_dataframe(is_prophet_model, periods = 9, freq = "month", include_history = FALSE)
+is_prophet_forecast <- predict(is_prophet_model, is_future)
+```
+
+```{r}
+plot(is_prophet_model, is_prophet_forecast) + 
+  ggtitle("Índice de Salarios", subtitle = "Con prediccion de 9 meses") +
+  ylab("% cambio acumulado") +
+  xlab("Fecha")
+```
+
+```{r}
+prophet_plot_components(is_prophet_model, is_prophet_forecast)
+```
+
+### Base Monetaria
+
+```{r}
+bm_model_data <- rename(bm, ds = fecha, y = variacion_base_monetaria_acumulada)
+
+bm_train <- head(bm_model_data, 53)
+bm_test <- tail(bm_model_data, 3)
+```
+
+```{r include=FALSE}
+bm_prophet_model <- prophet(bm_train)
+```
+
+```{r}
+bm_x_test <- make_future_dataframe(bm_prophet_model, periods = 3, freq = "month", include_history = FALSE)
+bm_y_pred <- predict(bm_prophet_model, bm_x_test)
+bm_prophet_accuracy <- accuracy(bm_test$y, bm_y_pred$yhat)
+
+bm_prophet_accuracy %>% 
+  as_tibble() %>% 
+  kable(booktabs = T, caption = "Métricas de performance", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+```{r}
+bm_future <- make_future_dataframe(bm_prophet_model, periods = 9, freq = "month", include_history = FALSE)
+bm_prophet_forecast <- predict(bm_prophet_model, bm_future)
+```
+
+```{r}
+plot(bm_prophet_model, bm_prophet_forecast) + 
+  ggtitle("Base monetaria", subtitle = "Con prediccion de 9 meses") +
+  ylab("% cambio acumulado") +
+  xlab("Fecha")
+```
+
+```{r}
+prophet_plot_components(bm_prophet_model, bm_prophet_forecast)
+```
+
+
+
+
 
 \newpage
 
