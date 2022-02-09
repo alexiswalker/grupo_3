@@ -1070,20 +1070,27 @@ adjust_forecast <- function(dif_ts, ts, forecast_object, ts_name, ts_ndiffs){
 
 ## Prophet
 
-### Índice de Precios al Consumidor
+Otra forma de modelar las series analizadas anteriomente es mediante Prophet. Se modela cada una de forma independiente, separando el conjunto de datos en train y test. Se considera train hasta el 2021-04-01 y test hasta el 2021-07-01.
 
 ```{r}
+holidays <- read.csv('elecciones.csv')
+```
+
+
+### Índice de Precios al Consumidor
+
+```{r include=FALSE}
 ipc_model_data <- rename(ipc, ds = fecha, y = indice_precios_consumidor_acumulada)
 
 ipc_train <- head(ipc_model_data, 53)
 ipc_test <- tail(ipc_model_data, 3)
+
+ipc_prophet_model <- prophet(ipc_train, holidays = holidays)
 ```
 
-```{r include=FALSE}
-ipc_prophet_model <- prophet(ipc_train)
-```
+En la Tabla \@ref(tab:ipc-prophet-acc) se detallan las métricas de testing obtenidas al entrenar el modelo Prophet para la serie IPC. 
 
-```{r}
+```{r ipc-prophet-acc}
 ipc_x_test <- make_future_dataframe(ipc_prophet_model, periods = 3, freq = "month", include_history = FALSE)
 ipc_y_pred <- predict(ipc_prophet_model, ipc_x_test)
 ipc_prophet_accuracy <- accuracy(ipc_test$y, ipc_y_pred$yhat)
@@ -1095,7 +1102,7 @@ ipc_prophet_accuracy %>%
 ```
 
 ```{r}
-ipc_future <- make_future_dataframe(ipc_prophet_model, periods = 9, freq = "month", include_history = FALSE)
+ipc_future <- make_future_dataframe(ipc_prophet_model, periods = 9, freq = "month")
 ipc_prophet_forecast <- predict(ipc_prophet_model, ipc_future)
 ```
 
@@ -1112,16 +1119,15 @@ prophet_plot_components(ipc_prophet_model, ipc_prophet_forecast)
 
 ### Índice de Salarios
 
-```{r}
+```{r include=FALSE}
 is_model_data <- rename(is, ds = fecha, y = indice_salarios_acumulada)
 
 is_train <- head(is_model_data, 53)
 is_test <- tail(is_model_data, 3)
+
+is_prophet_model <- prophet(is_train, holidays = holidays)
 ```
 
-```{r include=FALSE}
-is_prophet_model <- prophet(is_train)
-```
 
 ```{r}
 is_x_test <- make_future_dataframe(is_prophet_model, periods = 3, freq = "month", include_history = FALSE)
@@ -1135,7 +1141,7 @@ is_prophet_accuracy %>%
 ```
 
 ```{r}
-is_future <- make_future_dataframe(is_prophet_model, periods = 9, freq = "month", include_history = FALSE)
+is_future <- make_future_dataframe(is_prophet_model, periods = 9, freq = "month")
 is_prophet_forecast <- predict(is_prophet_model, is_future)
 ```
 
@@ -1152,15 +1158,13 @@ prophet_plot_components(is_prophet_model, is_prophet_forecast)
 
 ### Base Monetaria
 
-```{r}
+```{r include=FALSE}
 bm_model_data <- rename(bm, ds = fecha, y = variacion_base_monetaria_acumulada)
 
 bm_train <- head(bm_model_data, 53)
 bm_test <- tail(bm_model_data, 3)
-```
 
-```{r include=FALSE}
-bm_prophet_model <- prophet(bm_train)
+bm_prophet_model <- prophet(bm_train, holidays = holidays)
 ```
 
 ```{r}
@@ -1175,7 +1179,7 @@ bm_prophet_accuracy %>%
 ```
 
 ```{r}
-bm_future <- make_future_dataframe(bm_prophet_model, periods = 9, freq = "month", include_history = FALSE)
+bm_future <- make_future_dataframe(bm_prophet_model, periods = 9, freq = "month")
 bm_prophet_forecast <- predict(bm_prophet_model, bm_future)
 ```
 

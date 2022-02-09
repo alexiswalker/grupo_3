@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.12.10)  9 FEB 2022 19:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.12.10)  9 FEB 2022 19:37
 entering extended mode
 **./tp_final.tex
 (tp_final.tex
@@ -805,105 +805,105 @@ Package pdftex.def Info: tp_final_files/figure-latex/irf-is-bm-1.pdf  used on i
 nput line 1017.
 (pdftex.def)             Requested size: 469.76045pt x 187.90417pt.
 [16]
-<tp_final_files/figure-latex/unnamed-chunk-26-1.pdf, id=342, 469.755pt x 325.21
+<tp_final_files/figure-latex/unnamed-chunk-24-1.pdf, id=343, 469.755pt x 325.21
 5pt>
-File: tp_final_files/figure-latex/unnamed-chunk-26-1.pdf Graphic file (type pdf
+File: tp_final_files/figure-latex/unnamed-chunk-24-1.pdf Graphic file (type pdf
 )
-<use tp_final_files/figure-latex/unnamed-chunk-26-1.pdf>
-Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-26-1.pdf  us
-ed on input line 1045.
+<use tp_final_files/figure-latex/unnamed-chunk-24-1.pdf>
+Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-24-1.pdf  us
+ed on input line 1049.
 (pdftex.def)             Requested size: 419.75792pt x 290.60162pt.
 [17 <./tp_final_files/figure-latex/irf-is-bm-1.pdf>]
-<tp_final_files/figure-latex/unnamed-chunk-27-1.pdf, id=358, 469.755pt x 325.21
+<tp_final_files/figure-latex/unnamed-chunk-25-1.pdf, id=359, 469.755pt x 325.21
 5pt>
-File: tp_final_files/figure-latex/unnamed-chunk-27-1.pdf Graphic file (type pdf
+File: tp_final_files/figure-latex/unnamed-chunk-25-1.pdf Graphic file (type pdf
 )
-<use tp_final_files/figure-latex/unnamed-chunk-27-1.pdf>
-Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-27-1.pdf  us
-ed on input line 1047.
+<use tp_final_files/figure-latex/unnamed-chunk-25-1.pdf>
+Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-25-1.pdf  us
+ed on input line 1051.
 (pdftex.def)             Requested size: 419.75792pt x 290.60162pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<tp_final_files/figure-latex/unnamed-chunk-32-1.pdf, id=359, 469.755pt x 325.21
+<tp_final_files/figure-latex/unnamed-chunk-30-1.pdf, id=360, 469.755pt x 325.21
 5pt>
-File: tp_final_files/figure-latex/unnamed-chunk-32-1.pdf Graphic file (type pdf
+File: tp_final_files/figure-latex/unnamed-chunk-30-1.pdf Graphic file (type pdf
 )
-<use tp_final_files/figure-latex/unnamed-chunk-32-1.pdf>
-Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-32-1.pdf  us
-ed on input line 1066.
+<use tp_final_files/figure-latex/unnamed-chunk-30-1.pdf>
+Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-30-1.pdf  us
+ed on input line 1070.
 (pdftex.def)             Requested size: 419.75792pt x 290.60162pt.
-[18 <./tp_final_files/figure-latex/unnamed-chunk-26-1.pdf> <./tp_final_files/fi
-gure-latex/unnamed-chunk-27-1.pdf>]
-<tp_final_files/figure-latex/unnamed-chunk-33-1.pdf, id=377, 469.755pt x 325.21
+[18 <./tp_final_files/figure-latex/unnamed-chunk-24-1.pdf> <./tp_final_files/fi
+gure-latex/unnamed-chunk-25-1.pdf>]
+<tp_final_files/figure-latex/unnamed-chunk-31-1.pdf, id=378, 469.755pt x 325.21
 5pt>
-File: tp_final_files/figure-latex/unnamed-chunk-33-1.pdf Graphic file (type pdf
+File: tp_final_files/figure-latex/unnamed-chunk-31-1.pdf Graphic file (type pdf
 )
-<use tp_final_files/figure-latex/unnamed-chunk-33-1.pdf>
-Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-33-1.pdf  us
-ed on input line 1068.
+<use tp_final_files/figure-latex/unnamed-chunk-31-1.pdf>
+Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-31-1.pdf  us
+ed on input line 1072.
 (pdftex.def)             Requested size: 419.75792pt x 290.60162pt.
-[19 <./tp_final_files/figure-latex/unnamed-chunk-32-1.pdf>]
-<tp_final_files/figure-latex/unnamed-chunk-38-1.pdf, id=390, 469.755pt x 325.21
+[19 <./tp_final_files/figure-latex/unnamed-chunk-30-1.pdf>]
+<tp_final_files/figure-latex/unnamed-chunk-36-1.pdf, id=391, 469.755pt x 325.21
 5pt>
-File: tp_final_files/figure-latex/unnamed-chunk-38-1.pdf Graphic file (type pdf
+File: tp_final_files/figure-latex/unnamed-chunk-36-1.pdf Graphic file (type pdf
 )
-<use tp_final_files/figure-latex/unnamed-chunk-38-1.pdf>
-Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-38-1.pdf  us
-ed on input line 1087.
+<use tp_final_files/figure-latex/unnamed-chunk-36-1.pdf>
+Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-36-1.pdf  us
+ed on input line 1091.
 (pdftex.def)             Requested size: 419.75792pt x 290.60162pt.
-[20 <./tp_final_files/figure-latex/unnamed-chunk-33-1.pdf>]
-<tp_final_files/figure-latex/unnamed-chunk-39-1.pdf, id=403, 469.755pt x 325.21
+[20 <./tp_final_files/figure-latex/unnamed-chunk-31-1.pdf>]
+<tp_final_files/figure-latex/unnamed-chunk-37-1.pdf, id=404, 469.755pt x 325.21
 5pt>
-File: tp_final_files/figure-latex/unnamed-chunk-39-1.pdf Graphic file (type pdf
+File: tp_final_files/figure-latex/unnamed-chunk-37-1.pdf Graphic file (type pdf
 )
-<use tp_final_files/figure-latex/unnamed-chunk-39-1.pdf>
-Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-39-1.pdf  us
-ed on input line 1089.
+<use tp_final_files/figure-latex/unnamed-chunk-37-1.pdf>
+Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-37-1.pdf  us
+ed on input line 1093.
 (pdftex.def)             Requested size: 419.75792pt x 290.60162pt.
-[21 <./tp_final_files/figure-latex/unnamed-chunk-38-1.pdf> <./tp_final_files/fi
-gure-latex/unnamed-chunk-39-1.pdf>] [22] [23]
+[21 <./tp_final_files/figure-latex/unnamed-chunk-36-1.pdf> <./tp_final_files/fi
+gure-latex/unnamed-chunk-37-1.pdf>] [22] [23]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 1125.
+(Font)              <12> on input line 1129.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 1125.
+(Font)              <8> on input line 1129.
 [24]
-Overfull \hbox (197.84377pt too wide) in paragraph at lines 1258--1258
+Overfull \hbox (197.84377pt too wide) in paragraph at lines 1262--1262
  []\T1/lmtt/m/n/9 ## train_ipc = train_ipc.l1 + train_is.l1 + train_ipc.l2 + tr
 ain_is.l2 + train_ipc.l3 + train_is.l3 + train_ipc.l4 + train_is.l4 + const[] 
  []
 
 
-Overfull \hbox (193.11877pt too wide) in paragraph at lines 1258--1258
+Overfull \hbox (193.11877pt too wide) in paragraph at lines 1262--1262
  []\T1/lmtt/m/n/9 ## train_is = train_ipc.l1 + train_is.l1 + train_ipc.l2 + tra
 in_is.l2 + train_ipc.l3 + train_is.l3 + train_ipc.l4 + train_is.l4 + const[] 
  []
 
 [25]
-Overfull \hbox (438.8183pt too wide) in paragraph at lines 1341--1341
+Overfull \hbox (438.8183pt too wide) in paragraph at lines 1345--1345
  []\T1/lmtt/m/n/9 ## train_is = train_is.l1 + train_bm.l1 + train_is.l2 + train
 _bm.l2 + train_is.l3 + train_bm.l3 + train_is.l4 + train_bm.l4 + train_is.l5 + 
 train_bm.l5 + train_is.l6 + train_bm.l6 + const[] 
  []
 
 
-Overfull \hbox (438.8183pt too wide) in paragraph at lines 1341--1341
+Overfull \hbox (438.8183pt too wide) in paragraph at lines 1345--1345
  []\T1/lmtt/m/n/9 ## train_bm = train_is.l1 + train_bm.l1 + train_is.l2 + train
 _bm.l2 + train_is.l3 + train_bm.l3 + train_is.l4 + train_bm.l4 + train_is.l5 + 
 train_bm.l5 + train_is.l6 + train_bm.l6 + const[] 
  []
 
 [26]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1343.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1347.
 [27]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1343.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1347.
 (tp_final.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1343.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1343.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1347.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1347.
  ) 
 Here is how much of TeX's memory you used:
  16868 strings out of 480790
- 251064 string characters out of 2909416
+ 251063 string characters out of 2909416
  551760 words of memory out of 3000000
  32287 multiletter control sequences out of 15000+200000
  606783 words of font info for 126 fonts, out of 3000000 for 9000
@@ -925,9 +925,9 @@ KTeX/fonts/type1/public/lm/lmri9.pfb><D:/Programs/MiKTeX/fonts/type1/public/lm/
 lmsy6.pfb><D:/Programs/MiKTeX/fonts/type1/public/lm/lmsy9.pfb><D:/Programs/MiKT
 eX/fonts/type1/public/lm/lmtt9.pfb><D:/Programs/MiKTeX/fonts/type1/public/lm/lm
 tti10.pfb>
-Output written on tp_final.pdf (27 pages, 2289891 bytes).
+Output written on tp_final.pdf (27 pages, 2291664 bytes).
 PDF statistics:
- 672 PDF objects out of 1000 (max. 8388607)
+ 673 PDF objects out of 1000 (max. 8388607)
  160 named destinations out of 1000 (max. 500000)
  16798 words of extra memory for PDF output out of 17280 (max. 10000000)
 
