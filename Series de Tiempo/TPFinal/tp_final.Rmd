@@ -999,7 +999,25 @@ irf_is_data %>%
   #theme(axis.text.x=element_blank()) +
   geom_line(colour = 'black')
 ```
+
 Gráficamente (Figura \@ref(fig:irf-is-bm)), los _shocks_ en el Índice de Salarios tienen un impacto a mediado plazo en la Base Monetaria, sus efectos perduran aproximadamente 10 meses después de su ocurrencia.
+
+```{r}
+#accuracy
+
+ipc_bm_model_forecast <- forecast(ipc_bm_model, h = 3)
+is_bm_model_forecast <- forecast(is_bm_model, h = 3)
+ipc_is_model_forecast <- forecast(ipc_is_model, h = 3)
+
+#accuracy(test_ipc, ipc_bm_model_forecast$forecast$train_ipc$mean)
+ipc_var_accuracy <- accuracy(test_ipc, ipc_is_model_forecast$forecast$train_ipc$mean)
+
+bm_var_accuracy <- accuracy(test_bm, ipc_bm_model_forecast$forecast$train_bm$mean)
+#accuracy(test_bm, is_bm_model_forecast$forecast$train_bm$mean)
+
+is_var_accuracy <- accuracy(test_is, ipc_is_model_forecast$forecast$train_is$mean)
+#accuracy(test_is, is_bm_model_forecast$forecast$train_is$mean)
+```
 
 ### Pronósticos
 
