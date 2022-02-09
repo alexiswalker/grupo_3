@@ -43,6 +43,9 @@ header-includes:
 
 output: 
   bookdown::pdf_document2: default
+
+toc: yes
+toc-depth: 4
 ---
 
 \thispagestyle{empty}
@@ -267,21 +270,27 @@ Para mantenerlo simple, se presenta un modelo VAR de dos variables con retraso i
 
 Donde $\epsilon_{1, t}$ y $\epsilon_{2, t}$ \~ $N(0,\sigma_{y})$ y no están autocorrelacionados. $y_{1, t}$ y $y_{2, t}$ son estacionarias. El coeficiente $\phi_{ii, p}$ captura la influencia del _lag_ $p$ de la variable $y_{i}$ sobre si misma. Mientras que $\phi_{ij, p}$ determina el peso del _lag_ $p$ de la variable $y_{j}$ sobre $y_{i}$.
 
+
+usar fpe: https://homepage.univie.ac.at/robert.kunst/pres07_var_abdgunyan.pdf
+
+Final Prediction Error Criterion
+The Final Prediction Error Criterion (FPE) estimates the model-fitting error when you use the model to predict new outputs. For the FPE, an optimal model is the one that minimizes the following equation:
+
+[1] Ljung, L. System Identification: Theory for the User, Upper Saddle River, NJ, Prentice-Hall PTR, 1999. See sections 7.4 and 16.4.
+
+
+
+You want to choose a model that minimizes the FPE, which represents a balance between the number of parameters and the explained variation.
+
 \newpage
 
 # Análisis de Resultados
 
+## Analisis de la series {#analisis}
 
-## Vectores Autoregresivos
+### Índice de Precios al Consumidor (IPC)
 
-
-TODO: aca tendriamos que hacer referencia a que VAR necesita series diferenciadas
-
-### Índice de Precios al Consumidor
-
-#### Analisis de la serie
-
-En la Figura \@ref(fig:ipc), se observa que la serie de IPC es _no estacionaria_ ya que su media varia a lo largo del tiempo y su función de autocorrelación decrece en forma lineal lentamente.
+En la Figura \@ref(fig:ipc), se observa que la serie IPC es _no estacionaria_ ya que su media varía a lo largo del tiempo y su función de autocorrelación decrece lentamente en forma lineal.
 
 ```{r ipc, fig.cap="Índice de precios al consumidor", fig.height=5, fig.width=10}
 ggtsdisplay(ts_ipc, main = 'Índice de precios al consumidor')
@@ -309,59 +318,17 @@ kpss_test(ts_ipc) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-En este caso el p-value es menor al grado de significación 0.05, por lo que se rechaza $H_0$.
+En este caso el p-value es menor al grado de significación 0.05, por lo que se rechaza $H_0$. A diferencia de la prueba anterior, en este caso la hipótesis nula plantea estacionariedad.
 
-En conclusión, ambos tests determinan que la serie de IPC es _no estacionaria_.
-
-#### Diferenciación
-
-```{r}
-ipc_ndiffs <- ndiffs(ts_ipc)
-```
-
-Mediante la función `ndiffs` de R, se estima que el numero de diferenciaciones necesarias para convertir a la serie IPC en estacionaria (`r ipc_ndiffs` veces).
-
-La Figura \@ref(fig:ipc-diferenciado) muestra el indice de precios al consumidor diferenciado.
-
-```{r ipc-diferenciado, fig.cap="Índice de precio al consumidor diferenciado", fig.height=5, fig.width=10}
-dif_ts_ipc <- ts_ipc %>%
-  diff(lag = 1, differences = ipc_ndiffs)
-
-ggtsdisplay(dif_ts_ipc, 
-            main = "Índice de precios al consumidor: Diferenciado dos veces")
-```    
-
-**Test de Estacionariedad: ADF**
-
-Se corrobora que la serie de IPC diferenciada es estacionaria mediante el test Dickey-Fuller aumentado (Tabla \@ref(tab:ipc-dif-adf)). El valor de $\tau^{e}$ se encuentra dentro de la zona de rechazo, por lo que se concluye que se rechaza $H_0$.
-
-```{r ipc-dif-adf}
-adf_test(dif_ts_ipc) %>% 
-  kable(booktabs = T, caption = "Test de ADF para IPC diferenciada", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
-```
-
-**Test de Estacionariedad: KPSS**
-
-El test KPSS coincide con ADF. El p-value es mayor al grado de significación de 0.05, por lo que no se rechaza la hipótesis nula de estacionariedad.
-
-```{r ipc-dif-kpss}
-kpss_test(dif_ts_ipc) %>% 
-  kable(booktabs = T, caption = "Test KPSS para IPC diferenciada", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
-```
-
-Se confirma entonces que la serie diferenciada es _estacionaria_.
+En conclusión, ambos tests determinan que la serie IPC es _no estacionaria_.
 
 ### Índice de Salarios
 
-La Figura \@ref(fig:is) muestra la serie de Índice de Salarios.
+La Figura \@ref(fig:is) muestra la serie de Índice de Salarios con evidencia gráfica de _no estacionariedad_.
 
 ```{r is, fig.cap="Índice de Salarios", fig.height=5, fig.width=10, fig.pos="H"}
 ggtsdisplay(ts_is, main = "Índice de Salarios")
 ```
-
-#### Analisis de la serie
 
 **Test de Estacionariedad: ADF**
 
@@ -385,61 +352,17 @@ kpss_test(ts_is) %>%
 
 Ambos tests concluyen que la serie de Índice de Salarios es _no estacionaria_.
 
-#### Diferenciación
-
-En la Figura \@ref(fig:is) se observa que, al igual que la serie de IPC, el Índice de Salarios tampoco es estacionario. Su media varia a lo largo del tiempo y su función de autocorrelación también decrece lentamente en forma lineal.
-
-Mediante la función `ndiffs` de R, se estima que el número de diferenciaciones necesarias para convertir la serie en estacionaria. El resultado obtenido es `r ndiffs(ts_is)`.
-
-```{r}
-is_ndiffs <- ndiffs(ts_is)
-#is_nsdiffs <- nsdiffs(ts_is)
-```
-
-```{r is-diferenciado, fig.cap="Índice de Salarios diferenciado", fig.height=5, fig.width=10, fig.pos="H"}
-dif_ts_is <- ts_is %>% 
-  diff(1, differences=is_ndiffs)
-
-ggtsdisplay(dif_ts_is, 
-            main = "Índice de Salarios: Diferenciado una vez")
-```
-
-**Test de Estacionariedad: ADF**
-
-Al aplicar el test ADF a la serie diferenciada, el valor de $\tau^{e}$ se encuentra en la zona de rechazo de `H_0`, por lo que se confirma que la serie diferenciada es estacionaria.
-
-```{r is-adf-dif}
-adf_test(dif_ts_is) %>% 
-  kable(booktabs = T, caption = "Prueba de ADF para Índice de Salarios diferenciado", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
-```
-
-**Test de Estacionariedad: KPSS**
-
-El test KPSS sobre la serie diferenciada concuerda con el test ADF, concluyendo que la serie diferenciada es _estacionaria_.
-
-```{r is-kpss-dif}
-kpss_test(dif_ts_is) %>% 
-  kable(booktabs = T, caption = "Test KPSS para Índice de Salarios diferenciado", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
-```
-
-
 ### Base Monetaria
 
-#### Analisis de la serie
-
-En la Figura \@ref(fig:bm), se observa que la serie de base monetaria es _no estacionaria_ ya que su media varia a lo largo del tiempo y su función de autocorrelación decrece en forma lineal lentamente.
+La Figura \@ref(fig:bm) muestra la serie de Base Monetaria que, al igual que las anteriores presenta comportamientos _no estacionarios_.
 
 ```{r bm, fig.cap="Base Monetaria", fig.height=5, fig.width=10}
 ggtsdisplay(ts_bm, main = 'Base Monetaria')
 ```
 
-Es posible someter la evidencia gráfica a distintas pruebas estadísticas para ratificar o rectificar lo observado.
-
 **Test de Estacionariedad: ADF**
 
-En la Tabla \@ref(tab:bm-adf) se observa $\tau^{e}$ entre el valor crítico y cero, lo que determina que no hay evidencia para rechazar $H_{0}$ (serie no estacionaria).
+En la Tabla \@ref(tab:bm-adf) se observa $\tau^{e}$ entre el valor crítico y cero, lo que determina que no hay evidencia para rechazar $H_{0}$.
 
 ```{r bm-adf}
 adf_test(ts_bm) %>% 
@@ -457,19 +380,105 @@ kpss_test(ts_bm) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-En este caso el p-value es menor al grado de significación 0.05, por lo que se rechaza $H_0$.
+Ambos tests concluyen estadísticamente la _no estacionariedad_ de la serie, coherente con lo que las funciones de autocorrelación hacían suponer.
 
-En conclusión, ambos tests determinan que la serie de IPC es _no estacionaria_.
+## Vectores Autoregresivos
 
-#### Diferenciación
+Bajo la sospecha de la existencia de una interacción simultánea entre los grupos de variables bajo análisis, se plantea un modelo de ecuaciones donde las variables explicativas se componen del rezago de cada una de las incorporadas.
+
+Debido a que un modelo VAR estructural se basa, entre otras cosas, en la estacionariedad de las series, la primera instancia del desarrollo es obtener transformaciones de los datos originales (ya concluida la falta de esta propiedad en la sección [Analisis de la series](#analisis)) para cumplir con la precondición.  
+
+### Diferenciación
+
+#### Índice de Precios al Consumidor
+
+```{r}
+ipc_ndiffs <- ndiffs(ts_ipc)
+```
+
+Mediante la función `ndiffs` de R, se estima que el numero de diferenciaciones necesarias para convertir a la serie IPC en estacionaria (`r ipc_ndiffs` veces).
+
+La Figura \@ref(fig:ipc-diferenciado) muestra el Índice de Precios al Consumidor diferenciado.
+
+```{r ipc-diferenciado, fig.cap="Índice de precio al consumidor diferenciado", fig.height=5, fig.width=10}
+dif_ts_ipc <- ts_ipc %>%
+  diff(lag = 1, differences = ipc_ndiffs)
+
+ggtsdisplay(dif_ts_ipc, 
+            main = "Índice de precios al consumidor: Diferenciado dos veces")
+```    
+
+**Test de Estacionariedad: ADF**
+
+Se corrobora que la serie IPC diferenciada es estacionaria mediante el test Dickey-Fuller aumentado (Tabla \@ref(tab:ipc-dif-adf)). El valor de $\tau^{e}$ se encuentra dentro de la zona de rechazo, por lo que se concluye la no aceptación de $H_0$.
+
+```{r ipc-dif-adf}
+adf_test(dif_ts_ipc) %>% 
+  kable(booktabs = T, caption = "Test de ADF para IPC diferenciada", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+**Test de Estacionariedad: KPSS**
+
+El test KPSS coincide con ADF. El p-value es mayor al grado de significación de 0.05, por lo que no se rechaza la hipótesis nula de estacionariedad.
+
+```{r ipc-dif-kpss}
+kpss_test(dif_ts_ipc) %>% 
+  kable(booktabs = T, caption = "Test KPSS para IPC diferenciada", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+Se confirma entonces que la serie diferenciada es _estacionaria_.
+
+
+#### Índice de Salarios
+
+```{r}
+is_ndiffs <- ndiffs(ts_is)
+#is_nsdiffs <- nsdiffs(ts_is)
+```
+
+En la Figura \@ref(fig:is) se observa que, al igual que la serie IPC, el Índice de Salarios tampoco es estacionario.
+
+Mediante la función `ndiffs` de R, se estima que el número de diferenciaciones necesarias para convertir la serie en estacionaria. El resultado obtenido es `r is_ndiffs`.
+
+```{r is-diferenciado, fig.cap="Índice de Salarios diferenciado", fig.height=5, fig.width=10, fig.pos="H"}
+dif_ts_is <- ts_is %>% 
+  diff(1, differences=is_ndiffs)
+
+ggtsdisplay(dif_ts_is, 
+            main = "Índice de Salarios: Diferenciado una vez")
+```
+
+**Test de Estacionariedad: ADF**
+
+Al aplicar el test ADF a la serie diferenciada, el valor de $\tau^{e}$ se encuentra en la zona de rechazo de $H_0$, por lo que se confirma que la serie diferenciada es estacionaria.
+
+```{r is-adf-dif}
+adf_test(dif_ts_is) %>% 
+  kable(booktabs = T, caption = "Prueba de ADF para Índice de Salarios diferenciado", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+**Test de Estacionariedad: KPSS**
+
+El test KPSS concuerda con el test ADF, concluyendo que la serie diferenciada es _estacionaria_.
+
+```{r is-kpss-dif}
+kpss_test(dif_ts_is) %>% 
+  kable(booktabs = T, caption = "Test KPSS para Índice de Salarios diferenciado", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+#### Base Monetaria
 
 ```{r}
 bm_ndiffs <- ndiffs(ts_bm)
 ```
 
-Mediante la función `ndiffs` de R, se estima que el numero de diferenciaciones necesarias para convertir a la serie ___ en estacionaria (`r bm_ndiffs` veces).
+Mediante la función `ndiffs` de R, se estima que el numero de diferenciaciones necesarias para convertir a la serie Base Monetaria en estacionaria (`r bm_ndiffs` veces).
 
-La Figura \@ref(fig:bm-diferenciado) muestra el indice de precios al consumidor diferenciado.
+La Figura \@ref(fig:bm-diferenciado) muestran los valores diferenciado.
 
 ```{r bm-diferenciado, fig.cap="Base Monetaria diferenciada", fig.height=5, fig.width=10}
 dif_ts_bm <- ts_bm %>%
@@ -481,7 +490,7 @@ ggtsdisplay(dif_ts_bm,
 
 **Test de Estacionariedad: ADF**
 
-Se corrobora que la serie de --- diferenciada es estacionaria mediante el test Dickey-Fuller aumentado (Tabla \@ref(tab:bm-dif-adf)). El valor de $\tau^{e}$ se encuentra dentro de la zona de rechazo, por lo que se concluye que se rechaza $H_0$.
+Se corrobora que la serie diferenciada es estacionaria mediante el test Dickey-Fuller aumentado (Tabla \@ref(tab:bm-dif-adf)). El valor de $\tau^{e}$ se encuentra dentro de la zona de rechazo de la hipótesis nula.
 
 ```{r bm-dif-adf}
 adf_test(dif_ts_bm) %>% 
@@ -491,7 +500,7 @@ adf_test(dif_ts_bm) %>%
 
 **Test de Estacionariedad: KPSS**
 
-El test KPSS coincide con ADF. El p-value es mayor al grado de significación de 0.05, por lo que no se rechaza la hipótesis nula de estacionariedad.
+El test KPSS coincide con ADF. El p-value es mayor al grado de significación de 0.05, por lo que no se rechaza la hipótesis nula.
 
 ```{r bm-dif-kpss}
 kpss_test(dif_ts_bm) %>% 
@@ -501,50 +510,90 @@ kpss_test(dif_ts_bm) %>%
 
 Se confirma entonces que la serie diferenciada es _estacionaria_.
 
-
 ```{r}
 dif_ts_bm <- window(dif_ts_bm, start = index(dif_ts_ipc)[1])
+dif_ts_is <- window(dif_ts_is, start = index(dif_ts_ipc)[1])
+```
 
-# train_data_ipc <- window(dif_ts_ipc, end = c(2021, 04))
-# test_data_ipc <- window(dif_ts_ipc, start = c(2021, 05))
-# 
-# train_data_bm <- window(dif_ts_bm, end = c(2021, 04))
-# test_data_bm <- window(dif_ts_bm, start = c(2021, 05))
-# 
-# var_train_data <- cbind(train_data_ipc, train_data_bm)
-# var_test_data <- cbind(test_data_ipc, test_data_bm)
+```{r}
+train_ipc <- window(dif_ts_ipc, end = c(2021, 04))
+test_ipc <- window(dif_ts_ipc, start = c(2021, 05))
 
-var_data <- cbind(dif_ts_ipc, dif_ts_bm)
+train_is <- window(dif_ts_is, end = c(2021, 04))
+test_is <- window(dif_ts_is, start = c(2021, 05))
+
+train_bm <- window(dif_ts_bm, end = c(2021, 04))
+test_bm <- window(dif_ts_bm, start = c(2021, 05))
+```
+
+```{r}
+ipc_is <- cbind(train_ipc, train_is)
+ipc_bm <- cbind(train_ipc, train_bm)
+is_bm <- cbind(train_is, train_bm)
+```
+
+```{r}
+# todo <- cbind(train_ipc, train_is, train_bm)
+# information_criteria <- VARselect(todo, lag.max = 11, type = "const")
+# todo_model <- VAR(todo, p = 10, type = "const", season = NULL, exog = NULL)
+# 
+# var_forecast <- forecast(todo_model, h = 3)
+# 
+# 
+# test_bm
+# var_forecast$forecast$train_bm
+# window(ts_bm, start = start(test_bm))
+# 
+# 
+# var_forecast <- adjust_forecast(train_bm, window(ts_bm, end = end(train_bm)), var_forecast, "train_bm", bm_ndiffs)
+# 
+# autoplot(window(ts_bm, end = end(train_bm)),
+#          series = "train") +
+#   autolayer(var_forecast$forecast$train_bm,
+#             series = "Pronostico",
+#             alpha = 0.5) +
+#     autolayer(window(ts_bm, start = start(test_bm)),
+#             series = "test") +
+#   
+#   labs(x = "Tiempo", y = "Porcentaje Acumulado") +
+#   ggtitle("Series con sus pronosticos")
 ```
 
 ### Modelado
 
-Se utilizan distintos criterios de información para decidir el número de retardos a incluir.
+Con el objeto principal de analizar causalidad entre series se proponen modelos agrupando de a pares los datos que se utilizan.
 
-```{r var-selection}
-information_criteria <- VARselect(var_data, lag.max = 12, type = "const")
+Se calculan y muestran distintos criterios de selección para determinar el modelo que mejor ajusta, sin embargo se trabaja con el *Error de Predicción Final* (o FPE de su denominación en inglés) para determinar que retardo utilizar.
+
+### Modelo: Índice de Precios al Consumidor y Base Monetaria
+
+#### Selección
+
+```{r var-selection-ipc-bm}
+information_criteria <- VARselect(ipc_bm, lag.max = 12, type = "const")
 
 information_criteria$selection %>% 
   t %>%
   kable(booktabs = T, caption = "Criterios de selección", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7) %>%
+  column_spec(4, color = "red")
+
+lags = information_criteria$selection[4]
 ```
 
 
-En la tabla \@ref(tab:var-selection), todos sugieren que el uso de p = 1 es apropiado para estimar el modelo.
+En la tabla \@ref(tab:var-selection-ipc-bm), se sugieren que el uso de retardo igual a `r lags` es apropiado para estimar el modelo. El resumen del modelo se incluye en el [Apendice](#ipc-bm-modelo-var).
 
 ```{r}
-var_model <- VAR(var_data, p = 1, type = "const", season = NULL, exog = NULL) 
+ipc_bm_model <- VAR(ipc_bm, p = lags, type = "const", season = NULL, exog = NULL) 
 ```
 
-El resumen del modelo se incluye en el [Apendice](#ipc-bm-modelo-var)).
-
-### Análisis de diagnóstico
+#### Análisis de diagnóstico
 
 Para evaluar el ajuste del modelo se ejecutan algunas pruebas de diagnostico sobre los residuos del modelo.
 
-```{r portmanteau-test}
-portmanteau_test <- serial.test(var_model, lags.pt = 12, type = "PT.asymptotic")
+```{r portmanteau-test-ipc-bm}
+portmanteau_test <- serial.test(ipc_bm_model, lags.pt = 12, type = "PT.asymptotic")
 
 portmanteau_test_result <- data.frame(portmanteau_test$serial$statistic,
                                       portmanteau_test$serial$parameter,
@@ -558,12 +607,12 @@ portmanteau_test_result%>%
 ```
 
 
-Con la prueba de Portmanteau se revisa correlación. Un p-value mayor al 5% indica la ausencia de correlación, no se rechaza la hipótesis nula.
+Con la prueba de Portmanteau se revisa correlación. Según la Tabla \@ref(tab:portmanteau-test-ipc-bm), un p-value mayor al 5% indica la ausencia de correlación, no se rechaza la hipótesis nula de correlación.
 
 Es posible tener evidencia de homocedasticidad utilizando la prueba Multiplicador de Lagrange, para efectos ARCH.
 
-```{r arch}
-arch_test <- arch.test(var_model, lags.multi = 12, multivariate.only = TRUE)
+```{r arch-ipc-bm}
+arch_test <- arch.test(ipc_bm_model, lags.multi = 12, multivariate.only = TRUE)
 
 arch_test <- data.frame(arch_test$arch.mul$statistic,
                         arch_test$arch.mul$parameter,
@@ -576,15 +625,14 @@ arch_test%>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
-En la Tabla \@ref(tab:arch) so observa un p-value por encima del valor crítico lo que no brinda evidencia suficiente para rechazar la hipótesis nula de homocedasticidad.
-
+En la Tabla \@ref(tab:arch-ipc-bm) se observa un p-value por encima del valor crítico lo que no brinda evidencia suficiente para rechazar la hipótesis nula de homocedasticidad.
 
 Se utiliza la prueba de Jarque-Bera para comprobar si una muestra de datos tiene la asimetría y la curtosis de una distribución normal.
 
-```{r jb}
+```{r jb-ipc-bm}
 # TODO: y si aca solo mostramos jarque bera?
 
-normality_test <- normality.test(var_model)
+normality_test <- normality.test(ipc_bm_model)
 
 e <- c(normality_test$jb.mul$JB$statistic,
        normality_test$jb.mul$Skewness$statistic,
@@ -609,97 +657,351 @@ normality_test %>%
 ```{r}
 # TODO: nos conviene meternos en este lio? yo lo borraria
 
-resid <- residuals(var_model)
-shapiro_test_bm <- shapiro.test(resid[, 1])
-shapiro_test_bm_sin_37 <- shapiro.test(resid[-c(37), 1])
-shapiro_test_ipc <- shapiro.test(resid[, 2])
+resid <- residuals(ipc_bm_model)
+shapiro_test_ipc <- shapiro.test(resid[, 1])
+shapiro_test_bm <- shapiro.test(resid[, 2])
+shapiro_test_bm_sin_37 <- shapiro.test(resid[-c(37), 2])
+
 ```
 
-Los resultados resumidos en la Tabla \@ref(tab:jb) no muestran residuos distribuidos normalmente. Si se analizan los generados por cada ecuación por separado, la prueba de Shapiro-Wilk (p-value igual a `r shapiro_test_bm$p.value`) para el índice de precios señala normalidad, mientras que para la base monetaria no (p-value igual a `r shapiro_test_ipc$p.value`).
+Los resultados resumidos en la Tabla \@ref(tab:jb-ipc-bm) no muestran residuos distribuidos normalmente. Si se analizan los generados por cada ecuación por separado, la prueba de Shapiro-Wilk (p-value igual a `r shapiro_test_ipc$p.value`) para el índice de precios señala normalidad, mientras que para la base monetaria no (p-value igual a `r shapiro_test_bm$p.value`).
 
-De revisar la Figura \@ref(fig:ipc-vs-is) se observa un valor atípico para el mes de marzo de 2020, eliminando esta lectura se obtiene un p-value igual a `r shapiro_test_bm_sin_37$p.value` observando normalidad.
+De revisar la Figura \@ref(fig:ipc-vs-is-vs-bm) se observa un valor atípico para el mes de marzo de 2020, eliminando esta lectura se obtiene un p-value igual a `r shapiro_test_bm_sin_37$p.value` observando normalidad.
 
-### Causalidad e Impulso Respuesta
+#### Causalidad e Impulso Respuesta
 
-En este punto es posible probar la causalidad de Granger, donde la hipótesis nula de que no hay causalidad se descarta en ambas direcciones
+En este punto es posible probar la causalidad de Granger.
 
-```{r}
-cause_bm <- causality(var_model, cause = "dif_ts_bm")
+```{r granger-ipc-bm}
+cause_bm <- causality(ipc_bm_model, cause = "train_bm")
+cause_ipc <- causality(ipc_bm_model, cause = "train_ipc")
 
-bm_granger <- data.frame(cause_bm$Granger$method, 
-                         cause_bm$Granger$p.value)
 
-colnames(bm_granger) <- c("Método", "P-Value")
+granger <- data.frame(c(cause_bm$Granger$method, cause_ipc$Granger$method), 
+                      c(cause_bm$Granger$p.value, cause_ipc$Granger$p.value))
 
-bm_granger %>%
-  kable(booktabs = T, caption = "Causalidad de Grange: Base Monetaria", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+colnames(granger) <- c("Método", "P-Value")
+
+granger %>%
+  kable(booktabs = T, caption = "Causalidad de Grange: Base Monetaria e IPC", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7) %>%
+  column_spec(2, color = ifelse(granger[,2] < 0.05, "red", "black"))
 ```
 
-```{r}
-cause_ipc <- causality(var_model, cause = "dif_ts_ipc")
+En la Tabla \@ref(tab:granger-ipc-bm) se observa evidencia que el Índice de Precios al Consumidor es causa de la Base Monetaria.
 
-ipc_granger <- data.frame(cause_ipc$Granger$method,
-                          cause_ipc$Granger$p.value)
-
-colnames(ipc_granger) <- c("Método", "P-Value")
-
-ipc_granger %>%
-  kable(booktabs = T, caption = "Causalidad de Grange: IPC", digits = 3) %>%
-  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
-```
-
-Generar funciones de respuesta de impulso para describir la respuesta de la producción a un shock de desempleo
+Se genera la función Impulso-Respuesta para describir la respuesta de la Base Monetaria a un _shock_ de IPC.
 
 ```{r}
-irf_bm <- irf(var_model, 
-              impulse = "dif_ts_bm", 
-              response = "dif_ts_ipc",  
-              n.ahead = 11)
-
-irf_bm_data <- data.frame(irf_bm$irf$dif_ts_bm[ ,1],
-                          irf_bm$Lower$dif_ts_bm[ ,1],
-                          irf_bm$Upper$dif_ts_bm[ ,1], 
-                          0:11)
-colnames(irf_bm_data) <- c('irf', 'lower', 'upper', 'lags')
-
-irf_ipc <- irf(var_model,
-               impulse = "dif_ts_ipc",
-               response = "dif_ts_bm",
+irf_ipc <- irf(ipc_bm_model,
+               impulse = "train_ipc",
+               response = "train_bm",
                n.ahead = 11)
 
-irf_ipc_data <- data.frame(irf_ipc$irf$dif_ts_ipc[ ,1],
-                           irf_ipc$Lower$dif_ts_ipc[ ,1],
-                           irf_ipc$Upper$dif_ts_ipc[ ,1], 
+irf_ipc_data <- data.frame(irf_ipc$irf$train_ipc[ ,1],
+                           irf_ipc$Lower$train_ipc[ ,1],
+                           irf_ipc$Upper$train_ipc[ ,1], 
                            0:11)
 colnames(irf_ipc_data) <- c('irf', 'lower', 'upper', 'lags')
 ```
 
-```{r irf-base-monetaria, fig.cap="Base Monetaria: Impulso Respuesta", fig.height=4, fig.width=10}
-irf_bm_data %>%
-  ggplot(aes(lags, irf)) +
-  geom_line(aes(y = upper), colour = 'lightblue2') +
-  geom_line(aes(y = lower), colour = 'lightblue')+
-  geom_line(aes(y = irf))+
-  geom_ribbon(aes(x=lags, ymax=upper, ymin=lower), fill="lightblue", alpha=.1) +
-  xlab("") + ylab("Base Monetaria") + ggtitle("Base Monetaria: Impulso Respuesta") +
-  theme(axis.text.x=element_blank()) +
-  geom_line(colour = 'black')
-```
-
-```{r irf-ipc, fig.cap="IPC: Impulso Respuesta", fig.height=4, fig.width=10}
+```{r irf-ipc-bm, fig.cap="Impulso Respuesta: IPC y Base Monetaria", fig.height=4, fig.width=10}
 irf_ipc_data %>%
   ggplot(aes(lags, irf)) +
   geom_line(aes(y = upper), colour = 'lightblue2') +
   geom_line(aes(y = lower), colour = 'lightblue')+
   geom_line(aes(y = irf))+
   geom_ribbon(aes(x=lags, ymax=upper, ymin=lower), fill="lightblue", alpha=.1) +
-  xlab("") + ylab("Índice de Precio al Consumidor") + ggtitle("IPC: Impulso Respuesta") +
-  theme(axis.text.x=element_blank()) +
+  xlab("") + ylab("Base Monetaria") + ggtitle("Impulso Respuesta: IPC y Base Monetaria") +
+  #theme(axis.text.x=element_blank()) +
   geom_line(colour = 'black')
 ```
 
-### Pronósticos
+En la Figura \@ref(fig:irf-ipc-bm) se identifica que los _shocks_ en IPC no tienen un impacto de largo plazo en la Base Monetaria, su efecto desaparece después de 4 meses. Contribuyen a la variabilidad a corto plazo.
+
+### Modelo: Índice de Precios al Consumidor y Índice de Salarios
+
+#### Selección
+
+```{r var-selection-ipc-is}
+information_criteria <- VARselect(ipc_is, lag.max = 12, type = "const")
+
+information_criteria$selection %>% 
+  t %>%
+  kable(booktabs = T, caption = "Criterios de selección", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7) %>%
+  column_spec(4, color = "red")
+
+lags = information_criteria$selection[4]
+```
+
+En la tabla \@ref(tab:var-selection-ipc-is), se sugieren que el uso de retardo igual a `r lags` es apropiado para estimar el modelo. El resumen del modelo se incluye en el [Apendice](#ipc-is-modelo-var).
+
+```{r}
+ipc_is_model <- VAR(ipc_is, p = lags, type = "const", season = NULL, exog = NULL)
+```
+
+#### Análisis de diagnóstico
+
+Para evaluar el ajuste del modelo se ejecutan algunas pruebas de diagnostico sobre los residuos del modelo.
+
+```{r portmanteau-test-ipc-is}
+portmanteau_test <- serial.test(ipc_is_model, lags.pt = 12, type = "PT.asymptotic")
+
+portmanteau_test_result <- data.frame(portmanteau_test$serial$statistic,
+                                      portmanteau_test$serial$parameter,
+                                      portmanteau_test$serial$p.value) 
+colnames(portmanteau_test_result) <- c("Estadístico", "Parámetro", "P Value")
+rownames(portmanteau_test_result) <- NULL
+
+portmanteau_test_result%>%
+  kable(booktabs = T, caption = "Test de Portmanteau para la correlación de residuos", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+
+Con la prueba de Portmanteau se revisa correlación. Según la Tabla \@ref(tab:portmanteau-test-ipc-is), un p-value mayor al 5% indica la ausencia de correlación, no se rechaza la hipótesis nula de correlación.
+
+Es posible tener evidencia de homocedasticidad utilizando la prueba Multiplicador de Lagrange, para efectos ARCH.
+
+```{r arch-ipc-is}
+arch_test <- arch.test(ipc_is_model, lags.multi = 12, multivariate.only = TRUE)
+
+arch_test <- data.frame(arch_test$arch.mul$statistic,
+                        arch_test$arch.mul$parameter,
+                        arch_test$arch.mul$p.value) 
+colnames(arch_test) <- c("Estadístico", "Parámetro", "P Value")
+rownames(arch_test) <- NULL
+
+arch_test%>%
+  kable(booktabs = T, caption = "Test ARCH para la homocedasticidad de los residuos", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+En la Tabla \@ref(tab:arch-ipc-is) se observa un p-value por encima del valor crítico lo que no brinda evidencia suficiente para rechazar la hipótesis nula de homocedasticidad.
+
+Se utiliza la prueba de Jarque-Bera para comprobar si una muestra de datos tiene la asimetría y la curtosis de una distribución normal.
+
+```{r jb-ipc-is}
+# TODO: y si aca solo mostramos jarque bera?
+
+normality_test <- normality.test(ipc_is_model)
+
+e <- c(normality_test$jb.mul$JB$statistic,
+       normality_test$jb.mul$Skewness$statistic,
+       normality_test$jb.mul$Kurtosis$statistic)
+p <- c(normality_test$jb.mul$JB$parameter,
+       normality_test$jb.mul$Skewness$parameter,
+       normality_test$jb.mul$Kurtosis$parameter)
+pv <- c(normality_test$jb.mul$JB$p.value,
+        normality_test$jb.mul$Skewness$p.value,
+        normality_test$jb.mul$Kurtosis$p.value)
+
+normality_test <- data.frame(e, p, pv)
+colnames(normality_test) <- c("Estadístico", "Parámetro", "P Value")
+rownames(normality_test) <- c("Jarque-Bera", "Asimetría", "Curtosis")
+
+normality_test %>%
+  kable(booktabs = T, caption = "Normalidad de los residuos", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+Todos los estadísticos brindan información para reconocer normalidad en la distribución de los errores.
+
+#### Causalidad e Impulso Respuesta
+
+En este punto es posible probar la causalidad de Granger.
+
+```{r granger-ipc-is}
+cause_is <- causality(ipc_is_model, cause = "train_is")
+cause_ipc <- causality(ipc_is_model, cause = "train_ipc")
+
+
+granger <- data.frame(c(cause_is$Granger$method, cause_ipc$Granger$method), 
+                      c(cause_is$Granger$p.value, cause_ipc$Granger$p.value))
+
+colnames(granger) <- c("Método", "P-Value")
+
+granger %>%
+  kable(booktabs = T, caption = "Causalidad de Grange: Índice de Salarios e IPC", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7) %>%
+  column_spec(2, color = ifelse(granger[,2] < 0.05, "red", "black"))
+```
+
+En la Tabla \@ref(tab:granger-ipc-is) se observa evidencia que el Índice de Salarios es causa del de Precios al Consumidor.
+
+Se genera la función Impulso-Respuesta para describir la respuesta de IPC a un _shock_ en los salarios.
+
+```{r}
+irf_is <- irf(ipc_is_model, 
+              impulse = "train_is", 
+              response = "train_ipc",  
+              n.ahead = 15)
+
+irf_is_data <- data.frame(irf_is$irf$train_is[ ,1],
+                          irf_is$Lower$train_is[ ,1],
+                          irf_is$Upper$train_is[ ,1], 
+                          0:15)
+
+colnames(irf_is_data) <- c('irf', 'lower', 'upper', 'lags')
+```
+
+```{r irf-is-ipc, fig.cap="Impulso Respuesta: IPC y Índice de Salarios", fig.height=4, fig.width=10}
+irf_is_data %>%
+  ggplot(aes(lags, irf)) +
+  geom_line(aes(y = upper), colour = 'lightblue2') +
+  geom_line(aes(y = lower), colour = 'lightblue')+
+  geom_line(aes(y = irf))+
+  geom_ribbon(aes(x=lags, ymax=upper, ymin=lower), fill="lightblue", alpha=.1) +
+  xlab("") + ylab("IPC") + ggtitle("Impulso Respuesta: IPC y Índice de Salarios") +
+  #theme(axis.text.x=element_blank()) +
+  geom_line(colour = 'black')
+```
+
+Gráficamente (Figura \@ref(fig:irf-is-ipc)), los _shocks_ en el Índice de Salarios tienen un impacto a largo plazo en IPC, sus efectos se atenúan pasado el año.
+
+### Modelo: Índice de Salarios y Base Monetaria
+
+#### Selección
+
+```{r var-selection-is-bm}
+information_criteria <- VARselect(is_bm, lag.max = 12, type = "const")
+
+information_criteria$selection %>% 
+  t %>%
+  kable(booktabs = T, caption = "Criterios de selección", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7) %>%
+  column_spec(4, color = "red")
+
+lags = information_criteria$selection[4]
+```
+
+
+En la tabla \@ref(tab:var-selection-is-bm), se sugieren que el uso de retardo igual a `r lags` es apropiado para estimar el modelo. El resumen del modelo se incluye en el [Apendice](#is-bm-modelo-var).
+
+```{r}
+is_bm_model <- VAR(is_bm, p = lags, type = "const", season = NULL, exog = NULL)
+```
+
+#### Análisis de diagnóstico
+
+Para evaluar el ajuste del modelo se ejecutan algunas pruebas de diagnostico sobre los residuos del modelo.
+
+```{r portmanteau-test-is-bm}
+portmanteau_test <- serial.test(is_bm_model, lags.pt = 12, type = "PT.asymptotic")
+
+portmanteau_test_result <- data.frame(portmanteau_test$serial$statistic,
+                                      portmanteau_test$serial$parameter,
+                                      portmanteau_test$serial$p.value) 
+colnames(portmanteau_test_result) <- c("Estadístico", "Parámetro", "P Value")
+rownames(portmanteau_test_result) <- NULL
+
+portmanteau_test_result%>%
+  kable(booktabs = T, caption = "Test de Portmanteau para la correlación de residuos", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+
+Con la prueba de Portmanteau se revisa correlación. Según la Tabla \@ref(tab:portmanteau-test-is-bm), un p-value mayor al 5% indica la ausencia de correlación, no se rechaza la hipótesis nula de correlación.
+
+Es posible tener evidencia de homocedasticidad utilizando la prueba Multiplicador de Lagrange, para efectos ARCH.
+
+```{r arch-is-bm}
+arch_test <- arch.test(is_bm_model, lags.multi = 12, multivariate.only = TRUE)
+
+arch_test <- data.frame(arch_test$arch.mul$statistic,
+                        arch_test$arch.mul$parameter,
+                        arch_test$arch.mul$p.value) 
+colnames(arch_test) <- c("Estadístico", "Parámetro", "P Value")
+rownames(arch_test) <- NULL
+
+arch_test%>%
+  kable(booktabs = T, caption = "Test ARCH para la homocedasticidad de los residuos", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+En la Tabla \@ref(tab:arch-is-bm) se observa un p-value por encima del valor crítico lo que no brinda evidencia suficiente para rechazar la hipótesis nula de homocedasticidad.
+
+Se utiliza la prueba de Jarque-Bera para comprobar si una muestra de datos tiene la asimetría y la curtosis de una distribución normal.
+
+```{r jb-is-bm}
+# TODO: y si aca solo mostramos jarque bera?
+
+normality_test <- normality.test(is_bm_model)
+
+e <- c(normality_test$jb.mul$JB$statistic,
+       normality_test$jb.mul$Skewness$statistic,
+       normality_test$jb.mul$Kurtosis$statistic)
+p <- c(normality_test$jb.mul$JB$parameter,
+       normality_test$jb.mul$Skewness$parameter,
+       normality_test$jb.mul$Kurtosis$parameter)
+pv <- c(normality_test$jb.mul$JB$p.value,
+        normality_test$jb.mul$Skewness$p.value,
+        normality_test$jb.mul$Kurtosis$p.value)
+
+normality_test <- data.frame(e, p, pv)
+colnames(normality_test) <- c("Estadístico", "Parámetro", "P Value")
+rownames(normality_test) <- c("Jarque-Bera", "Asimetría", "Curtosis")
+
+normality_test %>%
+  kable(booktabs = T, caption = "Normalidad de los residuos", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
+```
+
+Todos los estadísticos brindan información para reconocer normalidad en la distribución de los errores.
+
+#### Causalidad e Impulso Respuesta
+
+En este punto es posible probar la causalidad de Granger.
+
+```{r granger-bm-is}
+cause_bm <- causality(is_bm_model, cause = "train_bm")
+cause_is <- causality(is_bm_model, cause = "train_is")
+
+
+granger <- data.frame(c(cause_bm$Granger$method, cause_is$Granger$method), 
+                      c(cause_bm$Granger$p.value, cause_is$Granger$p.value))
+
+colnames(granger) <- c("Método", "P-Value")
+
+granger %>%
+  kable(booktabs = T, caption = "Causalidad de Grange: Base Monetaria e Índice de Salarios", digits = 3) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 7) %>%
+  column_spec(2, color = ifelse(granger[,2] < 0.05, "red", "black"))
+
+```
+
+En la Tabla \@ref(tab:granger-bm-is) se observa evidencia que el Índice de Salarios es causa de la Base Monetaria.
+
+Se genera la función Impulso-Respuesta para describir la respuesta de la Base Monetaria a un _shock_ en los salarios.
+
+```{r}
+irf_is <- irf(is_bm_model, 
+              impulse = "train_is", 
+              response = "train_bm",  
+              n.ahead = 15)
+
+irf_is_data <- data.frame(irf_is$irf$train_is[ ,1],
+                          irf_is$Lower$train_is[ ,1],
+                          irf_is$Upper$train_is[ ,1], 
+                          0:15)
+colnames(irf_is_data) <- c('irf', 'lower', 'upper', 'lags')
+```
+
+```{r irf-is-bm, fig.cap="Impulso Respuesta: Base Monetaria e Índice de Salarios", fig.height=4, fig.width=10}
+irf_is_data %>%
+  ggplot(aes(lags, irf)) +
+  geom_line(aes(y = upper), colour = 'lightblue2') +
+  geom_line(aes(y = lower), colour = 'lightblue')+
+  geom_line(aes(y = irf))+
+  geom_ribbon(aes(x=lags, ymax=upper, ymin=lower), fill="lightblue", alpha=.1) +
+  xlab("") + ylab("Base Monetaria") + ggtitle("Impulso Respuesta: Base Monetaria e Índice de Salarios") +
+  #theme(axis.text.x=element_blank()) +
+  geom_line(colour = 'black')
+```
+Gráficamente (Figura \@ref(fig:irf-is-bm)), los _shocks_ en el Índice de Salarios tienen un impacto a mediado plazo en la Base Monetaria, sus efectos perduran aproximadamente 10 meses después de su ocurrencia.
+
+## Pronósticos
 
 ```{r}
 diff_inv <- function(dif_ts, original_ts, n_diff) {
@@ -740,28 +1042,28 @@ adjust_forecast <- function(dif_ts, ts, forecast_object, ts_name, ts_ndiffs){
 ```
 
 ```{r}
-var_forecast <- forecast(var_model, h = 6)
-
-o_dif_ts_bm <- diff(ts_bm, lag = 1, differences = bm_ndiffs) #a la que veníamos usando le sacamos un dato para que quede del mismo tamaño que la otra
-
-var_forecast <- adjust_forecast(dif_ts_ipc, ts_ipc, var_forecast, "dif_ts_ipc", ipc_ndiffs)
-var_forecast <- adjust_forecast(o_dif_ts_bm, ts_bm, var_forecast, "dif_ts_bm", bm_ndiffs)
+# var_forecast <- forecast(ipc_bm_model, h = 6)
+# 
+# o_dif_ts_bm <- diff(ts_bm, lag = 1, differences = bm_ndiffs) #a la que veníamos usando le sacamos un dato para que quede del mismo tamaño que la otra
+# 
+# var_forecast <- adjust_forecast(dif_ts_ipc, ts_ipc, var_forecast, "dif_ts_ipc", ipc_ndiffs)
+# var_forecast <- adjust_forecast(o_dif_ts_bm, ts_bm, var_forecast, "dif_ts_bm", bm_ndiffs)
 ```
 
 
 ```{r pronostico-general, fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
-autoplot(ts_ipc, 
-         series = "Indice Precios Consumidor") +
-  autolayer(var_forecast$forecast$dif_ts_ipc,
-            series = "Pronostico Indice Precios Consumidor", 
-            alpha = 0.5) +
-    autolayer(ts_bm, 
-            series = "Base Monetaria") +
-  autolayer(var_forecast$forecast$dif_ts_bm, 
-            series = "Pronostico Base Monetaria", 
-            alpha = 0.5) +
-  labs(x = "Tiempo", y = "Porcentaje Acumulado") +
-  ggtitle("Series con sus pronosticos")
+# autoplot(ts_ipc, 
+#          series = "Indice Precios Consumidor") +
+#   autolayer(var_forecast$forecast$dif_ts_ipc,
+#             series = "Pronostico Indice Precios Consumidor", 
+#             alpha = 0.5) +
+#     autolayer(ts_bm, 
+#             series = "Base Monetaria") +
+#   autolayer(var_forecast$forecast$dif_ts_bm, 
+#             series = "Pronostico Base Monetaria", 
+#             alpha = 0.5) +
+#   labs(x = "Tiempo", y = "Porcentaje Acumulado") +
+#   ggtitle("Series con sus pronosticos")
 ```
 
 
@@ -770,25 +1072,24 @@ autoplot(ts_ipc,
 
 
 ```{r}
-model_ipc <- ipc %>% 
-  rename(ds = fecha, y = indice_precios_consumidor_acumulada) %>% 
-  prophet
-
-future <- make_future_dataframe(model_ipc, periods = 6, include_history = F, freq = "month")
-forecast_ipc <- predict(model_ipc, future)
-
-plot(model_ipc, forecast_ipc)
+# t <- diff(ts_ipc, lag = 1)
+# m <- arima(window(t), order = c(1,0,1))
+# f <- forecast::forecast(m, h = 6)
+# f
+# 
+# t <- ts_ipc
+# m <- arima(window(t), order = c(1,1,1))
+# f <- forecast(m, h = 6)
+# f
 ```
 
 ```{r}
-model_is <- is %>% 
-  rename(ds = fecha, y = indice_salarios_acumulada) %>% 
-  prophet
-
-future <- make_future_dataframe(model_is, periods = 6, include_history = F, freq = "month")
-forecast_is <- predict(model_is, future)
-
-plot(model_is, forecast_is)
+# nn_model <- ipc %>% rename(ds = fecha, y = indice_precios_consumidor_acumulada) %>% prophet
+# future <- make_future_dataframe(nn_model, periods = 6, include_history = F, freq = "month")
+# forecast <- predict(nn_model, future)
+# plot(nn_model, forecast)
+# 
+# autoplot(nn_model)
 ```
 
 ```{r}
@@ -820,8 +1121,23 @@ TODO: ALGO
 
 # Apéndices
 
-## Modelo $VAR$ con retardo 1 para IPC y BM {#ipc-bm-modelo-var}
+## Modelo $VAR$ para IPC y Base Monetaria {#ipc-bm-modelo-var}
 
 ```{r}
-summary(var_model)
+summary(ipc_bm_model)
 ```
+
+## Modelo $VAR$ para IPC e Índice de Salarios {#ipc-is-modelo-var}
+
+```{r}
+summary(ipc_is_model)
+```
+
+## Modelo $VAR$ para Índice de Salarios y Base Monetaria {#is-bm-modelo-var}
+
+```{r}
+summary(is_bm_model)
+```
+
+
+
