@@ -1091,7 +1091,7 @@ adjust_forecast <- function(dif_ts, ts, forecast_object, ts_name, ts_ndiffs){
 Otra forma de modelar las series analizadas anteriomente es mediante Prophet. Se modela cada una de forma independiente, separando el conjunto de datos en train y test. Se considera train hasta el 2021-04-01 y test hasta el 2021-07-01.
 
 ```{r}
-holidays <- read.csv('elecciones.csv')
+holidays <- read.csv('eventos.csv')
 ```
 
 
