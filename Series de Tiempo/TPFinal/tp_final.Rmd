@@ -764,27 +764,45 @@ autoplot(ts_ipc,
   ggtitle("Series con sus pronosticos")
 ```
 
-```{r}
-t <- diff(ts_ipc, lag = 1)
-m <- arima(window(t), order = c(1,0,1))
-f <- forecast::forecast(m, h = 6)
-f
 
-t <- ts_ipc
-m <- arima(window(t), order = c(1,1,1))
-f <- forecast(m, h = 6)
-f
+
+## Prophet
+
+
+```{r}
+model_ipc <- ipc %>% 
+  rename(ds = fecha, y = indice_precios_consumidor_acumulada) %>% 
+  prophet
+
+future <- make_future_dataframe(model_ipc, periods = 6, include_history = F, freq = "month")
+forecast_ipc <- predict(model_ipc, future)
+
+plot(model_ipc, forecast_ipc)
 ```
 
 ```{r}
-nn_model <- ipc %>% rename(ds = fecha, y = indice_precios_consumidor_acumulada) %>% prophet
-future <- make_future_dataframe(nn_model, periods = 6, include_history = F, freq = "month")
-forecast <- predict(nn_model, future)
-plot(nn_model, forecast)
+model_is <- is %>% 
+  rename(ds = fecha, y = indice_salarios_acumulada) %>% 
+  prophet
 
+future <- make_future_dataframe(model_is, periods = 6, include_history = F, freq = "month")
+forecast_is <- predict(model_is, future)
+
+plot(model_is, forecast_is)
 ```
 
+```{r}
+model_bm <- bm %>% 
+  rename(ds = fecha, y = variacion_base_monetaria_acumulada) %>% 
+  prophet 
 
+future <- make_future_dataframe(model_bm, periods = 6, freq = "month")
+forecast_bm <- predict(model_bm, future)
+
+plot(model_bm, forecast_bm) + add_changepoints_to_plot(model_bm)
+
+prophet_plot_components(model_bm, forecast_bm)
+```
 
 \newpage
 
