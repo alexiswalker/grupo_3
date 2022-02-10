@@ -58,12 +58,6 @@ toc-depth: 4
 \setlength{\parskip}{0.5em}
 \setlength{\parindent}{0em}
 
-```{r}
-# borrar
-library(showtext)
-showtext_auto()
-```
-
 
 \noindent El presente trabajo tiene por objetivo estudiar la relación entre tres variables económicas fundamentales, el Indice de precios al Consumidor (IPC), el Índice de Salarios y la Base Monetaria.
 
@@ -1096,6 +1090,14 @@ adjust_forecast <- function(dif_ts, ts, forecast_object, ts_name, ts_ndiffs){
 
 Otra forma de modelar las series analizadas anteriomente es mediante Prophet. Se modela cada una de forma independiente, separando el conjunto de datos en train y test. Se considera train hasta el 2021-04-01 y test hasta el 2021-07-01.
 
+Una de las ventajas que posee Prophet es que puede tener en cuenta eventos como las vacaciones nacionales en el analisis de la serie. Debido a que gran parte de la economia argentina responde a situaciones politicas del momento, resulta interesante tener en cuenta los siguientes eventos:
+
+- Elecciones PASO (2019-08-11)
+- Elecciones Presidenciales (2019-10-27)
+- Anuncio del aislamiento preventivo y obligatorio por COVID (2020-03-20)
+
+Se utiliza Prophet para modelar las 3 series, teniendo en cuenta dichos eventos.
+
 ```{r}
 holidays <- read.csv('eventos.csv')
 ```
@@ -1112,7 +1114,7 @@ ipc_test <- tail(ipc_model_data, 3)
 ipc_prophet_model <- prophet(ipc_train, holidays = holidays)
 ```
 
-En la Tabla \@ref(tab:ipc-prophet-acc) se detallan las métricas de testing obtenidas al entrenar el modelo Prophet para la serie IPC. 
+Se entrena un modelo Prophet para IPC y se analizan las metricas de performance. En la Tabla \@ref(tab:ipc-prophet-acc) se detallan las métricas de testing obtenidas. 
 
 ```{r ipc-prophet-acc}
 ipc_x_test <- make_future_dataframe(ipc_prophet_model, periods = 3, freq = "month", include_history = FALSE)
@@ -1121,7 +1123,7 @@ ipc_prophet_accuracy <- accuracy(ipc_test$y, ipc_y_pred$yhat)
 
 ipc_prophet_accuracy %>% 
   as_tibble() %>% 
-  kable(booktabs = T, caption = "Métricas de performance", digits = 3) %>%
+  kable(booktabs = T, caption = "Métricas del modelo Prophet sobre IPC", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
 
@@ -1130,16 +1132,22 @@ ipc_future <- make_future_dataframe(ipc_prophet_model, periods = 9, freq = "mont
 ipc_prophet_forecast <- predict(ipc_prophet_model, ipc_future)
 ```
 
-```{r}
+```{r fig.cap="Predicciones de IPC"}
 plot(ipc_prophet_model, ipc_prophet_forecast) + 
-  ggtitle("Índice de Precios al Consumidor", subtitle = "Con prediccion de 9 meses") +
+  ggtitle("Índice de Precios al Consumidor", subtitle = "Con prediccion de 9 meses con Prophet") +
   ylab("% cambio acumulado") +
   xlab("Fecha")
 ```
 
-```{r}
+Resulta interesante mencionar que los intervalos de confianza de las predicciones es mas acotado que el obtenido con los modelos VAR analizados anteriormente.
+
+```{r ipc-pp-componentes fig.cap="Componentes del modelo IPC"}
 prophet_plot_components(ipc_prophet_model, ipc_prophet_forecast)
 ```
+
+En este caso, ambas elecciones afectaron la serie de forma positiva, aumentando entre 1,5% y 3% el Indice de Precios al consumidor. Del otro lado, el inicio del aislamiento por covid afecta la serie disminiyendo un 1%.
+
+Entre fin de agosto e inicios de septiembre la serie presenta una estacionalidad positiva, lo que provoca un aumento mayor que los meses anteriores. A finales de octubre este comportamiento se revierte.
 
 ### Índice de Salarios
 
