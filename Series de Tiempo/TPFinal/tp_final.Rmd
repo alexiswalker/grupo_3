@@ -1141,7 +1141,7 @@ ipc_future <- make_future_dataframe(ipc_prophet_model, periods = 9, freq = "mont
 ipc_prophet_forecast <- predict(ipc_prophet_model, ipc_future)
 ```
 
-```{r fig.cap="Predicciones de IPC"}
+```{r fig.cap="Predicciones de IPC", fig.height=5, fig.width=8}
 plot(ipc_prophet_model, ipc_prophet_forecast) + 
   ggtitle("Índice de Precios al Consumidor", subtitle = "Con prediccion de 9 meses") +
   ylab("% cambio acumulado") +
@@ -1197,7 +1197,7 @@ is_future <- make_future_dataframe(is_prophet_model, periods = 9, freq = "month"
 is_prophet_forecast <- predict(is_prophet_model, is_future)
 ```
 
-```{r}
+```{r fig.cap="Predicciones de Indice Salarios", fig.height=5, fig.width=8}
 plot(is_prophet_model, is_prophet_forecast) + 
   ggtitle("Índice de Salarios", subtitle = "Con prediccion de 9 meses") +
   ylab("% cambio acumulado") +
@@ -1252,7 +1252,7 @@ bm_future <- make_future_dataframe(bm_prophet_model, periods = 9, freq = "month"
 bm_prophet_forecast <- predict(bm_prophet_model, bm_future)
 ```
 
-```{r}
+```{r fig.cap="Predicciones de Base Monetaria", fig.height=5, fig.width=8}
 plot(bm_prophet_model, bm_prophet_forecast) + 
   ggtitle("Base monetaria", subtitle = "Con prediccion de 9 meses") +
   ylab("% cambio acumulado") +
