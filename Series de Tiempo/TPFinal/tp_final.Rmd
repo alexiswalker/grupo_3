@@ -1150,7 +1150,7 @@ plot(ipc_prophet_model, ipc_prophet_forecast) +
 
 Resulta interesante mencionar que los intervalos de confianza de las predicciones son mas acotado que el obtenido con los modelos VAR analizados anteriormente.
 
-```{r ipc-pp-componentes fig.cap="Componentes del modelo IPC"}
+```{r ipc-pp-componentes, fig.cap="Componentes del modelo IPC"}
 prophet_plot_components(ipc_prophet_model, ipc_prophet_forecast)
 ```
 
