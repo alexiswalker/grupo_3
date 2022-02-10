@@ -201,11 +201,11 @@ Se considera la variación mensual acumulada estableciendo a Diciembre 2016 como
 
 # Marco Teórico
 
-Los modelos autorregresivos y de medias móviles son validos para series de tiempo que son _estacionarias_. Se define que una serie es estacionaria de orden 2 cuando sus segundos momentos son constantes a lo largo del tiempo. Es decir, cuando su media y varianza se mantienen constantes.
+Los modelos de vectores autorregresivos son validos para series de tiempo que son _estacionarias_. Se define que una serie es estacionaria de orden 2 cuando sus segundos momentos son constantes a lo largo del tiempo. Es decir, cuando su media y varianza se mantienen constantes.
 
 Por lo contrario, una serie es _no estacionaria_ cuando la tendencia y/o la variabilidad cambian a lo largo del tiempo.
 
-El presente trabajo práctico tiene como objetivo el análisis de la estacionariedad de las series presentadas y su modelado mediante modelos SARIMA.
+El presente trabajo práctico tiene como objetivo el análisis de la estacionariedad de las series presentadas y su modelado mediante modelos VAR y Prophet.
 
 ## Tests de estacionariedad
 
@@ -281,6 +281,12 @@ The Final Prediction Error Criterion (FPE) estimates the model-fitting error whe
 
 
 You want to choose a model that minimizes the FPE, which represents a balance between the number of parameters and the explained variation.
+
+## Prophet 
+
+Es un procedimiento para pronosticar datos de series temporales basado en un modelo aditivo donde las tendencias no lineales se ajustan a la estacionalidad anual, semanal y diaria, además de los efectos de las vacaciones. 
+
+Resistente a datos faltantes, valores atípicos y cambios de tendencia. 
 
 \newpage
 
