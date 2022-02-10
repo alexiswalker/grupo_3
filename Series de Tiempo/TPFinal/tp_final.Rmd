@@ -1182,7 +1182,7 @@ metrics_is_pp <- is_prophet_accuracy %>%
 
 metrics_is_var <- is_var_accuracy %>% 
   as_tibble() %>% 
-  dplyr::select(colnames(metrics_bm_pp)) %>% 
+  dplyr::select(colnames(is_prophet_accuracy)) %>% 
   add_column(Modelo = "VAR", .before = "ME") 
 
 rbind(metrics_is_pp, metrics_is_var) %>% 
@@ -1237,7 +1237,7 @@ metrics_bm_pp <- bm_prophet_accuracy %>%
 
 metrics_bm_var <- bm_var_accuracy %>% 
   as_tibble() %>% 
-  dplyr::select(colnames(metrics_bm_pp)) %>% 
+  dplyr::select(colnames(bm_prophet_accuracy)) %>% 
   add_column(Modelo = "VAR", .before = "ME") 
 
 rbind(metrics_bm_pp, metrics_bm_var) %>% 
