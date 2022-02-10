@@ -1114,7 +1114,7 @@ ipc_test <- tail(ipc_model_data, 3)
 ipc_prophet_model <- prophet(ipc_train, holidays = holidays)
 ```
 
-Se entrena un modelo Prophet para IPC y se analizan las metricas de performance. En la Tabla \@ref(tab:ipc-prophet-acc) se detallan las métricas de testing obtenidas. 
+Se entrena un modelo Prophet para Índice de Precios al Consumidor y se analizan las metricas de performance. En la Tabla \@ref(tab:ipc-prophet-acc) se detallan las métricas de testing obtenidas. 
 
 ```{r ipc-prophet-acc}
 ipc_x_test <- make_future_dataframe(ipc_prophet_model, periods = 3, freq = "month", include_history = FALSE)
@@ -1126,6 +1126,7 @@ ipc_prophet_accuracy %>%
   kable(booktabs = T, caption = "Métricas del modelo Prophet sobre IPC", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
+TODO: aca deberiamos comparar con el VAR?
 
 ```{r}
 ipc_future <- make_future_dataframe(ipc_prophet_model, periods = 9, freq = "month")
@@ -1134,18 +1135,18 @@ ipc_prophet_forecast <- predict(ipc_prophet_model, ipc_future)
 
 ```{r fig.cap="Predicciones de IPC"}
 plot(ipc_prophet_model, ipc_prophet_forecast) + 
-  ggtitle("Índice de Precios al Consumidor", subtitle = "Con prediccion de 9 meses con Prophet") +
+  ggtitle("Índice de Precios al Consumidor", subtitle = "Con prediccion de 9 meses") +
   ylab("% cambio acumulado") +
   xlab("Fecha")
 ```
 
-Resulta interesante mencionar que los intervalos de confianza de las predicciones es mas acotado que el obtenido con los modelos VAR analizados anteriormente.
+Resulta interesante mencionar que los intervalos de confianza de las predicciones son mas acotado que el obtenido con los modelos VAR analizados anteriormente.
 
 ```{r ipc-pp-componentes fig.cap="Componentes del modelo IPC"}
 prophet_plot_components(ipc_prophet_model, ipc_prophet_forecast)
 ```
 
-En este caso, ambas elecciones afectaron la serie de forma positiva, aumentando entre 1,5% y 3% el Indice de Precios al consumidor. Del otro lado, el inicio del aislamiento por covid afecta la serie disminiyendo un 1%.
+Ambas elecciones afectaron la serie de forma positiva, aumentando entre 1,5% y 3% por sobre la tendencia. Del otro lado, el inicio del aislamiento por COVID afecta la serie disminiyendo un 1%.
 
 Entre fin de agosto e inicios de septiembre la serie presenta una estacionalidad positiva, lo que provoca un aumento mayor que los meses anteriores. A finales de octubre este comportamiento se revierte.
 
@@ -1160,17 +1161,19 @@ is_test <- tail(is_model_data, 3)
 is_prophet_model <- prophet(is_train, holidays = holidays)
 ```
 
+Se entrena un modelo Prophet para Índice de Salarios y se analizan las metricas de performance. En la Tabla \@ref(tab:is-prophet-acc) se detallan las métricas de testing obtenidas. 
 
-```{r}
+```{r is-prophet-acc}
 is_x_test <- make_future_dataframe(is_prophet_model, periods = 3, freq = "month", include_history = FALSE)
 is_y_pred <- predict(is_prophet_model, is_x_test)
 is_prophet_accuracy <- accuracy(is_test$y, is_y_pred$yhat)
 
 is_prophet_accuracy %>% 
   as_tibble() %>% 
-  kable(booktabs = T, caption = "Métricas de performance", digits = 3) %>%
+  kable(booktabs = T, caption = "Métricas del modelo Prophet sobre IS", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
+TODO: aca deberiamos comparar con el VAR?
 
 ```{r}
 is_future <- make_future_dataframe(is_prophet_model, periods = 9, freq = "month")
@@ -1184,9 +1187,14 @@ plot(is_prophet_model, is_prophet_forecast) +
   xlab("Fecha")
 ```
 
+Resulta interesante mencionar que los intervalos de confianza de las predicciones son mas acotado que el obtenido con los modelos VAR analizados anteriormente.
+
 ```{r}
 prophet_plot_components(is_prophet_model, is_prophet_forecast)
 ```
+Ambas elecciones afectaron la serie de forma positiva, aumentando aproximadamente en un 2% por sobre la tendencia. El inicio del aislamiento por COVID afecta la serie aumentandola un 3,5%.
+
+Un resultado esperable es que la serie presenta una estacionalidad positiva en diciembre, aumentando el valor de la misma para mediados de mes.
 
 ### Base Monetaria
 
@@ -1199,16 +1207,19 @@ bm_test <- tail(bm_model_data, 3)
 bm_prophet_model <- prophet(bm_train, holidays = holidays)
 ```
 
-```{r}
+Se entrena un modelo Prophet para la Base Monetaria acumulada y se analizan las metricas de performance. En la Tabla \@ref(tab:bm-prophet-acc) se detallan las métricas de testing obtenidas. 
+
+```{r bm-prophet-acc}
 bm_x_test <- make_future_dataframe(bm_prophet_model, periods = 3, freq = "month", include_history = FALSE)
 bm_y_pred <- predict(bm_prophet_model, bm_x_test)
 bm_prophet_accuracy <- accuracy(bm_test$y, bm_y_pred$yhat)
 
 bm_prophet_accuracy %>% 
   as_tibble() %>% 
-  kable(booktabs = T, caption = "Métricas de performance", digits = 3) %>%
+  kable(booktabs = T, caption = "Métricas del modelo Prophet sobre IS", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
+TODO: aca deberiamos comparar con el VAR?
 
 ```{r}
 bm_future <- make_future_dataframe(bm_prophet_model, periods = 9, freq = "month")
@@ -1221,14 +1232,15 @@ plot(bm_prophet_model, bm_prophet_forecast) +
   ylab("% cambio acumulado") +
   xlab("Fecha")
 ```
+Resulta interesante mencionar que los intervalos de confianza de las predicciones son mas acotado que el obtenido con los modelos VAR analizados anteriormente.
 
 ```{r}
 prophet_plot_components(bm_prophet_model, bm_prophet_forecast)
 ```
 
+Ambas elecciones afectaron la serie de forma negativa, disminuyendo aproximadamente en un 25% la Base Monetaria Acumulada sobre la tendencia. El inicio del aislamiento por COVID afecta la serie aumentandola hasta un 20% sobre la tendencia.
 
-
-
+A mitad de anio la base monetaria presenta su pico maximo de estacionalidad positiva, coincidiendo con los aguinaldos.
 
 \newpage
 
