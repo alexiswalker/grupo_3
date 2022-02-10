@@ -1121,12 +1121,20 @@ ipc_x_test <- make_future_dataframe(ipc_prophet_model, periods = 3, freq = "mont
 ipc_y_pred <- predict(ipc_prophet_model, ipc_x_test)
 ipc_prophet_accuracy <- accuracy(ipc_test$y, ipc_y_pred$yhat)
 
-ipc_prophet_accuracy %>% 
+metrics_ipc_pp <- ipc_prophet_accuracy %>% 
   as_tibble() %>% 
-  kable(booktabs = T, caption = "Métricas del modelo Prophet sobre IPC", digits = 3) %>%
+  add_column(Modelo = "Prophet", .before = "ME") 
+
+metrics_ipc_var <- ipc_var_accuracy %>% 
+  as_tibble() %>% 
+  dplyr::select(colnames(ipc_prophet_accuracy)) %>% 
+  add_column(Modelo = "VAR", .before = "ME") 
+
+rbind(metrics_ipc_pp, metrics_ipc_var) %>% 
+  kable(booktabs = T, caption = "Métricas de los modelos de IPC", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
-TODO: aca deberiamos comparar con el VAR?
+TODO: Conclusion de las metricas?
 
 ```{r}
 ipc_future <- make_future_dataframe(ipc_prophet_model, periods = 9, freq = "month")
@@ -1168,12 +1176,21 @@ is_x_test <- make_future_dataframe(is_prophet_model, periods = 3, freq = "month"
 is_y_pred <- predict(is_prophet_model, is_x_test)
 is_prophet_accuracy <- accuracy(is_test$y, is_y_pred$yhat)
 
-is_prophet_accuracy %>% 
+metrics_is_pp <- is_prophet_accuracy %>% 
   as_tibble() %>% 
-  kable(booktabs = T, caption = "Métricas del modelo Prophet sobre IS", digits = 3) %>%
+  add_column(Modelo = "Prophet", .before = "ME") 
+
+metrics_is_var <- is_var_accuracy %>% 
+  as_tibble() %>% 
+  dplyr::select(colnames(metrics_bm_pp)) %>% 
+  add_column(Modelo = "VAR", .before = "ME") 
+
+rbind(metrics_is_pp, metrics_is_var) %>% 
+  kable(booktabs = T, caption = "Métricas de los modelos de Indice de Salarios", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
-TODO: aca deberiamos comparar con el VAR?
+
+TODO: Conclusion de las metricas?
 
 ```{r}
 is_future <- make_future_dataframe(is_prophet_model, periods = 9, freq = "month")
@@ -1214,12 +1231,21 @@ bm_x_test <- make_future_dataframe(bm_prophet_model, periods = 3, freq = "month"
 bm_y_pred <- predict(bm_prophet_model, bm_x_test)
 bm_prophet_accuracy <- accuracy(bm_test$y, bm_y_pred$yhat)
 
-bm_prophet_accuracy %>% 
+metrics_bm_pp <- bm_prophet_accuracy %>% 
   as_tibble() %>% 
-  kable(booktabs = T, caption = "Métricas del modelo Prophet sobre IS", digits = 3) %>%
+  add_column(Modelo = "Prophet", .before = "ME") 
+
+metrics_bm_var <- bm_var_accuracy %>% 
+  as_tibble() %>% 
+  dplyr::select(colnames(metrics_bm_pp)) %>% 
+  add_column(Modelo = "VAR", .before = "ME") 
+
+rbind(metrics_bm_pp, metrics_bm_var) %>% 
+  kable(booktabs = T, caption = "Métricas de los modelos de Base Monetaria", digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
-TODO: aca deberiamos comparar con el VAR?
+
+TODO: Conclusion de las metricas?
 
 ```{r}
 bm_future <- make_future_dataframe(bm_prophet_model, periods = 9, freq = "month")
