@@ -1040,23 +1040,6 @@ Gráficamente (Figura \@ref(fig:irf-is-bm)), los _shocks_ en el Índice de Salar
 ```{r}
 #accuracy
 
-ipc_bm_model_forecast <- forecast(ipc_bm_model, h = 3)
-is_bm_model_forecast <- forecast(is_bm_model, h = 3)
-ipc_is_model_forecast <- forecast(ipc_is_model, h = 3)
-
-#accuracy(test_ipc, ipc_bm_model_forecast$forecast$train_ipc$mean)
-ipc_var_accuracy <- accuracy(test_ipc, ipc_is_model_forecast$forecast$train_ipc$mean)
-
-bm_var_accuracy <- accuracy(test_bm, ipc_bm_model_forecast$forecast$train_bm$mean)
-#accuracy(test_bm, is_bm_model_forecast$forecast$train_bm$mean)
-
-is_var_accuracy <- accuracy(test_is, ipc_is_model_forecast$forecast$train_is$mean)
-#accuracy(test_is, is_bm_model_forecast$forecast$train_is$mean)
-```
-
-```{r}
-#accuracy
-
 original_test_ipc <- tail(ts_ipc, n=length(test_ipc) + ipc_ndiffs)
 original_test_bm <- tail(ts_bm, n=length(test_bm) + bm_ndiffs)
 original_test_is <- tail(ts_is, n=length(test_bm) + is_ndiffs)
