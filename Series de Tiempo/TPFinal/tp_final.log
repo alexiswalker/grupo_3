@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.2.2)  10 FEB 2022 21:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.2.2)  10 FEB 2022 22:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -733,12 +733,12 @@ Package pdftex.def Info: tp_final_files/figure-latex/irf-is-bm-1.pdf  used on i
 nput line 956.
 (pdftex.def)             Requested size: 469.76074pt x 175.00888pt.
 [17]
-<tp_final_files/figure-latex/unnamed-chunk-26-1.pdf, id=385, 521.95pt x 352.316
+<tp_final_files/figure-latex/unnamed-chunk-25-1.pdf, id=385, 521.95pt x 352.316
 25pt>
-File: tp_final_files/figure-latex/unnamed-chunk-26-1.pdf Graphic file (type pdf
+File: tp_final_files/figure-latex/unnamed-chunk-25-1.pdf Graphic file (type pdf
 )
-<use tp_final_files/figure-latex/unnamed-chunk-26-1.pdf>
-Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-26-1.pdf  us
+<use tp_final_files/figure-latex/unnamed-chunk-25-1.pdf>
+Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-25-1.pdf  us
 ed on input line 1003.
 (pdftex.def)             Requested size: 469.75862pt x 317.08707pt.
 [18 <./tp_final_files/figure-latex/irf-is-bm-1.pdf>]
@@ -750,44 +750,44 @@ df)
 Package pdftex.def Info: tp_final_files/figure-latex/ipc-pp-componentes-1.pdf  
 used on input line 1009.
 (pdftex.def)             Requested size: 459.71637pt x 319.19171pt.
-[19 <./tp_final_files/figure-latex/unnamed-chunk-26-1.pdf>]
-<tp_final_files/figure-latex/unnamed-chunk-29-1.pdf, id=423, 521.95pt x 352.316
+[19 <./tp_final_files/figure-latex/unnamed-chunk-25-1.pdf>]
+<tp_final_files/figure-latex/unnamed-chunk-28-1.pdf, id=423, 521.95pt x 352.316
 25pt>
+File: tp_final_files/figure-latex/unnamed-chunk-28-1.pdf Graphic file (type pdf
+)
+<use tp_final_files/figure-latex/unnamed-chunk-28-1.pdf>
+Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-28-1.pdf  us
+ed on input line 1039.
+(pdftex.def)             Requested size: 469.75862pt x 317.08707pt.
+[20 <./tp_final_files/figure-latex/ipc-pp-componentes-1.pdf>]
+<tp_final_files/figure-latex/unnamed-chunk-29-1.pdf, id=441, 459.7175pt x 316.1
+8124pt>
 File: tp_final_files/figure-latex/unnamed-chunk-29-1.pdf Graphic file (type pdf
 )
 <use tp_final_files/figure-latex/unnamed-chunk-29-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-29-1.pdf  us
-ed on input line 1039.
-(pdftex.def)             Requested size: 469.75862pt x 317.08707pt.
-[20 <./tp_final_files/figure-latex/ipc-pp-componentes-1.pdf>]
-<tp_final_files/figure-latex/unnamed-chunk-30-1.pdf, id=441, 459.7175pt x 316.1
-8124pt>
-File: tp_final_files/figure-latex/unnamed-chunk-30-1.pdf Graphic file (type pdf
-)
-<use tp_final_files/figure-latex/unnamed-chunk-30-1.pdf>
-Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-30-1.pdf  us
 ed on input line 1044.
 (pdftex.def)             Requested size: 419.77457pt x 288.70958pt.
-[21 <./tp_final_files/figure-latex/unnamed-chunk-29-1.pdf>]
-<tp_final_files/figure-latex/unnamed-chunk-33-1.pdf, id=458, 521.95pt x 349.305
+[21 <./tp_final_files/figure-latex/unnamed-chunk-28-1.pdf>]
+<tp_final_files/figure-latex/unnamed-chunk-32-1.pdf, id=458, 521.95pt x 349.305
 pt>
+File: tp_final_files/figure-latex/unnamed-chunk-32-1.pdf Graphic file (type pdf
+)
+<use tp_final_files/figure-latex/unnamed-chunk-32-1.pdf>
+Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-32-1.pdf  us
+ed on input line 1072.
+(pdftex.def)             Requested size: 469.75862pt x 314.3769pt.
+[22 <./tp_final_files/figure-latex/unnamed-chunk-29-1.pdf>]
+<tp_final_files/figure-latex/unnamed-chunk-33-1.pdf, id=475, 459.7175pt x 316.1
+8124pt>
 File: tp_final_files/figure-latex/unnamed-chunk-33-1.pdf Graphic file (type pdf
 )
 <use tp_final_files/figure-latex/unnamed-chunk-33-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-33-1.pdf  us
-ed on input line 1072.
-(pdftex.def)             Requested size: 469.75862pt x 314.3769pt.
-[22 <./tp_final_files/figure-latex/unnamed-chunk-30-1.pdf>]
-<tp_final_files/figure-latex/unnamed-chunk-34-1.pdf, id=475, 459.7175pt x 316.1
-8124pt>
-File: tp_final_files/figure-latex/unnamed-chunk-34-1.pdf Graphic file (type pdf
-)
-<use tp_final_files/figure-latex/unnamed-chunk-34-1.pdf>
-Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-34-1.pdf  us
 ed on input line 1077.
 (pdftex.def)             Requested size: 419.77457pt x 288.70958pt.
-[23 <./tp_final_files/figure-latex/unnamed-chunk-33-1.pdf>] [24 <./tp_final_fil
-es/figure-latex/unnamed-chunk-34-1.pdf>] [25] [26]
+[23 <./tp_final_files/figure-latex/unnamed-chunk-32-1.pdf>] [24 <./tp_final_fil
+es/figure-latex/unnamed-chunk-33-1.pdf>] [25] [26]
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <12> on input line 1117.
 LaTeX Font Info:    External font `lmex10' loaded for size
@@ -846,7 +846,7 @@ ist/fonts/type1/public/lm/lmr7.pfb></home/alexis/.TinyTeX/texmf-dist/fonts/type
 ri9.pfb></home/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></hom
 e/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></home/alexis/.Tin
 yTeX/texmf-dist/fonts/type1/public/lm/lmtt9.pfb>
-Output written on tp_final.pdf (30 pages, 531630 bytes).
+Output written on tp_final.pdf (30 pages, 531619 bytes).
 PDF statistics:
  777 PDF objects out of 1000 (max. 8388607)
  652 compressed objects within 7 object streams

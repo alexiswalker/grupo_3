@@ -1048,14 +1048,14 @@ ipc_bm_model_forecast <- forecast(ipc_bm_model, h = 3)
 is_bm_model_forecast <- forecast(is_bm_model, h = 3)
 ipc_is_model_forecast <- forecast(ipc_is_model, h = 3)
 
-#accuracy(tail(original_test_ipc, n=length(test_ipc)), tail(diff_inv(ipc_bm_model_forecast$forecast$train_ipc$mean, original_test_ipc, ipc_ndiffs), n=length(test_ipc)))
-ipc_var_accuracy <- accuracy(tail(original_test_ipc, n=length(test_ipc)), tail(diff_inv(ipc_is_model_forecast$forecast$train_ipc$mean, original_test_ipc, ipc_ndiffs), n=length(test_ipc)))
+#accuracy(x = tail(original_test_ipc, n=length(test_ipc)), tail(diff_inv(ipc_bm_model_forecast$forecast$train_ipc$mean, original_test_ipc, ipc_ndiffs), n=length(test_ipc)))
+ipc_var_accuracy <- accuracy(x = tail(original_test_ipc, n=length(test_is)), tail(diff_inv(ipc_is_model_forecast$forecast$train_ipc$mean, original_test_ipc, ipc_ndiffs), n=length(test_ipc)))
 
-is_var_accuracy <- accuracy(tail(original_test_is, n=length(test_is)), tail(diff_inv(ipc_is_model_forecast$forecast$train_is$mean, original_test_is, is_ndiffs), n=length(test_is)))
+is_var_accuracy <- accuracy(x = tail(original_test_is, n=length(test_is)), tail(diff_inv(ipc_is_model_forecast$forecast$train_is$mean, original_test_is, is_ndiffs), n=length(test_is)))
 #accuracy(tail(original_test_is, n=length(test_is)), tail(diff_inv(is_bm_model_forecast$forecast$train_is$mean, original_test_is, is_ndiffs), n=length(test_is)))
 
 #accuracy(tail(original_test_bm, n=length(test_bm)), tail(diff_inv(ipc_bm_model_forecast$forecast$train_bm$mean, original_test_bm, bm_ndiffs), n=length(test_bm)))
-bm_var_accuracy <- accuracy(tail(original_test_bm, n=length(test_bm)), tail(diff_inv(is_bm_model_forecast$forecast$train_bm$mean, original_test_bm, bm_ndiffs), n=length(test_bm)))
+bm_var_accuracy <- accuracy(x = tail(original_test_bm, n=length(test_bm)), tail(diff_inv(is_bm_model_forecast$forecast$train_bm$mean, original_test_bm, bm_ndiffs), n=length(test_bm)))
 ```
 
 ```{r}
@@ -1118,7 +1118,7 @@ Se entrena un modelo Prophet para Índice de Precios al Consumidor y se analizan
 ```{r ipc-prophet-acc}
 ipc_x_test <- make_future_dataframe(ipc_prophet_model, periods = 3, freq = "month", include_history = FALSE)
 ipc_y_pred <- predict(ipc_prophet_model, ipc_x_test)
-ipc_prophet_accuracy <- accuracy(ipc_test$y, ipc_y_pred$yhat)
+ipc_prophet_accuracy <- accuracy(x = ipc_test$y, ipc_y_pred$yhat)
 
 metrics_ipc_pp <- ipc_prophet_accuracy %>% 
   as_tibble() %>% 
@@ -1173,7 +1173,7 @@ Se entrena un modelo Prophet para Índice de Salarios y se analizan las metricas
 ```{r is-prophet-acc}
 is_x_test <- make_future_dataframe(is_prophet_model, periods = 3, freq = "month", include_history = FALSE)
 is_y_pred <- predict(is_prophet_model, is_x_test)
-is_prophet_accuracy <- accuracy(is_test$y, is_y_pred$yhat)
+is_prophet_accuracy <- accuracy(x = is_test$y, is_y_pred$yhat)
 
 metrics_is_pp <- is_prophet_accuracy %>% 
   as_tibble() %>% 
@@ -1228,7 +1228,7 @@ Se entrena un modelo Prophet para la Base Monetaria acumulada y se analizan las 
 ```{r bm-prophet-acc}
 bm_x_test <- make_future_dataframe(bm_prophet_model, periods = 3, freq = "month", include_history = FALSE)
 bm_y_pred <- predict(bm_prophet_model, bm_x_test)
-bm_prophet_accuracy <- accuracy(bm_test$y, bm_y_pred$yhat)
+bm_prophet_accuracy <- accuracy(x = bm_test$y, bm_y_pred$yhat)
 
 metrics_bm_pp <- bm_prophet_accuracy %>% 
   as_tibble() %>% 
