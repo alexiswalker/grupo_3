@@ -777,13 +777,21 @@ autoplot(window(ts_ipc, end=end(train_ipc)),
   autolayer(ipc_bm_model_forecast$forecast$train_ipc,
             series = "Pronostico Indice Precios Consumidor",
             alpha = 0.5) +
-     autolayer(window(ts_bm, end=end(train_bm)),
-             series = "Base Monetaria") +
-   autolayer(ipc_bm_model_forecast$forecast$train_bm,
-             series = "Pronostico Base Monetaria",
-             alpha = 0.5) +
+  autolayer(window(ts_bm, end=end(train_bm)),
+            series = "Base Monetaria") +
+  autolayer(ipc_bm_model_forecast$forecast$train_bm,
+            series = "Pronostico Base Monetaria",
+            alpha = 0.5) +
   labs(x = "Tiempo", y = "Porcentaje Acumulado") +
   ggtitle("Series con sus pronosticos")
+```
+```{r}
+var_bm_pred <- head(ipc_bm_model_forecast$forecast$train_bm$mean, 3)
+var_ipc_pred <- head(ipc_bm_model_forecast$forecast$train_ipc$mean, 3)
+var_bm_real <- tail(ts_bm, 3)
+var_ipc_real <- tail(ts_ipc, 3)
+bm_var_ipc_bm_accuracy <- accuracy(var_bm_real, var_bm_pred)
+ipc_var_ipc_bm_accuracy <- accuracy(var_ipc_real, var_ipc_pred)
 ```
 
 
@@ -951,13 +959,22 @@ autoplot(window(ts_ipc, end=end(train_ipc)),
   autolayer(ipc_is_model_forecast$forecast$train_ipc,
             series = "Pronostico Indice Precios Consumidor",
             alpha = 0.5) +
-     autolayer(window(ts_is, end=end(train_is)),
-             series = "Índice de Salarios") +
-   autolayer(ipc_is_model_forecast$forecast$train_is,
-             series = "Pronostico Índice de Salarios",
-             alpha = 0.5) +
+  autolayer(window(ts_is, end=end(train_is)),
+            series = "Índice de Salarios") +
+  autolayer(ipc_is_model_forecast$forecast$train_is,
+            series = "Pronostico Índice de Salarios",
+            alpha = 0.5) +
   labs(x = "Tiempo", y = "Porcentaje Acumulado") +
   ggtitle("Series con sus pronosticos")
+```
+
+```{r}
+var_ipc_pred <- head(ipc_is_model_forecast$forecast$train_ipc$mean, 3)
+var_is_pred <- head(ipc_is_model_forecast$forecast$train_is$mean, 3)
+var_ipc_real <- tail(ts_ipc, 3)
+var_is_real <- tail(ts_is, 3)
+ipc_var_ipc_is_accuracy <- accuracy(var_ipc_real, var_ipc_pred)
+is_var_ipc_is_accuracy <- accuracy(var_is_real, var_is_pred)
 ```
 
 ### Modelo: Índice de Salarios y Base Monetaria
@@ -1125,43 +1142,22 @@ autoplot(window(ts_is, end=end(train_is)),
   autolayer(is_bm_model_forecast$forecast$train_is,
             series = "Pronostico Índice de Salarios",
             alpha = 0.5) +
-     autolayer(window(ts_bm, end=end(train_bm)),
-             series = "Base Monetaria") +
-   autolayer(is_bm_model_forecast$forecast$train_bm,
-             series = "Pronostico Base Monetaria",
-             alpha = 0.5) +
+  autolayer(window(ts_bm, end=end(train_bm)),
+            series = "Base Monetaria") +
+  autolayer(is_bm_model_forecast$forecast$train_bm,
+            series = "Pronostico Base Monetaria",
+            alpha = 0.5) +
   labs(x = "Tiempo", y = "Porcentaje Acumulado") +
   ggtitle("Series con sus pronosticos")
 ```
 
 ```{r}
-#accuracy
-
-# original_test_ipc <- tail(ts_ipc, n=length(test_ipc) + ipc_ndiffs)
-# original_test_bm <- tail(ts_bm, n=length(test_bm) + bm_ndiffs)
-# original_test_is <- tail(ts_is, n=length(test_bm) + is_ndiffs)
-
-ipc_bm_model_forecast <- forecast(ipc_bm_model, h = 3)
-is_bm_model_forecast <- forecast(is_bm_model, h = 3)
-ipc_is_model_forecast <- forecast(ipc_is_model, h = 3)
-
-#accuracy(ipc_bm_model_forecast$forecast$train_ipc$mean, test_ipc)
-ipc_var_accuracy <-accuracy(ipc_is_model_forecast$forecast$train_ipc$mean, x = test_ipc)
-
-is_var_accuracy <- accuracy(ipc_is_model_forecast$forecast$train_is$mean, x = test_is)
-#accuracy(is_bm_model_forecast$forecast$train_is$mean, test_is)
-
-bm_var_accuracy <- accuracy(ipc_bm_model_forecast$forecast$train_bm$mean, x = test_bm)
-#accuracy(is_bm_model_forecast$forecast$train_bm$mean, test_bm)
-
-#accuracy(x = tail(original_test_ipc, n=length(test_ipc)), tail(diff_inv(ipc_bm_model_forecast$forecast$train_ipc$mean, original_test_ipc, ipc_ndiffs), n=length(test_ipc)))
-#ipc_var_accuracy <- accuracy(x = tail(original_test_ipc, n=length(test_is)), tail(diff_inv(ipc_is_model_forecast$forecast$train_ipc$mean, original_test_ipc, ipc_ndiffs), n=length(test_ipc)))
-
-#is_var_accuracy <- accuracy(x = tail(original_test_is, n=length(test_is)), tail(diff_inv(ipc_is_model_forecast$forecast$train_is$mean, original_test_is, is_ndiffs), n=length(test_is)))
-#accuracy(tail(original_test_is, n=length(test_is)), tail(diff_inv(is_bm_model_forecast$forecast$train_is$mean, original_test_is, is_ndiffs), n=length(test_is)))
-
-#accuracy(tail(original_test_bm, n=length(test_bm)), tail(diff_inv(ipc_bm_model_forecast$forecast$train_bm$mean, original_test_bm, bm_ndiffs), n=length(test_bm)))
-#bm_var_accuracy <- accuracy(x = tail(original_test_bm, n=length(test_bm)), tail(diff_inv(is_bm_model_forecast$forecast$train_bm$mean, original_test_bm, bm_ndiffs), n=length(test_bm)))
+var_is_pred <- head(is_bm_model_forecast$forecast$train_is$mean, 3)
+var_bm_pred <- head(is_bm_model_forecast$forecast$train_bm$mean, 3)
+var_is_real <- tail(ts_is, 3)
+var_bm_real <- tail(ts_bm, 3)
+is_var_is_bm_accuracy <- accuracy(var_is_real, var_is_pred)
+bm_var_is_bm_accuracy <- accuracy(var_bm_real, var_bm_pred)
 ```
 
 
@@ -1197,7 +1193,10 @@ ipc_prophet_model <- prophet(ipc_train, holidays = holidays)
 Se entrena un modelo Prophet para Índice de Precios al Consumidor y se analizan las metricas de performance. En la Tabla \@ref(tab:ipc-prophet-acc) se detallan las métricas de testing obtenidas. 
 
 ```{r ipc-prophet-acc}
-ipc_x_test <- make_future_dataframe(ipc_prophet_model, periods = 3, freq = "month", include_history = FALSE)
+ipc_x_test <- make_future_dataframe(ipc_prophet_model, 
+                                    periods = 3, 
+                                    freq = "month", 
+                                    include_history = FALSE)
 ipc_y_pred <- predict(ipc_prophet_model, ipc_x_test)
 ipc_prophet_accuracy <- accuracy(x = ipc_test$y, ipc_y_pred$yhat)
 
@@ -1205,38 +1204,48 @@ metrics_ipc_pp <- ipc_prophet_accuracy %>%
   as_tibble() %>% 
   add_column(Modelo = "Prophet", .before = "ME") 
 
-metrics_ipc_var <- ipc_var_accuracy %>% 
+metrics_ipc_var_ipc_bm <- ipc_var_ipc_bm_accuracy %>% 
   as_tibble() %>% 
   dplyr::select(colnames(ipc_prophet_accuracy)) %>% 
-  add_column(Modelo = "VAR", .before = "ME") 
+  add_column(Modelo = "VAR IPC-BM", .before = "ME") 
 
-rbind(metrics_ipc_pp, metrics_ipc_var) %>% 
-  kable(booktabs = T, caption = "Métricas de los modelos de IPC", digits = 3) %>%
+metrics_ipc_var_is_bm <- ipc_var_ipc_is_accuracy %>% 
+  as_tibble() %>% 
+  dplyr::select(colnames(ipc_prophet_accuracy)) %>% 
+  add_column(Modelo = "VAR IPC-IS", .before = "ME") 
+
+rbind(metrics_ipc_pp, metrics_ipc_var_ipc_bm, metrics_ipc_var_is_bm) %>% 
+  kable(booktabs = T, 
+        caption = "Métricas de los modelos de Indice de Precios al Consumidor", 
+        digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
-TODO: Conclusion de las metricas?
 
 ```{r}
 ipc_future <- make_future_dataframe(ipc_prophet_model, periods = 9, freq = "month")
 ipc_prophet_forecast <- predict(ipc_prophet_model, ipc_future)
 ```
 
-```{r fig.cap="Predicciones de IPC", fig.height=5, fig.width=8}
+```{r fig.cap="Predicciones de IPC", fig.height=4, fig.width=8}
 plot(ipc_prophet_model, ipc_prophet_forecast) + 
   ggtitle("Índice de Precios al Consumidor", subtitle = "Con prediccion de 9 meses") +
   ylab("% cambio acumulado") +
   xlab("Fecha")
 ```
 
-Resulta interesante mencionar que los intervalos de confianza de las predicciones son mas acotado que el obtenido con los modelos VAR analizados anteriormente.
+Ambos modelos $VAR$ que modelan IPC obtuvieron mejores métricas en test a comparación del modelo $Prophet$. Sin embargo, los intervalos de confianza de las predicciones son mas acotados en el modelo $Prophet$ que los obtenidos con los modelos $VAR$.
 
-```{r ipc-pp-componentes, fig.cap="Componentes del modelo IPC"}
+La Figura \@ref(fig:ipc-pp-componentes) muestra la descomposición de los componentes del modelo.
+
+```{r ipc-pp-componentes, fig.cap="Componentes del modelo Prophet", fig.height=4, fig.width=8}
 prophet_plot_components(ipc_prophet_model, ipc_prophet_forecast)
 ```
 
-Ambas elecciones afectaron la serie de forma positiva, aumentando entre 1,5% y 3% por sobre la tendencia. Del otro lado, el inicio del aislamiento por COVID afecta la serie disminiyendo un 1%.
+Analizando las componentes, se concluye que:
 
-Entre fin de agosto e inicios de septiembre la serie presenta una estacionalidad positiva, lo que provoca un aumento mayor que los meses anteriores. A finales de octubre este comportamiento se revierte.
+- El indice de precios al consumidor acumulado presenta una tendencia positiva, de forma cuasi lineal.
+- Ambas elecciones afectaron la serie de forma positiva, aumentando entre 1,5pp y 3pp por sobre la tendencia. Del otro lado, el inicio del aislamiento por COVID afecta la serie disminuyendo un 1pp.
+- Entre fin de agosto e inicios de septiembre la serie presenta una estacionalidad positiva, lo que provoca un aumento mayor que los meses anteriores. A finales de octubre este comportamiento se revierte.
 
 ### Índice de Salarios
 
@@ -1252,7 +1261,10 @@ is_prophet_model <- prophet(is_train, holidays = holidays)
 Se entrena un modelo Prophet para Índice de Salarios y se analizan las metricas de performance. En la Tabla \@ref(tab:is-prophet-acc) se detallan las métricas de testing obtenidas. 
 
 ```{r is-prophet-acc}
-is_x_test <- make_future_dataframe(is_prophet_model, periods = 3, freq = "month", include_history = FALSE)
+is_x_test <- make_future_dataframe(is_prophet_model, 
+                                   periods = 3, 
+                                   freq = "month", 
+                                   include_history = FALSE)
 is_y_pred <- predict(is_prophet_model, is_x_test)
 is_prophet_accuracy <- accuracy(x = is_test$y, is_y_pred$yhat)
 
@@ -1260,38 +1272,47 @@ metrics_is_pp <- is_prophet_accuracy %>%
   as_tibble() %>% 
   add_column(Modelo = "Prophet", .before = "ME") 
 
-metrics_is_var <- is_var_accuracy %>% 
+metrics_is_var_ipc_is <- is_var_ipc_is_accuracy %>% 
   as_tibble() %>% 
   dplyr::select(colnames(is_prophet_accuracy)) %>% 
-  add_column(Modelo = "VAR", .before = "ME") 
+  add_column(Modelo = "VAR IPC-IS", .before = "ME") 
 
-rbind(metrics_is_pp, metrics_is_var) %>% 
-  kable(booktabs = T, caption = "Métricas de los modelos de Indice de Salarios", digits = 3) %>%
+metrics_is_var_is_bm <- is_var_is_bm_accuracy %>% 
+  as_tibble() %>% 
+  dplyr::select(colnames(is_prophet_accuracy)) %>% 
+  add_column(Modelo = "VAR IS-BM", .before = "ME") 
+
+rbind(metrics_is_pp, metrics_is_var_ipc_is, metrics_is_var_is_bm) %>% 
+  kable(booktabs = T, 
+        caption = "Métricas de los modelos de Indice de Salarios", 
+        digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
-
-TODO: Conclusion de las metricas?
 
 ```{r}
 is_future <- make_future_dataframe(is_prophet_model, periods = 9, freq = "month")
 is_prophet_forecast <- predict(is_prophet_model, is_future)
 ```
 
-```{r fig.cap="Predicciones de Indice Salarios", fig.height=5, fig.width=8}
+```{r fig.cap="Predicciones de Indice Salarios", fig.height=4, fig.width=8}
 plot(is_prophet_model, is_prophet_forecast) + 
   ggtitle("Índice de Salarios", subtitle = "Con prediccion de 9 meses") +
   ylab("% cambio acumulado") +
   xlab("Fecha")
 ```
 
-Resulta interesante mencionar que los intervalos de confianza de las predicciones son mas acotado que el obtenido con los modelos VAR analizados anteriormente.
+Ambos modelos $VAR$ que modelan IPC obtuvieron mejores métricas en test a comparación del modelo $Prophet$. Sin embargo, los intervalos de confianza de las predicciones son mas acotados en el modelo $Prophet$ que los obtenidos con los modelos $VAR$.
 
-```{r}
+La Figura \@ref(fig:is-pp-componentes) muestra la descomposición de los componentes del modelo.
+
+```{r is-pp-componentes, fig.cap="Componentes del modelo Prophet", fig.height=4, fig.width=8}
 prophet_plot_components(is_prophet_model, is_prophet_forecast)
 ```
-Ambas elecciones afectaron la serie de forma positiva, aumentando aproximadamente en un 2% por sobre la tendencia. El inicio del aislamiento por COVID afecta la serie aumentandola un 3,5%.
+Analizando las componentes, se concluye que:
 
-Un resultado esperable es que la serie presenta una estacionalidad positiva en diciembre, aumentando el valor de la misma para mediados de mes.
+- El indice de salarios acumulado presenta una tendencia positiva, de forma cuasi lineal.
+- Ambas elecciones afectaron la serie de forma positiva, aumentando aproximadamente en un 2pp por sobre la tendencia. El inicio del aislamiento por COVID afecta la serie aumentándola un 3,5pp.
+- La serie presenta una estacionalidad positiva en diciembre, aumentando el valor de la misma para mediados de mes.
 
 ### Base Monetaria
 
@@ -1307,7 +1328,10 @@ bm_prophet_model <- prophet(bm_train, holidays = holidays)
 Se entrena un modelo Prophet para la Base Monetaria acumulada y se analizan las metricas de performance. En la Tabla \@ref(tab:bm-prophet-acc) se detallan las métricas de testing obtenidas. 
 
 ```{r bm-prophet-acc}
-bm_x_test <- make_future_dataframe(bm_prophet_model, periods = 3, freq = "month", include_history = FALSE)
+bm_x_test <- make_future_dataframe(bm_prophet_model, 
+                                   periods = 3, 
+                                   freq = "month", 
+                                   include_history = FALSE)
 bm_y_pred <- predict(bm_prophet_model, bm_x_test)
 bm_prophet_accuracy <- accuracy(x = bm_test$y, bm_y_pred$yhat)
 
@@ -1315,38 +1339,48 @@ metrics_bm_pp <- bm_prophet_accuracy %>%
   as_tibble() %>% 
   add_column(Modelo = "Prophet", .before = "ME") 
 
-metrics_bm_var <- bm_var_accuracy %>% 
+metrics_bm_var_ipc_bm <- bm_var_ipc_bm_accuracy %>% 
   as_tibble() %>% 
   dplyr::select(colnames(bm_prophet_accuracy)) %>% 
-  add_column(Modelo = "VAR", .before = "ME") 
+  add_column(Modelo = "VAR IPC-BM", .before = "ME") 
 
-rbind(metrics_bm_pp, metrics_bm_var) %>% 
-  kable(booktabs = T, caption = "Métricas de los modelos de Base Monetaria", digits = 3) %>%
+metrics_bm_var_is_bm <- bm_var_is_bm_accuracy %>% 
+  as_tibble() %>% 
+  dplyr::select(colnames(bm_prophet_accuracy)) %>% 
+  add_column(Modelo = "VAR IS-BM", .before = "ME") 
+
+rbind(metrics_bm_pp, metrics_bm_var_ipc_bm, metrics_bm_var_is_bm) %>% 
+  kable(booktabs = T, 
+        caption = "Métricas de los modelos de Base Monetaria", 
+        digits = 3) %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 7)
 ```
-
-TODO: Conclusion de las metricas?
 
 ```{r}
 bm_future <- make_future_dataframe(bm_prophet_model, periods = 9, freq = "month")
 bm_prophet_forecast <- predict(bm_prophet_model, bm_future)
 ```
 
-```{r fig.cap="Predicciones de Base Monetaria", fig.height=5, fig.width=8}
+```{r fig.cap="Predicciones de Base Monetaria", fig.height=4, fig.width=8}
 plot(bm_prophet_model, bm_prophet_forecast) + 
   ggtitle("Base monetaria", subtitle = "Con prediccion de 9 meses") +
   ylab("% cambio acumulado") +
   xlab("Fecha")
 ```
-Resulta interesante mencionar que los intervalos de confianza de las predicciones son mas acotado que el obtenido con los modelos VAR analizados anteriormente.
 
-```{r}
+El modelo $Prophet$ es el que mejor ajusta a la serie de Base Monetaria, superando a los modelos $VAR$. A su vez, los intervalos de confianza de sus predicciones son mas acotadas que las de los modelos $VAR$.
+
+La Figura \@ref(fig:bm-pp-componentes) muestra la descomposición de los componentes del modelo.
+
+```{r bm-pp-components, fig.cap="Componentes del modelo Prophet", fig.height=4, fig.width=8}
 prophet_plot_components(bm_prophet_model, bm_prophet_forecast)
 ```
 
-Ambas elecciones afectaron la serie de forma negativa, disminuyendo aproximadamente en un 25% la Base Monetaria Acumulada sobre la tendencia. El inicio del aislamiento por COVID afecta la serie aumentandola hasta un 20% sobre la tendencia.
+Analizando las componentes, se concluye que:
 
-A mitad de anio la base monetaria presenta su pico maximo de estacionalidad positiva, coincidiendo con los aguinaldos.
+- La base monetaria acumulada presenta una tendencia positiva, de forma cuasi lineal.
+- Ambas elecciones afectaron la serie de forma negativa, disminuyendo aproximadamente en un 25pp la base monetaria acumulada por sobre la tendencia. El inicio del aislamiento por COVID afecta la serie aumentándola hasta un 20pp sobre la tendencia.
+- A mitad de año la base monetaria presenta su pico máximo de estacionalidad positiva, coincidiendo con los aguinaldos.
 
 \newpage
 
