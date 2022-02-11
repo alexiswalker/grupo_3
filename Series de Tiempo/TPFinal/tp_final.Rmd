@@ -1120,12 +1120,12 @@ is_bm_model_forecast$forecast$train_bm$lower[,2] = window(diff_inv(join_ts(train
 is_bm_model_forecast$forecast$train_bm$upper[,1] = window(diff_inv(join_ts(train_bm, is_bm_model_forecast$forecast$train_bm$upper[,1]), ts_bm, bm_ndiffs), start = start(test_bm))
 is_bm_model_forecast$forecast$train_bm$upper[,2] = window(diff_inv(join_ts(train_bm, is_bm_model_forecast$forecast$train_bm$upper[,2]), ts_bm, bm_ndiffs), start = start(test_bm))
 
-autoplot(window(ts_ipc, end=end(train_is)),
+autoplot(window(ts_is, end=end(train_is)),
          series = "Índice de Salarios") +
   autolayer(is_bm_model_forecast$forecast$train_is,
             series = "Pronostico Índice de Salarios",
             alpha = 0.5) +
-     autolayer(window(ts_is, end=end(train_bm)),
+     autolayer(window(ts_bm, end=end(train_bm)),
              series = "Base Monetaria") +
    autolayer(is_bm_model_forecast$forecast$train_bm,
              series = "Pronostico Base Monetaria",
