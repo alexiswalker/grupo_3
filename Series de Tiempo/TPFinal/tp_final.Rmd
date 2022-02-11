@@ -130,6 +130,41 @@ shapiro_wilk_normality_test <- function(residuos){
 
 
 ```{r}
+diff_inv <- function(dif_ts, original_ts, n_diff) {
+
+  ts_dif_inv <-  dif_ts
+  
+  for (i in n_diff:1) {
+    if (i > 1) {
+      ts_dif_i_1 <-  diff(original_ts, lag = 1, differences = (i-1))
+    } else {
+      ts_dif_i_1 <- original_ts
+    }
+    ts_dif_inv <- diffinv(ts_dif_inv, lag = 1, differences = 1) + ts_dif_i_1[1]
+  }
+  
+  return(ts_dif_inv)
+}
+
+join_ts <- function(before, after){
+  return(ts(c(before,after), start=start(before), frequency=frequency(before)))
+}
+
+
+adjust_forecast <- function(forecast_object, ts_name, mean, lower, upper){
+
+  forecast_object$forecast[[ts_name]]$mean = mean
+  forecast_object$forecast[[ts_name]]$lower[, 1] = lower[, 1]
+  forecast_object$forecast[[ts_name]]$lower[, 2] = lower[, 2]
+  forecast_object$forecast[[ts_name]]$upper[, 1] = upper[, 1]
+  forecast_object$forecast[[ts_name]]$upper[, 2] = upper[, 2]
+  
+  return(forecast_object)
+}
+
+```
+
+```{r}
 raw_data <- read_csv(
   file = "https://docs.google.com/uc?id=16we_OjrEZxBUwaQKOh3QAoW5YwfcEg1E",
   col_types = cols(fecha = col_date(format = "%d/%m/%Y")))
@@ -1019,44 +1054,25 @@ is_var_accuracy <- accuracy(test_is, ipc_is_model_forecast$forecast$train_is$mea
 #accuracy(test_is, is_bm_model_forecast$forecast$train_is$mean)
 ```
 
-### Pronósticos
-
 ```{r}
-diff_inv <- function(dif_ts, original_ts, n_diff) {
+#accuracy
 
-  ts_dif_inv <-  dif_ts
-  
-  for (i in n_diff:1) {
-    if (i > 1) {
-      ts_dif_i_1 <-  diff(original_ts, lag = 1, differences = (i-1))
-    } else {
-      ts_dif_i_1 <- original_ts
-    }
-    ts_dif_inv <- diffinv(ts_dif_inv, lag = 1, differences = 1) + ts_dif_i_1[1]
-  }
-  
-  return(ts_dif_inv)
-}
+original_test_ipc <- tail(ts_ipc, n=length(test_ipc) + ipc_ndiffs)
+original_test_bm <- tail(ts_bm, n=length(test_bm) + bm_ndiffs)
+original_test_is <- tail(ts_is, n=length(test_bm) + is_ndiffs)
 
+ipc_bm_model_forecast <- forecast(ipc_bm_model, h = 3)
+is_bm_model_forecast <- forecast(is_bm_model, h = 3)
+ipc_is_model_forecast <- forecast(ipc_is_model, h = 3)
 
-join_ts <- function(before, after){
-  return(ts(c(before,after), start=start(before), frequency=frequency(before)))
-}
+#accuracy(tail(original_test_ipc, n=length(test_ipc)), tail(diff_inv(ipc_bm_model_forecast$forecast$train_ipc$mean, original_test_ipc, ipc_ndiffs), n=length(test_ipc)))
+ipc_var_accuracy <- accuracy(tail(original_test_ipc, n=length(test_ipc)), tail(diff_inv(ipc_is_model_forecast$forecast$train_ipc$mean, original_test_ipc, ipc_ndiffs), n=length(test_ipc)))
 
+is_var_accuracy <- accuracy(tail(original_test_is, n=length(test_is)), tail(diff_inv(ipc_is_model_forecast$forecast$train_is$mean, original_test_is, is_ndiffs), n=length(test_is)))
+#accuracy(tail(original_test_is, n=length(test_is)), tail(diff_inv(is_bm_model_forecast$forecast$train_is$mean, original_test_is, is_ndiffs), n=length(test_is)))
 
-adjust_forecast <- function(dif_ts, ts, forecast_object, ts_name, ts_ndiffs){
-
-  forecast_start = start(forecast_object$forecast[[ts_name]]$mean)
-  
-  forecast_object$forecast[[ts_name]]$mean = window(diff_inv(join_ts(dif_ts, forecast_object$forecast[[ts_name]]$mean), ts, ts_ndiffs), start = forecast_start)
-  forecast_object$forecast[[ts_name]]$lower[, 1] = window(diff_inv(join_ts(dif_ts, forecast_object$forecast[[ts_name]]$lower[, 1]), ts, ts_ndiffs), start = forecast_start)
-  forecast_object$forecast[[ts_name]]$lower[, 2] = window(diff_inv(join_ts(dif_ts, forecast_object$forecast[[ts_name]]$lower[, 2]), ts, ts_ndiffs), start = forecast_start)
-  forecast_object$forecast[[ts_name]]$upper[, 1] = window(diff_inv(join_ts(dif_ts, forecast_object$forecast[[ts_name]]$upper[, 1]), ts, ts_ndiffs), start = forecast_start)
-  forecast_object$forecast[[ts_name]]$upper[, 2] = window(diff_inv(join_ts(dif_ts, forecast_object$forecast[[ts_name]]$upper[, 2]), ts, ts_ndiffs), start = forecast_start)  
-  
-  return(forecast_object)
-}
-
+#accuracy(tail(original_test_bm, n=length(test_bm)), tail(diff_inv(ipc_bm_model_forecast$forecast$train_bm$mean, original_test_bm, bm_ndiffs), n=length(test_bm)))
+bm_var_accuracy <- accuracy(tail(original_test_bm, n=length(test_bm)), tail(diff_inv(is_bm_model_forecast$forecast$train_bm$mean, original_test_bm, bm_ndiffs), n=length(test_bm)))
 ```
 
 ```{r}
