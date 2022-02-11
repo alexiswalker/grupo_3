@@ -1098,7 +1098,7 @@ Una de las ventajas que posee Prophet es que puede tener en cuenta eventos como 
 Se utiliza Prophet para modelar las 3 series, teniendo en cuenta dichos eventos.
 
 ```{r}
-holidays <- read.csv('eventos.csv')
+holidays <- read.csv("https://docs.google.com/uc?id=1UEoytRJY-R_MzbKiT11AvEmQWdfxC2ht")
 ```
 
 
