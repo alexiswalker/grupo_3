@@ -1104,7 +1104,7 @@ Gráficamente (Figura \@ref(fig:irf-is-bm)), los _shocks_ en el Índice de Salar
 
 #### Prónósticos
 
-```{r pronostico-ipc-is, fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
+```{r pronostico-bm-is, fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
 
 is_bm_model_forecast <- forecast(is_bm_model, h = 9)
 
