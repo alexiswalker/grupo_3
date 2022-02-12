@@ -198,15 +198,17 @@ ts_bm <- bm$variacion_base_monetaria_acumulada %>%
 
 Las series de tiempo son el resultado de observar valores de una variable aleatoria a lo largo del tiempo en intervalos iguales o desiguales. En el análisis de las series temporales se utilizan métodos que permiten interpretarlas y extraer información sobre las relaciones entre los datos de la serie u otras series. 
 
-Según @mochon, _“La inflación es el crecimiento generalizado y continuo de los precios de los bienes y los servicios”_ (p. 496), y el índice de precios al consumidor (IPC) representa el costo de la canasta de bienes y servicios consumidos por la economía local.
+Según @mochon, _“La inflación es el crecimiento generalizado y continuo de los precios de los bienes y los servicios”_ (p. 496), y el Índice de Precios al Consumidor (IPC) representa el costo de la canasta de bienes y servicios consumidos por la economía local.
 
 El  fenómeno  de la inflación se produce por múltiples causas. Las teorías tradicionales se pueden resumir en: inflación de demanda, que se produce cuando los gastos superan la capacidad de producción de la economía, por causas monetarias, cuando se incrementa la emisión monetaria, la inflación de costos, cuando los precios suben por grupos económicos de presión y la inflación estructural, que es la que se origina debido a los problemas estructurales de las economías en vías de desarrollo.
 
-La percepción individual sugiere que los motivos, en la coyuntura actual, son variados: especulación, emisión desmedida, presión por devaluación, bajas exportaciones, monopolios formadores de precios, elevado gasto público, mercado laboral altamente regulado, etc.
+La percepción individual sugiere que los motivos, en la coyuntura actual, son variados: especulación, emisión desmedida, presión por devaluación, bajas exportaciones, monopolios formadores de precios, elevado gasto público, mercado laboral altamente regulado, etcétera.
 
-Analizar como evolucionan conjuntamente en el tiempo el Índice de precios al consumidor y el Índice de salarios puede ayudar a clarificar los problemas y soluciones posibles.
+Analizar como evolucionan conjuntamente en el tiempo el Índice de Precios al Consumidor y el Índice de Salarios puede ayudar a clarificar los problemas y soluciones posibles.
 
 Además, esta comparativa muestra cómo se comporta el poder adquisitivo de un empleado. Es posible determinar si se recompone conforme aumentan los precios, acompaña o se abre una brecha que da cuenta de su disminución.
+
+Así mismo, se agrega al estudio la Base Monetaria, atendiendo a la conjetura colectiva del estrecho vínculo que existe entre emisión e inflación (sin dejar de considerar la posibles causas enumeradas anteriormente de la primera variable). Ésto con intensión de reconocer si genera impacto en el Índice de Precios al Consumidor.
 
 ```{r ipc-vs-is-vs-bm, fig.cap="IPC vs IS vs BM", fig.height=4, fig.width=10}
 autoplot(ts_ipc, series = 'Índice de Precios al Consumidor') +
