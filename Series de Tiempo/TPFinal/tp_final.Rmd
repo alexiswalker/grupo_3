@@ -67,7 +67,7 @@ Por un lado, cómo evoluciona en nivel de vida de la población. Si los salarios
 
 Por otro, si los indicadores de incremento de bienes y servicios crecen a mayor ritmo que los salarios, disminuye el bienestar de la masa asalariada.
 
-Además. como resultado del actual proceso inflacionario (elemento que sugiere incluir también en el análisis la Base Monetaria) y de la baja demanda interna hay que mencionar el perjuicio que se ocasiona a los sectores productivos internos.
+Además, como resultado del actual proceso inflacionario (elemento que sugiere incluir también en el análisis la Base Monetaria) y de la baja demanda interna hay que mencionar el perjuicio que se ocasiona a los sectores productivos internos.
 
 Las causas que originan el fenómeno de inflación no serán tratadas por lo complejo y extenso que es el tema. Se simplifica solo evaluando la posible relación con la creación de moneda.
 
@@ -211,9 +211,9 @@ Además, esta comparativa muestra cómo se comporta el poder adquisitivo de un e
 Así mismo, se agrega al estudio la Base Monetaria, atendiendo a la conjetura colectiva del estrecho vínculo que existe entre emisión e inflación (sin dejar de considerar la posibles causas enumeradas anteriormente de la primera variable). Ésto con intensión de reconocer si genera impacto en el Índice de Precios al Consumidor.
 
 ```{r ipc-vs-is-vs-bm, fig.cap="IPC vs IS vs BM", fig.height=4, fig.width=10}
-autoplot(ts_ipc, series = 'Índice de Precios al Consumidor') +
-  autolayer(ts_is, series = 'Índice de Salarios') +
-  autolayer(ts_bm, series = 'Base Monetaria') +
+autoplot(ts_ipc, series = 'Índice de Precios al Consumidor (IPC)') +
+  autolayer(ts_is, series = 'Índice de Salarios (IS)') +
+  autolayer(ts_bm, series = 'Base Monetaria (BM)') +
   ggtitle('Índice de Precios al Consumidor, Índice de Salarios acumulados y Base Monetaria',
           subtitle = 'Con base Diciembre 2016') +
   ylab('% de cambio acumulado') +
@@ -309,12 +309,18 @@ Para determinar el aporte que una variable realiza para la predicción de otra, 
 
 ## Prophet 
 
+Según @prophet, esta técnica propone un modelo de serie de tiempo con tres componentes principales: tendencia, estacionalidad y vacaciones. Los cuales se combinan conforme la ecuación \@ref(eq:prophet-eq).
 
-Según @rafferty Prophet fue desarrollado internamente en Facebook por Sean J. Taylor y Ben Letham. 
+\begin{equation}
+  y(t) = g(t) + s(t) + h(t) + \epsilon_t
+  (\#eq:prophet-eq)
+\end{equation}
 
-Es un modelo de regresión aditivo, lo que implica la suma de varios componentes (opcionales), como: una curva de tendencia de crecimiento lineal o logística, una de estacionalidad anual, semanal o diaria, días festivos u otros eventos especiales, y, por último, curvas de estacionalidad adicionales especificadas por el usuario.
+Donde $g(t)$ es la función de tendencia que modela cambios no periódicos, $s(t)$ representa cambios periódicos (por ejemplo, estacionalidad semanal y anual), y $h(t)$ representa los efectos de las vacaciones. El término de error $\epsilon_t$ representa cualquier cambio que no se adapte al modelo.
 
-Resistente a datos faltantes, valores atípicos y cambios de tendencia.
+Se enmarca el problema de pronóstico como un ejercicio de ajuste de curvas, que es inherentemente diferente de los modelos de series de tiempo que explican la estructura de dependencia temporal en los datos. 
+
+Esta formulación proporciona una serie de ventajas prácticas: flexibilidad, es posible acomodar fácilmente la estacionalidad con múltiples períodos y permitir que el analista haga diferentes suposiciones sobre las tendencias; no es necesario espaciar regularmente las medidas y no es necesario interpolar los valores faltantes; el ajuste es muy rápido, lo que permite al analista explorar de forma interactiva muchas especificaciones; y, por último, el modelo de pronóstico tiene parámetros fáciles de interpretar que se pueden cambiar para imponer suposiciones.
 
 \newpage
 
@@ -510,7 +516,7 @@ kpss_test(dif_ts_is) %>%
 bm_ndiffs <- ndiffs(ts_bm)
 ```
 
-Mediante la función `ndiffs` de R, se estima que el numero de diferenciaciones necesarias para convertir a la serie Base Monetaria en estacionaria (`r bm_ndiffs` veces).
+Mediante la función `ndiffs` de R, se estima que el numero de diferenciaciones necesarias para convertir a la serie Base Monetaria en estacionaria es `r bm_ndiffs`.
 
 La Figura \@ref(fig:bm-diferenciado) muestran los valores diferenciado.
 
@@ -597,7 +603,7 @@ is_bm <- cbind(train_is, train_bm)
 
 Con el objeto principal de analizar causalidad entre series se proponen modelos agrupando de a pares los datos que se utilizan.
 
-Se calculan y muestran distintos criterios de selección para determinar el modelo que mejor ajusta, sin embargo se trabaja con el *Error de Predicción Final* (o FPE de su denominación en inglés) para determinar que retardo utilizar.
+Se calculan y muestran distintos criterios de selección para determinar el modelo que mejor ajusta, sin embargo se trabaja con el *Error de Predicción Final* (FPE) para determinar que retardo utilizar.
 
 ### Modelo: Índice de Precios al Consumidor y Base Monetaria
 
@@ -616,7 +622,7 @@ lags = information_criteria$selection[4]
 ```
 
 
-En la tabla \@ref(tab:var-selection-ipc-bm), se sugieren que el uso de retardo igual a `r lags` es apropiado para estimar el modelo. El resumen del modelo se incluye en el [Apendice](#ipc-bm-modelo-var).
+En la tabla \@ref(tab:var-selection-ipc-bm), se sugieren que el uso de retardo igual a `r lags` es apropiado para estimar el modelo. El resumen del mismo se incluye en el [Apendice](#ipc-bm-modelo-var).
 
 ```{r}
 ipc_bm_model <- VAR(ipc_bm, p = lags, type = "const", season = NULL, exog = NULL) 
@@ -755,6 +761,8 @@ En la Figura \@ref(fig:irf-ipc-bm) se identifica que los _shocks_ en IPC no tien
 
 #### Prónósticos
 
+En la figura \@ref(fig:pronostico-ipc-bm) se presenta el resultado gráfico de estimar las variables incluidas.
+
 ```{r pronostico-ipc-bm, fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
 
 ipc_bm_model_forecast <- forecast(ipc_bm_model, h = 9)
@@ -810,7 +818,7 @@ information_criteria$selection %>%
 lags = information_criteria$selection[4]
 ```
 
-En la tabla \@ref(tab:var-selection-ipc-is), se sugieren que el uso de retardo igual a `r lags` es apropiado para estimar el modelo. El resumen del modelo se incluye en el [Apendice](#ipc-is-modelo-var).
+En la tabla \@ref(tab:var-selection-ipc-is), se sugieren que el uso de retardo igual a `r lags` es apropiado para estimar el modelo. El resumen se incluye en el [Apendice](#ipc-is-modelo-var).
 
 ```{r}
 ipc_is_model <- VAR(ipc_is, p = lags, type = "const", season = NULL, exog = NULL)
@@ -937,6 +945,8 @@ Gráficamente (Figura \@ref(fig:irf-is-ipc)), los _shocks_ en el Índice de Sala
 
 #### Prónósticos
 
+En la figura \@ref(fig:pronostico-ipc-is) se presenta el resultado gráfico de estimar las variables incluidas.
+
 ```{r pronostico-ipc-is, fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
 
 ipc_is_model_forecast <- forecast(ipc_is_model, h = 9)
@@ -993,7 +1003,7 @@ lags = information_criteria$selection[4]
 ```
 
 
-En la tabla \@ref(tab:var-selection-is-bm), se sugieren que el uso de retardo igual a `r lags` es apropiado para estimar el modelo. El resumen del modelo se incluye en el [Apendice](#is-bm-modelo-var).
+En la tabla \@ref(tab:var-selection-is-bm), se sugieren que el uso de retardo igual a `r lags` es apropiado para estimar el modelo. El resumen se incluye en el [Apendice](#is-bm-modelo-var).
 
 ```{r}
 is_bm_model <- VAR(is_bm, p = lags, type = "const", season = NULL, exog = NULL)
@@ -1120,6 +1130,8 @@ Gráficamente (Figura \@ref(fig:irf-is-bm)), los _shocks_ en el Índice de Salar
 
 #### Prónósticos
 
+En la figura \@ref(fig:pronostico-bm-is) se presenta el resultado gráfico de estimar las variables incluidas.
+
 ```{r pronostico-bm-is, fig.cap="Predicciones", fig.height=4, fig.width=10, warning=FALSE, fig.pos="H"}
 
 is_bm_model_forecast <- forecast(is_bm_model, h = 9)
@@ -1163,15 +1175,15 @@ bm_var_is_bm_accuracy <- accuracy(var_bm_real, var_bm_pred)
 
 ## Prophet
 
-Otra forma de modelar las series analizadas anteriomente es mediante Prophet. Se modela cada una de forma independiente, separando el conjunto de datos en train y test. Se considera train hasta el 2021-04-01 y test hasta el 2021-07-01.
+Otra forma de modelar las series analizadas anteriormente es mediante Prophet. Se trabaja con cada una de forma independiente, separando el conjunto de datos en train y test. Donde se considera train hasta el 2021-04-01 y test hasta el 2021-07-01.
 
-Una de las ventajas que posee Prophet es que puede tener en cuenta eventos como las vacaciones nacionales en el analisis de la serie. Debido a que gran parte de la economia argentina responde a situaciones politicas del momento, resulta interesante tener en cuenta los siguientes eventos:
+Una de las ventajas que posee Prophet es que puede tener en cuenta eventos como las vacaciones nacionales en el análisis de la serie. Debido a que gran parte de la economía argentina responde a situaciones políticas del momento, resulta interesante tener en cuenta los siguientes eventos:
 
 - Elecciones PASO (2019-08-11)
 - Elecciones Presidenciales (2019-10-27)
 - Anuncio del aislamiento preventivo y obligatorio por COVID (2020-03-20)
 
-Se utiliza Prophet para modelar las 3 series, teniendo en cuenta dichos eventos.
+Se utiliza esta técnica para modelar las 3 series, teniendo en cuenta dichos eventos.
 
 ```{r}
 holidays <- read.csv("https://docs.google.com/uc?id=1UEoytRJY-R_MzbKiT11AvEmQWdfxC2ht")
@@ -1189,7 +1201,7 @@ ipc_test <- tail(ipc_model_data, 3)
 ipc_prophet_model <- prophet(ipc_train, holidays = holidays)
 ```
 
-Se entrena un modelo Prophet para Índice de Precios al Consumidor y se analizan las metricas de performance. En la Tabla \@ref(tab:ipc-prophet-acc) se detallan las métricas de testing obtenidas. 
+Se entrena un modelo Prophet para Índice de Precios al Consumidor y se analizan las métricas de performance. En la Tabla \@ref(tab:ipc-prophet-acc) se detallan las métricas de testing obtenidas. 
 
 ```{r ipc-prophet-acc}
 ipc_x_test <- make_future_dataframe(ipc_prophet_model, 
@@ -1232,7 +1244,7 @@ plot(ipc_prophet_model, ipc_prophet_forecast) +
   xlab("Fecha")
 ```
 
-Ambos modelos $VAR$ que modelan IPC obtuvieron mejores métricas en test a comparación del modelo $Prophet$. Sin embargo, los intervalos de confianza de las predicciones son mas acotados en el modelo $Prophet$ que los obtenidos con los modelos $VAR$.
+Ambos modelos $VAR$ que ajustan IPC obtuvieron mejores métricas en test a comparación del modelo $Prophet$. Sin embargo, los intervalos de confianza de las predicciones son mas acotados en el modelo $Prophet$ que los obtenidos con los modelos $VAR$.
 
 La Figura \@ref(fig:ipc-pp-componentes) muestra la descomposición de los componentes del modelo.
 
@@ -1242,7 +1254,7 @@ prophet_plot_components(ipc_prophet_model, ipc_prophet_forecast)
 
 Analizando las componentes, se concluye que:
 
-- El indice de precios al consumidor acumulado presenta una tendencia positiva, de forma cuasi lineal.
+- El Índice de Precios al Consumidor acumulado presenta una tendencia positiva, de forma cuasi lineal.
 - Ambas elecciones afectaron la serie de forma positiva, aumentando entre 1,5pp y 3pp por sobre la tendencia. Del otro lado, el inicio del aislamiento por COVID afecta la serie disminuyendo un 1pp.
 - Entre fin de agosto e inicios de septiembre la serie presenta una estacionalidad positiva, lo que provoca un aumento mayor que los meses anteriores. A finales de octubre este comportamiento se revierte.
 
@@ -1257,7 +1269,7 @@ is_test <- tail(is_model_data, 3)
 is_prophet_model <- prophet(is_train, holidays = holidays)
 ```
 
-Se entrena un modelo Prophet para Índice de Salarios y se analizan las metricas de performance. En la Tabla \@ref(tab:is-prophet-acc) se detallan las métricas de testing obtenidas. 
+Se entrena un modelo Prophet para Índice de Salarios y se analizan las métricas de performance. En la Tabla \@ref(tab:is-prophet-acc) se detallan las métricas de testing obtenidas. 
 
 ```{r is-prophet-acc}
 is_x_test <- make_future_dataframe(is_prophet_model, 
@@ -1300,7 +1312,7 @@ plot(is_prophet_model, is_prophet_forecast) +
   xlab("Fecha")
 ```
 
-Ambos modelos $VAR$ que modelan IPC obtuvieron mejores métricas en test a comparación del modelo $Prophet$. Sin embargo, los intervalos de confianza de las predicciones son mas acotados en el modelo $Prophet$ que los obtenidos con los modelos $VAR$.
+Ambos modelos $VAR$ que modelan el Índice de Salarios obtuvieron mejores métricas en test a comparación del modelo $Prophet$. Sin embargo, los intervalos de confianza de las predicciones son mas acotados en el modelo $Prophet$ que los obtenidos con los modelos $VAR$.
 
 La Figura \@ref(fig:is-pp-componentes) muestra la descomposición de los componentes del modelo.
 
@@ -1309,7 +1321,7 @@ prophet_plot_components(is_prophet_model, is_prophet_forecast)
 ```
 Analizando las componentes, se concluye que:
 
-- El indice de salarios acumulado presenta una tendencia positiva, de forma cuasi lineal.
+- El Índice de Salarios acumulado presenta una tendencia positiva, de forma cuasi lineal.
 - Ambas elecciones afectaron la serie de forma positiva, aumentando aproximadamente en un 2pp por sobre la tendencia. El inicio del aislamiento por COVID afecta la serie aumentándola un 3,5pp.
 - La serie presenta una estacionalidad positiva en diciembre, aumentando el valor de la misma para mediados de mes.
 
@@ -1324,8 +1336,7 @@ bm_test <- tail(bm_model_data, 3)
 bm_prophet_model <- prophet(bm_train, holidays = holidays)
 ```
 
-Se entrena un modelo Prophet para la Base Monetaria acumulada y se analizan las metricas de performance. En la Tabla \@ref(tab:bm-prophet-acc) se detallan las métricas de testing obtenidas. 
-
+Se entrena un modelo Prophet para la Base Monetaria acumulada y se analizan las métricas de performance. En la Tabla \@ref(tab:bm-prophet-acc) se detallan las métricas de testing obtenidas. 
 ```{r bm-prophet-acc}
 bm_x_test <- make_future_dataframe(bm_prophet_model, 
                                    periods = 3, 
@@ -1377,9 +1388,9 @@ prophet_plot_components(bm_prophet_model, bm_prophet_forecast)
 
 Analizando las componentes, se concluye que:
 
-- La base monetaria acumulada presenta una tendencia positiva, de forma cuasi lineal.
-- Ambas elecciones afectaron la serie de forma negativa, disminuyendo aproximadamente en un 25pp la base monetaria acumulada por sobre la tendencia. El inicio del aislamiento por COVID afecta la serie aumentándola hasta un 20pp sobre la tendencia.
-- A mitad de año la base monetaria presenta su pico máximo de estacionalidad positiva, coincidiendo con los aguinaldos.
+- La Base Monetaria acumulada presenta una tendencia positiva, de forma cuasi lineal.
+- Ambas elecciones afectaron la serie de forma negativa, disminuyendo aproximadamente en un 25pp la Base Monetaria acumulada por sobre la tendencia. El inicio del aislamiento por COVID afecta la serie aumentándola hasta un 20pp sobre la tendencia.
+- A mitad de año la Base Monetaria presenta su pico máximo de estacionalidad positiva, coincidiendo con los aguinaldos.
 
 \newpage
 
