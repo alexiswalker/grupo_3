@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.2.2)  13 FEB 2022 13:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.2.13)  13 FEB 2022 15:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **tp_final.tex
 (./tp_final.tex
 LaTeX2e <2021-11-15> patch level 1
-L3 programming layer <2022-01-21> (/home/alexis/.TinyTeX/texmf-dist/tex/latex/b
+L3 programming layer <2022-02-05> (/home/alexis/.TinyTeX/texmf-dist/tex/latex/b
 ase/article.cls
 Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
 (/home/alexis/.TinyTeX/texmf-dist/tex/latex/base/size10.clo
@@ -119,7 +119,7 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
 ) (/home/alexis/.TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
-Package: iftex 2020/03/06 v1.0d TeX engine tests
+Package: iftex 2022/02/03 v1.0f TeX engine tests
 ) (/home/alexis/.TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 LaTeX Font Info:    Trying to load font information for T1+lmr on input line 11
@@ -415,22 +415,296 @@ Package floatrow Info: Modified rotfloat package code loaded on input line 473.
 \LTleft=\skip77
 \LTright=\skip78
 \flrow@types=\toks29
-) (/home/alexis/.TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
+) (/home/alexis/.TinyTeX/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty (/home
+/alexis/.TinyTeX/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty (/home/alexis/.Tin
+yTeX/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty (/home/alexis/.TinyTeX/texmf
+-dist/tex/generic/pgf/utilities/pgfutil-common.tex
+\pgfutil@everybye=\toks30
+\pgfutil@tempdima=\dimen192
+\pgfutil@tempdimb=\dimen193
+
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfutil-common-list
+s.tex)) (/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfutil-lat
+ex.def
+\pgfutil@abb=\box63
+) (/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex (
+/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/pgf.revision.tex)
+Package: pgfrcs 2021/05/15 v3.1.9a (3.1.9a)
+))
+Package: pgf 2021/05/15 v3.1.9a (3.1.9a)
+(/home/alexis/.TinyTeX/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty (/home/a
+lexis/.TinyTeX/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty (/home/alexis/.T
+inyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
+Package: pgfsys 2021/05/15 v3.1.9a (3.1.9a)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks31
+\pgfkeys@temptoks=\toks32
+
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfkeysfiltered.cod
+e.tex
+\pgfkeys@tmptoks=\toks33
+))
+\pgf@x=\dimen194
+\pgf@y=\dimen195
+\pgf@xa=\dimen196
+\pgf@ya=\dimen197
+\pgf@xb=\dimen198
+\pgf@yb=\dimen199
+\pgf@xc=\dimen256
+\pgf@yc=\dimen257
+\pgf@xd=\dimen258
+\pgf@yd=\dimen259
+\w@pgf@writea=\write3
+\r@pgf@reada=\read2
+\c@pgf@counta=\count305
+\c@pgf@countb=\count306
+\c@pgf@countc=\count307
+\c@pgf@countd=\count308
+\t@pgf@toka=\toks34
+\t@pgf@tokb=\toks35
+\t@pgf@tokc=\toks36
+\pgf@sys@id@count=\count309
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
+File: pgf.cfg 2021/05/15 v3.1.9a (3.1.9a)
+)
+Driver file for pgf: pgfsys-pdftex.def
+
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-pdftex.def
+File: pgfsys-pdftex.def 2021/05/15 v3.1.9a (3.1.9a)
+
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-pdf
+.def
+File: pgfsys-common-pdf.def 2021/05/15 v3.1.9a (3.1.9a)
+)))
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.co
+de.tex
+File: pgfsyssoftpath.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfsyssoftpath@smallbuffer@items=\count310
+\pgfsyssoftpath@bigbuffer@items=\count311
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.co
+de.tex
+File: pgfsysprotocol.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)) (/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.te
+x
+Package: pgfcore 2021/05/15 v3.1.9a (3.1.9a)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex (/home/
+alexis/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex (/home/ale
+xis/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex) (/home/alexi
+s/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
+\pgfmath@dimen=\dimen260
+\pgfmath@count=\count312
+\pgfmath@box=\box64
+\pgfmath@toks=\toks37
+\pgfmath@stack@operand=\toks38
+\pgfmath@stack@operation=\toks39
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.te
+x
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.c
+ode.tex)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigono
+metric.code.tex)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.
+code.tex)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.compari
+son.code.tex)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.co
+de.tex)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.c
+ode.tex)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.co
+de.tex)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integer
+arithmetics.code.tex))) (/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/math/
+pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count313
+)) (/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfint.code.tex)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code
+.tex
+File: pgfcorepoints.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@picminx=\dimen261
+\pgf@picmaxx=\dimen262
+\pgf@picminy=\dimen263
+\pgf@picmaxy=\dimen264
+\pgf@pathminx=\dimen265
+\pgf@pathmaxx=\dimen266
+\pgf@pathminy=\dimen267
+\pgf@pathmaxy=\dimen268
+\pgf@xx=\dimen269
+\pgf@xy=\dimen270
+\pgf@yx=\dimen271
+\pgf@yy=\dimen272
+\pgf@zx=\dimen273
+\pgf@zy=\dimen274
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstru
+ct.code.tex
+File: pgfcorepathconstruct.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@path@lastx=\dimen275
+\pgf@path@lasty=\dimen276
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.c
+ode.tex
+File: pgfcorepathusage.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@shorten@end@additional=\dimen277
+\pgf@shorten@start@additional=\dimen278
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code
+.tex
+File: pgfcorescopes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfpic=\box65
+\pgf@hbox=\box66
+\pgf@layerbox@main=\box67
+\pgf@picture@serial@count=\count314
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstat
+e.code.tex
+File: pgfcoregraphicstate.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgflinewidth=\dimen279
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformat
+ions.code.tex
+File: pgfcoretransformations.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@pt@x=\dimen280
+\pgf@pt@y=\dimen281
+\pgf@pt@temp=\dimen282
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.
+tex
+File: pgfcorequick.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.cod
+e.tex
+File: pgfcoreobjects.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathprocess
+ing.code.tex
+File: pgfcorepathprocessing.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code
+.tex
+File: pgfcorearrows.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfarrowsep=\dimen283
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.
+tex
+File: pgfcoreshade.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@max=\dimen284
+\pgf@sys@shading@range@num=\count315
+\pgf@shadingcount=\count316
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.
+tex
+File: pgfcoreimage.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.co
+de.tex
+File: pgfcoreexternal.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfexternal@startupbox=\box68
+))
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code
+.tex
+File: pgfcorelayers.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparenc
+y.code.tex
+File: pgfcoretransparency.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.co
+de.tex
+File: pgfcorepatterns.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf.code.te
+x
+File: pgfcorerdf.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)))
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.
+tex
+File: pgfmoduleshapes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfnodeparttextbox=\box69
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.te
+x
+File: pgfmoduleplot.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0
+-65.sty
+Package: pgfcomp-version-0-65 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@nodesepstart=\dimen285
+\pgf@nodesepend=\dimen286
+)
+(/home/alexis/.TinyTeX/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1
+-18.sty
+Package: pgfcomp-version-1-18 2021/05/15 v3.1.9a (3.1.9a)
+)) (/home/alexis/.TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgffor.sty (/home/
+alexis/.TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty (/home/alexis/.T
+inyTeX/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex)) (/home/alexis/.T
+inyTeX/texmf-dist/tex/latex/pgf/math/pgfmath.sty (/home/alexis/.TinyTeX/texmf-d
+ist/tex/generic/pgf/math/pgfmath.code.tex)) (/home/alexis/.TinyTeX/texmf-dist/t
+ex/generic/pgf/utilities/pgffor.code.tex
+Package: pgffor 2021/05/15 v3.1.9a (3.1.9a)
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)
+\pgffor@iter=\dimen287
+\pgffor@skip=\dimen288
+\pgffor@stack=\toks40
+\pgffor@toks=\toks41
+))
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.
+tex
+Package: tikz 2021/05/15 v3.1.9a (3.1.9a)
+
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandl
+ers.code.tex
+File: pgflibraryplothandlers.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@plot@mark@count=\count317
+\pgfplotmarksize=\dimen289
+)
+\tikz@lastx=\dimen290
+\tikz@lasty=\dimen291
+\tikz@lastxsaved=\dimen292
+\tikz@lastysaved=\dimen293
+\tikz@lastmovetox=\dimen294
+\tikz@lastmovetoy=\dimen295
+\tikzleveldistance=\dimen296
+\tikzsiblingdistance=\dimen297
+\tikz@figbox=\box70
+\tikz@figbox@bg=\box71
+\tikz@tempbox=\box72
+\tikz@tempbox@bg=\box73
+\tikztreelevel=\count318
+\tikznumberofchildren=\count319
+\tikznumberofcurrentchild=\count320
+\tikz@fig@count=\count321
+
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.
+tex
+File: pgfmodulematrix.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfmatrixcurrentrow=\count322
+\pgfmatrixcurrentcolumn=\count323
+\pgf@matrix@numberofcolumns=\count324
+)
+\tikz@expandcount=\count325
+
+(/home/alexis/.TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/
+tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+))) (/home/alexis/.TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
 \multirow@colwidth=\skip79
-\multirow@cntb=\count305
+\multirow@cntb=\count326
 \multirow@dima=\skip80
-\bigstrutjot=\dimen192
+\bigstrutjot=\dimen298
 ) (/home/alexis/.TinyTeX/texmf-dist/tex/latex/wrapfig/wrapfig.sty
-\wrapoverhang=\dimen193
-\WF@size=\dimen194
-\c@WF@wrappedlines=\count306
-\WF@box=\box63
-\WF@everypar=\toks30
+\wrapoverhang=\dimen299
+\WF@size=\dimen300
+\c@WF@wrappedlines=\count327
+\WF@box=\box74
+\WF@everypar=\toks42
 Package: wrapfig 2003/01/31  v 3.6
 ) (/home/alexis/.TinyTeX/texmf-dist/tex/latex/colortbl/colortbl.sty
 Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
-\everycr=\toks31
+\everycr=\toks43
 \minrowclearance=\skip81
 ) (/home/alexis/.TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
@@ -442,36 +716,36 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
 (/home/alexis/.TinyTeX/texmf-dist/tex/latex/varwidth/varwidth.sty
 Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
-\@vwid@box=\box64
-\sift@deathcycles=\count307
-\@vwid@loff=\dimen195
-\@vwid@roff=\dimen196
+\@vwid@box=\box75
+\sift@deathcycles=\count328
+\@vwid@loff=\dimen301
+\@vwid@roff=\dimen302
 )
-\c@taburow=\count308
-\tabu@nbcols=\count309
-\tabu@cnt=\count310
-\tabu@Xcol=\count311
-\tabu@alloc=\count312
-\tabu@nested=\count313
-\tabu@target=\dimen197
-\tabu@spreadtarget=\dimen198
-\tabu@naturalX=\dimen199
-\tabucolX=\dimen256
-\tabu@Xsum=\dimen257
-\extrarowdepth=\dimen258
-\abovetabulinesep=\dimen259
-\belowtabulinesep=\dimen260
-\tabustrutrule=\dimen261
-\tabu@thebody=\toks32
-\tabu@footnotes=\toks33
-\tabu@box=\box65
-\tabu@arstrutbox=\box66
-\tabu@hleads=\box67
-\tabu@vleads=\box68
+\c@taburow=\count329
+\tabu@nbcols=\count330
+\tabu@cnt=\count331
+\tabu@Xcol=\count332
+\tabu@alloc=\count333
+\tabu@nested=\count334
+\tabu@target=\dimen303
+\tabu@spreadtarget=\dimen304
+\tabu@naturalX=\dimen305
+\tabucolX=\dimen306
+\tabu@Xsum=\dimen307
+\extrarowdepth=\dimen308
+\abovetabulinesep=\dimen309
+\belowtabulinesep=\dimen310
+\tabustrutrule=\dimen311
+\tabu@thebody=\toks44
+\tabu@footnotes=\toks45
+\tabu@box=\box76
+\tabu@arstrutbox=\box77
+\tabu@hleads=\box78
+\tabu@vleads=\box79
 \tabu@cellskip=\skip82
 ) (/home/alexis/.TinyTeX/texmf-dist/tex/latex/threeparttable/threeparttable.sty
 Package: threeparttable 2003/06/13  v 3.0
-\@tempboxb=\box69
+\@tempboxb=\box80
 )
 (/home/alexis/.TinyTeX/texmf-dist/tex/latex/threeparttablex/threeparttablex.sty
 Package: threeparttablex 2013/07/23 v0.3 by daleif
@@ -482,49 +756,49 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 ))
 \TPTL@width=\skip83
 ) (/home/alexis/.TinyTeX/texmf-dist/tex/generic/ulem/ulem.sty
-\UL@box=\box70
-\UL@hyphenbox=\box71
+\UL@box=\box81
+\UL@hyphenbox=\box82
 \UL@skip=\skip84
-\UL@hook=\toks34
-\UL@height=\dimen262
-\UL@pe=\count314
-\UL@pixel=\dimen263
-\ULC@box=\box72
+\UL@hook=\toks46
+\UL@height=\dimen312
+\UL@pe=\count335
+\UL@pixel=\dimen313
+\ULC@box=\box83
 Package: ulem 2019/11/18
-\ULdepth=\dimen264
+\ULdepth=\dimen314
 ) (/home/alexis/.TinyTeX/texmf-dist/tex/latex/makecell/makecell.sty
 Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
-\rotheadsize=\dimen265
-\c@nlinenum=\count315
-\TeXr@lab=\toks35
+\rotheadsize=\dimen315
+\c@nlinenum=\count336
+\TeXr@lab=\toks47
 )
 \cslhangindent=\skip85
 \csllabelwidth=\skip86
 (/home/alexis/.TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count316
-\l__pdf_internal_box=\box73
+File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count337
+\l__pdf_internal_box=\box84
 ) (./tp_final.aux)
 \openout1 = `tp_final.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 133.
-LaTeX Font Info:    ... okay on input line 133.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 133.
-LaTeX Font Info:    ... okay on input line 133.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 133.
-LaTeX Font Info:    ... okay on input line 133.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 133.
-LaTeX Font Info:    ... okay on input line 133.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 133.
-LaTeX Font Info:    ... okay on input line 133.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 133.
-LaTeX Font Info:    ... okay on input line 133.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 133.
-LaTeX Font Info:    ... okay on input line 133.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 133.
-LaTeX Font Info:    ... okay on input line 133.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 133.
-LaTeX Font Info:    ... okay on input line 133.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 134.
+LaTeX Font Info:    ... okay on input line 134.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 134.
+LaTeX Font Info:    ... okay on input line 134.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 134.
+LaTeX Font Info:    ... okay on input line 134.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 134.
+LaTeX Font Info:    ... okay on input line 134.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 134.
+LaTeX Font Info:    ... okay on input line 134.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 134.
+LaTeX Font Info:    ... okay on input line 134.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 134.
+LaTeX Font Info:    ... okay on input line 134.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 134.
+LaTeX Font Info:    ... okay on input line 134.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 134.
+LaTeX Font Info:    ... okay on input line 134.
 (/home/alexis/.TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -533,7 +807,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 133.
+Package hyperref Info: Link coloring OFF on input line 134.
 (/home/alexis/.TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 (/home/alexis/.TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
@@ -542,11 +816,11 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 (/home/alexis/.TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count317
+\c@section@level=\count338
 )
-LaTeX Info: Redefining \ref on input line 133.
-LaTeX Info: Redefining \pageref on input line 133.
-LaTeX Info: Redefining \nameref on input line 133.
+LaTeX Info: Redefining \ref on input line 134.
+LaTeX Info: Redefining \pageref on input line 134.
+LaTeX Info: Redefining \nameref on input line 134.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -586,14 +860,14 @@ Package caption Info: End \AtBeginDocument code.
 (/home/alexis/.TinyTeX/texmf-dist/tex/latex/floatrow/fr-longtable.sty
 Package: fr-longtable 2007/11/28 v0.1b (beta) floatrow: additions for longtable
 
-\flrow@LT@lasthead=\box74
-\flrow@LT@prelastfoot=\box75
-\c@FBLTpage=\count318
+\flrow@LT@lasthead=\box85
+\flrow@LT@prelastfoot=\box86
+\c@FBLTpage=\count339
 )
-<logo.png, id=4, 737.75626pt x 144.54pt>
+<logo.png, id=7, 737.75626pt x 144.54pt>
 File: logo.png Graphic file (type png)
 <use logo.png>
-Package pdftex.def Info: logo.png  used on input line 134.
+Package pdftex.def Info: logo.png  used on input line 135.
 (pdftex.def)             Requested size: 144.5317pt x 28.3164pt.
 [1
 
@@ -633,221 +907,221 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 3.
 (/home/alexis/.TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [2])
-\tf@toc=\write3
-\openout3 = `tp_final.toc'.
+\tf@toc=\write4
+\openout4 = `tp_final.toc'.
 
 [3] [4]
-<tp_final_files/figure-latex/ipc-vs-is-vs-bm-1.pdf, id=122, 710.655pt x 282.053
+<tp_final_files/figure-latex/ipc-vs-is-vs-bm-1.pdf, id=125, 710.655pt x 282.053
 76pt>
 File: tp_final_files/figure-latex/ipc-vs-is-vs-bm-1.pdf Graphic file (type pdf)
 
 <use tp_final_files/figure-latex/ipc-vs-is-vs-bm-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/ipc-vs-is-vs-bm-1.pdf  use
-d on input line 185.
+d on input line 186.
 (pdftex.def)             Requested size: 469.77112pt x 186.4487pt.
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
-93.
+94.
 (/home/alexis/.TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [5 <./tp_final_files/figure-latex/ipc-vs-is-vs-bm-1.pdf>]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 223.
+(Font)              <9> on input line 224.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 223.
+(Font)              <6> on input line 224.
 [6] [7]
-<tp_final_files/figure-latex/ipc-1.pdf, id=190, 712.6625pt x 354.32375pt>
+<tp_final_files/figure-latex/ipc-1.pdf, id=193, 712.6625pt x 354.32375pt>
 File: tp_final_files/figure-latex/ipc-1.pdf Graphic file (type pdf)
 <use tp_final_files/figure-latex/ipc-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/ipc-1.pdf  used on input l
-ine 321.
+ine 322.
 (pdftex.def)             Requested size: 469.74974pt x 233.55162pt.
 [8 <./tp_final_files/figure-latex/ipc-1.pdf>]
-<tp_final_files/figure-latex/is-1.pdf, id=212, 712.6625pt x 354.32375pt>
+<tp_final_files/figure-latex/is-1.pdf, id=215, 712.6625pt x 354.32375pt>
 File: tp_final_files/figure-latex/is-1.pdf Graphic file (type pdf)
 <use tp_final_files/figure-latex/is-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/is-1.pdf  used on input li
-ne 374.
+ne 375.
 (pdftex.def)             Requested size: 469.74974pt x 233.55162pt.
-<tp_final_files/figure-latex/bm-1.pdf, id=216, 712.6625pt x 351.3125pt>
+<tp_final_files/figure-latex/bm-1.pdf, id=219, 712.6625pt x 351.3125pt>
 File: tp_final_files/figure-latex/bm-1.pdf Graphic file (type pdf)
 <use tp_final_files/figure-latex/bm-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/bm-1.pdf  used on input li
-ne 423.
+ne 424.
 (pdftex.def)             Requested size: 469.74974pt x 231.56676pt.
 [9 <./tp_final_files/figure-latex/is-1.pdf>]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
-79.
+80.
 (/home/alexis/.TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [10 <./tp_final_files/figure-latex/bm-1.pdf>]
-<tp_final_files/figure-latex/ipc-diferenciado-1.pdf, id=253, 712.6625pt x 354.3
+<tp_final_files/figure-latex/ipc-diferenciado-1.pdf, id=256, 712.6625pt x 354.3
 2375pt>
 File: tp_final_files/figure-latex/ipc-diferenciado-1.pdf Graphic file (type pdf
 )
 <use tp_final_files/figure-latex/ipc-diferenciado-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/ipc-diferenciado-1.pdf  us
-ed on input line 484.
+ed on input line 485.
 (pdftex.def)             Requested size: 469.74974pt x 233.55162pt.
-<tp_final_files/figure-latex/is-diferenciado-1.pdf, id=256, 712.6625pt x 354.32
+<tp_final_files/figure-latex/is-diferenciado-1.pdf, id=259, 712.6625pt x 354.32
 375pt>
 File: tp_final_files/figure-latex/is-diferenciado-1.pdf Graphic file (type pdf)
 
 <use tp_final_files/figure-latex/is-diferenciado-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/is-diferenciado-1.pdf  use
-d on input line 535.
+d on input line 536.
 (pdftex.def)             Requested size: 469.74974pt x 233.55162pt.
 [11 <./tp_final_files/figure-latex/ipc-diferenciado-1.pdf>]
-<tp_final_files/figure-latex/bm-diferenciado-1.pdf, id=275, 712.6625pt x 351.31
+<tp_final_files/figure-latex/bm-diferenciado-1.pdf, id=278, 712.6625pt x 351.31
 25pt>
 File: tp_final_files/figure-latex/bm-diferenciado-1.pdf Graphic file (type pdf)
 
 <use tp_final_files/figure-latex/bm-diferenciado-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/bm-diferenciado-1.pdf  use
-d on input line 584.
+d on input line 585.
 (pdftex.def)             Requested size: 469.74974pt x 231.56676pt.
 [12 <./tp_final_files/figure-latex/is-diferenciado-1.pdf>]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [13 <./tp_final_files/figure-latex/bm-diferenciado-1.pdf>] [14]
-<tp_final_files/figure-latex/irf-ipc-bm-1.pdf, id=330, 716.6775pt x 263.98625pt
+<tp_final_files/figure-latex/irf-ipc-bm-1.pdf, id=333, 716.6775pt x 263.98625pt
 >
 File: tp_final_files/figure-latex/irf-ipc-bm-1.pdf Graphic file (type pdf)
 <use tp_final_files/figure-latex/irf-ipc-bm-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/irf-ipc-bm-1.pdf  used on 
-input line 742.
+input line 743.
 (pdftex.def)             Requested size: 469.76074pt x 173.03511pt.
-<tp_final_files/figure-latex/pronostico-ipc-bm-1.pdf, id=333, 710.655pt x 279.0
+<tp_final_files/figure-latex/pronostico-ipc-bm-1.pdf, id=336, 710.655pt x 279.0
 425pt>
 File: tp_final_files/figure-latex/pronostico-ipc-bm-1.pdf Graphic file (type pd
 f)
 <use tp_final_files/figure-latex/pronostico-ipc-bm-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/pronostico-ipc-bm-1.pdf  u
-sed on input line 753.
+sed on input line 754.
 (pdftex.def)             Requested size: 469.77112pt x 184.45815pt.
 [15 <./tp_final_files/figure-latex/irf-ipc-bm-1.pdf> <./tp_final_files/figure-l
 atex/pronostico-ipc-bm-1.pdf>]
-<tp_final_files/figure-latex/irf-is-ipc-1.pdf, id=372, 712.6625pt x 266.9975pt>
+<tp_final_files/figure-latex/irf-is-ipc-1.pdf, id=375, 712.6625pt x 266.9975pt>
 
 File: tp_final_files/figure-latex/irf-is-ipc-1.pdf Graphic file (type pdf)
 <use tp_final_files/figure-latex/irf-is-ipc-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/irf-is-ipc-1.pdf  used on 
-input line 862.
+input line 863.
 (pdftex.def)             Requested size: 469.74974pt x 175.99072pt.
 [16]
-<tp_final_files/figure-latex/pronostico-ipc-is-1.pdf, id=384, 710.655pt x 279.0
+<tp_final_files/figure-latex/pronostico-ipc-is-1.pdf, id=387, 710.655pt x 279.0
 425pt>
 File: tp_final_files/figure-latex/pronostico-ipc-is-1.pdf Graphic file (type pd
 f)
 <use tp_final_files/figure-latex/pronostico-ipc-is-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/pronostico-ipc-is-1.pdf  u
-sed on input line 873.
+sed on input line 874.
 (pdftex.def)             Requested size: 469.77112pt x 184.45815pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [17 <./tp_final_files/figure-latex/irf-is-ipc-1.pdf> <./tp_final_files/figure-l
 atex/pronostico-ipc-is-1.pdf>]
-<tp_final_files/figure-latex/irf-is-bm-1.pdf, id=424, 716.6775pt x 266.9975pt>
+<tp_final_files/figure-latex/irf-is-bm-1.pdf, id=427, 716.6775pt x 266.9975pt>
 File: tp_final_files/figure-latex/irf-is-bm-1.pdf Graphic file (type pdf)
 <use tp_final_files/figure-latex/irf-is-bm-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/irf-is-bm-1.pdf  used on i
-nput line 982.
+nput line 983.
 (pdftex.def)             Requested size: 469.76074pt x 175.00888pt.
 [18]
-<tp_final_files/figure-latex/pronostico-bm-is-1.pdf, id=436, 710.655pt x 279.04
+<tp_final_files/figure-latex/pronostico-bm-is-1.pdf, id=439, 710.655pt x 279.04
 25pt>
 File: tp_final_files/figure-latex/pronostico-bm-is-1.pdf Graphic file (type pdf
 )
 <use tp_final_files/figure-latex/pronostico-bm-is-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/pronostico-bm-is-1.pdf  us
-ed on input line 993.
+ed on input line 994.
 (pdftex.def)             Requested size: 469.77112pt x 184.45815pt.
 [19 <./tp_final_files/figure-latex/irf-is-bm-1.pdf> <./tp_final_files/figure-la
 tex/pronostico-bm-is-1.pdf>]
-<tp_final_files/figure-latex/unnamed-chunk-26-1.pdf, id=468, 401.5pt x 280.0462
+<tp_final_files/figure-latex/unnamed-chunk-26-1.pdf, id=471, 401.5pt x 280.0462
 5pt>
 File: tp_final_files/figure-latex/unnamed-chunk-26-1.pdf Graphic file (type pdf
 )
 <use tp_final_files/figure-latex/unnamed-chunk-26-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-26-1.pdf  us
-ed on input line 1037.
+ed on input line 1038.
 (pdftex.def)             Requested size: 401.51738pt x 280.05836pt.
-<tp_final_files/figure-latex/ipc-pp-componentes-1.pdf, id=470, 568.1225pt x 283
+<tp_final_files/figure-latex/ipc-pp-componentes-1.pdf, id=473, 568.1225pt x 283
 .0575pt>
 File: tp_final_files/figure-latex/ipc-pp-componentes-1.pdf Graphic file (type p
 df)
 <use tp_final_files/figure-latex/ipc-pp-componentes-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/ipc-pp-componentes-1.pdf  
-used on input line 1045.
+used on input line 1046.
 (pdftex.def)             Requested size: 469.7731pt x 234.05655pt.
 [20 <./tp_final_files/figure-latex/unnamed-chunk-26-1.pdf>]
-<tp_final_files/figure-latex/unnamed-chunk-29-1.pdf, id=490, 401.5pt x 280.0462
+<tp_final_files/figure-latex/unnamed-chunk-29-1.pdf, id=493, 401.5pt x 280.0462
 5pt>
 File: tp_final_files/figure-latex/unnamed-chunk-29-1.pdf Graphic file (type pdf
 )
 <use tp_final_files/figure-latex/unnamed-chunk-29-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-29-1.pdf  us
-ed on input line 1082.
+ed on input line 1083.
 (pdftex.def)             Requested size: 401.51738pt x 280.05836pt.
 [21 <./tp_final_files/figure-latex/ipc-pp-componentes-1.pdf>]
-<tp_final_files/figure-latex/is-pp-componentes-1.pdf, id=508, 568.1225pt x 280.
+<tp_final_files/figure-latex/is-pp-componentes-1.pdf, id=511, 568.1225pt x 280.
 04625pt>
 File: tp_final_files/figure-latex/is-pp-componentes-1.pdf Graphic file (type pd
 f)
 <use tp_final_files/figure-latex/is-pp-componentes-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/is-pp-componentes-1.pdf  u
-sed on input line 1090.
+sed on input line 1091.
 (pdftex.def)             Requested size: 469.7731pt x 231.56659pt.
 [22 <./tp_final_files/figure-latex/unnamed-chunk-29-1.pdf> <./tp_final_files/fi
 gure-latex/is-pp-componentes-1.pdf>]
-<tp_final_files/figure-latex/unnamed-chunk-32-1.pdf, id=537, 401.5pt x 277.035p
+<tp_final_files/figure-latex/unnamed-chunk-32-1.pdf, id=540, 401.5pt x 277.035p
 t>
 File: tp_final_files/figure-latex/unnamed-chunk-32-1.pdf Graphic file (type pdf
 )
 <use tp_final_files/figure-latex/unnamed-chunk-32-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-32-1.pdf  us
-ed on input line 1127.
+ed on input line 1128.
 (pdftex.def)             Requested size: 401.49901pt x 277.03432pt.
 
 LaTeX Warning: Reference `fig:bm-pp-componentes' on page 23 undefined on input 
-line 1132.
+line 1133.
 
-<tp_final_files/figure-latex/bm-pp-components-1.pdf, id=538, 568.1225pt x 280.0
+<tp_final_files/figure-latex/bm-pp-components-1.pdf, id=541, 568.1225pt x 280.0
 4625pt>
 File: tp_final_files/figure-latex/bm-pp-components-1.pdf Graphic file (type pdf
 )
 <use tp_final_files/figure-latex/bm-pp-components-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/bm-pp-components-1.pdf  us
-ed on input line 1135.
+ed on input line 1136.
 (pdftex.def)             Requested size: 469.7731pt x 231.56659pt.
 [23 <./tp_final_files/figure-latex/unnamed-chunk-32-1.pdf>] [24 <./tp_final_fil
 es/figure-latex/bm-pp-components-1.pdf>] [25] [26]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 1193.
+(Font)              <12> on input line 1213.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 1193.
+(Font)              <8> on input line 1213.
 [27]
-Overfull \hbox (197.84377pt too wide) in paragraph at lines 1326--1326
+Overfull \hbox (197.84377pt too wide) in paragraph at lines 1346--1346
  []\T1/lmtt/m/n/9 ## train_ipc = train_ipc.l1 + train_is.l1 + train_ipc.l2 + tr
 ain_is.l2 + train_ipc.l3 + train_is.l3 + train_ipc.l4 + train_is.l4 + const[] 
  []
 
 
-Overfull \hbox (193.11877pt too wide) in paragraph at lines 1326--1326
+Overfull \hbox (193.11877pt too wide) in paragraph at lines 1346--1346
  []\T1/lmtt/m/n/9 ## train_is = train_ipc.l1 + train_is.l1 + train_ipc.l2 + tra
 in_is.l2 + train_ipc.l3 + train_is.l3 + train_ipc.l4 + train_is.l4 + const[] 
  []
 
 [28]
-Overfull \hbox (438.8183pt too wide) in paragraph at lines 1409--1409
+Overfull \hbox (438.8183pt too wide) in paragraph at lines 1429--1429
  []\T1/lmtt/m/n/9 ## train_is = train_is.l1 + train_bm.l1 + train_is.l2 + train
 _bm.l2 + train_is.l3 + train_bm.l3 + train_is.l4 + train_bm.l4 + train_is.l5 + 
 train_bm.l5 + train_is.l6 + train_bm.l6 + const[] 
  []
 
 [29]
-Overfull \hbox (438.8183pt too wide) in paragraph at lines 1409--1409
+Overfull \hbox (438.8183pt too wide) in paragraph at lines 1429--1429
  []\T1/lmtt/m/n/9 ## train_bm = train_is.l1 + train_bm.l1 + train_is.l2 + train
 _bm.l2 + train_is.l3 + train_bm.l3 + train_is.l4 + train_bm.l4 + train_is.l5 + 
 train_bm.l5 + train_is.l6 + train_bm.l6 + const[] 
@@ -859,13 +1133,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 14872 strings out of 480247
- 241342 string characters out of 5895876
- 529719 words of memory out of 5000000
- 32344 multiletter control sequences out of 15000+600000
+ 24937 strings out of 480238
+ 463063 string characters out of 5895672
+ 715212 words of memory out of 5000000
+ 42209 multiletter control sequences out of 15000+600000
  532601 words of font info for 78 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 74i,9n,77p,809b,482s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 84i,9n,80p,809b,715s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/home/alexis/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/home/ale
 xis/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/home/alexis/.TinyTeX/tex
 mf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/home/alexis/.TinyTeX/texmf-dist/font
@@ -885,10 +1159,10 @@ c/lm/lmr7.pfb></home/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr9.pfb>
 /.TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></home/alexis/.TinyTeX/tex
 mf-dist/fonts/type1/public/lm/lmsy9.pfb></home/alexis/.TinyTeX/texmf-dist/fonts
 /type1/public/lm/lmtt9.pfb>
-Output written on tp_final.pdf (30 pages, 558176 bytes).
+Output written on tp_final.pdf (30 pages, 560428 bytes).
 PDF statistics:
- 856 PDF objects out of 1000 (max. 8388607)
- 721 compressed objects within 8 object streams
- 182 named destinations out of 1000 (max. 500000)
- 453 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 860 PDF objects out of 1000 (max. 8388607)
+ 725 compressed objects within 8 object streams
+ 183 named destinations out of 1000 (max. 500000)
+ 465 words of extra memory for PDF output out of 10000 (max. 10000000)
 
