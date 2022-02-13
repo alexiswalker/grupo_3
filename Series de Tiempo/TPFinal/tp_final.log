@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.2.13)  13 FEB 2022 15:57
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.2.13)  13 FEB 2022 18:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1083,11 +1083,7 @@ File: tp_final_files/figure-latex/unnamed-chunk-32-1.pdf Graphic file (type pdf
 Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-32-1.pdf  us
 ed on input line 1128.
 (pdftex.def)             Requested size: 401.49901pt x 277.03432pt.
-
-LaTeX Warning: Reference `fig:bm-pp-componentes' on page 23 undefined on input 
-line 1133.
-
-<tp_final_files/figure-latex/bm-pp-components-1.pdf, id=541, 568.1225pt x 280.0
+<tp_final_files/figure-latex/bm-pp-components-1.pdf, id=542, 568.1225pt x 280.0
 4625pt>
 File: tp_final_files/figure-latex/bm-pp-components-1.pdf Graphic file (type pdf
 )
@@ -1127,42 +1123,38 @@ _bm.l2 + train_is.l3 + train_bm.l3 + train_is.l4 + train_bm.l4 + train_is.l5 +
 train_bm.l5 + train_is.l6 + train_bm.l6 + const[] 
  []
 
-[30] (./tp_final.aux)
-
-LaTeX Warning: There were undefined references.
-
- ) 
+[30] (./tp_final.aux) ) 
 Here is how much of TeX's memory you used:
- 24937 strings out of 480238
- 463063 string characters out of 5895672
+ 24936 strings out of 480238
+ 463040 string characters out of 5895672
  715212 words of memory out of 5000000
- 42209 multiletter control sequences out of 15000+600000
+ 42208 multiletter control sequences out of 15000+600000
  532601 words of font info for 78 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  84i,9n,80p,809b,715s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/home/alexis/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/home/ale
-xis/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/home/alexis/.TinyTeX/tex
-mf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/home/alexis/.TinyTeX/texmf-dist/font
-s/enc/dvips/lm/lm-rm.enc}{/home/alexis/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/l
-m-ts1.enc}</home/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></
-home/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></home/alexis/
-.TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></home/alexis/.TinyTeX/texm
-f-dist/fonts/type1/public/lm/lmmi10.pfb></home/alexis/.TinyTeX/texmf-dist/fonts
-/type1/public/lm/lmmi12.pfb></home/alexis/.TinyTeX/texmf-dist/fonts/type1/publi
-c/lm/lmmi6.pfb></home/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi9.pf
-b></home/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></home/alex
-is/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></home/alexis/.TinyTeX/t
-exmf-dist/fonts/type1/public/lm/lmr17.pfb></home/alexis/.TinyTeX/texmf-dist/fon
-ts/type1/public/lm/lmr6.pfb></home/alexis/.TinyTeX/texmf-dist/fonts/type1/publi
-c/lm/lmr7.pfb></home/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr9.pfb>
-</home/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmri9.pfb></home/alexis
-/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></home/alexis/.TinyTeX/tex
-mf-dist/fonts/type1/public/lm/lmsy9.pfb></home/alexis/.TinyTeX/texmf-dist/fonts
-/type1/public/lm/lmtt9.pfb>
-Output written on tp_final.pdf (30 pages, 560428 bytes).
+{/home/alexis/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-
+mathit.enc}{/home/alexis/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/hom
+e/alexis/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/home/alexis/.Ti
+nyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/home/alexis/.TinyTeX/texmf-dist
+/fonts/enc/dvips/lm/lm-ts1.enc}</home/alexis/.TinyTeX/texmf-dist/fonts/type1/pu
+blic/lm/lmbx10.pfb></home/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx
+12.pfb></home/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></home
+/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></home/alexis/.Tin
+yTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></home/alexis/.TinyTeX/texmf-d
+ist/fonts/type1/public/lm/lmmi6.pfb></home/alexis/.TinyTeX/texmf-dist/fonts/typ
+e1/public/lm/lmmi9.pfb></home/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/
+lmr10.pfb></home/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></h
+ome/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb></home/alexis/.T
+inyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb></home/alexis/.TinyTeX/texmf-d
+ist/fonts/type1/public/lm/lmr7.pfb></home/alexis/.TinyTeX/texmf-dist/fonts/type
+1/public/lm/lmr9.pfb></home/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/lm
+ri9.pfb></home/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></hom
+e/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></home/alexis/.Tin
+yTeX/texmf-dist/fonts/type1/public/lm/lmtt9.pfb>
+Output written on tp_final.pdf (30 pages, 560105 bytes).
 PDF statistics:
- 860 PDF objects out of 1000 (max. 8388607)
- 725 compressed objects within 8 object streams
+ 861 PDF objects out of 1000 (max. 8388607)
+ 726 compressed objects within 8 object streams
  183 named destinations out of 1000 (max. 500000)
  465 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -602,7 +602,7 @@ is_bm <- cbind(train_is, train_bm)
 
 ### Modelado
 
-Con el objeto principal de analizar causalidad entre series se proponen modelos agrupando de a pares los datos que se utilizan.
+Con el objeto principal de pronosticar y analizar causalidad entre series se proponen modelos agrupando de a pares los datos que se utilizan.
 
 Se calculan y muestran distintos criterios de selección para determinar el modelo que mejor ajusta, sin embargo se trabaja con el *Error de Predicción Final* (FPE) para determinar que retardo utilizar.
 
@@ -1381,7 +1381,7 @@ plot(bm_prophet_model, bm_prophet_forecast) +
 
 El modelo $Prophet$ es el que mejor ajusta a la serie de Base Monetaria, superando a los modelos $VAR$. A su vez, los intervalos de confianza de sus predicciones son mas acotadas que las de los modelos $VAR$.
 
-La Figura \@ref(fig:bm-pp-componentes) muestra la descomposición de los componentes del modelo.
+La Figura \@ref(fig:bm-pp-components) muestra la descomposición de los componentes del modelo.
 
 ```{r bm-pp-components, fig.cap="Componentes del modelo Prophet", fig.height=4, fig.width=8}
 prophet_plot_components(bm_prophet_model, bm_prophet_forecast)
@@ -1401,7 +1401,7 @@ Queda en evidencia que la tendencia del Índice de Precios al Consumidor y el Í
 
 De no realizarse cambios en el rumbo económico que impliquen mejoras en: el aspecto financiero (bajar el ritmo de emisión monetaria), incrementar las exportaciones para solventar la balanza de pagos y tipo de cambio, fomentar la producción nacional, para utilizar al máximo la capacidad instalada y poder disminuir las importaciones y luego con el crecimiento disminuir los impuestos para ser más competitivos, no se lograran mejorar los indicadores y el salario real seguirá decreciendo.
 
-Respecto a la causalidad o impacto que estos indicadores tienes entre si, hay falta de evidencia en los modelos simplificados que la tendencia de la Base Monetaria afecte el Índice de Precios al Consumidor; la conjetura del directo impacto de la emisión en la inflación no se hace visible entre los índices utilizados. Parece que encontrar esta dependencia implica complejizar el análisis sumando información al estudio.
+Respecto a la causalidad o impacto que estos indicadores tienes entre si, hay falta de indicios en los modelos simplificados que la tendencia de la Base Monetaria afecte el Índice de Precios al Consumidor; la conjetura del efecto directo de la emisión en la inflación no se hace visible entre los índices utilizados. Parece que encontrar esta dependencia implica complejizar el análisis sumando información al estudio.
 
 \begin{figure}
 \centering
@@ -1415,6 +1415,8 @@ Respecto a la causalidad o impacto que estos indicadores tienes entre si, hay fa
 \end{tikzpicture} 
 \caption{Causalidad}
 \end{figure}
+
+Por otro lado, existen eventos de carácter político que dejan huella en las lecturas obtenidas en torno al momento de su ocurrencia; conjuntos de medidas gubernamentales que tienen impacto en las series analizadas. Particularmente, la calidad del ajuste sugiere que las elecciones y la pandemia generaron una alteración del comportamiento, especialmente visible en la Base Monetaria. 
 
 Desde un punto de vista técnico, las series que tiene una variación relativamente constante en signo y valor (IPC e Índice de Salarios), son mejor explicadas con la incorporación de las lecturas de otras. Mientras la que muestra rango mensuales más amplios y en distintas direcciones (Base Monetaria), la segunda técnica aplicada ajusta mejor; algo visible no solo en los criterios de información sino también en los amplios intervalos de confianza producto de su variabilidad.
 
