@@ -301,17 +301,11 @@ Para mantenerlo simple, se presenta un modelo VAR de dos variables con retraso i
 
 Donde $\epsilon_{1, t}$ y $\epsilon_{2, t}$ \~ $N(0,\sigma_{y})$ y no están autocorrelacionados. $y_{1, t}$ y $y_{2, t}$ son estacionarias. El coeficiente $\phi_{ii, p}$ captura la influencia del _lag_ $p$ de la variable $y_{i}$ sobre si misma. Mientras que $\phi_{ij, p}$ determina el peso del _lag_ $p$ de la variable $y_{j}$ sobre $y_{i}$.
 
+La cantidad de retardos que constituyen el modelo de mejor ajuste surge de calcular una serie de criterios de información para una secuencia de valores asignadas al parámetro. 
 
-usar fpe: https://homepage.univie.ac.at/robert.kunst/pres07_var_abdgunyan.pdf
+Uno de ellos es el Error de Predicción Final (FPE de sus siglas en inglés). Según @ljung, éste proporciona una medida de calidad al simular la situación en la que el modelo se prueba con un conjunto de datos diferente. Según la teoría de Akaike, el más preciso tiene el FPE más pequeño, que representa un equilibrio entre el número de parámetros y la variación explicada.
 
-Final Prediction Error Criterion
-The Final Prediction Error Criterion (FPE) estimates the model-fitting error when you use the model to predict new outputs. For the FPE, an optimal model is the one that minimizes the following equation:
-
-[1] Ljung, L. System Identification: Theory for the User, Upper Saddle River, NJ, Prentice-Hall PTR, 1999. See sections 7.4 and 16.4.
-
-
-
-You want to choose a model that minimizes the FPE, which represents a balance between the number of parameters and the explained variation.
+Para determinar el aporte que una variable realiza para la predicción de otra, @granger propone una prueba donde determinar si el valor actual de $X_t$ se "predice" mejor cuando el valor actual de $Y_t$ es incluido en el modelo.
 
 ## Prophet 
 

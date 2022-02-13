@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.2.2)  12 FEB 2022 16:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.2.2)  12 FEB 2022 22:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -643,183 +643,183 @@ File: tp_final_files/figure-latex/ipc-vs-is-vs-bm-1.pdf Graphic file (type pdf)
 
 <use tp_final_files/figure-latex/ipc-vs-is-vs-bm-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/ipc-vs-is-vs-bm-1.pdf  use
-d on input line 183.
+d on input line 185.
 (pdftex.def)             Requested size: 469.77112pt x 186.4487pt.
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
-91.
+93.
 (/home/alexis/.TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [5 <./tp_final_files/figure-latex/ipc-vs-is-vs-bm-1.pdf>]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 221.
+(Font)              <9> on input line 223.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 221.
+(Font)              <6> on input line 223.
 [6] [7]
-<tp_final_files/figure-latex/ipc-1.pdf, id=180, 712.6625pt x 354.32375pt>
+<tp_final_files/figure-latex/ipc-1.pdf, id=182, 712.6625pt x 354.32375pt>
 File: tp_final_files/figure-latex/ipc-1.pdf Graphic file (type pdf)
 <use tp_final_files/figure-latex/ipc-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/ipc-1.pdf  used on input l
-ine 313.
+ine 310.
 (pdftex.def)             Requested size: 469.74974pt x 233.55162pt.
 [8 <./tp_final_files/figure-latex/ipc-1.pdf>]
-<tp_final_files/figure-latex/is-1.pdf, id=202, 712.6625pt x 354.32375pt>
+<tp_final_files/figure-latex/is-1.pdf, id=204, 712.6625pt x 354.32375pt>
 File: tp_final_files/figure-latex/is-1.pdf Graphic file (type pdf)
 <use tp_final_files/figure-latex/is-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/is-1.pdf  used on input li
-ne 366.
+ne 363.
 (pdftex.def)             Requested size: 469.74974pt x 233.55162pt.
-<tp_final_files/figure-latex/bm-1.pdf, id=206, 712.6625pt x 351.3125pt>
+<tp_final_files/figure-latex/bm-1.pdf, id=208, 712.6625pt x 351.3125pt>
 File: tp_final_files/figure-latex/bm-1.pdf Graphic file (type pdf)
 <use tp_final_files/figure-latex/bm-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/bm-1.pdf  used on input li
-ne 415.
+ne 412.
 (pdftex.def)             Requested size: 469.74974pt x 231.56676pt.
 [9 <./tp_final_files/figure-latex/is-1.pdf>]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
-71.
+68.
 (/home/alexis/.TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [10 <./tp_final_files/figure-latex/bm-1.pdf>]
-<tp_final_files/figure-latex/ipc-diferenciado-1.pdf, id=243, 712.6625pt x 354.3
+<tp_final_files/figure-latex/ipc-diferenciado-1.pdf, id=245, 712.6625pt x 354.3
 2375pt>
 File: tp_final_files/figure-latex/ipc-diferenciado-1.pdf Graphic file (type pdf
 )
 <use tp_final_files/figure-latex/ipc-diferenciado-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/ipc-diferenciado-1.pdf  us
-ed on input line 476.
+ed on input line 473.
 (pdftex.def)             Requested size: 469.74974pt x 233.55162pt.
-<tp_final_files/figure-latex/is-diferenciado-1.pdf, id=246, 712.6625pt x 354.32
+<tp_final_files/figure-latex/is-diferenciado-1.pdf, id=248, 712.6625pt x 354.32
 375pt>
 File: tp_final_files/figure-latex/is-diferenciado-1.pdf Graphic file (type pdf)
 
 <use tp_final_files/figure-latex/is-diferenciado-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/is-diferenciado-1.pdf  use
-d on input line 527.
+d on input line 524.
 (pdftex.def)             Requested size: 469.74974pt x 233.55162pt.
 [11 <./tp_final_files/figure-latex/ipc-diferenciado-1.pdf>]
-<tp_final_files/figure-latex/bm-diferenciado-1.pdf, id=265, 712.6625pt x 351.31
+<tp_final_files/figure-latex/bm-diferenciado-1.pdf, id=267, 712.6625pt x 351.31
 25pt>
 File: tp_final_files/figure-latex/bm-diferenciado-1.pdf Graphic file (type pdf)
 
 <use tp_final_files/figure-latex/bm-diferenciado-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/bm-diferenciado-1.pdf  use
-d on input line 576.
+d on input line 573.
 (pdftex.def)             Requested size: 469.74974pt x 231.56676pt.
 [12 <./tp_final_files/figure-latex/is-diferenciado-1.pdf>]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [13 <./tp_final_files/figure-latex/bm-diferenciado-1.pdf>] [14]
-<tp_final_files/figure-latex/irf-ipc-bm-1.pdf, id=320, 716.6775pt x 263.98625pt
+<tp_final_files/figure-latex/irf-ipc-bm-1.pdf, id=322, 716.6775pt x 263.98625pt
 >
 File: tp_final_files/figure-latex/irf-ipc-bm-1.pdf Graphic file (type pdf)
 <use tp_final_files/figure-latex/irf-ipc-bm-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/irf-ipc-bm-1.pdf  used on 
-input line 734.
+input line 731.
 (pdftex.def)             Requested size: 469.76074pt x 173.03511pt.
-<tp_final_files/figure-latex/pronostico-ipc-bm-1.pdf, id=322, 710.655pt x 279.0
+<tp_final_files/figure-latex/pronostico-ipc-bm-1.pdf, id=324, 710.655pt x 279.0
 425pt>
 File: tp_final_files/figure-latex/pronostico-ipc-bm-1.pdf Graphic file (type pd
 f)
 <use tp_final_files/figure-latex/pronostico-ipc-bm-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/pronostico-ipc-bm-1.pdf  u
-sed on input line 743.
+sed on input line 740.
 (pdftex.def)             Requested size: 469.77112pt x 184.45815pt.
 [15 <./tp_final_files/figure-latex/irf-ipc-bm-1.pdf> <./tp_final_files/figure-l
 atex/pronostico-ipc-bm-1.pdf>]
-<tp_final_files/figure-latex/irf-is-ipc-1.pdf, id=361, 712.6625pt x 266.9975pt>
+<tp_final_files/figure-latex/irf-is-ipc-1.pdf, id=363, 712.6625pt x 266.9975pt>
 
 File: tp_final_files/figure-latex/irf-is-ipc-1.pdf Graphic file (type pdf)
 <use tp_final_files/figure-latex/irf-is-ipc-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/irf-is-ipc-1.pdf  used on 
-input line 852.
+input line 849.
 (pdftex.def)             Requested size: 469.74974pt x 175.99072pt.
 [16]
-<tp_final_files/figure-latex/pronostico-ipc-is-1.pdf, id=372, 710.655pt x 279.0
+<tp_final_files/figure-latex/pronostico-ipc-is-1.pdf, id=374, 710.655pt x 279.0
 425pt>
 File: tp_final_files/figure-latex/pronostico-ipc-is-1.pdf Graphic file (type pd
 f)
 <use tp_final_files/figure-latex/pronostico-ipc-is-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/pronostico-ipc-is-1.pdf  u
-sed on input line 861.
+sed on input line 858.
 (pdftex.def)             Requested size: 469.77112pt x 184.45815pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [17 <./tp_final_files/figure-latex/irf-is-ipc-1.pdf> <./tp_final_files/figure-l
 atex/pronostico-ipc-is-1.pdf>]
-<tp_final_files/figure-latex/irf-is-bm-1.pdf, id=412, 716.6775pt x 266.9975pt>
+<tp_final_files/figure-latex/irf-is-bm-1.pdf, id=414, 716.6775pt x 266.9975pt>
 File: tp_final_files/figure-latex/irf-is-bm-1.pdf Graphic file (type pdf)
 <use tp_final_files/figure-latex/irf-is-bm-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/irf-is-bm-1.pdf  used on i
-nput line 970.
+nput line 967.
 (pdftex.def)             Requested size: 469.76074pt x 175.00888pt.
 [18]
-<tp_final_files/figure-latex/pronostico-bm-is-1.pdf, id=423, 710.655pt x 279.04
+<tp_final_files/figure-latex/pronostico-bm-is-1.pdf, id=425, 710.655pt x 279.04
 25pt>
 File: tp_final_files/figure-latex/pronostico-bm-is-1.pdf Graphic file (type pdf
 )
 <use tp_final_files/figure-latex/pronostico-bm-is-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/pronostico-bm-is-1.pdf  us
-ed on input line 979.
+ed on input line 976.
 (pdftex.def)             Requested size: 469.77112pt x 184.45815pt.
 [19 <./tp_final_files/figure-latex/irf-is-bm-1.pdf> <./tp_final_files/figure-la
 tex/pronostico-bm-is-1.pdf>]
-<tp_final_files/figure-latex/unnamed-chunk-26-1.pdf, id=455, 401.5pt x 280.0462
+<tp_final_files/figure-latex/unnamed-chunk-26-1.pdf, id=457, 401.5pt x 280.0462
 5pt>
 File: tp_final_files/figure-latex/unnamed-chunk-26-1.pdf Graphic file (type pdf
 )
 <use tp_final_files/figure-latex/unnamed-chunk-26-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-26-1.pdf  us
-ed on input line 1023.
+ed on input line 1020.
 (pdftex.def)             Requested size: 401.51738pt x 280.05836pt.
-<tp_final_files/figure-latex/ipc-pp-componentes-1.pdf, id=457, 568.1225pt x 283
+<tp_final_files/figure-latex/ipc-pp-componentes-1.pdf, id=459, 568.1225pt x 283
 .0575pt>
 File: tp_final_files/figure-latex/ipc-pp-componentes-1.pdf Graphic file (type p
 df)
 <use tp_final_files/figure-latex/ipc-pp-componentes-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/ipc-pp-componentes-1.pdf  
-used on input line 1031.
+used on input line 1028.
 (pdftex.def)             Requested size: 469.7731pt x 234.05655pt.
 [20 <./tp_final_files/figure-latex/unnamed-chunk-26-1.pdf>]
-<tp_final_files/figure-latex/unnamed-chunk-29-1.pdf, id=477, 401.5pt x 280.0462
+<tp_final_files/figure-latex/unnamed-chunk-29-1.pdf, id=479, 401.5pt x 280.0462
 5pt>
 File: tp_final_files/figure-latex/unnamed-chunk-29-1.pdf Graphic file (type pdf
 )
 <use tp_final_files/figure-latex/unnamed-chunk-29-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-29-1.pdf  us
-ed on input line 1068.
+ed on input line 1065.
 (pdftex.def)             Requested size: 401.51738pt x 280.05836pt.
 [21 <./tp_final_files/figure-latex/ipc-pp-componentes-1.pdf>]
-<tp_final_files/figure-latex/is-pp-componentes-1.pdf, id=495, 568.1225pt x 280.
+<tp_final_files/figure-latex/is-pp-componentes-1.pdf, id=497, 568.1225pt x 280.
 04625pt>
 File: tp_final_files/figure-latex/is-pp-componentes-1.pdf Graphic file (type pd
 f)
 <use tp_final_files/figure-latex/is-pp-componentes-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/is-pp-componentes-1.pdf  u
-sed on input line 1076.
+sed on input line 1073.
 (pdftex.def)             Requested size: 469.7731pt x 231.56659pt.
 [22 <./tp_final_files/figure-latex/unnamed-chunk-29-1.pdf> <./tp_final_files/fi
 gure-latex/is-pp-componentes-1.pdf>]
-<tp_final_files/figure-latex/unnamed-chunk-32-1.pdf, id=524, 401.5pt x 277.035p
+<tp_final_files/figure-latex/unnamed-chunk-32-1.pdf, id=526, 401.5pt x 277.035p
 t>
 File: tp_final_files/figure-latex/unnamed-chunk-32-1.pdf Graphic file (type pdf
 )
 <use tp_final_files/figure-latex/unnamed-chunk-32-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/unnamed-chunk-32-1.pdf  us
-ed on input line 1113.
+ed on input line 1110.
 (pdftex.def)             Requested size: 401.49901pt x 277.03432pt.
 
 LaTeX Warning: Reference `fig:bm-pp-componentes' on page 23 undefined on input 
-line 1118.
+line 1115.
 
-<tp_final_files/figure-latex/bm-pp-components-1.pdf, id=525, 568.1225pt x 280.0
+<tp_final_files/figure-latex/bm-pp-components-1.pdf, id=527, 568.1225pt x 280.0
 4625pt>
 File: tp_final_files/figure-latex/bm-pp-components-1.pdf Graphic file (type pdf
 )
 <use tp_final_files/figure-latex/bm-pp-components-1.pdf>
 Package pdftex.def Info: tp_final_files/figure-latex/bm-pp-components-1.pdf  us
-ed on input line 1121.
+ed on input line 1118.
 (pdftex.def)             Requested size: 469.7731pt x 231.56659pt.
 [23 <./tp_final_files/figure-latex/unnamed-chunk-32-1.pdf>] [24 <./tp_final_fil
 es/figure-latex/bm-pp-components-1.pdf>] [25] [26]
@@ -859,8 +859,8 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 14867 strings out of 480247
- 241284 string characters out of 5895876
+ 14868 strings out of 480247
+ 241293 string characters out of 5895876
  529686 words of memory out of 5000000
  32343 multiletter control sequences out of 15000+600000
  532601 words of font info for 78 fonts, out of 8000000 for 9000
@@ -885,10 +885,10 @@ c/lm/lmr7.pfb></home/alexis/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr9.pfb>
 /.TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></home/alexis/.TinyTeX/tex
 mf-dist/fonts/type1/public/lm/lmsy9.pfb></home/alexis/.TinyTeX/texmf-dist/fonts
 /type1/public/lm/lmtt9.pfb>
-Output written on tp_final.pdf (30 pages, 554123 bytes).
+Output written on tp_final.pdf (30 pages, 555120 bytes).
 PDF statistics:
- 841 PDF objects out of 1000 (max. 8388607)
- 706 compressed objects within 8 object streams
- 178 named destinations out of 1000 (max. 500000)
+ 843 PDF objects out of 1000 (max. 8388607)
+ 708 compressed objects within 8 object streams
+ 179 named destinations out of 1000 (max. 500000)
  453 words of extra memory for PDF output out of 10000 (max. 10000000)
 
