@@ -309,9 +309,12 @@ Para determinar el aporte que una variable realiza para la predicción de otra, 
 
 ## Prophet 
 
-Es un procedimiento para pronosticar datos de series temporales basado en un modelo aditivo donde las tendencias no lineales se ajustan a la estacionalidad anual, semanal y diaria, además de los efectos de las vacaciones. 
 
-Resistente a datos faltantes, valores atípicos y cambios de tendencia. 
+Según @rafferty Prophet fue desarrollado internamente en Facebook por Sean J. Taylor y Ben Letham. 
+
+Es un modelo de regresión aditivo, lo que implica la suma de varios componentes (opcionales), como: una curva de tendencia de crecimiento lineal o logística, una de estacionalidad anual, semanal o diaria, días festivos u otros eventos especiales, y, por último, curvas de estacionalidad adicionales especificadas por el usuario.
+
+Resistente a datos faltantes, valores atípicos y cambios de tendencia.
 
 \newpage
 
