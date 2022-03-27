@@ -77,15 +77,17 @@ El entregable que resulta de este trabajo supone:
 
 # Consideraciones (a completar)
 
-describir los aspectos a tener en cuenta cuando se hace scraping y que no serán desarrollados
+describir los aspectos a tener en cuenta cuando se hace scraping: CAPTCHA, contenido dinámico, etc.
 
 # Resto de tareas (a completar) 
 
-- cron
-- reintentos
+Cron en hosting
+Monitoreo: agente externo para ver si anda -> si anda, me autochequeo
+Resolver la caida de internet -> por ejemplo, reintentando
+Resolver errores html (40, 50)
+Chequear que la estructura cambio o no
+Describir cómo construir el dashboard sin construir nada
 ...
-...
-- dashboard
 
 # Futuras lineas de trabajo (a completar)
 
