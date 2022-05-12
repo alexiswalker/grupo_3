@@ -1,0 +1,539 @@
+avg_hourly_rate,client_focus_enterprise_1b,client_focus_midmarket_10m_1b,client_focus_small_business,company_name,employees,location,min_project_size,rating,reviews,service_focus_custom_software_development,service_focus_digital_strategy,service_focus_ecommerce_development,service_focus_it_managed_services,service_focus_it_staff_augmentation,service_focus_it_strategy_consulting,service_focus_mobile_app_development,service_focus_search_engine_optimization,service_focus_social_media_marketing,service_focus_uxui_design,service_focus_web_design,service_focus_web_development,cluster
+37,10,80,10,404 // Software crafters,29,"Campo Salles, Argentina",10000,4.7,5,30,0,0,0,0,0,40,0,0,0,0,30,1
+124,25,40,35,Rootstrap,149,"Buenos Aires, Argentina",50000,4.8,34,10,0,0,0,0,0,25,0,0,0,0,40,1
+-1,25,50,25,Flux IT,149,"Gonnet, Argentina",10000,4.9,10,40,0,0,0,0,0,30,0,0,0,0,30,1
+37,0,70,30,Clarika,149,"Córdoba, Argentina",10000,4.8,14,30,0,0,0,30,10,20,0,0,0,0,10,1
+37,30,40,30,Azumo,149,"Rosario, Argentina",25000,4.9,10,20,0,0,0,0,0,10,0,0,0,0,20,1
+37,20,50,30,The App Master,29,"Buenos Aires, Argentina",10000,5.0,7,30,0,0,0,0,0,40,0,0,10,0,0,1
+37,20,50,30,Nybble Group,149,"DQF, Argentina",5000,4.8,8,30,0,0,0,0,0,20,0,0,0,0,0,1
+74,20,45,35,Patagonian,149,"General Roca, Argentina",75000,4.9,6,20,0,5,0,0,0,20,0,0,20,0,10,1
+37,0,30,70,Crombie,29,"FQC, Argentina",10000,4.8,15,25,0,10,0,25,0,20,0,0,0,0,20,1
+25,0,0,0,Greelow,29,"CABA, Argentina",5000,5.0,9,0,0,0,0,30,0,20,0,0,0,0,50,0
+74,0,0,0,AccelOne,149,"Ciudad de Buenos Aires, Argentina",75000,4.9,11,10,0,5,0,10,0,15,0,0,15,0,0,1
+74,20,40,40,NaNLABS,29,"La Plata, Argentina",25000,4.9,13,50,0,0,0,0,0,10,0,0,10,0,10,1
+74,20,40,40,3XM Group,149,"Córdoba, Argentina",10000,4.9,7,40,0,0,0,10,0,10,0,0,0,0,10,1
+74,0,30,70,WillDom,624,"Buenos Aires, Argentina",10000,5.0,13,0,0,0,0,30,15,15,0,0,0,0,30,1
+74,55,40,5,Genium,149,"Buenos Aires, Argentina",25000,4.8,3,0,0,0,0,31,0,50,0,0,0,0,6,1
+37,0,40,60,XOOR Inc.,29,"Mar del Plata, Argentina",25000,5.0,21,0,0,0,0,0,0,50,0,0,0,0,50,1
+37,0,50,50,Simplex Software,149,"CMK, Argentina",10000,4.7,10,10,0,0,0,40,10,25,0,0,0,0,15,1
+74,0,0,0,Amalgama,149,"Buenos Aires, Argentina",10000,4.9,15,30,0,0,0,0,15,20,0,0,15,0,20,0
+37,30,40,30,Darwoft,149,"Córdoba, Argentina",5000,4.8,18,20,0,0,0,10,0,30,0,0,0,0,30,1
+-1,0,0,0,United Virtualities,149,"Buenos Aires, Argentina",50000,5.0,5,0,0,20,0,0,20,20,0,0,0,0,20,0
+37,0,0,0,Globant,10000,"Buenos Aires, Argentina",5000,4.8,3,10,10,0,0,0,0,10,0,10,10,10,30,1
+37,30,60,10,Southern Code,149,"Córdoba, Argentina",10000,4.8,9,30,0,0,0,15,0,40,0,0,15,0,0,1
+37,5,30,65,Devsar,29,"La Plata, Argentina",-1,4.8,15,0,0,0,0,0,0,40,0,0,0,0,60,1
+37,0,50,50,Zarego,29,"Ciudad Autonoma de Buenos Aires, Argentina",1000,4.8,7,25,0,0,7,0,10,25,0,0,5,0,20,1
+37,10,20,70,Serfe,29,"Santo Tomé, Argentina",10000,4.9,10,20,0,20,0,0,0,30,0,0,0,0,30,1
+74,10,10,80,Underscope,29,"Buenos Aires, Argentina",25000,5.0,1,0,0,0,0,0,0,60,0,0,0,0,10,1
+37,33,40,27,Huenei IT Services,624,"AAC, Argentina",5000,4.2,15,30,0,0,5,5,0,10,0,0,5,0,20,1
+37,0,50,50,The Fuzzy Fish,149,"Córdoba, Argentina",10000,4.9,6,20,0,10,10,0,0,20,0,0,15,5,20,1
+37,0,0,0,InAllMedia,5,"Buenos Aires, Argentina",-1,5.0,1,20,5,0,0,0,0,25,0,0,10,0,25,0
+25,10,50,40,Julasoft,29,"City Bell, Argentina",10000,5.0,5,20,0,0,0,0,0,20,0,0,0,0,20,1
+74,5,25,70,10Pines,149,"AAQ, Argentina",50000,5.0,4,45,0,5,0,0,0,10,0,0,5,0,30,1
+37,10,40,50,Softion,29,"Olivos, Argentina",5000,5.0,2,10,0,0,0,0,0,50,0,0,40,0,0,1
+37,0,20,80,Syloper,29,"AUB, Argentina",5000,4.8,6,30,0,0,0,0,0,40,0,0,0,0,30,1
+-1,0,0,0,EMMSA,149,"Ciudad Autónoma de Buenos Aires, Argentina",-1,5.0,2,35,0,0,0,0,30,35,0,0,0,0,0,0
+37,0,40,60,Puzzle,29,"Rosario, Argentina",10000,4.8,7,0,0,0,0,30,0,45,0,0,5,0,20,1
+37,0,0,0,Intermedia,29,"Tandil, Argentina",5000,4.5,1,0,0,0,0,0,0,50,0,0,10,0,25,0
+37,0,20,80,Southern Minds,5,"Rosario, Argentina",1000,5.0,2,15,0,15,0,0,0,20,0,0,0,0,25,1
+37,50,30,20,SimTLiX,624,"Córdoba, Argentina",25000,4.8,2,30,0,0,0,0,0,20,0,0,0,0,0,1
+124,0,0,0,G&L Group,149,"Buenos Aires, Argentina",5000,4.8,2,40,0,0,0,0,30,30,0,0,0,0,0,0
+74,40,40,20,Chispa Lab,29,"Rincón de Milberg, Argentina",5000,5.0,1,0,0,0,0,0,0,20,0,0,20,20,20,1
+-1,0,0,0,TGV,624,"Buenos Aires, Argentina",-1,4.7,3,30,0,0,0,15,0,20,0,0,0,0,20,0
+-1,15,35,50,Consensus,149,"ACM, Argentina",1000,4.7,3,35,0,0,0,0,25,25,0,0,0,0,0,1
+37,0,30,70,ZERF,29,"Buenos Aires, Argentina",5000,5.0,2,0,0,10,0,0,0,40,0,0,0,0,40,1
+37,20,40,40,Bombieri,29,"Concepción del Uruguay, Argentina",5000,4.9,9,0,0,15,0,0,0,15,0,10,10,0,30,1
+37,10,80,10,Hexacta,624,"Buenos Aires, Argentina",5000,5.0,1,35,0,0,0,0,0,15,0,0,10,5,25,1
+74,30,40,30,ABstract Solutions,29,"Martínez, Argentina",25000,5.0,2,0,0,0,0,0,0,30,0,0,0,0,30,1
+37,30,60,10,MAGNETICO,29,"AAT, Argentina",5000,4.8,3,0,0,0,0,0,0,30,0,0,30,0,30,1
+37,0,50,50,Jedify,29,"BUENOS AIRES, Argentina",5000,5.0,1,10,0,20,0,0,0,35,0,0,0,0,35,1
+37,0,0,0,Taller Technologies Argentina,149,"Córdoba, Argentina",-1,5.0,1,0,0,0,0,0,0,25,0,0,5,0,30,0
+74,0,0,100,Kelsus,29,"Buenos Aires, Argentina",50000,4.7,3,40,0,0,0,0,0,30,0,0,0,0,10,1
+74,20,20,60,Litebox,149,"Capital Federal, Argentina",10000,5.0,6,30,0,10,0,0,0,20,0,0,20,0,20,1
+74,0,80,20,Virtualmind,149,"ACN, Argentina",-1,4.9,6,45,0,0,0,0,0,15,0,0,10,0,20,1
+37,5,15,80,Kenility,149,"Córdoba, Argentina",10000,4.8,3,30,0,0,0,30,0,30,0,0,0,0,0,1
+74,0,20,80,Coorva,149,"Buenos Aires, Argentina",5000,5.0,2,0,0,0,0,60,0,20,0,0,0,0,20,1
+37,0,40,60,Claw Studios,5,"Córdoba, Argentina",25000,5.0,2,30,0,0,0,0,0,30,0,0,10,0,30,1
+74,30,50,20,Adviters,149,"CABA, Argentina",25000,5.0,1,30,0,0,0,10,0,20,0,0,0,0,0,1
+37,0,50,50,Orbit,29,"Rincón de Milberg, Argentina",1000,4.8,3,30,0,0,0,10,0,30,0,0,0,0,30,1
+37,0,30,70,XSide,29,"Buenos Aires, Argentina",1000,4.5,1,20,0,0,0,0,0,30,0,0,0,0,30,1
+37,0,30,70,Innovare Software,5,"Reconquista, Argentina",5000,5.0,2,40,0,0,0,0,0,20,0,0,0,0,20,1
+74,0,40,60,GM2,149,"EWG, Argentina",50000,5.0,2,30,0,25,0,0,0,15,0,0,30,0,0,1
+37,0,0,0,Smallcode,29,"Buenos Aires, Argentina",1000,5.0,4,30,0,20,0,0,0,20,0,0,0,0,20,0
+37,0,30,70,Novit,29,"ADK, Argentina",10000,5.0,2,25,0,0,0,0,0,30,0,0,0,0,35,1
+74,70,30,0,Wolox,624,"BZJ, Argentina",25000,3.4,4,30,0,0,0,0,10,20,0,0,20,0,0,1
+37,70,30,0,Workflow Development SA,29,"Buenos Aires, Argentina",10000,5.0,1,30,0,0,0,0,0,30,0,0,0,0,40,1
+37,0,0,0,Venon Solutions,29,"Córdoba, Argentina",10000,5.0,3,25,0,0,0,30,0,15,0,0,0,0,30,0
+37,0,0,0,Devlights,29,"Corrientes, Argentina",-1,4.9,8,15,0,10,0,20,0,15,10,0,7,0,18,0
+37,25,60,15,Velocity Partners,624,"Rosario, Argentina",-1,4.7,5,25,0,10,0,0,0,10,0,0,10,0,35,1
+25,0,50,50,Bit Think,29,"Rosario, Argentina",1000,3.5,1,0,0,0,0,0,0,50,0,0,0,0,30,1
+37,0,0,0,Accion Point,149,"Belgrano, Argentina",5000,4.3,3,0,0,0,0,0,60,20,0,0,0,0,20,0
+74,20,45,35,asamblo,29,"Lomas de Zamora, Argentina",5000,5.0,5,50,0,0,0,0,0,15,0,0,0,5,30,1
+37,20,55,25,Codea IT,29,"Buenos Aires, Argentina",-1,4.7,7,20,0,0,0,40,0,20,0,0,0,0,20,1
+74,40,60,0,Balloon Group,149,"DVS, Argentina",25000,5.0,2,0,15,60,0,0,0,10,0,0,0,15,0,1
+37,0,10,90,Devias,5,"Río Cuarto, Argentina",10000,4.5,2,35,0,0,0,0,0,30,0,0,0,0,35,1
+25,30,35,35,GearthLogic,29,"Mar del Plata, Argentina",5000,4.5,1,0,0,5,0,5,0,30,0,0,0,0,25,1
+37,0,30,70,Tuxdi,29,"Tandil, Argentina",5000,4.8,2,0,0,0,0,30,0,15,0,0,40,0,15,1
+37,10,80,10,Dividato AI Software Development,149,"Córdoba, Argentina",25000,5.0,2,35,0,0,0,0,0,10,0,0,0,0,10,1
+37,0,80,20,Flowing Code,5,"Santa Fe, Argentina",5000,5.0,1,30,0,0,10,0,0,10,0,0,0,0,20,1
+37,35,45,20,Digital Beings,29,"Buenos Aires, Argentina",5000,4.7,3,35,0,0,0,0,0,15,0,0,0,0,30,1
+37,0,50,50,Lab.a,29,"Ciudad Autónoma de Buenos Aires, Argentina",5000,5.0,1,20,0,0,0,0,0,10,0,0,10,0,15,1
+37,50,40,10,AYI GROUP,149,"Córdoba, Argentina",10000,4.5,1,25,0,0,20,20,0,10,0,0,10,0,10,1
+74,0,0,0,DHNN Creative Agency,29,"BEV, Argentina",5000,4.4,10,0,0,10,0,0,0,10,0,0,30,0,20,0
+37,0,0,0,FlyDevs,29,"Castelar, Argentina",5000,4.8,7,10,10,0,0,10,10,10,0,0,10,10,10,0
+37,80,20,0,Ketos-Delphin,149,"Ciudad Autonoma de Buenos Aires, Argentina",1000,4.2,2,20,0,0,20,0,0,10,0,0,10,0,20,1
+37,0,30,70,Blimop,149,"San Salvador de Jujuy, Argentina",25000,4.0,1,30,0,10,0,40,0,10,0,0,0,0,10,1
+74,0,50,50,IGGLOBAL,29,"Buenos Aires, Argentina",5000,4.0,1,10,0,0,0,0,0,10,0,0,0,0,0,1
+37,0,40,60,Paisanos.io,149,"Buenos Aires, Argentina",10000,0.0,0,20,0,0,0,0,0,20,0,0,20,0,20,1
+37,30,30,40,NewBitCrew,5,"CABA, Argentina",1000,4.6,6,20,0,0,0,0,0,10,0,0,0,0,20,1
+74,0,0,0,Grupo Sabra,624,"San Miguel de Tucumán, Argentina",-1,0.0,0,15,0,0,0,0,0,35,0,0,10,10,15,0
+37,0,0,100,Pathfinders Studio,29,"Buenos Aires, Argentina",5000,0.0,0,15,0,0,0,0,0,70,0,0,0,0,0,1
+37,0,0,0,Epidata SA,624,"ACE, Argentina",5000,0.0,0,0,0,0,0,0,0,30,0,0,10,30,30,2
+37,40,50,10,eCloud Solutions,149,"Rosario, Argentina",25000,0.0,0,40,0,40,0,0,0,10,0,0,10,0,0,1
+124,0,0,0,IT Resources S.A,624,"Buenos Aires, Argentina",5000,0.0,0,30,0,0,0,0,30,30,0,0,10,0,0,0
+37,0,0,0,Movapps,5,"DGG, Argentina",5000,0.0,0,0,0,0,0,0,0,60,0,0,10,10,20,0
+174,25,60,15,Solstice Mobile,149,"Buenos Aires, Argentina",-1,0.0,0,0,5,0,0,0,0,40,0,0,30,0,15,1
+74,45,45,10,Altoros,624,"Buenos Aires, Argentina",25000,4.7,26,30,0,0,0,0,0,33,0,0,0,0,27,1
+-1,0,0,0,Rosario Mobile Apps,5,"CGL, Argentina",-1,0.0,0,0,0,0,0,0,0,100,0,0,0,0,0,0
+174,0,0,0,VMN+,149,"Buenos Aires, Argentina",10000,0.0,0,60,0,0,0,0,0,40,0,0,0,0,0,0
+37,0,70,30,Vault Consulting,29,"BUQ, Argentina",10000,0.0,0,0,0,0,0,0,0,50,0,0,10,0,35,1
+37,0,0,0,Snoop,149,"Buenos Aires, Argentina",5000,0.0,0,0,0,0,0,0,0,35,0,0,0,30,35,2
+-1,0,0,0,Movizen,5,"Rosario, Argentina",-1,0.0,0,0,0,0,0,0,0,50,0,0,50,0,0,0
+37,10,60,30,Avra Dev,29,"Lomas de Zamora, Argentina",5000,0.0,0,0,0,0,0,0,0,50,0,0,0,0,50,1
+124,0,0,0,Sandstorm Interactive,5,"AAG, Argentina",5000,0.0,0,0,0,0,0,0,0,50,0,0,0,0,50,0
+-1,0,0,0,Clover Sistemas,5,"ARB, Argentina",-1,0.0,0,0,0,0,0,0,0,50,0,0,0,0,50,0
+37,0,0,0,Argin,29,"Ciudad Autónoma de Buenos Aires, Argentina",5000,0.0,0,30,0,0,0,0,0,40,0,30,0,0,0,2
+37,0,0,0,Activica SA.,29,"BVE, Argentina",5000,0.0,0,30,0,0,0,0,0,40,0,0,0,0,30,0
+124,0,0,0,SOOFT Technology,29,"Córdoba, Argentina",10000,0.0,0,30,0,0,0,0,30,40,0,0,0,0,0,0
+-1,0,0,0,Clapps,29,"Buenos Aires, Argentina",-1,0.0,0,40,0,0,0,0,0,40,0,0,0,0,20,0
+-1,0,0,0,Deitres S.A.,29,"Mar del Plata, Argentina",-1,0.0,0,60,0,0,0,0,0,40,0,0,0,0,0,0
+37,0,30,70,Vortex Software,29,"San Miguel de Tucumán, Argentina",5000,0.0,0,0,0,0,0,50,0,35,0,0,0,0,15,1
+37,50,25,25,Folder IT,624,"Santa Fe, Argentina",25000,0.0,0,18,0,0,0,30,0,20,0,0,0,0,10,1
+-1,0,0,0,redbee studios,149,"Buenos Aires, Argentina",-1,0.0,0,40,0,0,0,0,0,30,0,0,0,0,0,0
+-1,0,0,0,Innovavista srl,5,"Rosario, Argentina",-1,0.0,0,40,0,0,0,0,0,40,20,0,0,0,0,0
+-1,0,0,0,InfoBit,5,"Rosario, Argentina",-1,0.0,0,20,0,0,0,0,0,40,0,0,0,0,20,0
+37,0,0,0,Infogestion,29,"La Plata, Argentina",5000,0.0,0,30,0,0,0,0,0,35,0,0,0,0,35,0
+-1,0,0,0,CESSI,5,"Buenos Aires, Argentina",-1,0.0,0,50,0,0,0,0,0,50,0,0,0,0,0,0
+174,50,25,25,Modus,149,"BVJ, Argentina",25000,4.9,4,0,30,0,0,0,0,10,0,0,0,30,30,1
+74,0,0,0,Softline,149,"AAH, Argentina",5000,0.0,0,25,0,0,50,0,0,25,0,0,0,0,0,0
+37,0,30,70,Incognito Worldwide,29,"Vicente López, Argentina",-1,5.0,1,0,25,0,0,0,0,10,7,0,0,36,21,2
+37,0,50,50,Vision Group NYC,29,"Buenos Aires, Argentina",5000,0.0,0,0,0,30,0,0,0,35,0,0,10,5,10,1
+37,0,0,0,Mobillers,5,"Buenos Aires, Argentina",5000,0.0,0,20,0,0,0,0,0,40,0,0,0,0,20,0
+37,90,0,10,Reserv IT Solutions,149,"Ciudad de Buenos Aires, Argentina",5000,0.0,0,25,0,0,0,10,5,25,0,0,0,0,10,1
+37,0,0,0,Cuoma,29,"Buenos Aires, Argentina",5000,0.0,0,0,0,0,0,0,0,30,0,0,0,40,0,2
+37,0,0,0,Estado Digital,29,"Buenos Aires, Argentina",5000,0.0,0,0,0,0,0,0,0,30,0,0,0,35,35,2
+37,0,50,50,DESNEA,29,"CGB, Argentina",5000,0.0,0,20,0,0,0,0,0,40,0,0,0,0,30,1
+74,10,30,60,LoopStudio,149,"Córdoba, Argentina",25000,5.0,10,0,0,0,0,0,0,35,0,0,15,0,50,1
+37,0,20,80,Andina Tech,29,"City of Buenos Aires, Argentina",10000,0.0,0,40,0,20,0,0,0,40,0,0,0,0,0,1
+37,0,50,50,Nodku,29,"San Salvador de Jujuy, Argentina",5000,0.0,0,10,0,0,0,0,0,40,0,0,0,0,40,1
+37,0,0,0,Lemmonet,29,"Capital Federal, Argentina",5000,0.0,0,0,0,0,0,0,0,30,0,30,0,0,0,2
+37,0,0,0,Insignia,29,"San Miguel de Tucumán, Argentina",5000,0.0,0,0,0,0,0,0,0,30,20,0,0,20,30,2
+74,0,0,0,Eryx,29,"CMZ, Argentina",5000,0.0,0,10,0,0,0,0,0,30,0,0,5,0,30,0
+-1,0,0,0,Mundo IT,29,"Rosario, Argentina",-1,0.0,0,30,0,0,20,0,20,30,0,0,0,0,0,0
+-1,0,0,0,Cooperativa de Trabajo Equality Ltda,29,"Rosario, Argentina",-1,0.0,0,40,0,0,0,0,0,30,0,0,0,0,30,0
+74,0,20,80,Linkchar,5,"Córdoba, Argentina",10000,0.0,0,20,0,5,0,0,0,40,0,0,0,0,30,1
+37,0,0,0,Software del Centro,29,"Tandil, Argentina",5000,0.0,0,0,0,0,0,0,0,30,0,0,0,0,30,0
+37,0,0,0,Horizon Argentina,29,"Lomas del Mirador, Argentina",5000,0.0,0,0,0,0,0,0,0,30,0,0,0,30,40,2
+25,50,50,0,ESolutions S.A.,149,"FZI, Argentina",10000,0.0,0,20,0,0,0,0,0,25,0,0,10,0,25,1
+-1,0,90,10,MangooDev,149,"DNQ, Argentina",-1,0.0,0,50,0,0,0,0,0,25,0,0,0,0,25,1
+-1,0,0,0,netKEL,149,"Ciudad autónoma de Buenos Aires, Argentina",-1,0.0,0,25,0,0,0,0,25,25,0,0,0,0,0,0
+74,45,40,15,intive,5499,"Buenos Aires, Argentina",-1,4.2,4,0,0,0,0,0,0,20,0,0,20,0,0,1
+37,0,0,0,P3Design,29,"Buenos Aires, Argentina",5000,0.0,0,0,25,0,0,0,0,25,25,0,0,0,25,2
+37,0,0,100,Codimbo,5,"Rosario, Argentina",5000,0.0,0,0,0,0,0,0,0,40,0,0,20,0,40,1
+37,0,0,0,Pentamedia Argentina SA,29,"Córdoba, Argentina",5000,0.0,0,0,15,0,0,0,0,25,0,25,0,0,25,2
+37,0,40,60,POSSUMUS,149,"San Rafael, Argentina",5000,0.0,0,40,0,0,20,0,0,20,0,0,0,0,0,1
+37,0,0,0,Sofrecom,149,"ABM, Argentina",5000,0.0,0,20,20,0,0,0,20,20,0,0,20,0,0,2
+-1,0,0,0,Harriague + Asociados,149,"Córdoba, Argentina",-1,0.0,0,50,0,0,0,0,0,20,0,0,0,0,0,0
+-1,0,0,0,Quadion Technologies,149,"AAM, Argentina",-1,0.0,0,30,0,0,0,0,0,20,0,0,20,0,30,0
+37,0,55,45,Celerative,149,"La Plata, Argentina",10000,0.0,0,0,0,0,0,0,0,20,0,0,20,0,20,1
+-1,0,0,0,Flexxus,149,"Córdoba, Argentina",-1,0.0,0,40,0,20,0,0,0,20,0,0,0,0,0,0
+-1,0,0,0,GeoPagos,149,"C1429BNS, Argentina",-1,0.0,0,80,0,0,0,0,0,20,0,0,0,0,0,0
+37,0,0,0,Rockbox Studios,5,"San Luis, Argentina",5000,0.0,0,0,0,0,0,0,30,40,0,0,0,0,0,0
+-1,0,0,0,Consensus Group,149,"ACM, Argentina",-1,0.0,0,25,0,0,20,0,0,20,0,0,15,0,0,0
+-1,0,0,0,Quales,149,"Buenos Aires, Argentina",-1,0.0,0,20,0,0,20,0,20,20,0,0,0,0,0,0
+-1,0,0,0,TopGroup,149,"AAM, Argentina",-1,0.0,0,20,0,0,0,0,0,20,0,0,20,0,20,0
+37,0,30,70,Braintly,29,"CMK, Argentina",10000,0.0,0,25,0,10,0,0,0,25,0,0,20,0,20,1
+74,0,40,60,IT Crowd Argentina,29,"BOU, Argentina",10000,0.0,0,20,0,0,0,15,0,20,0,0,0,0,25,1
+-1,0,0,0,Around | The Broadcast Revolution,29,"Vicente López, Argentina",-1,0.0,0,25,0,0,0,0,25,25,0,0,0,0,25,0
+74,10,70,20,Making Sense,624,"Mar del Plata, Argentina",250000,0.0,0,40,0,0,0,0,0,10,0,0,30,0,0,1
+-1,0,0,0,Ualabee,29,"Córdoba, Argentina",-1,0.0,0,0,0,0,20,0,0,20,0,0,0,0,0,0
+37,30,40,30,Bizit Global,149,"Córdoba, Argentina",1000,0.0,0,30,0,0,0,0,20,20,0,0,0,0,0,1
+74,0,50,50,Pampa Business Ideas,149,"Rosario, Argentina",25000,0.0,0,0,0,0,0,50,0,20,0,0,0,0,0,1
+37,0,0,0,Giro54,29,"CTN, Argentina",5000,0.0,0,10,10,10,0,0,0,20,0,0,40,0,10,0
+-1,0,0,0,Grupa,29,"CABA, Argentina",-1,0.0,0,0,0,0,0,0,0,20,30,0,0,30,20,2
+-1,0,0,0,MobyDigital,29,"Córdoba, Argentina",-1,0.0,0,0,0,20,40,0,0,20,0,0,0,0,0,0
+37,10,20,70,MasterSoft,29,"CABA, Argentina",5000,0.0,0,20,0,0,0,0,0,20,0,0,0,0,20,1
+37,0,10,90,Coderguys,5,"EIH, Argentina",1000,0.0,0,0,0,0,0,40,0,35,0,0,0,0,20,1
+74,0,0,0,Overprint,29,"FMV, Argentina",5000,0.0,0,0,0,0,0,0,0,20,0,0,20,20,20,0
+37,0,0,0,Snappler,29,"La Plata, Argentina",5000,0.0,0,50,0,0,0,0,0,20,0,0,0,10,20,0
+37,35,30,35,BlackBox Vision,29,"Victoria, Argentina",5000,0.0,0,20,0,0,0,0,0,20,0,0,10,0,20,1
+37,75,15,10,"Tonic3, the UX division of W3",149,"AAM, Argentina",10000,0.0,0,0,0,0,0,40,0,15,0,10,10,0,15,1
+37,20,50,30,Zennovia,29,"AAP, Argentina",5000,0.0,0,70,0,0,0,0,0,20,0,0,0,0,10,1
+37,0,0,100,E-Saurio,29,"Ciudad de Buenos Aires, Argentina",1000,0.0,0,20,0,0,0,20,0,20,0,0,0,0,20,1
+-1,70,30,0,Guayerd,5,"BGE, Argentina",-1,0.0,0,25,0,0,0,15,0,25,0,0,0,0,25,1
+-1,0,0,0,Vousys,5,"Castelar, Argentina",-1,0.0,0,0,0,0,0,0,0,20,0,0,40,20,20,0
+-1,0,0,0,Manifesto AR,5,"Córdoba, Argentina",-1,0.0,0,0,0,0,0,0,0,20,30,0,0,20,30,2
+-1,0,0,0,Chosan Ideas,5,"Rosario, Argentina",-1,0.0,0,0,0,0,0,0,0,20,15,0,0,20,0,2
+37,0,40,60,GlobeMind,5,"Ciudad Autonoma de Buenos Aires, Argentina",1000,0.0,0,50,0,0,0,5,0,30,0,0,0,0,10,1
+-1,0,0,0,Fantommers,29,"Rosario, Argentina",-1,0.0,0,40,0,0,0,0,20,20,0,0,0,0,20,0
+-1,0,0,0,MAWAPE Mobile Development,29,"Rosario, Argentina",-1,0.0,0,20,0,0,0,0,0,20,0,0,0,0,20,0
+-1,0,0,0,Estratega Software,29,"Rosario, Argentina",-1,0.0,0,30,0,0,0,0,0,20,0,0,0,20,30,0
+37,25,25,50,Latech Factory,29,"Buenos Aires, Argentina",5000,0.0,0,20,0,20,0,0,0,20,0,0,8,8,20,1
+37,0,0,100,OutsourcingDev,149,"Villa Allende, Argentina",25000,0.0,0,10,0,0,0,20,0,10,0,0,0,0,10,1
+37,0,0,0,Broobe,5,"Buenos Aires, Argentina",5000,0.0,0,0,0,0,0,0,0,20,15,15,0,30,20,2
+-1,0,0,0,iDomo,5,"Córdoba, Argentina",-1,0.0,0,20,0,0,40,0,0,20,0,0,20,0,0,0
+-1,0,0,0,Softcom Argentina,5,"Córdoba, Argentina",-1,0.0,0,40,0,0,0,0,0,30,0,0,0,0,30,0
+-1,0,0,0,Oh!STUDIO Soluciones en internet,29,"Rosario, Argentina",-1,0.0,0,20,0,0,0,0,0,15,0,15,0,20,0,2
+-1,0,0,0,Itrio SA,149,"Ciudad de Buenos Aires, Argentina",-1,0.0,0,15,0,0,15,0,15,15,0,0,0,0,0,0
+-1,0,0,0,Surhive Design,29,"Rosario, Argentina",-1,0.0,0,20,10,15,0,0,0,15,0,0,0,15,0,2
+-1,0,0,0,Upa Estudio,5,"ALU, Argentina",-1,0.0,0,0,0,0,0,0,0,20,0,0,0,20,20,0
+-1,0,0,0,Heredia Estudio,5,"IQB, Argentina",-1,0.0,0,0,0,0,0,0,0,20,15,15,0,20,0,2
+-1,0,0,0,DNA Studio,5,"ABH, Argentina",-1,0.0,0,0,0,0,0,0,0,20,0,0,20,20,0,0
+37,0,0,0,INNSHIP,5,"Ramos Mejía, Argentina",1000,0.0,0,30,0,0,0,0,30,20,0,0,0,0,20,0
+-1,0,0,0,Global Business Consulting - Buenos Aires,29,"CMK, Argentina",-1,0.0,0,15,0,0,0,20,20,15,0,0,15,0,15,0
+-1,0,0,0,VR4,29,"Buenos Aires, Argentina",-1,0.0,0,20,0,0,10,0,10,15,0,0,0,0,0,0
+-1,0,0,0,Sueños Digitales Argentina,5,"ABJ, Argentina",-1,0.0,0,0,0,0,15,0,10,15,15,0,0,0,30,2
+25,0,30,70,Novaworks,5,"Capital Federal, Argentina",1000,0.0,0,0,0,0,0,0,0,15,0,0,0,0,15,1
+-1,0,0,0,Focus Mind - Digital Agency,5,"Bahía Blanca, Argentina",-1,0.0,0,15,15,10,0,0,0,15,0,0,0,15,15,2
+-1,0,0,0,Dattasmart. Agencia de Marketing Digital,5,"Rosario, Argentina",-1,0.0,0,0,0,0,0,0,0,15,15,20,0,0,0,2
+37,50,40,10,IT4W,29,"Ramos Mejía, Argentina",5000,0.0,0,10,0,0,0,0,0,15,0,0,0,0,15,1
+-1,0,0,0,Zelarus,5,"Rosario, Argentina",-1,0.0,0,15,0,0,20,0,20,15,0,0,0,0,15,0
+37,10,20,70,Pisol,5,"CHY, Argentina",5000,0.0,0,20,0,14,0,0,0,15,0,0,10,10,30,1
+-1,0,0,0,Codeicus,29,"AAN, Argentina",-1,0.0,0,20,0,0,0,0,20,20,0,0,0,20,20,0
+37,50,0,50,Fusap,29,"AAP, Argentina",5000,0.0,0,30,0,0,0,30,0,10,0,0,0,0,10,1
+-1,0,0,0,TechnoCapital SRL,5,"Rosario, Argentina",-1,0.0,0,15,0,0,0,20,20,15,0,0,0,15,15,0
+-1,0,0,0,Open Solutions Argentina,29,"CABA, Argentina",-1,0.0,0,0,0,0,20,0,0,10,0,0,0,0,10,0
+37,0,0,0,COPRINF,29,"Santa Fe, Argentina",1000,0.0,0,0,0,10,0,15,0,10,0,0,5,5,20,0
+37,10,30,60,Advenio Software,5,"Mar del Plata, Argentina",1000,0.0,0,30,0,0,0,0,0,10,0,0,0,0,10,1
+-1,0,0,0,Ciberiada,5,"Buenos Aires, Argentina",-1,0.0,0,0,20,0,0,0,0,10,0,0,0,30,0,2
+74,30,40,30,Global Task,149,"AAS, Argentina",25000,0.0,0,25,0,0,0,10,0,10,0,0,10,0,10,1
+37,30,30,40,ROSS Outside The Box,149,"Córdoba, Argentina",10000,0.0,0,10,0,10,0,10,0,10,0,0,0,0,10,1
+-1,0,0,0,Aldente Global,29,"Buenos Aires, Argentina",-1,0.0,0,10,0,10,0,0,0,10,0,0,30,20,10,0
+37,5,35,60,AppeX Technology,5,"IXA, Argentina",5000,0.0,0,30,0,0,0,0,30,20,0,0,0,0,20,1
+37,50,30,20,IntelPro,29,"Buenos Aires, Argentina",5000,0.0,0,50,0,0,0,0,5,10,0,0,0,0,23,1
+37,0,0,100,Siblings Software,29,"JJS, Argentina",10000,0.0,0,50,0,15,0,0,0,10,0,0,0,0,20,1
+-1,0,0,0,Axter Software Solutions,5,"Rosario, Argentina",-1,0.0,0,0,0,0,0,0,0,20,0,0,0,0,20,0
+-1,0,0,0,BAIT Software,5,"FXF, Argentina",-1,0.0,0,20,0,0,0,0,20,20,0,0,20,0,20,0
+37,0,50,50,GenoTecnia,5,"Buenos Aires, Argentina",50000,0.0,0,20,0,0,0,0,0,20,0,0,0,0,20,1
+-1,0,0,0,Jubbler Technologies,5,"CML, Argentina",-1,0.0,0,20,0,20,0,0,0,20,0,0,0,20,20,0
+25,40,40,20,Mindia,5,"Puerto San Julián, Argentina",5000,0.0,0,60,0,0,0,0,0,20,0,0,0,0,20,1
+37,10,50,40,Prostart Software,5,"Buenos Aires, Argentina",1000,0.0,0,60,0,5,0,0,0,20,0,0,0,0,5,1
+37,5,15,80,Axioma IT Solutions,29,"Buenos Aires, Argentina",5000,0.0,0,45,0,0,0,5,0,10,0,0,5,0,30,1
+-1,0,0,0,Rosario Sistemas,5,"AYR, Argentina",-1,0.0,0,0,0,0,0,0,0,10,20,15,0,0,0,2
+37,0,35,65,mvpchecklist,5,"Buenos Aires, Argentina",1000,0.0,0,10,0,0,0,0,0,15,0,0,10,10,20,1
+-1,0,0,0,Estudio BL,5,"Rosario, Argentina",-1,0.0,0,0,0,0,0,0,0,15,0,10,0,15,20,2
+-1,0,0,0,Neuronic,5,"Rosario, Argentina",-1,0.0,0,20,0,0,0,0,0,15,0,0,0,15,20,0
+74,10,45,45,GOITRISE,5,"Córdoba, Argentina",10000,0.0,0,25,0,0,0,20,15,15,0,0,0,0,15,1
+37,55,30,15,DigitalMate,5,"San Carlos, Argentina",5000,0.0,0,35,0,0,0,0,10,15,0,0,0,0,10,1
+74,0,50,50,Applica Corp. IT Staff Augmentation Uruguay,149,"Rosario, Argentina",25000,4.8,3,10,0,0,0,70,0,20,0,0,0,0,0,1
+37,0,0,0,Revolt,29,"Ciudad Autonoma de Buenos Aires, Argentina",25000,0.0,0,0,0,5,0,0,0,12,0,0,12,12,12,0
+-1,10,30,60,Betech Consulting,149,"AAP, Argentina",-1,0.0,0,25,0,0,0,10,0,10,0,0,5,0,20,1
+37,30,70,0,Develative,29,"Buenos Aires, Argentina",10000,0.0,0,0,0,0,0,75,0,10,0,0,0,0,15,1
+37,0,40,60,Texdinamo,29,"Córdoba, Argentina",1000,0.0,0,10,20,20,0,0,0,10,10,0,0,0,20,2
+74,35,45,20,Borderless Software,29,"AAD, Argentina",5000,0.0,0,10,0,5,20,7,0,10,0,0,8,10,15,1
+37,0,40,60,fuzzdea,29,"Córdoba, Argentina",1000,0.0,0,10,0,10,0,10,0,10,5,5,5,0,10,1
+37,0,0,0,BSB Engineering,29,"Alta Gracia, Argentina",1000,0.0,0,25,0,0,0,0,0,10,0,0,0,0,0,0
+25,5,10,85,WebLeads,29,"Córdoba, Argentina",1000,0.0,0,50,0,0,0,20,0,10,0,0,0,0,20,1
+37,0,20,80,SB8 Group Digital Marketing,5,"Buenos Aires, Argentina",1000,0.0,0,10,15,0,0,0,0,10,0,15,0,0,10,1
+37,25,25,50,Hoffentech,5,"Buenos Aires, Argentina",1000,0.0,0,0,0,0,0,0,0,10,0,0,10,10,50,1
+-1,0,0,0,TeraCode,149,"Buenos Aires, Argentina",-1,0.0,0,25,0,0,0,0,0,25,0,0,0,0,0,0
+37,0,0,0,Bitflow,149,"Vicente López, Argentina",5000,0.0,0,25,0,0,0,0,0,35,0,0,20,0,20,0
+37,0,0,0,Dogma Solutions,29,"ABL, Argentina",5000,0.0,0,0,0,0,0,0,0,40,0,0,0,30,0,0
+37,0,0,0,Brandy Software,5,"Ciudad de Buenos Aires, Argentina",5000,0.0,0,0,0,0,0,0,0,45,25,0,30,0,0,0
+37,35,30,35,Techunting LLC,149,"Buenos Aires, Argentina",5000,4.9,7,5,0,0,0,30,0,10,0,0,0,0,5,1
+74,0,80,20,ZirconTech,29,"Buenos Aires, Argentina",10000,5.0,4,10,0,0,0,0,0,15,0,0,0,0,15,1
+-1,0,0,0,Liricus,29,"HYR, Argentina",-1,0.0,0,30,0,0,40,0,0,30,0,0,0,0,0,0
+37,0,60,40,Shoppias Ecommerce,29,"Rosario, Argentina",5000,0.0,0,0,0,75,0,0,0,15,0,0,0,0,10,1
+37,30,20,50,Blink+,1,"Buenos Aires, Argentina",5000,0.0,0,0,0,0,0,0,0,50,0,0,0,0,50,1
+37,0,0,0,Coderio,5,"BSO, Argentina",5000,0.0,0,0,20,0,0,0,0,30,0,0,20,0,30,2
+-1,0,0,0,Excedesoft,5,"Córdoba, Argentina",-1,0.0,0,30,0,0,40,0,0,30,0,0,0,0,0,0
+-1,0,0,0,InnovAction Research Group,29,"Martínez, Argentina",-1,0.0,0,25,0,0,0,0,25,25,0,0,0,0,25,0
+-1,0,0,0,Briknet,5,"Rosario, Argentina",-1,0.0,0,40,0,0,0,0,0,30,0,0,0,0,0,0
+-1,0,0,0,Glubatec,5,"Córdoba, Argentina",-1,0.0,0,40,0,0,0,0,0,30,0,0,0,0,0,0
+-1,0,0,0,Techtripod,5,"Córdoba, Argentina",-1,0.0,0,0,0,0,50,0,0,30,0,0,0,20,0,0
+-1,0,0,0,Siscard S.A,149,"Córdoba, Argentina",-1,0.0,0,0,0,0,80,0,0,20,0,0,0,0,0,0
+25,15,25,60,Heliconia Software,29,"Posadas, Argentina",5000,0.0,0,40,0,0,0,0,0,40,0,0,0,0,20,1
+-1,0,0,0,GoDesign,29,"Buenos Aires, Argentina",-1,0.0,0,0,0,0,0,0,0,20,20,0,0,20,20,2
+-1,0,0,0,Troop Software Factory,29,"Buenos Aires, Argentina",-1,0.0,0,20,0,20,0,0,0,20,0,0,0,20,20,0
+-1,0,0,0,binamp,5,"Córdoba, Argentina",-1,0.0,0,0,0,25,25,0,0,25,0,0,0,0,0,0
+-1,0,0,0,RL System Designer,1,"Rosario, Argentina",-1,0.0,0,0,0,0,0,0,0,50,0,0,0,0,50,0
+-1,0,0,0,D&H Solutions,29,"Junín, Argentina",-1,0.0,0,40,0,0,0,0,0,20,0,0,0,20,20,0
+-1,0,0,0,Toptive,29,"Río Cuarto, Argentina",-1,0.0,0,0,0,0,20,0,0,20,0,0,60,0,0,0
+-1,0,0,0,Neomedia Comunicación,1,"Buenos Aires, Argentina",-1,0.0,0,0,0,30,0,0,0,30,0,0,0,0,40,0
+37,0,0,0,Dedo,29,"Buenos Aires, Argentina",5000,0.0,0,0,20,0,0,0,0,30,0,20,0,0,0,2
+-1,0,0,0,Dequo,5,"HUA, Argentina",-1,0.0,0,20,0,20,40,0,0,20,0,0,0,0,0,0
+-1,0,0,0,Estrategia Zen,5,"ADW, Argentina",-1,0.0,0,0,0,0,0,0,0,20,20,20,0,0,0,2
+-1,0,0,0,MooD Technology,5,"JHO, Argentina",-1,0.0,0,30,0,0,40,0,0,30,0,0,0,0,0,0
+-1,0,0,0,Teatrux,5,"Córdoba, Argentina",-1,0.0,0,30,0,0,40,0,0,30,0,0,0,0,0,0
+-1,0,0,0,geco | Technology & Services,29,"AAT, Argentina",-1,0.0,0,20,0,15,0,0,15,15,0,0,0,15,20,0
+-1,0,0,0,CROP7,5,"Ingeniero Maschwitz, Argentina",-1,0.0,0,0,0,0,0,0,0,20,0,20,0,0,20,2
+37,50,15,35,GIGA IT,149,"Rosario, Argentina",10000,4.3,5,25,0,0,0,25,0,25,0,0,0,0,25,1
+-1,0,0,0,Solstice,624,"ASW, Argentina",100000,0.0,0,20,10,0,0,0,0,10,0,0,10,0,10,1
+-1,0,0,0,Kood Studio,29,"Buenos Aires, Argentina",-1,0.0,0,20,0,0,0,0,0,20,0,0,0,20,20,0
+-1,0,0,0,ECLYPSE,29,"AAX, Argentina",-1,0.0,0,0,20,20,20,0,0,20,0,0,0,0,20,2
+-1,0,0,0,Myros,5,"Córdoba, Argentina",-1,0.0,0,40,0,0,40,0,0,20,0,0,0,0,0,0
+-1,0,0,0,Back Media,5,"Córdoba, Argentina",-1,0.0,0,0,0,0,0,0,0,20,0,20,0,0,0,2
+174,80,20,0,POSSIBLE,5499,"AGE, Argentina",10000,0.0,0,0,20,0,0,0,0,20,0,20,20,0,0,1
+37,0,60,40,CGTS Corp Inc,149,"BZA, Argentina",10000,0.0,0,60,0,0,20,0,0,20,0,0,0,0,0,1
+74,11,59,30,SSA Group,149,"Buenos Aires, Argentina",5000,4.6,15,50,0,10,0,0,15,25,0,0,0,0,0,1
+37,50,30,20,Thorus Solutions,5,"Buenos Aires, Argentina",1000,0.0,0,15,0,0,0,15,30,10,0,0,0,0,0,1
+-1,10,80,10,AgileEngine,624,"Buenos Aires, Argentina",50000,5.0,43,60,0,0,0,0,0,30,0,0,10,0,0,1
+-1,0,0,0,TechGenies,149,"Buenos Aires, Argentina",-1,0.0,0,10,0,0,0,10,0,10,0,0,10,10,10,0
+124,20,30,50,emBlue + Zenman,149,"buenos aires, Argentina",1000,5.0,7,0,10,0,0,0,0,0,0,0,0,15,15,1
+37,0,40,60,SINAPTIA,29,"La Plata, Argentina",10000,4.8,11,25,0,0,0,0,0,0,0,0,25,0,50,1
+74,50,30,20,BairesDev,5499,"Buenos Aires, Argentina",50000,4.9,43,30,0,0,10,10,10,0,0,0,0,0,20,1
+37,25,40,35,"Menlo Technologies, A Quisitive Company",624,"Rosario, Argentina",25000,4.9,15,40,0,0,0,10,0,0,0,0,0,0,40,1
+37,20,70,10,Solvd Inc.,624,"Tandil, Argentina",10000,5.0,12,40,0,0,0,0,0,0,0,0,0,0,10,1
+37,5,15,80,White Canvas,29,"Olivos, Argentina",5000,5.0,11,0,0,0,0,0,0,0,0,0,0,20,80,1
+37,30,60,10,Zetenta,29,"BHA, Argentina",5000,4.8,8,0,15,0,0,0,0,0,0,20,0,20,30,1
+74,20,40,40,40Q,5,"Buenos Aires, Argentina",5000,5.0,4,30,0,0,0,0,0,0,0,0,0,0,70,1
+74,0,30,70,Folka Media,29,"AUK, Argentina",1000,5.0,1,0,0,0,0,0,0,0,0,0,0,30,70,1
+37,50,25,25,IncluIT,624,"Córdoba, Argentina",50000,4.9,10,20,0,0,0,5,0,5,0,0,0,0,10,1
+37,40,30,30,Arbusta,624,"Ciudad Autonoma de Buenos Aires, Argentina",5000,4.8,5,0,0,0,10,0,0,0,0,0,0,10,15,1
+124,0,40,60,Bracketmedia,5,"BVB, Argentina",5000,5.0,1,0,0,0,0,0,0,0,20,0,0,40,40,2
+74,0,0,0,Tec Solutions Network,5,"BAC, Argentina",1000,4.8,5,35,0,0,0,0,0,0,0,0,0,0,35,0
+37,0,30,70,GeekGauchos,149,"Autonomus City of Buenos Aires, Argentina",1000,5.0,1,20,0,10,0,40,0,5,0,5,0,0,20,1
+74,0,20,80,Indicius,29,"Vicente López, Argentina",10000,5.0,5,0,0,0,0,0,0,0,0,0,40,20,20,1
+37,0,0,0,MANDARiNA,29,"BQL, Argentina",1000,4.7,5,0,10,0,0,0,0,0,0,10,0,0,20,0
+37,0,0,0,Urbi Labs,5,"Buenos Aires, Argentina",5000,5.0,1,0,0,0,0,0,0,0,0,0,0,30,35,2
+74,50,50,0,IMPRONTA IT,29,"Buenos Aires, Argentina",25000,4.7,3,60,0,0,0,20,0,0,0,0,0,0,20,1
+74,50,30,20,Kambrica,29,"Buenos Aires, Argentina",25000,5.0,1,0,0,0,0,0,10,0,0,0,25,10,10,1
+74,60,30,10,Intelifaz,29,"Mendoza, Argentina",5000,5.0,2,65,0,10,0,0,0,5,0,0,0,0,10,1
+37,0,20,80,Odiseo Software Development Company,29,"Villa Crespo, Argentina",1000,0.0,0,30,0,40,0,0,0,0,0,0,0,0,30,1
+37,0,0,0,NeuralSoft,149,"Rosario, Argentina",5000,0.0,0,30,0,0,0,0,0,0,0,0,0,30,40,2
+37,0,0,0,Softland Argentina,149,"Buenos Aires, Argentina",5000,0.0,0,50,0,0,0,0,0,0,0,0,0,0,50,0
+37,0,0,0,UNITECH S.A.,149,"Ciudad de Buenos Aires, Argentina",5000,0.0,0,0,0,0,0,0,0,0,30,0,0,30,40,2
+37,0,0,0,tecso,149,"Martínez, Argentina",5000,0.0,0,0,30,0,0,0,0,0,0,0,0,0,40,2
+74,0,0,0,42mate,29,"Resistencia, Argentina",5000,0.0,0,0,0,0,10,0,10,0,0,0,30,0,50,0
+37,0,20,80,Tecnopyme,5,"Munro, Argentina",1000,0.0,0,0,20,0,0,0,0,0,20,0,0,0,60,2
+124,0,0,0,DFX,5499,"Buenos Aires, Argentina",5000,0.0,0,20,0,0,0,0,0,0,20,0,0,20,20,1
+-1,0,0,0,BSD Solutions,29,"Buenos Aires, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,20,0,0,60,2
+-1,0,0,0,Clappbox,5,"Buenos Aires, Argentina",-1,0.0,0,0,20,0,0,0,0,0,0,0,0,0,60,2
+124,0,0,0,Ypsilon Digital,5,"Buenos Aires, Argentina",5000,0.0,0,0,20,0,0,0,0,0,30,0,0,0,50,2
+-1,0,0,0,Tinka Lawinka,5,"Buenos Aires., Argentina",5000,0.0,0,0,0,0,0,0,0,0,0,0,0,50,50,2
+37,0,30,70,Easy Software,5,"Rosario, Argentina",5000,5.0,3,40,0,0,0,0,0,0,0,0,0,0,30,1
+-1,0,0,0,Todo10,5,"Rosario, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,0,0,50,50,2
+37,0,0,0,Desarrollo WordPress Argentina,5,"Tandil, Argentina",1000,0.0,0,0,0,0,0,0,0,0,0,0,0,50,50,2
+124,0,0,0,Syncromind,29,"Buenos Aires, Argentina",5000,0.0,0,40,0,0,0,0,0,0,0,0,0,0,40,0
+-1,0,0,0,Inenco SRL,29,"Neuquén, Argentina",-1,0.0,0,30,0,0,0,0,30,0,0,0,0,0,40,0
+25,0,0,0,Clickbunker,5,"Buenos Aires., Argentina",1000,0.0,0,0,0,0,0,0,0,0,40,20,0,0,40,2
+37,0,0,0,Temperies,149,"Tandil, Argentina",10000,0.0,0,40,0,0,0,0,5,0,0,0,5,0,30,0
+-1,0,0,0,Heniax,5,"CABA, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,30,0,0,40,2
+-1,0,0,0,Creacttive,5,"DYT, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,30,0,30,40,2
+37,0,0,100,MVP Builders,5,"Ciudad Autónoma de Buenos Aires, Argentina",5000,0.0,0,0,0,0,0,0,0,0,0,0,20,20,60,1
+124,0,0,0,DO2 Online Solutions.,5,"San Martín, Argentina",5000,0.0,0,30,0,0,0,0,0,0,0,0,30,0,40,0
+-1,0,0,0,Rendoro,5,"Buenos Aires., Argentina",-1,0.0,0,60,0,0,0,0,0,0,0,0,0,0,40,0
+37,0,0,0,Rednodo,29,"ARN, Argentina",5000,0.0,0,0,0,0,0,0,0,0,0,0,0,40,30,2
+-1,0,0,0,GrowAds,29,"San Miguel de Tucumán, Argentina",-1,0.0,0,0,0,0,0,0,0,0,40,0,0,30,30,2
+-1,0,0,0,Beew,29,"Rosario, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,0,20,30,30,0
+124,0,0,0,Gallagher Bros,5,"La Lonja, Argentina",5000,0.0,0,0,20,0,0,0,0,0,0,0,0,40,40,2
+-1,0,0,0,Aimingweb,5,"Buenos Aires, Argentina",-1,0.0,0,0,30,0,0,0,0,0,0,0,0,0,40,2
+-1,0,0,0,Pragmativa Marketing,29,"Buenos Aires., Argentina",-1,0.0,0,0,0,0,0,0,0,0,30,0,0,0,30,2
+124,0,0,0,Zinc,5,"Victoria, Argentina",5000,0.0,0,0,0,0,0,0,0,0,0,0,0,30,30,2
+37,0,0,0,Cognitis Software House,29,"Resistencia, Argentina",1000,0.0,0,0,0,0,0,0,0,0,0,0,20,25,40,0
+124,0,0,0,Bitopía,5,"Lomas de Zamora, Argentina",5000,0.0,0,0,0,0,0,0,0,0,0,20,0,30,30,2
+-1,0,0,0,Triptongo,5,"Santa Fe, Argentina",-1,0.0,0,30,0,10,0,0,0,0,0,0,0,0,30,0
+37,0,0,0,Barlovento Tech,5,"Buenos Aires, Argentina",5000,0.0,0,35,0,30,0,0,0,0,0,0,0,0,35,0
+37,20,40,40,Lutvia,29,"Córdoba, Argentina",1000,0.0,0,0,0,0,0,0,0,0,0,30,0,0,30,2
+-1,0,0,0,El Niño,5,"Buenos Aires, Argentina",-1,0.0,0,0,0,0,0,0,0,0,20,0,0,30,30,2
+-1,0,0,0,Area 7G,5,"DFB, Argentina",-1,0.0,0,0,0,0,0,0,0,0,20,0,0,30,30,2
+-1,0,0,0,Agencia Buffalo,5,"C.A.B.A, Argentina",-1,0.0,0,0,0,20,0,0,0,0,0,0,0,30,30,0
+-1,0,0,0,Mas Marketing,5,"San Isidro, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,30,0,20,30,2
+-1,0,0,0,Barco Design Studio,5,"BSO, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,0,0,0,30,0
+25,0,34,66,Onlines & co.,5,"Rosario, Argentina",1000,0.0,0,0,0,10,0,0,0,0,0,0,30,30,30,1
+37,0,0,0,25Watts,29,"Córdoba, Argentina",5000,0.0,0,0,25,25,0,0,0,0,0,0,0,10,20,2
+37,34,33,33,Seotronix,29,"Mar del Plata, Argentina",1000,0.0,0,0,20,0,0,0,0,0,20,0,0,0,20,2
+37,0,0,0,Kinexo,149,"Rafaela, Argentina",5000,0.0,0,40,0,0,0,0,20,0,0,0,0,20,20,0
+-1,0,0,0,PSH,149,"Buenos Aires, Argentina",-1,0.0,0,20,0,0,0,0,0,0,0,20,0,0,20,2
+-1,0,0,0,WES,149,"XAC, Argentina",-1,0.0,0,20,0,0,20,0,20,0,0,0,0,0,20,0
+-1,0,0,0,MarketingElectronico.com,5,"Córdoba, Argentina",-1,0.0,0,0,0,0,0,0,0,0,25,0,0,0,25,2
+-1,0,0,0,Lexfe,5,"AAD, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,0,0,40,30,2
+-1,0,0,0,Wdesign,5,"Rosario, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,0,0,0,30,0
+37,5,45,50,Dorve UX,29,"AAI, Argentina",5000,0.0,0,0,0,0,0,0,0,0,0,0,20,20,20,1
+124,0,0,0,Dogo Creativo,29,"Puerto Madero, Argentina",5000,0.0,0,0,20,0,0,0,0,0,0,20,0,0,20,2
+-1,0,0,0,Webmedia,29,"AZI, Argentina",-1,0.0,0,0,20,0,0,0,0,0,20,20,0,20,20,2
+-1,0,0,0,Somos Duplo,5,"Buenos Aires., Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,0,0,30,40,2
+-1,0,0,0,Dialéctica Web,5,"C.A.B.A., Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,30,0,30,40,2
+-1,0,0,0,H&FV Web Design,5,"AOP, Argentina",-1,0.0,0,0,0,0,20,0,0,0,0,0,0,40,40,2
+37,0,0,0,Agencia Mejor Digital,29,"AAF, Argentina",1000,0.0,0,0,0,0,0,0,0,0,0,20,0,20,20,2
+-1,0,0,0,Adviline Digital Marketing,29,"Vicente López, Argentina",-1,0.0,0,0,0,0,0,0,0,0,20,20,0,20,20,2
+-1,0,0,0,Potencial Digital,29,"BML, Argentina",-1,0.0,0,0,20,0,0,0,0,0,0,20,0,20,20,2
+-1,0,0,0,KODEAR,29,"Rosario, Argentina",-1,0.0,0,30,0,0,0,0,0,0,0,0,15,20,20,0
+-1,0,0,0,Brandal Estudio,5,"Junín, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,20,0,20,20,2
+-1,0,0,0,elPixel,5,"Buenos Aires., Argentina",-1,0.0,0,0,20,0,0,0,0,0,0,20,0,20,20,2
+37,40,40,20,INNEW,29,"Resistencia, Argentina",1000,0.0,0,25,0,25,0,0,0,0,0,0,0,20,20,1
+74,0,60,40,Poncho Studio,29,"Buenos Aires, Argentina",1000,0.0,0,0,0,0,0,0,0,0,0,0,20,0,20,1
+-1,0,0,0,Alpha Social Marketing,29,"Rosario, Argentina",-1,0.0,0,0,0,0,0,0,0,0,20,20,0,0,20,2
+37,0,0,0,MD Marketing Digital,29,"Ciudad Autónoma de Buenos Aires, Argentina",5000,5.0,1,0,5,5,0,0,0,0,20,20,0,5,15,2
+37,0,0,0,Smedia,5,"Lanús, Argentina",5000,0.0,0,0,30,0,0,0,0,0,0,20,0,30,20,2
+-1,0,0,0,ECLiCSYS,5,"Buenos Aires, Argentina",-1,0.0,0,0,0,20,0,0,0,0,20,0,0,20,20,2
+37,0,60,40,Glise,5,"CABA, Argentina",1000,0.0,0,10,0,60,0,0,0,0,0,0,0,0,30,1
+124,0,0,0,InHouse,5,"Buenos Aires, Argentina",5000,0.0,0,0,0,0,0,0,0,0,40,0,0,40,20,2
+-1,0,0,0,Ideatum Argentina,5,"C.A.B.A, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,20,0,20,20,2
+-1,0,0,0,Foco Networks,5,"BTD, Argentina",-1,0.0,0,0,0,0,0,0,0,0,20,0,0,20,20,2
+-1,0,0,0,CQSoluciones,5,"CTP, Argentina",-1,0.0,0,30,0,0,0,0,0,0,0,0,0,20,20,0
+124,0,0,0,AZP,5,"Ezpeleta, Argentina",5000,0.0,0,0,20,0,0,0,0,0,20,20,0,20,20,2
+-1,0,0,0,Desanda,5,"BUO, Argentina",-1,0.0,0,0,20,0,0,0,0,0,0,0,20,20,20,2
+-1,0,0,0,BiocCo,5,"Buenos Aires., Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,0,0,20,20,0
+-1,0,0,0,Conde Graphics,5,"Buenos Aires, Argentina",-1,0.0,0,0,0,0,0,0,0,0,20,20,0,20,20,2
+-1,0,0,0,Ellecktra,149,"Rosario, Argentina",-1,0.0,0,0,0,0,0,0,0,0,15,10,0,15,10,2
+-1,0,0,0,PACK agencia,5,"Pergamino, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,0,0,20,20,0
+-1,0,0,0,Dinamic Studio Web Rosario,5,"Rosario, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,0,0,20,15,0
+74,0,0,0,Tecnoarea,5,"Rosario, Argentina",1000,0.0,0,0,0,0,0,0,0,0,20,20,0,30,15,2
+-1,0,0,0,Comercia Agencia Digital,5,"Buenos Aires, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,20,0,30,30,2
+37,15,50,35,Gen IT,149,"CABA, Argentina",5000,0.0,0,30,0,0,20,0,20,5,0,0,5,0,10,1
+-1,0,0,0,Solvo,5,"Rosario, Argentina",-1,0.0,0,15,0,0,0,0,0,0,0,20,0,15,15,2
+-1,0,0,0,Mestizos Comunicación,5,"Rosario, Argentina",-1,0.0,0,0,10,0,0,0,0,0,0,15,0,15,15,2
+37,0,0,0,tercerclick,5,"Buenos Aires, Argentina",5000,0.0,0,0,0,20,0,0,0,0,0,20,0,0,10,2
+37,70,20,10,Kudos Commerce,29,"Córdoba, Argentina",5000,0.0,0,0,0,70,0,0,0,0,0,0,10,0,10,1
+25,0,0,0,Pymesign,5,"Villa Martelli, Argentina",1000,0.0,0,0,10,0,0,0,0,0,10,0,0,40,10,2
+-1,0,0,0,Easy Web Marketing,5,"BYR, Argentina",-1,0.0,0,0,0,0,0,0,0,0,15,20,0,10,10,2
+74,0,0,0,PuzzleMkt,5,"Buenos Aires, Argentina",1000,0.0,0,0,10,0,0,0,0,0,0,10,0,20,10,2
+-1,0,0,0,DEA3 Agencia Digital,5,"Rosario, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,20,10,15,10,2
+74,0,30,70,Experiencias Digitales,5,"Ciudad de Buenos Aires, Argentina",1000,0.0,0,0,0,20,20,0,0,0,0,0,10,10,20,1
+37,30,40,30,PMA Latam,5,"Buenos Aires, Argentina",5000,0.0,0,0,0,0,0,0,0,0,0,0,20,0,20,1
+-1,0,0,100,Ushuaia Creative,5,"DQK, Argentina",1000,0.0,0,5,5,5,0,0,0,5,5,5,5,5,10,1
+-1,0,0,0,Ignaccolo & Co.,5,"Rosario, Argentina",-1,0.0,0,0,15,0,0,0,0,0,15,20,0,10,10,2
+-1,0,0,0,Jamaica Inc.,5,"ERN, Argentina",-1,0.0,0,0,20,0,0,0,0,0,0,15,0,0,10,2
+-1,0,0,0,Quiya,5,"Rosario, Argentina",-1,0.0,0,0,0,0,0,0,0,0,20,30,0,15,15,2
+124,50,30,20,9thWonder,149,"Buenos Aires, Argentina",10000,4.9,6,0,10,0,0,0,0,0,10,0,0,10,10,1
+37,0,0,0,PinkSoft,5,"Ciudad Autónoma de Buenos Aires, Argentina",5000,0.0,0,10,0,9,0,0,0,0,0,0,0,0,13,0
+-1,75,25,0,Rise Interactive,624,"Buenos Aires, Argentina",-1,4.5,3,0,10,0,0,0,0,0,20,10,0,10,10,1
+-1,0,0,0,Brando,5,"Rosario, Argentina",-1,0.0,0,0,15,10,0,0,0,0,0,0,0,0,10,2
+124,0,0,0,Adverit Mediasur,29,"San Isidro, Argentina",5000,0.0,0,0,0,0,0,0,0,0,0,20,0,0,40,2
+-1,0,0,0,Grupo EON,5,"Córdoba, Argentina",-1,0.0,0,0,0,20,0,0,0,0,20,0,0,0,40,2
+37,0,0,0,Zezoz Studio,5,"ICW, Argentina",5000,0.0,0,25,0,0,0,0,25,0,0,0,0,0,50,0
+37,0,0,0,Visible Design,5,"Cdad. Autónoma de Buenos Aires, Argentina",5000,0.0,0,0,0,0,0,0,0,0,35,0,0,35,30,2
+-1,0,0,0,Dw Visual,5,"BQL, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,0,0,40,30,2
+-1,0,0,0,Adverita,5,"Buenos Aires, Argentina",-1,0.0,0,0,30,0,0,0,0,0,10,0,0,0,30,2
+-1,0,0,0,Buenos Aires Creativo,29,"El Palomar, Argentina",-1,0.0,0,0,20,20,0,0,0,0,0,0,0,20,20,2
+-1,0,0,0,LG SITIOS - Diseño web Argentina,5,"Rosario, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,0,0,25,25,0
+-1,0,0,0,Vitalmkd,5,"Córdoba, Argentina",-1,0.0,0,0,0,0,0,0,0,0,20,0,0,0,40,2
+-1,0,0,0,Oestesi,29,"Morón, Argentina",-1,0.0,0,0,20,0,20,0,0,0,10,10,0,20,20,2
+25,0,0,0,Scroll | Consultora Digital,5,"Belgrano, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,25,0,25,25,2
+-1,0,0,0,Hiades,5,"Córdoba, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,40,0,0,20,2
+124,0,0,0,Blú ar,1,"AGT, Argentina",5000,0.0,0,0,0,0,0,0,0,0,0,0,10,30,30,2
+-1,0,0,0,Redcomel,1,"Rosario, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,0,0,40,30,2
+-1,0,0,0,Draidel,5,"AAP, Argentina",-1,0.0,0,0,20,0,0,0,0,0,20,20,0,20,20,2
+74,20,60,20,RAD MKT,5,"Buenos Aires, Argentina",-1,0.0,0,0,15,0,0,0,0,0,20,0,15,0,15,2
+-1,0,0,0,Lunestudio,5,"Córdoba, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,20,20,0,20,2
+-1,0,0,0,OpeniX,29,"San Salvador de Jujuy, Argentina",-1,0.0,0,20,0,0,0,15,0,0,0,0,0,15,15,0
+124,0,0,0,DGRS,1,"CCW, Argentina",5000,0.0,0,0,20,0,0,0,0,0,20,0,0,40,20,2
+-1,0,0,0,Cooking,149,"Córdoba, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,0,0,0,20,0
+-1,0,0,0,MediaExperts.com.ar,1,"Rosario, Argentina",-1,0.0,0,0,0,0,0,0,0,0,15,0,30,20,20,0
+-1,0,0,0,Posicionate,5,"Buenos Aires., Argentina",-1,0.0,0,0,30,0,0,0,0,0,30,30,0,0,10,2
+-1,0,0,0,Indexdesign,5,"Rosario, Argentina",-1,0.0,0,0,0,0,0,0,0,0,15,20,0,10,10,2
+-1,0,0,0,Spiders Digital Marketing Agency,29,"Buenos Aires, Argentina",-1,0.0,0,0,0,0,0,0,0,0,20,20,0,0,20,2
+-1,0,0,0,Agencia Canoa,5,"Córdoba, Argentina",-1,0.0,0,0,0,0,0,0,0,0,0,0,0,0,20,0
+-1,0,0,0,Garra,5,"CXM, Argentina",-1,0.0,0,0,15,0,0,0,0,0,0,20,0,15,10,2
+-1,20,30,50,NearCoders,624,"Buenos Aires, Argentina",-1,0.0,0,20,0,0,10,20,10,0,0,0,0,0,10,1
+37,0,50,50,BEON Tech Studio,149,"Buenos Aires, Argentina",50000,4.9,27,50,0,0,0,50,0,0,0,0,0,0,0,1
+37,15,70,15,Vates,624,"Buenos Aires, Argentina",10000,4.9,13,40,0,0,0,10,0,0,0,0,0,0,0,1
+74,0,50,50,Moka,29,"Santa Fe, Argentina",10000,5.0,5,50,0,0,0,0,0,0,0,0,50,0,0,1
+37,0,0,0,"Rather Labs, Inc.",29,"Buenos Aires, Argentina",5000,5.0,3,10,0,0,0,10,0,0,0,0,0,0,0,0
+124,20,80,0,Baufest,624,"Buenos Aires, Argentina",100000,4.7,3,40,0,0,0,0,0,0,0,0,10,0,0,1
+37,0,10,90,Unagi,29,"La Plata, Argentina",10000,4.8,5,50,0,0,0,25,0,0,0,0,25,0,0,1
+37,0,0,100,GLOBALIS S.A.,29,"Godoy Cruz, Argentina",10000,4.9,4,50,0,0,0,30,0,0,0,0,0,0,0,1
+74,0,80,20,Agency Coda,29,"Vicente López, Argentina",10000,4.4,17,80,10,0,0,0,0,0,0,0,10,0,0,1
+37,0,10,90,Made2,5,"Córdoba, Argentina",10000,4.9,9,50,0,0,0,0,0,0,0,0,0,0,0,1
+74,60,30,10,Kovix,149,"Buenos Aires, Argentina",10000,4.8,4,80,0,0,0,0,10,0,0,0,0,0,0,1
+37,0,0,100,Sysgarage,29,"Tigre, Argentina",5000,5.0,1,50,0,0,0,50,0,0,0,0,0,0,0,1
+74,5,50,45,Cloud(X);,149,"Yerba Buena, Argentina",5000,5.0,4,30,0,0,0,0,0,0,0,0,0,0,0,1
+74,10,35,55,Mobeats,149,"Berazategui, Argentina",-1,4.5,1,65,0,10,0,0,0,0,0,0,10,0,5,1
+37,40,30,30,EDSA,149,"Tandil, Argentina",10000,4.7,3,30,0,0,0,0,5,5,0,0,0,0,5,1
+37,0,0,100,LinkSolution,149,"Buenos Aires, Argentina",10000,4.6,7,10,0,0,20,0,0,0,0,0,0,0,0,1
+37,5,70,25,MAvha,149,"Rafaela, Argentina",1000,5.0,2,10,0,5,0,65,0,5,0,0,0,0,5,1
+-1,0,0,0,Grupo Calipso S.A.,149,"Buenos Aires, Argentina",-1,0.0,0,60,0,0,0,0,0,0,0,0,0,0,0,0
+37,0,30,70,Webexperto Software,29,"Rosario, Argentina",25000,0.0,0,50,0,50,0,0,0,0,0,0,0,0,0,1
+-1,40,40,20,Overactive,624,"Buenos Aires, Argentina",50000,0.0,0,40,0,0,10,20,0,0,0,0,0,0,0,1
+174,0,0,0,Apex America,5499,"Córdoba, Argentina",10000,0.0,0,60,0,0,0,0,0,0,0,20,0,0,0,1
+-1,0,0,0,Eudaimonia,29,"Buenos Aires, Argentina",-1,0.0,0,60,0,0,0,0,20,0,0,0,20,0,0,0
+-1,0,0,0,Lepton Sistemas,5,"Argentina, Argentina",-1,0.0,0,100,0,0,0,0,0,0,0,0,0,0,0,0
+-1,0,0,0,Censys,149,"Yerba Buena, Argentina",-1,0.0,0,50,0,0,0,0,50,0,0,0,0,0,0,0
+37,60,40,0,Kanav,624,"EPU, Argentina",25000,0.0,0,25,0,0,0,25,0,0,0,0,0,0,0,1
+174,0,0,0,SBI Technology,149,"Buenos Aires, Argentina",10000,0.0,0,50,0,0,0,0,50,0,0,0,0,0,0,0
+174,0,0,0,Power Solution S.A,149,"Buenos Aires, Argentina",10000,0.0,0,60,0,0,0,0,40,0,0,0,0,0,0,0
+-1,0,0,0,SmartFran,29,"LFG, Argentina",-1,0.0,0,50,0,0,50,0,0,0,0,0,0,0,0,0
+-1,0,0,0,BioStudio Corporation,5,"DRJ, Argentina",-1,0.0,0,60,0,0,20,0,0,0,0,0,0,0,0,0
+-1,0,100,0,Clarolab,29,"Junín, Argentina",-1,0.0,0,50,0,0,0,0,0,0,0,0,0,0,0,1
+-1,0,0,0,TRANSFIRIENDO S.A,149,"Córdoba, Argentina",-1,0.0,0,50,0,0,0,0,50,0,0,0,0,0,0,0
+174,0,0,0,Bykom S.A.,5,"Mar del Plata, Argentina",10000,0.0,0,100,0,0,0,0,0,0,0,0,0,0,0,0
+-1,0,0,0,Córdoba Software,29,"Córdoba, Argentina",-1,0.0,0,50,0,0,0,0,30,0,0,0,0,0,0,0
+37,0,0,0,Diveria,29,"Santa Fe, Argentina",5000,0.0,0,100,0,0,0,0,0,0,0,0,0,0,0,0
+-1,0,0,0,Intertron S.A,149,"FQL, Argentina",-1,0.0,0,40,0,0,40,0,0,0,0,0,0,0,0,0
+-1,0,0,0,LOYAL Solutions,149,"Capital Federal, Argentina",-1,0.0,0,60,0,0,0,0,40,0,0,0,0,0,0,0
+-1,30,40,30,Wakapi,149,"Godoy Cruz, Argentina",-1,0.0,0,55,0,0,0,15,0,0,0,0,0,0,0,1
+74,0,30,70,Sinapsis,29,"Ciudad Autónoma de Buenos Aires, Argentina",25000,0.0,0,70,0,0,0,0,0,0,0,0,0,0,0,1
+-1,0,0,0,Cognisys,29,"Ciudad Autónoma de Buenos Aires, Argentina",-1,0.0,0,50,0,0,0,0,50,0,0,0,0,0,0,0
+37,10,0,90,Dicode Group,5,"Córdoba, Argentina",5000,0.0,0,70,0,0,0,0,10,0,0,0,0,0,0,1
+74,50,30,20,SHIFTA,149,"Buenos Aires, Argentina",25000,0.0,0,50,0,0,0,30,0,0,0,0,10,0,0,1
+-1,50,30,20,Econat,149,"CPV, Argentina",-1,0.0,0,35,0,0,0,0,35,0,0,0,0,0,0,1
+-1,0,0,0,Newcom LCS,149,"AAN, Argentina",-1,0.0,0,35,0,0,35,0,30,0,0,0,0,0,0,0
+74,20,60,20,Santex,149,"JJS, Argentina",5000,0.0,0,33,0,5,0,30,0,7,0,0,0,0,7,1
+124,0,0,0,Nemo SA,29,"Rosario, Argentina",5000,0.0,0,40,0,30,0,0,30,0,0,0,0,0,0,0
+174,0,0,0,Engee IT,29,"Buenos Aires, Argentina",10000,0.0,0,40,0,30,0,0,30,0,0,0,0,0,0,0
+-1,0,0,0,Liveware,29,"C.A.B.A., Argentina",-1,0.0,0,40,0,0,0,0,30,0,0,0,0,0,0,0
+174,0,0,0,Graion,5,"Buenos Aires., Argentina",10000,0.0,0,50,20,0,0,0,0,0,0,0,30,0,0,0
+-1,0,0,0,2GSoft S.A.,5,"Córdoba, Argentina",-1,0.0,0,50,0,0,0,0,50,0,0,0,0,0,0,0
+-1,0,0,0,MOX IT S.R.L.,5,"Santos Lugares, Argentina",-1,0.0,0,50,0,0,0,0,50,0,0,0,0,0,0,0
+74,70,30,0,LenioLabs,149,"CFK, Argentina",50000,0.0,0,30,0,0,0,50,0,0,0,0,0,0,0,1
+74,60,40,0,Fiera Tech,149,"Buenos Aires, Argentina",25000,0.0,0,50,0,0,0,20,10,0,0,0,0,0,0,1
+124,0,0,0,Southplans,29,"Buenos Aires, Argentina",10000,0.0,0,40,0,0,0,0,30,0,0,0,0,0,0,0
+25,70,20,10,Origin Software,29,"Buenos Aires, Argentina",5000,0.0,0,40,15,0,0,0,15,0,0,0,30,0,0,1
+-1,0,0,0,Rosario Software,29,"FXB, Argentina",-1,0.0,0,40,0,0,0,0,0,0,0,0,0,0,0,0
+37,30,60,10,Grupo Prominente,149,"Córdoba, Argentina",-1,0.0,0,20,0,0,20,20,0,0,0,0,0,0,0,1
+-1,0,0,0,qwad - Interactive Intelligence,5,"Bahía Blanca, Argentina",-1,0.0,0,100,0,0,0,0,0,0,0,0,0,0,0,0
+-1,0,0,0,Inthegra,29,"Córdoba, Argentina",-1,0.0,0,50,0,0,50,0,0,0,0,0,0,0,0,0
+-1,0,0,0,PK Argentina,5499,"JED, Argentina",-1,0.0,0,40,0,0,0,0,40,0,0,0,0,0,0,1
+-1,0,0,0,Magic Software Enterprises (GENERATICA S.A.),29,"ABU, Argentina",-1,0.0,0,35,0,0,0,0,30,0,0,0,0,0,0,0
+124,0,0,0,Paradigma,5,"Bahía Blanca, Argentina",5000,0.0,0,40,0,0,0,0,20,0,0,0,0,30,0,0
+-1,0,0,0,Tawro Technology SRL,5,"Rosario, Argentina",-1,0.0,0,40,20,0,0,0,0,0,0,0,0,40,0,2
+-1,0,0,0,Grupo SMS,624,"Ciudad Autónoma de Buenos Aires, Argentina",-1,0.0,0,20,0,0,20,0,20,0,0,0,0,0,0,0
+74,0,40,60,Expertizen,29,"Ciudad Autonoma Buenos Aires, Argentina",5000,0.0,0,30,0,0,0,0,0,0,0,0,0,0,0,1
+-1,0,0,0,Lainco Software S.A.,5,"Buenos Aires, Argentina",-1,0.0,0,40,0,0,0,0,20,0,0,0,0,0,0,0
+-1,0,0,0,OSH,29,"AAP, Argentina",-1,0.0,0,30,0,0,0,0,0,0,0,0,0,0,0,0
+-1,0,0,0,Tecnoap,149,"Berisso, Argentina",-1,0.0,0,25,0,0,0,0,25,0,0,0,0,0,0,0
+-1,0,0,0,Galeón Logistics,29,"Córdoba, Argentina",-1,0.0,0,30,0,0,0,0,0,0,0,0,0,0,0,0
+74,0,0,0,Nativa Digital,29,"AAT, Argentina",25000,0.0,0,30,0,0,10,10,10,0,0,0,20,0,0,0
+-1,0,0,0,iLatina Business Services,149,"Ciudad de Buenos Aires, Argentina",-1,0.0,0,20,0,0,0,0,20,0,0,0,0,0,0,0
+-1,0,0,0,Algeiba,149,"AAO, Argentina",-1,0.0,0,20,0,0,20,0,20,0,0,0,0,0,0,0
+37,10,30,60,BINIT,149,"Buenos Aires, Argentina",10000,0.0,0,20,0,0,40,0,20,0,0,0,0,0,0,0
+-1,0,0,0,That Day in London,5,"Benavidez, Argentina",-1,0.0,0,30,0,0,0,0,0,0,0,0,0,30,0,0
+-1,0,0,0,Consultoría Global S.A.,29,"ABW, Argentina",-1,0.0,0,25,0,0,25,0,25,0,0,0,0,0,0,0
+37,0,0,100,Develone,5,"Buenos Aires, Argentina",1000,5.0,1,25,0,5,5,0,5,5,0,0,0,0,5,1
+74,0,0,0,Quilsoft,29,"Ciudad de Buenos Aires, Argentina",25000,4.0,1,20,0,0,0,0,20,0,0,0,0,0,0,0
+-1,0,0,0,DLR Software,29,"Córdoba, Argentina",-1,0.0,0,20,0,20,40,0,0,0,0,0,0,0,0,0
+-1,0,0,0,BITLOGIC.IO,29,"Córdoba, Argentina",-1,0.0,0,20,0,0,30,0,0,0,0,0,0,0,0,0
+-1,0,0,0,COHEN Sistemas S.A,29,"Córdoba, Argentina",-1,0.0,0,20,0,0,80,0,0,0,0,0,0,0,0,0
+-1,0,0,0,imgloading,5,"AAD, Argentina",-1,0.0,0,20,20,0,0,0,0,0,0,0,20,20,0,2
+174,25,50,25,Gamifica,5,"Rosario, Argentina",1000,0.0,0,20,0,0,0,0,0,0,0,0,0,0,0,1
+-1,0,0,0,Bluna.tv,5,"Caseros, Argentina",-1,0.0,0,20,0,0,0,0,0,0,0,0,0,0,0,0
+-1,0,0,0,Silver Freight,29,"Buenos Aires, Argentina",-1,0.0,0,15,0,0,0,0,0,0,0,0,0,0,0,0
+37,55,30,15,Minexus,29,"San Juan, Argentina",10000,0.0,0,20,0,0,20,0,0,0,0,0,0,0,0,1
+-1,0,0,0,Sextageneracion,5,"AAR, Argentina",-1,0.0,0,10,20,0,0,0,0,0,20,20,0,10,0,2
+37,5,35,60,UNX Digital,29,"Córdoba, Argentina",25000,0.0,0,15,0,0,0,20,0,0,0,0,10,0,0,1
+-1,0,0,0,Tebyon Consulting,29,"Buenos Aires, Argentina",-1,0.0,0,10,0,0,25,0,25,0,0,0,0,0,0,0
+37,0,0,0,Plika,29,"Gonnet, Argentina",5000,0.0,0,15,0,0,0,0,0,0,0,0,0,0,0,0
+-1,50,50,0,Fulcrum Digital,5499,"Palermo, Argentina",-1,5.0,1,20,0,0,20,0,20,0,0,0,0,0,0,1
+37,0,20,80,BARQIA,5,"Buenos Aires, Argentina",1000,0.0,0,10,0,0,0,0,0,0,0,0,0,0,0,1
+74,25,50,25,_coderio Software Company,624,"Buenos Aires, Argentina",10000,0.0,0,40,0,0,0,40,0,0,0,0,0,0,0,1
+-1,0,0,0,Macena.,29,"Córdoba, Argentina",-1,0.0,0,50,0,0,50,0,0,0,0,0,0,0,0,0
+-1,0,0,0,Controlnet S.A.,5,"Córdoba, Argentina",-1,0.0,0,60,0,0,40,0,0,0,0,0,0,0,0,0
+-1,0,0,0,BQS Software,29,"AAU, Argentina",-1,0.0,0,60,0,0,0,0,40,0,0,0,0,0,0,0
+-1,0,0,0,FILOMENI Sistemas Informáticos,5,"Córdoba, Argentina",-1,0.0,0,60,0,0,40,0,0,0,0,0,0,0,0,0
+-1,0,0,0,Redy,5,"Córdoba, Argentina",-1,0.0,0,60,0,0,20,0,0,0,0,0,0,0,0,0
+-1,0,0,0,Argensoft,5,"Córdoba, Argentina",-1,0.0,0,60,0,0,40,0,0,0,0,0,0,0,0,0
+-1,0,0,0,ITPatagonia,149,"Ciudad Autónoma de Buenos Aires, Argentina",-1,0.0,0,35,0,0,0,30,35,0,0,0,0,0,0,0
+-1,0,0,0,Dividato,29,"Córdoba, Argentina",-1,0.0,0,40,0,0,50,0,0,0,0,0,0,0,0,0
+-1,0,0,0,Hundred inc.,5,"IIA, Argentina",-1,0.0,0,40,0,30,30,0,0,0,0,0,0,0,0,0
+-1,0,0,0,BuscoYa,5,"Córdoba, Argentina",-1,0.0,0,50,0,0,50,0,0,0,0,0,0,0,0,0
+-1,0,0,0,Proda Software,5,"AAN, Argentina",-1,0.0,0,35,0,0,0,0,30,0,0,0,0,0,0,0
+-1,0,0,0,MDTEC Soluciones en Tecnologia,5,"Córdoba, Argentina",-1,0.0,0,30,0,30,40,0,0,0,0,0,0,0,0,0
+-1,0,0,0,Goldway Internet,5,"Córdoba, Argentina",-1,0.0,0,30,0,30,40,0,0,0,0,0,0,0,0,0
+-1,0,0,0,Worldsys S.A.,149,"Buenos Aires, Argentina",-1,0.0,0,20,0,0,20,0,20,0,0,0,0,0,0,0
+-1,0,0,0,3TECS,5,"EPP, Argentina",-1,0.0,0,40,0,0,60,0,0,0,0,0,0,0,0,0
+-1,0,0,0,Picaso Software,5,"Córdoba, Argentina",-1,0.0,0,25,0,0,50,0,0,0,0,0,0,0,0,0
+-1,0,0,0,Devgurus,29,"ACE, Argentina",-1,0.0,0,20,0,30,50,0,0,0,0,0,0,0,0,0
+37,0,10,90,Isocorp,5,"Rosario, Argentina",1000,0.0,0,25,0,40,0,0,0,0,0,0,0,35,0,1
+74,0,85,15,UYGroup,29,"Buenos Aires, Argentina",1000,0.0,0,40,0,0,0,0,0,0,0,0,0,0,0,1
+174,65,20,15,Theorem,149,"ABL, Argentina",100000,0.0,0,15,0,5,0,5,8,5,0,0,8,0,8,1
