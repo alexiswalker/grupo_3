@@ -128,3 +128,14 @@ dependencies:
   - zipp=3.7.0=pyhd3eb1b0_0
   - zlib=1.2.12=h8cc25b3_1
   - zstd=1.4.9=h19a0ad4_0
+  - pip:
+    - joblib==1.1.0
+    - llvmlite==0.38.0
+    - numba==0.55.1
+    - pynndescent==0.5.6
+    - scikit-learn==1.0.2
+    - scipy==1.8.0
+    - seaborn==0.11.2
+    - sklearn==0.0
+    - threadpoolctl==3.1.0
+    - umap-learn==0.5.3
