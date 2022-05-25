@@ -2,10 +2,13 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from sklearn.decomposition import PCA
+from pathlib import Path
+
 
 st.set_page_config(layout="wide")
 
-empresas = pd.read_csv("../data/02 - processed/companies_processed.csv")
+empresas_path = Path(__file__).parents[1] / 'data/02 - processed/companies_processed.csv'
+empresas = pd.read_csv(empresas_path)
 columnas_client_focus = [
     col for col in empresas.columns if col.startswith("client_focus")
 ]
