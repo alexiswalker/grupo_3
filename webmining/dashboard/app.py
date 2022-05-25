@@ -13,7 +13,7 @@ columnas_client_focus = [
 empresas["client_focus_sum"] = (
     empresas.client_focus_enterprise_1b
     + empresas.client_focus_midmarket_10m_1b
-    + empresas.client_focus_small_business
+    + empresas.client_focus_small_business_10m
 )
 empresas_con_datos = empresas.query("client_focus_sum > 0 & rating != 0")
 
@@ -82,7 +82,7 @@ with col2:
         empresas_con_datos["client_focus_midmarket_10m_1b"].astype(str) + "%"
     )
     companies_client_focus_pca["small_business"] = (
-        empresas_con_datos["client_focus_small_business"].astype(str) + "%"
+        empresas_con_datos["client_focus_small_business_10m"].astype(str) + "%"
     )
     companies_client_focus_pca["referencia"] = "competencia"
     companies_client_focus_pca.loc[empresa.index, ["referencia"]] = "nosotros"
