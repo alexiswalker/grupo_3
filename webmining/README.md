@@ -19,5 +19,5 @@ Con este desarrollo se aspira a extraer referencias allí expuesta para constitu
 
 ## Documentación
 
-La revisión de este trabajo debe iniciarse en el notebook llamado [00 - documentacion.ipynb](/notebooks/00%20-%20documentacion.ipynb) almacenado en la carpeta [notebooks](/notebooks/)
+La revisión de este trabajo debe iniciarse en el notebook llamado [00 - documentacion.ipynb](/notebooks/00%20-%20documentacion.ipynb) almacenado en la carpeta [notebooks](/notebooks/).
 
